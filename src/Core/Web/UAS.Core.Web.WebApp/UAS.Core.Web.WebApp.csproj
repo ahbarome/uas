@@ -251,6 +251,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\AttendanceViewModel.js" />
+    <Content Include="App\UserViewModel.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />

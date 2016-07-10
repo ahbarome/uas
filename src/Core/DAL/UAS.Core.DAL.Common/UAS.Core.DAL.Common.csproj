@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Role.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
