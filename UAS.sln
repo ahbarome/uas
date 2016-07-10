@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{DC578383-0FB4-40D3-9BA5-4ADCDCC90CDE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{A876C829-C9A8-460F-A448-A421F2AA4E81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAS.Core.Web.WebApp", "src\Core\Web\UAS.Core.Web.WebApp\UAS.Core.Web.WebApp.csproj", "{8A229EDE-8E32-4391-B3A4-DCDC99A014BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A229EDE-8E32-4391-B3A4-DCDC99A014BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A229EDE-8E32-4391-B3A4-DCDC99A014BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A229EDE-8E32-4391-B3A4-DCDC99A014BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A229EDE-8E32-4391-B3A4-DCDC99A014BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A876C829-C9A8-460F-A448-A421F2AA4E81} = {DC578383-0FB4-40D3-9BA5-4ADCDCC90CDE}
+		{8A229EDE-8E32-4391-B3A4-DCDC99A014BE} = {A876C829-C9A8-460F-A448-A421F2AA4E81}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+namespace UAS.Core.Web.WebApp.Areas.HelpPage.ModelDescriptions
+{
+    public class SimpleTypeModelDescription : ModelDescription
+    {
+    }
+}
