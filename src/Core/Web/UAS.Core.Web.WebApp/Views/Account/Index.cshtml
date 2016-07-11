@@ -13,6 +13,7 @@
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="~/Content/animate.css" rel="stylesheet">
     <link href="~/Content/style.css" rel="stylesheet">
 
@@ -25,24 +26,27 @@
             <div>
                 <h1 class="logo-name">UAS</h1>
             </div>
-            <h3>Bievenido a UAS+</h3>
+            <h3>Bienvenido a UAS+</h3>
             <p>
                 Perfectamente diseñado para una correcta gestión de asistencia.
             </p>
             <p>Por favor diligencia tus credenciales para iniciar.</p>
-            <form class="m-t" role="form" action="@Url.Action("Login", "Account")">
+            <form id="form-login" class="m-t" role="form" method="post">
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Username" required="">
+                    <input type="text" name="username" class="form-control" placeholder="Username" required="">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required="">
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <button id="btn-submit" type="button" class="btn btn-primary block full-width m-b">Login</button>
             </form>
             <p class="m-t"> <small>Sistema de Asistencia Universitaria &copy; 2016</small> </p>
         </div>
     </div>
-
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+    <script src="~/Scripts/plugins/validate/jquery.validate.min.js"></script>
+    <script src="~/Scripts/plugins/toastr/toastr.min.js"></script>
+    <script src="~/Scripts/app/AccountManager.js"></script>
 </body>
 
 </html>

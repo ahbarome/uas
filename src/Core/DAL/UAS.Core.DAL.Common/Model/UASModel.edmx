@@ -98,7 +98,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="UASEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="Fk_RoleUser" Association="Self.Fk_RoleUser">
@@ -111,7 +111,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="UASModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="UASModelStoreContainer" CdmEntityContainer="UASEntities">
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="UASModel.Role">
               <MappingFragment StoreEntitySet="Role">

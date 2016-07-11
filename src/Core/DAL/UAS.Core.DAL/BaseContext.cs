@@ -5,18 +5,19 @@ namespace UAS.Core.DAL
 {
     public class BaseContext
     {
-        private Entities _entities;
+        private UASEntities _entities;
 
-        protected Entities Entities { get { return _entities; } set { value = _entities; } }
+        protected UASEntities Entities { get { return _entities; } set { value = _entities; } }
 
         public BaseContext()
         {
             try
             {
-                this._entities = new Entities();
+                this._entities = new UASEntities();
             }
             catch (Exception exception)
             {
+                throw new Exception("EXC: No fué posible realiza la conexión con la base de datos", exception);
             }
         }
     }

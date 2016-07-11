@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Web.Mvc;
-using UAS.Core.Security.Validator;
 
 namespace UAS.Core.Web.WebApp.Controllers
 {
+    using Facade;
     public class AccountController : Controller
     {
-        private readonly AccountValidator _validator = new AccountValidator();
+        private readonly Facade _facade = new Facade();
         public AccountController()
         {
         }
@@ -16,14 +16,14 @@ namespace UAS.Core.Web.WebApp.Controllers
             return View();
         }
 
-        public ActionResult Login(string username, string password)
+        public JsonResult Login(string username, string password)
         {
             try {
-                _validator.Validate(username, password);
-                return RedirectToAction("Index", "Home"); ;
+                _facade.Login(username, password);
+                return Json(new { success = true,  url = Url.Action("Index", "Home"), message = string.Empty });
             }
-            catch (Exception exception) {
-                return Index();
+            catch(Exception exception) {
+                return Json(new { success = false, url = string.Empty, message = exception.Message });
             }
         }
 

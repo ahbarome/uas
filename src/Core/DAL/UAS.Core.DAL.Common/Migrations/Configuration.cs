@@ -2,14 +2,14 @@ namespace UAS.Core.DAL.Common.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Model.Entities>
+    internal sealed class Configuration : DbMigrationsConfiguration<Model.UASEntities>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Model.Entities context)
+        protected override void Seed(Model.UASEntities context)
         {
             //  This method will be called after migrating to the latest version.
 

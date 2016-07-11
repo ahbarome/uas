@@ -41,7 +41,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validator\AccountValidator.cs" />
+    <Compile Include="Validator\CredentialsValidator.cs" />
+    <Compile Include="Validator\UserValidator.cs" />
+    <Compile Include="WebSecurity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DAL\UAS.Core.DAL.Common\UAS.Core.DAL.Common.csproj">
+      <Project>{c529fba8-89f1-4b8d-a3f1-e4d9a37f9b92}</Project>
+      <Name>UAS.Core.DAL.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DAL\UAS.Core.DAL\UAS.Core.DAL.csproj">
+      <Project>{69b618c7-90f2-4bd6-8618-6cfd1b34bc6f}</Project>
+      <Name>UAS.Core.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
