@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -7,56 +8,199 @@ namespace UAS.Core.Cryptography
 
     public class CryptoManager
     {
-        public string Encrypt(string plainChain)
+        private string passPhrase = "Pas5pr@se";        // can be any string
+        private string saltValue = "s@1tValue";        // can be any string
+        private string hashAlgorithm = "SHA1";             // can be "MD5"
+        private int passwordIterations = 2;                // can be any number
+        private string initVector = "@1B2c3D4e5F6g7H8"; // must be 16 bytes
+        private int keySize = 256;                // can be 192 or 128
+
+        /// <summary>
+        /// Encrypts specified plaintext using Rijndael symmetric key algorithm
+        /// and returns a base64-encoded result.
+        /// </summary>
+        /// <param name="plainText">
+        /// Plaintext value to be encrypted.
+        /// </param>
+        /// <returns>
+        /// Encrypted value formatted as a base64-encoded string.
+        /// </returns>
+        public string Encrypt(string plainText)
         {
-            var publicKey = "<RSAKeyValue><Modulus>21wEnTU+mcD2w0Lfo1Gv4rtcSWsQJQTNa6gio05AOkV/Er9w3Y13Ddo5wGtjJ19402S71HUeN0vbKILLJdRSES5MHSdJPSVrOqdrll/vLXxDxWs/U0UT1c8u6k/Ogx9hTtZxYwoeYqdhDblof3E75d9n2F0Zvf6iTb4cI7j6fMs=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
+            // Convert strings into byte arrays.
+            // Let us assume that strings only contain ASCII codes.
+            // If strings include Unicode characters, use Unicode, UTF7, or UTF8 
+            // encoding.
+            byte[] initVectorBytes = Encoding.ASCII.GetBytes(initVector);
+            byte[] saltValueBytes = Encoding.ASCII.GetBytes(saltValue);
 
-            var testData = Encoding.UTF8.GetBytes(plainChain);
+            // Convert our plaintext into a byte array.
+            // Let us assume that plaintext contains UTF8-encoded characters.
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
 
-            using (var rsa = new RSACryptoServiceProvider(2048))
-            {
-                try
-                {
-                    // client encrypting data with public key issued by server                    
-                    rsa.FromXmlString(publicKey);
+            // First, we must create a password, from which the key will be derived.
+            // This password will be generated from the specified passphrase and 
+            // salt value. The password will be created using the specified hash 
+            // algorithm. Password creation can be done in several iterations.
+            PasswordDeriveBytes password = new PasswordDeriveBytes
+            (
+                passPhrase,
+                saltValueBytes,
+                hashAlgorithm,
+                passwordIterations
+            );
 
-                    var encryptedData = rsa.Encrypt(testData, true);
+            // Use the password to generate pseudo-random bytes for the encryption
+            // key. Specify the size of the key in bytes (instead of bits).
+            byte[] keyBytes = password.GetBytes(keySize / 8);
 
-                    var base64Encrypted = Convert.ToBase64String(encryptedData);
+            // Create uninitialized Rijndael encryption object.
+            RijndaelManaged symmetricKey = new RijndaelManaged();
 
-                    return base64Encrypted;
-                }
-                finally
-                {
-                    rsa.PersistKeyInCsp = false;
-                }
-            }
+            // It is reasonable to set encryption mode to Cipher Block Chaining
+            // (CBC). Use default options for other symmetric key parameters.
+            symmetricKey.Mode = CipherMode.CBC;
+
+            // Generate encryptor from the existing key bytes and initialization 
+            // vector. Key size will be defined based on the number of the key 
+            // bytes.
+            ICryptoTransform encryptor = symmetricKey.CreateEncryptor
+            (
+                keyBytes,
+                initVectorBytes
+            );
+
+            // Define memory stream which will be used to hold encrypted data.
+            MemoryStream memoryStream = new MemoryStream();
+
+            // Define cryptographic stream (always use Write mode for encryption).
+            CryptoStream cryptoStream = new CryptoStream
+            (
+                memoryStream,
+                encryptor,
+                CryptoStreamMode.Write
+            );
+
+            // Start encrypting.
+            cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+
+            // Finish encrypting.
+            cryptoStream.FlushFinalBlock();
+
+            // Convert our encrypted data from a memory stream into a byte array.
+            byte[] cipherTextBytes = memoryStream.ToArray();
+
+            // Close both streams.
+            memoryStream.Close();
+            cryptoStream.Close();
+
+            // Convert encrypted data into a base64-encoded string.
+            string cipherText = Convert.ToBase64String(cipherTextBytes);
+
+            // Return encrypted string.
+            return cipherText;
         }
 
-        public string Decrypt(string encryptedChain)
+        /// <summary>
+        /// Decrypts specified ciphertext using Rijndael symmetric key algorithm.
+        /// </summary>
+        /// <param name="cipherText">
+        /// Base64-formatted ciphertext value.
+        /// </param>
+        /// <returns>
+        /// Decrypted string value.
+        /// </returns>
+        /// <remarks>
+        /// Most of the logic in this function is similar to the Encrypt
+        /// logic. In order for decryption to work, all parameters of this function
+        /// - except cipherText value - must match the corresponding parameters of
+        /// the Encrypt function which was called to generate the
+        /// ciphertext.
+        /// </remarks>
+        public string Decrypt(string cipherText)
         {
-            var privateKey = "<RSAKeyValue><Modulus>21wEnTU+mcD2w0Lfo1Gv4rtcSWsQJQTNa6gio05AOkV/Er9w3Y13Ddo5wGtjJ19402S71HUeN0vbKILLJdRSES5MHSdJPSVrOqdrll/vLXxDxWs/U0UT1c8u6k/Ogx9hTtZxYwoeYqdhDblof3E75d9n2F0Zvf6iTb4cI7j6fMs=</Modulus><Exponent>AQAB</Exponent><P>/aULPE6jd5IkwtWXmReyMUhmI/nfwfkQSyl7tsg2PKdpcxk4mpPZUdEQhHQLvE84w2DhTyYkPHCtq/mMKE3MHw==</P><Q>3WV46X9Arg2l9cxb67KVlNVXyCqc/w+LWt/tbhLJvV2xCF/0rWKPsBJ9MC6cquaqNPxWWEav8RAVbmmGrJt51Q==</Q><DP>8TuZFgBMpBoQcGUoS2goB4st6aVq1FcG0hVgHhUI0GMAfYFNPmbDV3cY2IBt8Oj/uYJYhyhlaj5YTqmGTYbATQ==</DP><DQ>FIoVbZQgrAUYIHWVEYi/187zFd7eMct/Yi7kGBImJStMATrluDAspGkStCWe4zwDDmdam1XzfKnBUzz3AYxrAQ==</DQ><InverseQ>QPU3Tmt8nznSgYZ+5jUo9E0SfjiTu435ihANiHqqjasaUNvOHKumqzuBZ8NRtkUhS6dsOEb8A2ODvy7KswUxyA==</InverseQ><D>cgoRoAUpSVfHMdYXW9nA3dfX75dIamZnwPtFHq80ttagbIe4ToYYCcyUz5NElhiNQSESgS5uCgNWqWXt5PnPu4XmCXx6utco1UVH8HGLahzbAnSy6Cj3iUIQ7Gj+9gQ7PkC434HTtHazmxVgIR5l56ZjoQ8yGNCPZnsdYEmhJWk=</D></RSAKeyValue>";
+            // Convert strings defining encryption key characteristics into byte
+            // arrays. Let us assume that strings only contain ASCII codes.
+            // If strings include Unicode characters, use Unicode, UTF7, or UTF8
+            // encoding.
+            byte[] initVectorBytes = Encoding.ASCII.GetBytes(initVector);
+            byte[] saltValueBytes = Encoding.ASCII.GetBytes(saltValue);
 
-            var testData = Encoding.UTF8.GetBytes(encryptedChain);
+            // Convert our ciphertext into a byte array.
+            byte[] cipherTextBytes = Convert.FromBase64String(cipherText);
 
-            using (var rsa = new RSACryptoServiceProvider(2048))
-            {
-                try
-                {                    
-                    var base64Encrypted = encryptedChain;
-                    // server decrypting data with private key                    
-                    rsa.FromXmlString(privateKey);
+            // First, we must create a password, from which the key will be 
+            // derived. This password will be generated from the specified 
+            // passphrase and salt value. The password will be created using
+            // the specified hash algorithm. Password creation can be done in
+            // several iterations.
+            PasswordDeriveBytes password = new PasswordDeriveBytes
+            (
+                passPhrase,
+                saltValueBytes,
+                hashAlgorithm,
+                passwordIterations
+            );
 
-                    var resultBytes = Convert.FromBase64String(base64Encrypted);
-                    var decryptedBytes = rsa.Decrypt(resultBytes, true);
-                    var decryptedData = Encoding.UTF8.GetString(decryptedBytes);
-                    return decryptedData.ToString();
-                }
-                finally
-                {
-                    rsa.PersistKeyInCsp = false;
-                }
-            }
+            // Use the password to generate pseudo-random bytes for the encryption
+            // key. Specify the size of the key in bytes (instead of bits).
+            byte[] keyBytes = password.GetBytes(keySize / 8);
+
+            // Create uninitialized Rijndael encryption object.
+            RijndaelManaged symmetricKey = new RijndaelManaged();
+
+            // It is reasonable to set encryption mode to Cipher Block Chaining
+            // (CBC). Use default options for other symmetric key parameters.
+            symmetricKey.Mode = CipherMode.CBC;
+
+            // Generate decryptor from the existing key bytes and initialization 
+            // vector. Key size will be defined based on the number of the key 
+            // bytes.
+            ICryptoTransform decryptor = symmetricKey.CreateDecryptor
+            (
+                keyBytes,
+                initVectorBytes
+            );
+
+            // Define memory stream which will be used to hold encrypted data.
+            MemoryStream memoryStream = new MemoryStream(cipherTextBytes);
+
+            // Define cryptographic stream (always use Read mode for encryption).
+            CryptoStream cryptoStream = new CryptoStream
+            (
+                memoryStream,
+                decryptor,
+                CryptoStreamMode.Read
+            );
+
+            // Since at this point we don't know what the size of decrypted data
+            // will be, allocate the buffer long enough to hold ciphertext;
+            // plaintext is never longer than ciphertext.
+            byte[] plainTextBytes = new byte[cipherTextBytes.Length];
+
+            // Start decrypting.
+            int decryptedByteCount = cryptoStream.Read
+            (
+                plainTextBytes,
+                0,
+                plainTextBytes.Length
+            );
+
+            // Close both streams.
+            memoryStream.Close();
+            cryptoStream.Close();
+
+            // Convert decrypted data into a string. 
+            // Let us assume that the original plaintext string was UTF8-encoded.
+            string plainText = Encoding.UTF8.GetString
+            (
+                plainTextBytes,
+                0,
+                decryptedByteCount
+            );
+
+            // Return decrypted string.   
+            return plainText;
         }
     }
 }

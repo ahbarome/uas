@@ -48,7 +48,7 @@ ALTER TABLE [Security].[User] ADD  CONSTRAINT [DF_User_Register_Date]  DEFAULT (
 GO
 
 INSERT INTO [Security].[User]([Username], [Password], [IdRole], [IsActive], [CreatedBy]) 
-	VALUES ('admin', 'admin', 1, 1, 'admin') 
+	VALUES ('admin', 'NXo/ao4xL5ix30tACkl6jg==', 1, 1, 'admin') 
 --Tablas pendientes
 --Action 
 --PermissionActionByRol
