@@ -3,5 +3,7 @@ UNIVERSITY ATTENDANCE SYSTEM
 
 This is the graduation project broken down into stages.
 
-+ Master: Basic MVC project with a Web Api
++ Stage 0: Basic MVC project with a Web Api
 + Stage 1: Template integration
++ Stage 2: Added partial security
++ Master: Current version of the project
