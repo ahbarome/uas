@@ -44,9 +44,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Security\UAS.Core.Security\UAS.Core.Security.csproj">
-      <Project>{b5dc15ab-6d97-4af1-9921-982dee74db56}</Project>
-      <Name>UAS.Core.Security</Name>
+    <ProjectReference Include="..\..\Session\UAS.Core.Session.Common\UAS.Core.Session.Common.csproj">
+      <Project>{c60e458c-7f4d-4a9d-a43f-c0faf87a6aee}</Project>
+      <Name>UAS.Core.Session.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Session\UAS.Core.Session\UAS.Core.Session.csproj">
+      <Project>{9611af93-e264-4366-aa99-1b7712c3148a}</Project>
+      <Name>UAS.Core.Session</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

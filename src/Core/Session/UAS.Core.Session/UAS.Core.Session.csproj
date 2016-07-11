@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B5DC15AB-6D97-4AF1-9921-982DEE74DB56}</ProjectGuid>
+    <ProjectGuid>{9611AF93-E264-4366-AA99-1B7712C3148A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UAS.Core.Security</RootNamespace>
-    <AssemblyName>UAS.Core.Security</AssemblyName>
+    <RootNamespace>UAS.Core.Session</RootNamespace>
+    <AssemblyName>UAS.Core.Session</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,23 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validator\CredentialsValidator.cs" />
-    <Compile Include="Validator\UserValidator.cs" />
-    <Compile Include="WebSecurity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Cryptography\UAS.Core.Cryptography\UAS.Core.Cryptography.csproj">
-      <Project>{599456b2-1e5d-4654-92de-ec6b57609f77}</Project>
-      <Name>UAS.Core.Cryptography</Name>
+    <ProjectReference Include="..\..\Configuration\UAS.Core.Configuration\UAS.Core.Configuration.csproj">
+      <Project>{626bc2d8-40ac-4fb6-9bd4-459a75eabeb0}</Project>
+      <Name>UAS.Core.Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DAL\UAS.Core.DAL.Common\UAS.Core.DAL.Common.csproj">
-      <Project>{c529fba8-89f1-4b8d-a3f1-e4d9a37f9b92}</Project>
-      <Name>UAS.Core.DAL.Common</Name>
+    <ProjectReference Include="..\..\Security\UAS.Core.Security\UAS.Core.Security.csproj">
+      <Project>{b5dc15ab-6d97-4af1-9921-982dee74db56}</Project>
+      <Name>UAS.Core.Security</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DAL\UAS.Core.DAL\UAS.Core.DAL.csproj">
-      <Project>{69b618c7-90f2-4bd6-8618-6cfd1b34bc6f}</Project>
-      <Name>UAS.Core.DAL</Name>
+    <ProjectReference Include="..\UAS.Core.Session.Common\UAS.Core.Session.Common.csproj">
+      <Project>{c60e458c-7f4d-4a9d-a43f-c0faf87a6aee}</Project>
+      <Name>UAS.Core.Session.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

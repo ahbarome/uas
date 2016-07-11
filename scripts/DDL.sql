@@ -1,10 +1,13 @@
 CREATE DATABASE [UAS]
 GO
 
+ALTER DATABASE [UAS] SET ENABLE_BROKER 
+GO
+
 USE [UAS]
 GO
 
-CREATE SCHEMA  [Security];
+CREATE SCHEMA Security
 
 CREATE TABLE [Security].[Role](
 	[Id] 			[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -44,6 +47,8 @@ GO
 ALTER TABLE [Security].[User] ADD  CONSTRAINT [DF_User_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
+INSERT INTO [Security].[User]([Username], [Password], [IdRole], [IsActive], [CreatedBy]) 
+	VALUES ('admin', 'admin', 1, 1, 'admin') 
 --Tablas pendientes
 --Action 
 --PermissionActionByRol

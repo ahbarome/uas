@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B5DC15AB-6D97-4AF1-9921-982DEE74DB56}</ProjectGuid>
+    <ProjectGuid>{599456B2-1E5D-4654-92DE-EC6B57609F77}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UAS.Core.Security</RootNamespace>
-    <AssemblyName>UAS.Core.Security</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <RootNamespace>UAS.Core.Cryptography</RootNamespace>
+    <AssemblyName>UAS.Core.Cryptography</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,24 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryptoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validator\CredentialsValidator.cs" />
-    <Compile Include="Validator\UserValidator.cs" />
-    <Compile Include="WebSecurity.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Cryptography\UAS.Core.Cryptography\UAS.Core.Cryptography.csproj">
-      <Project>{599456b2-1e5d-4654-92de-ec6b57609f77}</Project>
-      <Name>UAS.Core.Cryptography</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DAL\UAS.Core.DAL.Common\UAS.Core.DAL.Common.csproj">
-      <Project>{c529fba8-89f1-4b8d-a3f1-e4d9a37f9b92}</Project>
-      <Name>UAS.Core.DAL.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DAL\UAS.Core.DAL\UAS.Core.DAL.csproj">
-      <Project>{69b618c7-90f2-4bd6-8618-6cfd1b34bc6f}</Project>
-      <Name>UAS.Core.DAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,18 +1,18 @@
-﻿using UAS.Core.Security;
-using UAS.Core.Security.Validator;
-
-namespace UAS.Core.Facade
+﻿namespace UAS.Core.Facade
 {
+    using Session;
+    using Session.Interfaces;
+
     public class Facade
     {
-        private WebSecurity _webSecurity;
+        private ISessionManager _sessionManager;
 
         public Facade() {
-            _webSecurity = new WebSecurity();
+            _sessionManager = new SessionManager();
         }
 
-        public void Login(string username, string password) {
-            _webSecurity.Login(username, password);
+        public void CreateSession(string username, string password) {
+            _sessionManager.CreateSession(username, password);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace UAS.Core.Web.WebApp.Controllers
     public class AccountController : Controller
     {
         private readonly Facade _facade = new Facade();
+
         public AccountController()
         {
         }
@@ -18,8 +19,9 @@ namespace UAS.Core.Web.WebApp.Controllers
 
         public JsonResult Login(string username, string password)
         {
+            
             try {
-                _facade.Login(username, password);
+                _facade.CreateSession(username, password);
                 return Json(new { success = true,  url = Url.Action("Index", "Home"), message = string.Empty });
             }
             catch(Exception exception) {

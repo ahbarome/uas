@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UAS.Core.Security.Validator;
+﻿using UAS.Core.Security.Validator;
 
 namespace UAS.Core.Security
 {
@@ -18,7 +13,7 @@ namespace UAS.Core.Security
             _userValidator = new UserValidator();
         }
 
-        public void Login(string username, string password)
+        public void ValidateLogin(string username, string password)
         {
             _credentialsValidator.Validate(username, password);
             _userValidator.Validate(username, password);
