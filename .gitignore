@@ -23,6 +23,9 @@
 *.sbr
 *.sdf
 ipch/
+packages/
+TestResults/
+.vs/
 obj/
 [Bb]in
 [Dd]ebug*/

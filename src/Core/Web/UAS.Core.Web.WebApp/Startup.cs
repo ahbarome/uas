@@ -12,7 +12,6 @@ namespace UAS.Core.Web.WebApp
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
         }
     }
 }
