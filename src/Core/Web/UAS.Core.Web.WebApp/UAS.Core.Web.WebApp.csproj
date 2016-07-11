@@ -240,6 +240,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FirewallController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1764,6 +1765,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Firewall\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1773,9 +1775,21 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Configuration\UAS.Core.Configuration\UAS.Core.Configuration.csproj">
+      <Project>{626bc2d8-40ac-4fb6-9bd4-459a75eabeb0}</Project>
+      <Name>UAS.Core.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Facade\UAS.Core.Facade\UAS.Core.Facade.csproj">
       <Project>{5dec6cf7-7370-469b-aaee-87b950eabb8a}</Project>
       <Name>UAS.Core.Facade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Session\UAS.Core.Session.Common\UAS.Core.Session.Common.csproj">
+      <Project>{c60e458c-7f4d-4a9d-a43f-c0faf87a6aee}</Project>
+      <Name>UAS.Core.Session.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Session\UAS.Core.Session\UAS.Core.Session.csproj">
+      <Project>{9611af93-e264-4366-aa99-1b7712c3148a}</Project>
+      <Name>UAS.Core.Session</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

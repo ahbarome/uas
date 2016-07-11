@@ -14,5 +14,10 @@
         public void CreateSession(string username, string password) {
             _sessionManager.CreateSession(username, password);
         }
+
+        public void CloseSession()
+        {
+            _sessionManager.CloseSession();
+        }
     }
 }

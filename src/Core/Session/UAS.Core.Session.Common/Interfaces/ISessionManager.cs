@@ -6,6 +6,6 @@
     {
         Session GetSession();
         void CreateSession(string username, string password);
-        void DestroySession();
+        void CloseSession();
     }
 }
