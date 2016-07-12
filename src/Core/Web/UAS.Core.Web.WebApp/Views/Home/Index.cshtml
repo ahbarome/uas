@@ -29,7 +29,8 @@
                 var session = @ViewData["SESSION"] as UAS.Core.Session.Entities.Session;
                 <h2>@Html.Raw(session.SessionId)</h2>
                 <h2>@Html.Raw(session.SessionUser.Username)</h2>
-                <h2>@Html.Raw(session.SessionUser.Password)</h2>
+                <h2>@Html.Raw(session.SessionUser.FullName)</h2>
+                <h2>@Html.Raw(session.SessionUser.RoleName)</h2>
             }
         </div>
         </div>

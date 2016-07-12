@@ -12,10 +12,12 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class PagePermissionByRol
+    public partial class PagePermissionByRole
     {
         public int IdPage { get; set; }
         public int IdRole { get; set; }
+        public bool IsDefault { get; set; }
+        public bool IsVisible { get; set; }
         public bool CanEdit { get; set; }
         public bool CanUpdate { get; set; }
         public bool CanSelect { get; set; }

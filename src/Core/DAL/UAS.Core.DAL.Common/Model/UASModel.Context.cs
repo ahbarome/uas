@@ -26,8 +26,8 @@ namespace UAS.Core.DAL.Common.Model
         }
     
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<Page> Pages { get; set; }
-        public virtual DbSet<PagePermissionByRol> PagePermissionByRols { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Page> Pages { get; set; }
+        public virtual DbSet<PagePermissionByRole> PagePermissionByRoles { get; set; }
     }
 }

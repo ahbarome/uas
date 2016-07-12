@@ -1,4 +1,4 @@
-﻿namespace UAS.Core.Security.Validator
+﻿namespace UAS.Core.Security.Validators
 {
     public class CredentialsValidator
     {

@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\PagesBuilder.cs" />
+    <Compile Include="Builders\SessionBuilder.cs" />
+    <Compile Include="Builders\UserBuilder.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -49,6 +52,10 @@
     <ProjectReference Include="..\..\Configuration\UAS.Core.Configuration\UAS.Core.Configuration.csproj">
       <Project>{626bc2d8-40ac-4fb6-9bd4-459a75eabeb0}</Project>
       <Name>UAS.Core.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DAL\UAS.Core.DAL.Common\UAS.Core.DAL.Common.csproj">
+      <Project>{C529FBA8-89F1-4B8D-A3F1-E4D9A37F9B92}</Project>
+      <Name>UAS.Core.DAL.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Security\UAS.Core.Security\UAS.Core.Security.csproj">
       <Project>{b5dc15ab-6d97-4af1-9921-982dee74db56}</Project>

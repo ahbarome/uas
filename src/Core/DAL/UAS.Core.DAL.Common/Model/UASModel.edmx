@@ -13,17 +13,19 @@
           <Property Name="Title" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="MenuItem" Type="nvarchar" MaxLength="80" Nullable="false" />
           <Property Name="ParentId" Type="int" />
-          <Property Name="Icon" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="80" />
           <Property Name="Order" Type="int" />
           <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="PagePermissionByRol">
+        <EntityType Name="PagePermissionByRole">
           <Key>
             <PropertyRef Name="IdPage" />
             <PropertyRef Name="IdRole" />
           </Key>
           <Property Name="IdPage" Type="int" Nullable="false" />
           <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="IsVisible" Type="bit" Nullable="false" />
           <Property Name="CanEdit" Type="bit" Nullable="false" />
           <Property Name="CanUpdate" Type="bit" Nullable="false" />
           <Property Name="CanSelect" Type="bit" Nullable="false" />
@@ -58,24 +60,24 @@
         </EntityType>
         <Association Name="Fk_PagePermission">
           <End Role="Page" Type="Self.Page" Multiplicity="1" />
-          <End Role="PagePermissionByRol" Type="Self.PagePermissionByRol" Multiplicity="*" />
+          <End Role="PagePermissionByRole" Type="Self.PagePermissionByRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PagePermissionByRol">
+            <Dependent Role="PagePermissionByRole">
               <PropertyRef Name="IdPage" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="Fk_RolePagePermission">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="PagePermissionByRol" Type="Self.PagePermissionByRol" Multiplicity="*" />
+          <End Role="PagePermissionByRole" Type="Self.PagePermissionByRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PagePermissionByRol">
+            <Dependent Role="PagePermissionByRole">
               <PropertyRef Name="IdRole" />
             </Dependent>
           </ReferentialConstraint>
@@ -94,16 +96,16 @@
         </Association>
         <EntityContainer Name="UASModelStoreContainer">
           <EntitySet Name="Page" EntityType="Self.Page" Schema="Security" store:Type="Tables" />
-          <EntitySet Name="PagePermissionByRol" EntityType="Self.PagePermissionByRol" Schema="Security" store:Type="Tables" />
+          <EntitySet Name="PagePermissionByRole" EntityType="Self.PagePermissionByRole" Schema="Security" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="Security" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="Security" store:Type="Tables" />
           <AssociationSet Name="Fk_PagePermission" Association="Self.Fk_PagePermission">
             <End Role="Page" EntitySet="Page" />
-            <End Role="PagePermissionByRol" EntitySet="PagePermissionByRol" />
+            <End Role="PagePermissionByRole" EntitySet="PagePermissionByRole" />
           </AssociationSet>
           <AssociationSet Name="Fk_RolePagePermission" Association="Self.Fk_RolePagePermission">
             <End Role="Role" EntitySet="Role" />
-            <End Role="PagePermissionByRol" EntitySet="PagePermissionByRol" />
+            <End Role="PagePermissionByRole" EntitySet="PagePermissionByRole" />
           </AssociationSet>
           <AssociationSet Name="Fk_RoleUser" Association="Self.Fk_RoleUser">
             <End Role="Role" EntitySet="Role" />
@@ -122,54 +124,27 @@
           <Property Name="Name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Alias" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PagePermissionByRols" Relationship="UASModel.Fk_RolePagePermission" FromRole="Role" ToRole="PagePermissionByRol" />
           <NavigationProperty Name="Users" Relationship="UASModel.Fk_RoleUser" FromRole="Role" ToRole="User" />
+          <NavigationProperty Name="PagePermissionByRoles" Relationship="UASModel.Fk_RolePagePermission" FromRole="Role" ToRole="PagePermissionByRole" />
         </EntityType>
         <EntityContainer Name="UASEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="Pages" EntityType="UASModel.Page" />
-          <EntitySet Name="PagePermissionByRols" EntityType="UASModel.PagePermissionByRol" />
           <EntitySet Name="Users" EntityType="UASModel.User" />
-          <AssociationSet Name="Fk_PagePermission" Association="UASModel.Fk_PagePermission">
-            <End Role="Page" EntitySet="Pages" />
-            <End Role="PagePermissionByRol" EntitySet="PagePermissionByRols" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_RolePagePermission" Association="UASModel.Fk_RolePagePermission">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="PagePermissionByRol" EntitySet="PagePermissionByRols" />
-          </AssociationSet>
           <AssociationSet Name="Fk_RoleUser" Association="UASModel.Fk_RoleUser">
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Pages" EntityType="UASModel.Page" />
+          <EntitySet Name="PagePermissionByRoles" EntityType="UASModel.PagePermissionByRole" />
+          <AssociationSet Name="Fk_PagePermission" Association="UASModel.Fk_PagePermission">
+            <End Role="Page" EntitySet="Pages" />
+            <End Role="PagePermissionByRole" EntitySet="PagePermissionByRoles" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_RolePagePermission" Association="UASModel.Fk_RolePagePermission">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="PagePermissionByRole" EntitySet="PagePermissionByRoles" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Page">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="MenuItem" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="ParentId" Type="Int32" />
-          <Property Name="Icon" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="Order" Type="Int32" />
-          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PagePermissionByRols" Relationship="UASModel.Fk_PagePermission" FromRole="Page" ToRole="PagePermissionByRol" />
-        </EntityType>
-        <EntityType Name="PagePermissionByRol">
-          <Key>
-            <PropertyRef Name="IdPage" />
-            <PropertyRef Name="IdRole" />
-          </Key>
-          <Property Name="IdPage" Type="Int32" Nullable="false" />
-          <Property Name="IdRole" Type="Int32" Nullable="false" />
-          <Property Name="CanEdit" Type="Boolean" Nullable="false" />
-          <Property Name="CanUpdate" Type="Boolean" Nullable="false" />
-          <Property Name="CanSelect" Type="Boolean" Nullable="false" />
-          <Property Name="CanDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Page" Relationship="UASModel.Fk_PagePermission" FromRole="PagePermissionByRol" ToRole="Page" />
-          <NavigationProperty Name="Role" Relationship="UASModel.Fk_RolePagePermission" FromRole="PagePermissionByRol" ToRole="Role" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -189,30 +164,6 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Role" Relationship="UASModel.Fk_RoleUser" FromRole="User" ToRole="Role" />
         </EntityType>
-        <Association Name="Fk_PagePermission">
-          <End Type="UASModel.Page" Role="Page" Multiplicity="1" />
-          <End Type="UASModel.PagePermissionByRol" Role="PagePermissionByRol" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Page">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PagePermissionByRol">
-              <PropertyRef Name="IdPage" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_RolePagePermission">
-          <End Type="UASModel.Role" Role="Role" Multiplicity="1" />
-          <End Type="UASModel.PagePermissionByRol" Role="PagePermissionByRol" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PagePermissionByRol">
-              <PropertyRef Name="IdRole" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Fk_RoleUser">
           <End Type="UASModel.Role" Role="Role" Multiplicity="1" />
           <End Type="UASModel.User" Role="User" Multiplicity="*" />
@@ -221,6 +172,59 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="User">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Page">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MenuItem" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Icon" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Order" Type="Int32" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PagePermissionByRoles" Relationship="UASModel.Fk_PagePermission" FromRole="Page" ToRole="PagePermissionByRole" />
+        </EntityType>
+        <EntityType Name="PagePermissionByRole">
+          <Key>
+            <PropertyRef Name="IdPage" />
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdPage" Type="Int32" Nullable="false" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="IsVisible" Type="Boolean" Nullable="false" />
+          <Property Name="CanEdit" Type="Boolean" Nullable="false" />
+          <Property Name="CanUpdate" Type="Boolean" Nullable="false" />
+          <Property Name="CanSelect" Type="Boolean" Nullable="false" />
+          <Property Name="CanDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Page" Relationship="UASModel.Fk_PagePermission" FromRole="PagePermissionByRole" ToRole="Page" />
+          <NavigationProperty Name="Role" Relationship="UASModel.Fk_RolePagePermission" FromRole="PagePermissionByRole" ToRole="Role" />
+        </EntityType>
+        <Association Name="Fk_PagePermission">
+          <End Type="UASModel.Page" Role="Page" Multiplicity="1" />
+          <End Type="UASModel.PagePermissionByRole" Role="PagePermissionByRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Page">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PagePermissionByRole">
+              <PropertyRef Name="IdPage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_RolePagePermission">
+          <End Type="UASModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="UASModel.PagePermissionByRole" Role="PagePermissionByRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PagePermissionByRole">
               <PropertyRef Name="IdRole" />
             </Dependent>
           </ReferentialConstraint>
@@ -241,31 +245,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Pages">
-            <EntityTypeMapping TypeName="UASModel.Page">
-              <MappingFragment StoreEntitySet="Page">
-                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="Icon" ColumnName="Icon" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="MenuItem" ColumnName="MenuItem" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PagePermissionByRols">
-            <EntityTypeMapping TypeName="UASModel.PagePermissionByRol">
-              <MappingFragment StoreEntitySet="PagePermissionByRol">
-                <ScalarProperty Name="CanDelete" ColumnName="CanDelete" />
-                <ScalarProperty Name="CanSelect" ColumnName="CanSelect" />
-                <ScalarProperty Name="CanUpdate" ColumnName="CanUpdate" />
-                <ScalarProperty Name="CanEdit" ColumnName="CanEdit" />
-                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
-                <ScalarProperty Name="IdPage" ColumnName="IdPage" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="UASModel.User">
               <MappingFragment StoreEntitySet="User">
@@ -282,6 +261,33 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pages">
+            <EntityTypeMapping TypeName="UASModel.Page">
+              <MappingFragment StoreEntitySet="Page">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="MenuItem" ColumnName="MenuItem" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PagePermissionByRoles">
+            <EntityTypeMapping TypeName="UASModel.PagePermissionByRole">
+              <MappingFragment StoreEntitySet="PagePermissionByRole">
+                <ScalarProperty Name="CanDelete" ColumnName="CanDelete" />
+                <ScalarProperty Name="CanSelect" ColumnName="CanSelect" />
+                <ScalarProperty Name="CanUpdate" ColumnName="CanUpdate" />
+                <ScalarProperty Name="CanEdit" ColumnName="CanEdit" />
+                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="IdPage" ColumnName="IdPage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

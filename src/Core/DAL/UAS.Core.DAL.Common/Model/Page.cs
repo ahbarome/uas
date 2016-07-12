@@ -17,7 +17,7 @@ namespace UAS.Core.DAL.Common.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Page()
         {
-            this.PagePermissionByRols = new HashSet<PagePermissionByRol>();
+            this.PagePermissionByRoles = new HashSet<PagePermissionByRole>();
         }
     
         public int Id { get; set; }
@@ -29,6 +29,8 @@ namespace UAS.Core.DAL.Common.Model
         public Nullable<System.DateTime> RegisterDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagePermissionByRol> PagePermissionByRols { get; set; }
+        public virtual ICollection<PagePermissionByRole> PagePermissionByRoles { get; set; }
+        public bool IsDefault { get; set; }
+        public bool IsVisible { get; set; }
     }
 }

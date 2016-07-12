@@ -6,12 +6,12 @@
     <edmx:Diagrams>
       <Diagram DiagramId="b6c51e1aa85d4c9098263752da3c9741" Name="Diagram1">
         <EntityTypeShape EntityType="UASModel.Role" Width="1.5" PointX="6.375" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="UASModel.Page" Width="1.5" PointX="0.75" PointY="5.375" />
-        <EntityTypeShape EntityType="UASModel.PagePermissionByRol" Width="1.5" PointX="3" PointY="0.75" />
         <EntityTypeShape EntityType="UASModel.User" Width="1.5" PointX="3" PointY="4.5" />
+        <AssociationConnector Association="UASModel.Fk_RoleUser" />
+        <EntityTypeShape EntityType="UASModel.Page" Width="1.5" PointX="6.375" PointY="7.375" />
+        <EntityTypeShape EntityType="UASModel.PagePermissionByRole" Width="1.5" PointX="8.625" PointY="2.25" />
         <AssociationConnector Association="UASModel.Fk_PagePermission" />
         <AssociationConnector Association="UASModel.Fk_RolePagePermission" />
-        <AssociationConnector Association="UASModel.Fk_RoleUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

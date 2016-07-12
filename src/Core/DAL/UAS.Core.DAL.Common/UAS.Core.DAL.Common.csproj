@@ -55,7 +55,7 @@
     <Compile Include="Model\Page.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\PagePermissionByRol.cs">
+    <Compile Include="Model\PagePermissionByRole.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Role.cs">

@@ -2,6 +2,7 @@
 
 namespace UAS.Core.Session
 {
+    using Builders;
     using Configuration;
     using Entities;
     using Interfaces;
@@ -41,12 +42,10 @@ namespace UAS.Core.Session
         /// <param name="password"></param>
         private void Create(string username, string password)
         {
+            var currentUser = _webSecurity.GetUser(username, password);
+
             HttpContext.Current.Session[ConfigurationManager.SESSION_KEY] =
-                            new Session
-                            {
-                                SessionId = Guid.NewGuid().ToString().ToUpper(),
-                                SessionUser = new User { Username = username, Password = password }
-                            };
+                    new SessionBuilder(currentUser, username, password).Build();
         }
 
         /// <summary>
@@ -73,7 +72,8 @@ namespace UAS.Core.Session
         /// <summary>
         /// 
         /// </summary>
-        private void RefreshSession() {
+        private void RefreshSession()
+        {
 
         }
     }
