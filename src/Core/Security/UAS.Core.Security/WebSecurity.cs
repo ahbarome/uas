@@ -13,6 +13,11 @@ namespace UAS.Core.Security
             _userValidator = new UserValidator();
         }
 
+        public bool AllowAccessToPage(string page, string username, string  password) {
+            var allowAccess = _userValidator.AllowAccessToPage(page, username, password);
+            return allowAccess;
+        }
+
         public void ValidateLogin(string username, string password)
         {
             _credentialsValidator.Validate(username, password);

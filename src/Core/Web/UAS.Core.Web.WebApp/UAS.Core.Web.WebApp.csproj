@@ -242,6 +242,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FirewallController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LayoutController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1761,11 +1763,14 @@
     <Content Include="Views\Shared\_TopNavbar.cshtml" />
     <Content Include="Views\Shared\_TopNavbar2.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Error.cshtml" />
+    <Content Include="Views\Layout\Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Firewall\" />
+    <Folder Include="Views\Session\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1782,6 +1787,10 @@
     <ProjectReference Include="..\..\Facade\UAS.Core.Facade\UAS.Core.Facade.csproj">
       <Project>{5dec6cf7-7370-469b-aaee-87b950eabb8a}</Project>
       <Name>UAS.Core.Facade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Security\UAS.Core.Security\UAS.Core.Security.csproj">
+      <Project>{B5DC15AB-6D97-4AF1-9921-982DEE74DB56}</Project>
+      <Name>UAS.Core.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Session\UAS.Core.Session.Common\UAS.Core.Session.Common.csproj">
       <Project>{c60e458c-7f4d-4a9d-a43f-c0faf87a6aee}</Project>

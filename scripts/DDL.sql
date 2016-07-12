@@ -49,6 +49,31 @@ GO
 
 INSERT INTO [Security].[User]([Username], [Password], [IdRole], [IsActive], [CreatedBy]) 
 	VALUES ('admin', 'NXo/ao4xL5ix30tACkl6jg==', 1, 1, 'admin') 
---Tablas pendientes
---Action 
---PermissionActionByRol
+
+
+CREATE TABLE [Security].[Page](
+	[Id] 				[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[Title] 			[nvarchar](15) 		NOT NULL,
+	[MenuItem] 			[nvarchar](80) 		NOT NULL,
+	[ParentId] 			[int]	 			NULL,
+	[Icon] 				[nvarchar](80) 		NULL,
+	[Order] 			[int]	 			NULL,
+	[RegisterDate] 		[datetime] 			NULL)
+GO
+
+
+ALTER TABLE [Security].[Page] ADD  CONSTRAINT [DF_Page_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+CREATE TABLE [Security].[PagePermissionByRol](
+	[IdPage] 			[int] 		NOT NULL,
+	[IdRole] 			[int] 		NOT NULL,
+	[CanEdit] 			BIT 		NOT NULL,
+	[CanUpdate] 		BIT			NOT NULL,
+	[CanSelect] 		BIT			NOT NULL,
+	[CanDelete] 		BIT			NOT NULL,
+	CONSTRAINT Pk_PagePermissionByRol PRIMARY KEY ([IdPage], [IdRole]),
+	CONSTRAINT Fk_RolePagePermission FOREIGN KEY  ([IdRole]) REFERENCES [Security].[Role](Id),
+	CONSTRAINT Fk_PagePermission FOREIGN KEY  ([IdPage]) REFERENCES [Security].[Page](Id)
+	 )
+GO

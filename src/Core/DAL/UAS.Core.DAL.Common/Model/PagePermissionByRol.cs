@@ -12,22 +12,16 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class PagePermissionByRol
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public int IdPage { get; set; }
         public int IdRole { get; set; }
-        public string Name { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> TelephoneNumber { get; set; }
-        public bool IsActive { get; set; }
-        public Nullable<System.DateTime> RegisterDate { get; set; }
-        public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> LastModiticationDate { get; set; }
-        public string ModifiedBy { get; set; }
+        public bool CanEdit { get; set; }
+        public bool CanUpdate { get; set; }
+        public bool CanSelect { get; set; }
+        public bool CanDelete { get; set; }
     
+        public virtual Page Page { get; set; }
         public virtual Role Role { get; set; }
     }
 }

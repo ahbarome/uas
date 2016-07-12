@@ -17,15 +17,34 @@ namespace UAS.Core.Web.WebApp.Controllers
             return View();
         }
 
+        public ActionResult Error()
+        {
+            return View();
+        }
+
         public JsonResult Login(string username, string password)
         {
-            
-            try {
+            try
+            {
                 _facade.CreateSession(username, password);
-                return Json(new { success = true,  url = Url.Action("Index", "Home"), message = string.Empty });
+                return Json(new { success = true, url = Url.Action("Index", "Home"), message = string.Empty });
             }
-            catch(Exception exception) {
+            catch (Exception exception)
+            {
                 return Json(new { success = false, url = string.Empty, message = exception.Message });
+            }
+        }
+
+        public ActionResult Logout()
+        {
+            try
+            {
+                _facade.CloseSession();
+                return Index();
+            }
+            catch (Exception exception)
+            {
+                return Error();
             }
         }
 

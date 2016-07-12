@@ -12,23 +12,23 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Page
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Page()
         {
             this.PagePermissionByRols = new HashSet<PagePermissionByRol>();
-            this.Users = new HashSet<User>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Alias { get; set; }
+        public string Title { get; set; }
+        public string MenuItem { get; set; }
+        public Nullable<int> ParentId { get; set; }
+        public string Icon { get; set; }
+        public Nullable<int> Order { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagePermissionByRol> PagePermissionByRols { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
     }
 }
