@@ -37,6 +37,8 @@ namespace UAS.Core.Session.Builders
                     MenuItem = currentPage.Page.MenuItem,
                     IsDefault = currentPage.IsDefault,
                     IsVisible = currentPage.IsVisible,
+                    IdPage = currentPage.IdPage,
+                    IconClass = currentPage.Page.Icon
                 };
                 pages.Add(page);
             }
