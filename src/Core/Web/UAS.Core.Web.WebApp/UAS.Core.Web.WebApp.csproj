@@ -240,6 +240,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\FirewallController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
@@ -1766,6 +1767,8 @@
     <Content Include="Views\Account\Error.cshtml" />
     <Content Include="Views\Layout\_Navigation.cshtml" />
     <Content Include="Views\Layout\_TopNavbar.cshtml" />
+    <Content Include="Views\Attendance\VirtualStudentsClassRoom.cshtml" />
+    <Content Include="Views\Attendance\VirtualTeachersClassRoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
