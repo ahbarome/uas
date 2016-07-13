@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartup(typeof(UAS.Core.Web.WebApp.Startup))]
@@ -12,6 +9,7 @@ namespace UAS.Core.Web.WebApp
     {
         public void Configuration(IAppBuilder app)
         {
+            app.MapSignalR();
         }
     }
 }

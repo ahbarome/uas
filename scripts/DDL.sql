@@ -91,6 +91,23 @@ GO
 --INSERT INTO [Security].[PagePermissionByRole] VALUES(3,1,1,1,1,1,1,1)
 --INSERT INTO [Security].[PagePermissionByRole] VALUES(4,1,1,1,1,1,1,1)
 
+
+CREATE SCHEMA Attendance
+
+--DROP TABLE [Attendance].[Movement]
+--The foreign key was not create because the movement could be from a no registered user
+CREATE TABLE [Attendance].[Movement](
+	[Id] 						[int]			IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[IdUser] 					[int]			NOT NULL,
+	[Name] 						[nvarchar](150) 	NULL,
+	[LastName] 					[nvarchar](150) 	NULL,
+	[RegisterDate] 				[datetime] 		NULL
+)
+
+ALTER TABLE  [Attendance].[Movement] ADD  CONSTRAINT [DF_Movement_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+
 SELECT * FROM [Security].[User]
 SELECT * FROM [Security].[Role]
 SELECT * FROM [Security].[Page]

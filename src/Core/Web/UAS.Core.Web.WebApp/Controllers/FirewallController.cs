@@ -8,6 +8,7 @@ namespace UAS.Core.Web.WebApp.Controllers
     {
         private WebSecurity _webSecurity;
         protected SessionManager SessionManager;
+        private const string DENIED_METHOD = "GET";
 
         /// <summary>
         /// Builder method
@@ -37,7 +38,7 @@ namespace UAS.Core.Web.WebApp.Controllers
                 var httpMethod = filterContext.HttpContext.Request.HttpMethod;
                 var allowAccessToUrlRequested = _webSecurity.AllowAccessToPage(absolutePathUrlRequested, session.SessionUser.Username, session.SessionUser.Password);
 
-                if (!allowAccessToUrlRequested) {
+                if (!allowAccessToUrlRequested && httpMethod.Equals(DENIED_METHOD)) {
                     filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Error" }));
                 }
             }

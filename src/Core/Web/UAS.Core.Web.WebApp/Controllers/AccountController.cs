@@ -6,10 +6,11 @@ namespace UAS.Core.Web.WebApp.Controllers
     using Facade;
     public class AccountController : Controller
     {
-        private readonly Facade _facade = new Facade();
+        private readonly Facade _facade;
 
         public AccountController()
         {
+            _facade = new Facade();
         }
 
         public ActionResult Index()
@@ -40,11 +41,11 @@ namespace UAS.Core.Web.WebApp.Controllers
             try
             {
                 _facade.CloseSession();
-                return Index();
+                return new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Index" }));
             }
             catch (Exception exception)
             {
-                return Error();
+                return new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Error" })); ;
             }
         }
 

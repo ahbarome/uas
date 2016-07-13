@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using UAS.Core.Configuration;
 
 namespace UAS.Core.Web.WebApp.Controllers
 {
@@ -8,7 +9,7 @@ namespace UAS.Core.Web.WebApp.Controllers
         {
             var session = base.CurrentSession;
             ViewBag.Title = "Home Page";
-            ViewData.Add("SESSION", session);
+            ViewData.Add(ConfigurationManager.SESSION_KEY, session);
             ViewData.Add("USERNAME", session.SessionUser.Username);
             return View();
         }

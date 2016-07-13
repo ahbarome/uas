@@ -12,6 +12,7 @@
         <EntityTypeShape EntityType="UASModel.PagePermissionByRole" Width="1.5" PointX="8.625" PointY="2.25" />
         <AssociationConnector Association="UASModel.Fk_PagePermission" />
         <AssociationConnector Association="UASModel.Fk_RolePagePermission" />
+        <EntityTypeShape EntityType="UASModel.Movement" Width="1.5" PointX="4.25" PointY="1.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

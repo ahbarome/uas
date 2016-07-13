@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using UAS.Core.Configuration;
 
 namespace UAS.Core.Web.WebApp.Controllers
 {
@@ -8,7 +9,7 @@ namespace UAS.Core.Web.WebApp.Controllers
         public ActionResult Navigation()
         {
             var session = base.CurrentSession;
-            ViewData.Add("SESSION", session);
+            ViewData.Add(ConfigurationManager.SESSION_KEY, session);
             return PartialView("_Navigation");
         }
 
@@ -16,7 +17,7 @@ namespace UAS.Core.Web.WebApp.Controllers
         public ActionResult TopNavbar()
         {
             var session = base.CurrentSession;
-            ViewData.Add("SESSION", session);
+            ViewData.Add(ConfigurationManager.SESSION_KEY, session);
             return PartialView("_TopNavbar");
         }
     }

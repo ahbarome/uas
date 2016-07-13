@@ -30,7 +30,5 @@ namespace UAS.Core.DAL.Common.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagePermissionByRole> PagePermissionByRoles { get; set; }
-        public bool IsDefault { get; set; }
-        public bool IsVisible { get; set; }
     }
 }
