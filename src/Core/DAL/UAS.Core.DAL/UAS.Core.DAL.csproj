@@ -42,10 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseContext.cs" />
+    <Compile Include="Persisters\MovementPersister.cs" />
     <Compile Include="Persisters\UserPersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Configuration\UAS.Core.Configuration\UAS.Core.Configuration.csproj">
+      <Project>{626BC2D8-40AC-4FB6-9BD4-459A75EABEB0}</Project>
+      <Name>UAS.Core.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UAS.Core.DAL.Common\UAS.Core.DAL.Common.csproj">
       <Project>{c529fba8-89f1-4b8d-a3f1-e4d9a37f9b92}</Project>
       <Name>UAS.Core.DAL.Common</Name>

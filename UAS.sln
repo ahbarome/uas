@@ -51,6 +51,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptograph
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAS.Core.CryptographyTest", "test\Core\Cryptography\UAS.Core.CryptographyTest\UAS.Core.CryptographyTest.csproj", "{000A5F3F-05BA-412D-B517-28C7B44E577C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Attendance", "Attendance", "{32F22295-4BDF-4AB6-ABD3-06D97052AF96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAS.Core.Attendance", "src\Core\Attendance\UAS.Core.Attendance\UAS.Core.Attendance.csproj", "{D3DFC2E8-C417-4515-A577-FFEB24988296}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +105,10 @@ Global
 		{000A5F3F-05BA-412D-B517-28C7B44E577C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{000A5F3F-05BA-412D-B517-28C7B44E577C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{000A5F3F-05BA-412D-B517-28C7B44E577C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3DFC2E8-C417-4515-A577-FFEB24988296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3DFC2E8-C417-4515-A577-FFEB24988296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3DFC2E8-C417-4515-A577-FFEB24988296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3DFC2E8-C417-4515-A577-FFEB24988296}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,5 +136,7 @@ Global
 		{599456B2-1E5D-4654-92DE-EC6B57609F77} = {C0B76CB7-7F1A-4EA2-BE28-C58790BCAF39}
 		{717C8A22-BF17-4CB7-B0C7-404EC4ED2BD8} = {BD8851EE-82CB-4A06-959A-BEE1B624B370}
 		{000A5F3F-05BA-412D-B517-28C7B44E577C} = {717C8A22-BF17-4CB7-B0C7-404EC4ED2BD8}
+		{32F22295-4BDF-4AB6-ABD3-06D97052AF96} = {DC578383-0FB4-40D3-9BA5-4ADCDCC90CDE}
+		{D3DFC2E8-C417-4515-A577-FFEB24988296} = {32F22295-4BDF-4AB6-ABD3-06D97052AF96}
 	EndGlobalSection
 EndGlobal

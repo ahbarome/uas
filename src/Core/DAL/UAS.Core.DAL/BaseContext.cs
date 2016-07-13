@@ -1,24 +1,29 @@
 ﻿using System;
+using System.Data.Entity.Core.EntityClient;
+using UAS.Core.Configuration;
 using UAS.Core.DAL.Common.Model;
 
 namespace UAS.Core.DAL
 {
     public class BaseContext
     {
-        private UASEntities _entities;
 
-        protected UASEntities Entities { get { return _entities; } set { value = _entities; } }
+        protected EntityConnectionStringBuilder EntityConnectionStringBuilder;
+
+        protected UASEntities Entities;
 
         public BaseContext()
         {
             try
             {
-                this._entities = new UASEntities();
+                Entities = new UASEntities();
+                EntityConnectionStringBuilder = new EntityConnectionStringBuilder(ConfigurationManager.ConnectionStringUASEntites);
             }
             catch (Exception exception)
             {
                 throw new Exception("EXC: No fué posible realiza la conexión con la base de datos", exception);
             }
         }
+
     }
 }

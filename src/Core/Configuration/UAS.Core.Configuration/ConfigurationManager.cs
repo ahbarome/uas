@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UAS.Core.Configuration
+﻿namespace UAS.Core.Configuration
 {
     public static class ConfigurationManager
     {

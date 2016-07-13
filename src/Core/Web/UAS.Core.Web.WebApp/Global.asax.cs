@@ -14,7 +14,7 @@ namespace UAS.Core.Web.WebApp
 
         protected void Application_Start()
         {
-            var connectionString = entityConnectionString.ConnectionString;
+            var connectionString = entityConnectionString.ProviderConnectionString;
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -24,7 +24,7 @@ namespace UAS.Core.Web.WebApp
         }
 
         protected void Application_End() {
-            var connectionString = entityConnectionString.ConnectionString;
+            var connectionString = entityConnectionString.ProviderConnectionString;
             SqlDependency.Stop(connectionString);
         }
     }

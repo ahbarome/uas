@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5DEC6CF7-7370-469B-AAEE-87B950EABB8A}</ProjectGuid>
+    <ProjectGuid>{D3DFC2E8-C417-4515-A577-FFEB24988296}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UAS.Core.Facade</RootNamespace>
-    <AssemblyName>UAS.Core.Facade</AssemblyName>
+    <RootNamespace>UAS.Core.Attendance</RootNamespace>
+    <AssemblyName>UAS.Core.Attendance</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,25 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Facade.cs" />
+    <Compile Include="AttendanceFacade.cs" />
+    <Compile Include="Managers\MovementManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Attendance\UAS.Core.Attendance\UAS.Core.Attendance.csproj">
-      <Project>{D3DFC2E8-C417-4515-A577-FFEB24988296}</Project>
-      <Name>UAS.Core.Attendance</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DAL\UAS.Core.DAL.Common\UAS.Core.DAL.Common.csproj">
       <Project>{c529fba8-89f1-4b8d-a3f1-e4d9a37f9b92}</Project>
       <Name>UAS.Core.DAL.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Session\UAS.Core.Session.Common\UAS.Core.Session.Common.csproj">
-      <Project>{c60e458c-7f4d-4a9d-a43f-c0faf87a6aee}</Project>
-      <Name>UAS.Core.Session.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Session\UAS.Core.Session\UAS.Core.Session.csproj">
-      <Project>{9611af93-e264-4366-aa99-1b7712c3148a}</Project>
-      <Name>UAS.Core.Session</Name>
+    <ProjectReference Include="..\..\DAL\UAS.Core.DAL\UAS.Core.DAL.csproj">
+      <Project>{69b618c7-90f2-4bd6-8618-6cfd1b34bc6f}</Project>
+      <Name>UAS.Core.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
