@@ -1,7 +1,9 @@
-﻿using System.Data.Entity;
+﻿using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using UAS.Core.DAL.Common.Model;
+using UAS.Core.DAL.Notifiers;
 
 namespace UAS.Core.DAL.Persisters
 {
@@ -10,12 +12,28 @@ namespace UAS.Core.DAL.Persisters
         /// <summary>
         /// 
         /// </summary>
+        public event SqlNotificationEventHandler SqlNotification;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
-        public IQueryable<Movement> Get()
+        public IQueryable<Movement> GetAllMovements()
         {
             var query = base.Entities.Movements;
 
-            Execute(query);
+            RegisterForNotifications(query);
+
+            return query;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private DbSet<Movement> GetAll()
+        {
+            var query = base.Entities.Movements;
 
             return query;
         }
@@ -24,16 +42,20 @@ namespace UAS.Core.DAL.Persisters
         /// 
         /// </summary>
         /// <param name="query"></param>
-        private void Execute(DbSet<Movement> query)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
+        private void RegisterForNotifications(DbSet<Movement> query)
         {
             using (var connection = new SqlConnection(base.EntityConnectionStringBuilder.ProviderConnectionString))
             {
                 connection.Open();
+
                 var command = new SqlCommand(query.ToString(), connection);
                 var sqlDependency = new SqlDependency(command);
-                sqlDependency.OnChange += new OnChangeEventHandler(SqlDependencyOnChange);
-                // NOTE: You have to execute the command, or the notification will never fire.
-                using (SqlDataReader reader = command.ExecuteReader()) { }
+                sqlDependency.OnChange += new OnChangeEventHandler(OnChangeDependency);
+
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                command.ExecuteNonQuery();
             }
         }
 
@@ -42,12 +64,12 @@ namespace UAS.Core.DAL.Persisters
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SqlDependencyOnChange(object sender, SqlNotificationEventArgs e)
+        private void OnChangeDependency(object sender, SqlNotificationEventArgs e)
         {
-            var info = e.Info;
-            var source = e.Source;
-            var type = e.Type;
-            return;
+            if (SqlNotification != null)
+                SqlNotification(sender, e);
+
+            RegisterForNotifications(GetAll());
         }
     }
 }

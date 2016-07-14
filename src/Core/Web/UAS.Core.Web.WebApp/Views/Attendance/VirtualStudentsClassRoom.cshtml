@@ -1,19 +1,19 @@
-﻿
+﻿@model IEnumerable<UAS.Core.DAL.Common.Model.Movement>
 @{
-    ViewBag.Title = "Dashboard v.1";
+    ViewBag.Title = "Aula Virtual";
     var session = @ViewData[UAS.Core.Configuration.ConfigurationManager.SESSION_KEY] as UAS.Core.Session.Entities.Session;
 }
 
 <div id="wrapper">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
-            <h2>This is main title</h2>
+            <h2>@ViewBag.Title.ToString().ToUpper()</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="index.html">This is</a>
+                    <a href="index.html">Asistencia</a>
                 </li>
                 <li class="active">
-                    <strong>Breadcrumb</strong>
+                    <strong>@ViewBag.Title</strong>
                 </li>
             </ol>
         </div>
@@ -78,104 +78,7 @@
             </div>
         </div>
 
-
-        <div class="row">
-            @for (int i = 0; i < 3; i++)
-            {
-                <div class="col-lg-3">
-                    <div class="contact-box">
-                        <a href="@Url.Action("Profile", "AppViews")">
-                            <div class="col-sm-4">
-                                <div class="text-center">
-                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="~/Images/a2.jpg">
-                                    <div class="m-t-xs font-bold">Graphics designer</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <h3><strong>John Smith</strong></h3>
-                                <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
-                                <address>
-                                    <strong>Twitter, Inc.</strong><br>
-                                    795 Folsom Ave, Suite 600<br>
-                                    San Francisco, CA 94107<br>
-                                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                                </address>
-                            </div>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="contact-box">
-                        <a href="@Url.Action("Profile", "AppViews")">
-                            <div class="col-sm-4">
-                                <div class="text-center">
-                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="~/Images/a1.jpg">
-                                    <div class="m-t-xs font-bold">CEO</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <h3><strong>Alex Johnatan</strong></h3>
-                                <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
-                                <address>
-                                    <strong>Twitter, Inc.</strong><br>
-                                    795 Folsom Ave, Suite 600<br>
-                                    San Francisco, CA 94107<br>
-                                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                                </address>
-                            </div>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="contact-box">
-                        <a href="@Url.Action("Profile", "AppViews")">
-                            <div class="col-sm-4">
-                                <div class="text-center">
-                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="~/Images/a3.jpg">
-                                    <div class="m-t-xs font-bold">Marketing manager</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <h3><strong>Monica Smith</strong></h3>
-                                <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
-                                <address>
-                                    <strong>Twitter, Inc.</strong><br>
-                                    795 Folsom Ave, Suite 600<br>
-                                    San Francisco, CA 94107<br>
-                                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                                </address>
-                            </div>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="contact-box">
-                        <a href="@Url.Action("Profile", "AppViews")">
-                            <div class="col-sm-4">
-                                <div class="text-center">
-                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="~/Images/a5.jpg">
-                                    <div class="m-t-xs font-bold">Graphics designer</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <h3><strong>Sandra Smith</strong></h3>
-                                <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
-                                <address>
-                                    <strong>Twitter, Inc.</strong><br>
-                                    795 Folsom Ave, Suite 600<br>
-                                    San Francisco, CA 94107<br>
-                                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                                </address>
-                            </div>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
-                </div>
-            }
-        </div>
+        @Html.Partial("VirtualStudentsClassRoomPartial", Model)
     </div>
 
 </div>

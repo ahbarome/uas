@@ -7,7 +7,6 @@ namespace UAS.Core.DAL
 {
     public class BaseContext
     {
-
         protected EntityConnectionStringBuilder EntityConnectionStringBuilder;
 
         protected UASEntities Entities;

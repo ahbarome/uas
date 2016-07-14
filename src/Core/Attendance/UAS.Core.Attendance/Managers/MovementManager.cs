@@ -16,6 +16,7 @@ namespace UAS.Core.Attendance.Managers
         /// </summary>
         public MovementManager() {
             _persister = new MovementPersister();
+            _persister.SqlNotification += SqlDependencyNotifier;
         }
 
         /// <summary>
@@ -23,7 +24,13 @@ namespace UAS.Core.Attendance.Managers
         /// </summary>
         /// <returns></returns>
         public IQueryable<Movement> Get() {
-            return _persister.Get();
+            
+            return _persister.GetAllMovements();
+        }
+
+        private void SqlDependencyNotifier(object sender, System.Data.SqlClient.SqlNotificationEventArgs e)
+        {
+            System.Console.WriteLine("Pasó");
         }
     }
 }

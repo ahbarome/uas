@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseContext.cs" />
+    <Compile Include="Notifiers\SqlNotificationEventHandler.cs" />
     <Compile Include="Persisters\MovementPersister.cs" />
     <Compile Include="Persisters\UserPersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

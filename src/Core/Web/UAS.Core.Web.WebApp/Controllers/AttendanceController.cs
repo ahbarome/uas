@@ -19,7 +19,15 @@ namespace UAS.Core.Web.WebApp.Controllers
             var session = base.CurrentSession;
             ViewBag.StudentMovements = _facade.Get();
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
-            return View();
+            return View(_facade.Get());
+        }
+
+        public ActionResult VirtualStudentsClassRoomPartial()
+        {
+            var session = base.CurrentSession;
+            ViewBag.StudentMovements = _facade.Get();
+            ViewData.Add(ConfigurationManager.SESSION_KEY, session);
+            return View(_facade.Get());
         }
 
         public ActionResult VirtualTeachersClassRoom()
@@ -27,7 +35,7 @@ namespace UAS.Core.Web.WebApp.Controllers
             var session = base.CurrentSession;
             ViewBag.TeacherMovements = _facade.Get();
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
-            return View();
+            return View(_facade.Get());
         }
 
         [HttpPost]

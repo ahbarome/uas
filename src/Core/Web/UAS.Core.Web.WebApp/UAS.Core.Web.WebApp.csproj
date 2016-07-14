@@ -1772,6 +1772,7 @@
     <Content Include="Views\Layout\_TopNavbar.cshtml" />
     <Content Include="Views\Attendance\VirtualStudentsClassRoom.cshtml" />
     <Content Include="Views\Attendance\VirtualTeachersClassRoom.cshtml" />
+    <Content Include="Views\Attendance\VirtualStudentsClassRoomPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
