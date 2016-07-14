@@ -35,18 +35,23 @@ function InitializeSignalRHubStore() {
         };
 
         movementsHub.client.broadcastMessage = function (message) {
+            console.log("broadcastMessage");
             if (message === "Refresh") {
+                toastr.success('Nuevo asistente', 'UAS+');
                 ReloadIndexPartial();
             }
         };
 
-        setInterval(function () {
-            var message = "New message";
-            toastr.info(message, 'UAS+');
-            movementsHub.server.broadcastMessages("New message");
-        }, 5000);
+        //setInterval(function () {
+        //    var message = "New message";
+        //    toastr.info(message, 'UAS+');
+        //    movementsHub.server.broadcastMessages("New message");
+        //}, 5000);
 
-        $.movementsHub.hub.start().done(function () {
+        $.connection.hub.start().done(function () {
+            console.log("Begin start");
+            movementsHub.server.initialize();
+            console.log("Done");
             signalRHubInitialized = true;
         });
     }

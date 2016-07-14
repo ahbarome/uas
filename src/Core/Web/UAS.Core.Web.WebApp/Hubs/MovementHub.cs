@@ -10,19 +10,6 @@ namespace UAS.Core.Web.WebApp.Hubs
         /// <summary>
         /// 
         /// </summary>
-        private Facade _facade;
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public MovementHub()
-        {
-            _facade = new Facade();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="message"></param>
         public void BroadcastMessages(string message)
         {
@@ -40,10 +27,10 @@ namespace UAS.Core.Web.WebApp.Hubs
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
-        public void Initialize(string value)
+        public void Initialize()
         {
             Action<string> dispatcher = (t) => { DispatchToClient(); };
+            Facade.Instance(dispatcher);
         }
     }
 }

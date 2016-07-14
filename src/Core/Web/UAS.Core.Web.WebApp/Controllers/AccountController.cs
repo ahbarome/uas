@@ -4,6 +4,7 @@ using System.Web.Mvc;
 namespace UAS.Core.Web.WebApp.Controllers
 {
     using Facade;
+
     public class AccountController : Controller
     {
         private readonly Facade _facade;

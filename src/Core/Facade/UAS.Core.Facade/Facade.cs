@@ -1,19 +1,31 @@
 ﻿namespace UAS.Core.Facade
 {
     using Attendance;
-    using DAL.Common.Model;
     using Session;
     using Session.Interfaces;
-    using System.Linq;
+    using System;
 
     public class Facade
     {
+        static Facade instance = null;
         private ISessionManager _sessionManager;
         private AttendanceFacade _attendanceFacade;
 
-        public Facade() {
+        public static Facade Instance(Action<string> attendanceDispatcher) {
+            if (instance == null)
+                instance = new Facade(attendanceDispatcher);
+            return instance; 
+        }
+
+        public Facade()
+        {
             _sessionManager = new SessionManager();
             _attendanceFacade = new AttendanceFacade();
+        }
+
+        public Facade(Action<string> attendanceDispatcher) {
+            _sessionManager = new SessionManager();
+            _attendanceFacade = new AttendanceFacade(attendanceDispatcher);
         }
 
         public void CreateSession(string username, string password) {
