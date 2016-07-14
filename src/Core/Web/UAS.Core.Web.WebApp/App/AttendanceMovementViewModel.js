@@ -62,6 +62,12 @@ function InitializeSignalRHubStore() {
 
 function ReloadIndexPartial() {
     console.log("ReloadIndexPartial");
+    $.post("VirtualStudentsClassRoomPartial").done(function (response) {
+        console.log(response);
+        $("#attendance").html(response);
+        if (!signalRHubInitialized)
+            InitializeSignalRHubStore();
+    });
 };
 
 function InitializeGraphs() {

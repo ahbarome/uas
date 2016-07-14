@@ -17,31 +17,34 @@ namespace UAS.Core.Web.WebApp.Controllers
         public ActionResult VirtualStudentsClassRoom()
         {
             var session = base.CurrentSession;
-            ViewBag.StudentMovements = _facade.Get();
+            var movements = _facade.GetAllMovementsWithoutNotifications();
+            ViewBag.StudentMovements = movements;
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
-            return View(_facade.Get());
+            return View(movements);
         }
 
         public ActionResult VirtualStudentsClassRoomPartial()
         {
             var session = base.CurrentSession;
-            ViewBag.StudentMovements = _facade.Get();
+            var movements = _facade.GetAllMovementsWithoutNotifications();
+            ViewBag.StudentMovements = movements;
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
-            return View(_facade.Get());
+            return PartialView(movements);
         }
 
         public ActionResult VirtualTeachersClassRoom()
         {
             var session = base.CurrentSession;
-            ViewBag.TeacherMovements = _facade.Get();
+            var movements = _facade.GetAllMovementsWithoutNotifications();
+            ViewBag.TeacherMovements = movements;
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
-            return View(_facade.Get());
+            return View(movements);
         }
 
         [HttpPost]
         public JsonResult GetMovements()
         {
-            var movements = _facade.Get();
+            var movements = _facade.GetAllMovementsWithNotifications();
             return Json(movements);
         }
     }

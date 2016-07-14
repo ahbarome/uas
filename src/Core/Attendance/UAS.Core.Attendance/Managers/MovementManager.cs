@@ -24,7 +24,7 @@ namespace UAS.Core.Attendance.Managers
         /// <summary>
         /// 
         /// </summary>
-        public MovementManager(Action<string> attendanceDispatcher)
+        public MovementManager(Action<string> attendanceDispatcher = null)
         {
             _dispatcher = attendanceDispatcher;
             _persister = new MovementPersister();
@@ -35,9 +35,18 @@ namespace UAS.Core.Attendance.Managers
         /// 
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Movement> Get()
+        public IQueryable<Movement> GetAllMovementsWithNotifications()
         {
-            return _persister.GetAllMovements();
+            return _persister.GetAllMovementsWithNotifications();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Movement> GetAllMovementsWithoutNotifications()
+        {
+            return _persister.GetAllMovementsWithoutNotifications();
         }
 
         private void SqlDependencyNotifier(object sender, System.Data.SqlClient.SqlNotificationEventArgs e)

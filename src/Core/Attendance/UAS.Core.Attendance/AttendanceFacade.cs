@@ -8,18 +8,22 @@ namespace UAS.Core.Attendance
     public class AttendanceFacade
     {
         private MovementManager _movementManager;
+        private Action<string> _dispatcher;
 
-        public AttendanceFacade() {
-            _movementManager = new MovementManager();
-        }
-
-        public AttendanceFacade(Action<string> attendanceDispatcher)
+        public AttendanceFacade(Action<string> dispatcher = null)
         {
-            _movementManager = new MovementManager(attendanceDispatcher);
+            this._dispatcher = dispatcher;
+            _movementManager = new MovementManager(dispatcher);
         }
 
-        public IQueryable<Movement> Get() {
-            return _movementManager.Get();
+        public IQueryable<Movement> GetAllMovementsWithNotifications()
+        {
+            return _movementManager.GetAllMovementsWithNotifications();
         }
+        public IQueryable<Movement> GetAllMovementsWithoutNotifications()
+        {
+            return _movementManager.GetAllMovementsWithoutNotifications();
+        }
+
     }
 }

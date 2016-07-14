@@ -23,7 +23,7 @@
             _attendanceFacade = new AttendanceFacade();
         }
 
-        public Facade(Action<string> attendanceDispatcher) {
+        public Facade(Action<string> attendanceDispatcher = null) {
             _sessionManager = new SessionManager();
             _attendanceFacade = new AttendanceFacade(attendanceDispatcher);
         }
@@ -37,8 +37,13 @@
             _sessionManager.CloseSession();
         }
 
-        public dynamic Get() {
-            return _attendanceFacade.Get();
+        public dynamic GetAllMovementsWithNotifications() {
+            return _attendanceFacade.GetAllMovementsWithNotifications();
+        }
+
+        public dynamic GetAllMovementsWithoutNotifications()
+        {
+            return _attendanceFacade.GetAllMovementsWithoutNotifications();
         }
     }
 }

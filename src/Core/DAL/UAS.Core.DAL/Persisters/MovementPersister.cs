@@ -18,7 +18,7 @@ namespace UAS.Core.DAL.Persisters
         /// 
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Movement> GetAllMovements()
+        public IQueryable<Movement> GetAllMovementsWithNotifications()
         {
             var query = base.Entities.Movements;
 
@@ -26,6 +26,17 @@ namespace UAS.Core.DAL.Persisters
 
             return query;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Movement> GetAllMovementsWithoutNotifications()
+        {
+            var query = base.Entities.Movements;
+
+            return query;
+        }
+
 
         /// <summary>
         /// 
