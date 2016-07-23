@@ -29,6 +29,16 @@ namespace UAS.Core.Attendance.Managers
             _dispatcher = attendanceDispatcher;
             _persister = new MovementPersister();
             _persister.SqlNotification += SqlDependencyNotifier;
+
+            ActivateNotifications();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ActivateNotifications()
+        {
+            _persister.GetAllMovementsWithNotifications();
         }
 
         /// <summary>

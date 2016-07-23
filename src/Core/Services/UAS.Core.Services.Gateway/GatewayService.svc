@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="UAS.Core.Services.Gateway.GatewayService" CodeBehind="GatewayService.svc.cs" %>

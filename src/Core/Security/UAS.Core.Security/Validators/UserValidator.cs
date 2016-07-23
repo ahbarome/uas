@@ -4,8 +4,9 @@
     using Cryptography;
     using DAL.Persisters;
     using DAL.Common.Model;
+    using Interfaces;
 
-    public class UserValidator
+    public class UserValidator : IUserSecurity
     {
         /// <summary>
         /// 
@@ -34,7 +35,7 @@
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        internal void Validate(string username, string password)
+        public void Validate(string username, string password)
         {
             var user = GetUser(username, password);
 

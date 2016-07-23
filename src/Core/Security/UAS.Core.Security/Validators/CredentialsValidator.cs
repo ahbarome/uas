@@ -1,13 +1,15 @@
-﻿namespace UAS.Core.Security.Validators
+﻿using UAS.Core.Security.Interfaces;
+
+namespace UAS.Core.Security.Validators
 {
-    public class CredentialsValidator
+    public class CredentialsValidator : IUserSecurity
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        internal void Validate(string username, string password) {
+        public void Validate(string username, string password) {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) {
                 throw new System.Exception("Usuario o password inválidos");
             }

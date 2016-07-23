@@ -44,7 +44,7 @@ namespace UAS.Core.Web.WebApp.Controllers
         [HttpPost]
         public JsonResult GetMovements()
         {
-            var movements = _facade.GetAllMovementsWithNotifications();
+            var movements = _facade.GetAllMovementsWithoutNotifications();
             return Json(movements);
         }
     }

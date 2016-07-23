@@ -1,20 +1,24 @@
-﻿using UAS.Core.DAL.Common.Model;
-using UAS.Core.Security.Validators;
+﻿using System.Collections.Generic;
 
 namespace UAS.Core.Security
 {
+    using DAL.Common.Model;
+    using Interfaces;
+    using Validators;
+
     public class WebSecurity
     {
-        private CredentialsValidator _credentialsValidator;
-        private UserValidator _userValidator;
+        private List<IUserSecurity> _validators;
 
         /// <summary>
         /// Builder method
         /// </summary>
         public WebSecurity()
         {
-            _credentialsValidator = new CredentialsValidator();
-            _userValidator = new UserValidator();
+            _validators = new List<IUserSecurity> {
+                new CredentialsValidator(),
+                new UserValidator()
+            };
         }
 
         /// <summary>
@@ -26,8 +30,14 @@ namespace UAS.Core.Security
         /// <returns></returns>
         public bool AllowAccessToPage(string page, string username, string password)
         {
-            var allowAccess = _userValidator.AllowAccessToPage(page, username, password);
-            return allowAccess;
+            foreach (var validator in _validators) {
+                if (validator is UserValidator) {
+                    var userValidator = validator as UserValidator;
+                    var allowAccess = userValidator.AllowAccessToPage(page, username, password);
+                    return allowAccess;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -37,8 +47,10 @@ namespace UAS.Core.Security
         /// <param name="password"></param>
         public void ValidateLogin(string username, string password)
         {
-            _credentialsValidator.Validate(username, password);
-            _userValidator.Validate(username, password);
+            foreach (var validator in _validators)
+            {
+                validator.Validate(username, password);
+            }
         }
 
         /// <summary>
@@ -49,8 +61,16 @@ namespace UAS.Core.Security
         /// <returns></returns>
         public User GetUser(string username, string password)
         {
-            var currentUser = _userValidator.GetUser(username, password);
-            return currentUser;
+            foreach (var validator in _validators)
+            {
+                if (validator is UserValidator)
+                {
+                    var userValidator = validator as UserValidator;
+                    var currentUser = userValidator.GetUser(username, password);
+                    return currentUser;
+                }
+            }
+            return null;
         }
     }
 }
