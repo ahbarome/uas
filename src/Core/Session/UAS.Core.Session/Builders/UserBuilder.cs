@@ -43,6 +43,7 @@ namespace UAS.Core.Session.Builders
                 RoleName = _user.Role.Alias,
                 Name = _user.Name,
                 LastName = _user.LastName,
+                ImageRelativePath = _user.ImageRelativePath,
                 FullName = string.Format("{0} {1}", _user.Name, _user.LastName),
                 IsActive = _user.IsActive,
                 Pages = new PagesBuilder(_user.Role.PagePermissionByRoles).Build()

@@ -12,10 +12,15 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Movement
+    public partial class ScheduleDetail
     {
         public int Id { get; set; }
-        public int DocumentNumber { get; set; }
+        public int IdSchedule { get; set; }
+        public int DayOfTheWeek { get; set; }
+        public System.TimeSpan StartTime { get; set; }
+        public System.TimeSpan EndTime { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
+    
+        public virtual Schedule Schedule { get; set; }
     }
 }

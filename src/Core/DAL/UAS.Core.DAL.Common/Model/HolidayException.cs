@@ -12,10 +12,9 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Movement
+    public partial class HolidayException
     {
         public int Id { get; set; }
-        public int DocumentNumber { get; set; }
-        public Nullable<System.DateTime> RegisterDate { get; set; }
+        public System.DateTime ExceptionDate { get; set; }
     }
 }

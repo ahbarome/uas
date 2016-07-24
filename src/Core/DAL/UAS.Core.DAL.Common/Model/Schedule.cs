@@ -12,26 +12,28 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Schedule
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Schedule()
         {
-            this.Users = new HashSet<User>();
-            this.PagePermissionByRoles = new HashSet<PagePermissionByRole>();
-            this.StatusApproverByRoles = new HashSet<StatusApproverByRole>();
+            this.EnrollmentDetails = new HashSet<EnrollmentDetail>();
+            this.ScheduleDetails = new HashSet<ScheduleDetail>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Alias { get; set; }
+        public int TeacherDocumentNumber { get; set; }
+        public int IdCourse { get; set; }
+        public int IdAcademicPeriod { get; set; }
+        public string Description { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
     
+        public virtual AcademicPeriod AcademicPeriod { get; set; }
+        public virtual Course Course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<EnrollmentDetail> EnrollmentDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagePermissionByRole> PagePermissionByRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StatusApproverByRole> StatusApproverByRoles { get; set; }
+        public virtual ICollection<ScheduleDetail> ScheduleDetails { get; set; }
+        public virtual Teacher Teacher { get; set; }
     }
 }

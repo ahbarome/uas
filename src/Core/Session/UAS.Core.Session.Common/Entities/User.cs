@@ -13,6 +13,7 @@ namespace UAS.Core.Session.Entities
         public string Password { get; set; }
         public string Username { get; set; }
         public string RoleName { get; set; }
+        public string ImageRelativePath { get; set; }
         public List<Page> Pages { get; set; }
     }
 }

@@ -1,7 +1,9 @@
-﻿@model IEnumerable<UAS.Core.DAL.Common.Model.Movement>
+﻿@model IEnumerable<UAS.Core.DAL.Common.Model.StudentMovement>
 @{
     ViewBag.Title = "Aula Virtual";
     var session = @ViewData[UAS.Core.Configuration.ConfigurationManager.SESSION_KEY] as UAS.Core.Session.Entities.Session;
+    var course = ViewBag.Course as UAS.Core.DAL.Common.Model.Course;
+    var teacher = ViewBag.Teacher as UAS.Core.DAL.Common.Model.Teacher;
 }
 
 <div id="wrapper">
@@ -23,7 +25,7 @@
             <div class="col-md-6">
 
                 <div class="profile-image">
-                    <img src="~/Images/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                    <img src="@Url.Content(teacher.ImageRelativePath)" class="img-circle circle-border m-b-md" alt="profile">
                 </div>
                 <div class="profile-info">
                     <div class="">
@@ -33,7 +35,9 @@
                             </h2>
                             <h4>@Html.Raw(session.SessionUser.RoleName)</h4>
                             <small>
-                                There are many variations of passages of Lorem Ipsum available, but the majority
+                                <strong>Asignatura: </strong> @course.Name<br/>
+                                <strong>Número de Créditos: </strong> @course.NumberOfCredits<br />
+                                <strong>Descripción: </strong> There are many variations of passages of Lorem Ipsum available, but the majority
                                 have suffered alteration in some form Ipsum available.
                             </small>
                         </div>
@@ -45,35 +49,27 @@
                     <tbody>
                         <tr>
                             <td>
-                                <strong>142</strong> Projects
+                                <strong>14</strong> Asistentes
                             </td>
                             <td>
-                                <strong>22</strong> Followers
+                                <strong>22</strong> Inasistentes
                             </td>
 
                         </tr>
                         <tr>
                             <td>
-                                <strong>61</strong> Comments
+                                <strong>61</strong> Matriculados
                             </td>
                             <td>
-                                <strong>54</strong> Articles
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>154</strong> Tags
-                            </td>
-                            <td>
-                                <strong>32</strong> Friends
+                                <strong>4</strong> No matriculados
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="col-md-3">
-                <small>Sales in last 24h</small>
-                <h2 class="no-margins">206 480</h2>
+                <small>Comportamiento Asistencia 24h</small>
+                <h2 class="no-margins">2 048</h2>
                 <div id="sparkline1"></div>
             </div>
         </div>

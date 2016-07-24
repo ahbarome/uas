@@ -10,9 +10,198 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="DocumentNumber" Type="int" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AcademicPeriod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Period" Type="int" Nullable="false" />
+          <Property Name="Semester" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Career">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="NumberOfCredits" Type="int" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentDocumentNumber" Type="int" Nullable="false" />
+          <Property Name="IdEnrollmentStatus" Type="int" Nullable="false" />
+          <Property Name="IdAcademicPeriod" Type="int" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="EnrollmentDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IdEnrollment" />
+            <PropertyRef Name="IdSchedule" />
+            <PropertyRef Name="RegisterDate" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEnrollment" Type="int" Nullable="false" />
+          <Property Name="IdSchedule" Type="int" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EnrollmentStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="Observation" Type="nvarchar" MaxLength="250" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Fringe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HolidayException">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExceptionDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeacherDocumentNumber" Type="int" Nullable="false" />
+          <Property Name="IdCourse" Type="int" Nullable="false" />
+          <Property Name="IdAcademicPeriod" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ScheduleDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdSchedule" Type="int" Nullable="false" />
+          <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="DocumentNumber" />
+          </Key>
+          <Property Name="DocumentNumber" Type="int" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="LastName" Type="nvarchar" MaxLength="150" />
+          <Property Name="IdCareer" Type="int" Nullable="false" />
+          <Property Name="IdFringe" Type="int" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" />
+          <Property Name="TelephoneNumber" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="ImageRelativePath" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="DocumentNumber" />
+          </Key>
+          <Property Name="DocumentNumber" Type="int" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="150" />
+          <Property Name="RegisterDate" Type="datetime" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" />
+          <Property Name="TelephoneNumber" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="ImageRelativePath" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Attachment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdExcuse" Type="int" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="150" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Classification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Classification" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsRequiredDescription" Type="bit" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Excuse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdStatus" Type="int" Nullable="false" />
+          <Property Name="IdClassification" Type="int" Nullable="false" />
+          <Property Name="IdUserOwner" Type="int" Nullable="false" />
+          <Property Name="Justification" Type="nvarchar(max)" />
+          <Property Name="Observation" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="LastModificationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ExcuseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdExcuse" Type="int" Nullable="false" />
+          <Property Name="IdStatus" Type="int" Nullable="false" />
+          <Property Name="IdUserApprover" Type="int" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsLast" Type="bit" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StatusApproverByRole">
+          <Key>
+            <PropertyRef Name="IdStatus" />
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdStatus" Type="int" Nullable="false" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="IsVisible" Type="bit" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Page">
@@ -67,7 +256,195 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="80" Nullable="false" />
           <Property Name="LastModiticationDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="80" />
+          <Property Name="DocumentNumber" Type="int" Nullable="false" />
+          <Property Name="ImageRelativePath" Type="nvarchar" MaxLength="256" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="StudentEnrollmentView">
+          <Key>
+            <PropertyRef Name="StudentFullName" />
+            <PropertyRef Name="TeacherFullName" />
+          </Key>
+          <Property Name="StudentDocumentNumber" Type="int" />
+          <Property Name="StudentCode" Type="int" />
+          <Property Name="StudentName" Type="nvarchar" MaxLength="150" />
+          <Property Name="StudentLastName" Type="nvarchar" MaxLength="150" />
+          <Property Name="StudentFullName" Type="nvarchar" MaxLength="301" Nullable="false" />
+          <Property Name="StudentEmail" Type="nvarchar" MaxLength="150" />
+          <Property Name="StudentTelephoneNumber" Type="int" />
+          <Property Name="StudentAddress" Type="nvarchar" MaxLength="250" />
+          <Property Name="StudentImageRelativePath" Type="nvarchar" MaxLength="256" />
+          <Property Name="CareerId" Type="int" />
+          <Property Name="CareerCode" Type="int" />
+          <Property Name="CareerName" Type="nvarchar" MaxLength="250" />
+          <Property Name="FringeName" Type="nvarchar" MaxLength="250" />
+          <Property Name="TeacherDocumentNumber" Type="int" />
+          <Property Name="TeacherCode" Type="int" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="150" />
+          <Property Name="TeacherLastName" Type="nvarchar" MaxLength="150" />
+          <Property Name="TeacherEmail" Type="nvarchar" MaxLength="150" />
+          <Property Name="TeacherTelephoneNumber" Type="int" />
+          <Property Name="TeacherAddress" Type="nvarchar" MaxLength="250" />
+          <Property Name="TeacherImageRelativePath" Type="nvarchar" MaxLength="256" />
+          <Property Name="TeacherFullName" Type="nvarchar" MaxLength="301" Nullable="false" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="250" />
+          <Property Name="CourseCredits" Type="int" />
+          <Property Name="DayOfTheWeek" Type="int" />
+          <Property Name="DayOfTheWeekName" Type="varchar" MaxLength="9" />
+          <Property Name="StartTime" Type="time" Precision="7" />
+          <Property Name="EndTime" Type="time" Precision="7" />
+          <Property Name="AcademicPeriod" Type="int" />
+          <Property Name="AcademicSemester" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="EnrollmentStatus" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <Association Name="Fk_AttachmentIdExcuse">
+          <End Role="Excuse" Type="Self.Excuse" Multiplicity="1" />
+          <End Role="Attachment" Type="Self.Attachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Excuse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attachment">
+              <PropertyRef Name="IdExcuse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Enrollment_IdAcademicPeriod">
+          <End Role="AcademicPeriod" Type="Self.AcademicPeriod" Multiplicity="1" />
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicPeriod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="IdAcademicPeriod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Enrollment_IdEnrollmentStatus">
+          <End Role="EnrollmentStatus" Type="Self.EnrollmentStatus" Multiplicity="1" />
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EnrollmentStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="IdEnrollmentStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Enrollment_IdStudent">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="DocumentNumber" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="StudentDocumentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_EnrollmentDetail_IdEnrollment">
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="1" />
+          <End Role="EnrollmentDetail" Type="Self.EnrollmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrollmentDetail">
+              <PropertyRef Name="IdEnrollment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_EnrollmentDetail_IdSchedule">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="EnrollmentDetail" Type="Self.EnrollmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrollmentDetail">
+              <PropertyRef Name="IdSchedule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseClassification">
+          <End Role="Classification" Type="Self.Classification" Multiplicity="1" />
+          <End Role="Excuse" Type="Self.Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdClassification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseDetailIdUserApprover">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ExcuseDetail" Type="Self.ExcuseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseDetail">
+              <PropertyRef Name="IdUserApprover" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseDetailState">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="ExcuseDetail" Type="Self.ExcuseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseDetail">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseIdExcuse">
+          <End Role="Excuse" Type="Self.Excuse" Multiplicity="1" />
+          <End Role="ExcuseDetail" Type="Self.ExcuseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Excuse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseDetail">
+              <PropertyRef Name="IdExcuse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseIdUserOwner">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Excuse" Type="Self.Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdUserOwner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseStatus">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Excuse" Type="Self.Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_PagePermission">
           <End Role="Page" Type="Self.Page" Multiplicity="1" />
           <End Role="PagePermissionByRole" Type="Self.PagePermissionByRole" Multiplicity="*" />
@@ -104,12 +481,222 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Fk_Schedule_IdAcademicPeriod">
+          <End Role="AcademicPeriod" Type="Self.AcademicPeriod" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicPeriod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="IdAcademicPeriod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Schedule_IdCourse">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="IdCourse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Schedule_IdSchedule">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="ScheduleDetail" Type="Self.ScheduleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduleDetail">
+              <PropertyRef Name="IdSchedule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Schedule_TeacherDocumentNumber">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="DocumentNumber" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="TeacherDocumentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_StatusApproverByRole_IdRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="StatusApproverByRole" Type="Self.StatusApproverByRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StatusApproverByRole">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_StatusApproverByRole_IdStatus">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="StatusApproverByRole" Type="Self.StatusApproverByRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StatusApproverByRole">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Student_IdCareer">
+          <End Role="Career" Type="Self.Career" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Career">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdCareer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Student_IdFringe">
+          <End Role="Fringe" Type="Self.Fringe" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fringe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdFringe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetAllStudentMovementsByTeacherDocumentNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Attendance">
+          <Parameter Name="TeacherDocumentNumber" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="UASModelStoreContainer">
           <EntitySet Name="Movement" EntityType="Self.Movement" Schema="Attendance" store:Type="Tables" />
+          <EntitySet Name="AcademicPeriod" EntityType="Self.AcademicPeriod" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="Career" EntityType="Self.Career" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="EnrollmentStatus" EntityType="Self.EnrollmentStatus" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="Fringe" EntityType="Self.Fringe" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="HolidayException" EntityType="Self.HolidayException" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="ScheduleDetail" EntityType="Self.ScheduleDetail" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="Attachment" EntityType="Self.Attachment" Schema="NonAttendance" store:Type="Tables" />
+          <EntitySet Name="Classification" EntityType="Self.Classification" Schema="NonAttendance" store:Type="Tables" />
+          <EntitySet Name="Excuse" EntityType="Self.Excuse" Schema="NonAttendance" store:Type="Tables" />
+          <EntitySet Name="ExcuseDetail" EntityType="Self.ExcuseDetail" Schema="NonAttendance" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="NonAttendance" store:Type="Tables" />
+          <EntitySet Name="StatusApproverByRole" EntityType="Self.StatusApproverByRole" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="Security" store:Type="Tables" />
           <EntitySet Name="PagePermissionByRole" EntityType="Self.PagePermissionByRole" Schema="Security" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="Security" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="Security" store:Type="Tables" />
+          <EntitySet Name="EnrollmentDetail" EntityType="Self.EnrollmentDetail" store:Type="Tables" store:Schema="Integration">
+            <DefiningQuery>SELECT 
+    [EnrollmentDetail].[Id] AS [Id], 
+    [EnrollmentDetail].[IdEnrollment] AS [IdEnrollment], 
+    [EnrollmentDetail].[IdSchedule] AS [IdSchedule], 
+    [EnrollmentDetail].[RegisterDate] AS [RegisterDate]
+    FROM [Integration].[EnrollmentDetail] AS [EnrollmentDetail]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="StudentEnrollmentView" EntityType="Self.StudentEnrollmentView" store:Type="Views" store:Schema="Integration">
+            <DefiningQuery>SELECT 
+    [StudentEnrollmentView].[StudentDocumentNumber] AS [StudentDocumentNumber], 
+    [StudentEnrollmentView].[StudentCode] AS [StudentCode], 
+    [StudentEnrollmentView].[StudentName] AS [StudentName], 
+    [StudentEnrollmentView].[StudentLastName] AS [StudentLastName], 
+    [StudentEnrollmentView].[StudentFullName] AS [StudentFullName], 
+    [StudentEnrollmentView].[StudentEmail] AS [StudentEmail], 
+    [StudentEnrollmentView].[StudentTelephoneNumber] AS [StudentTelephoneNumber], 
+    [StudentEnrollmentView].[StudentAddress] AS [StudentAddress], 
+    [StudentEnrollmentView].[StudentImageRelativePath] AS [StudentImageRelativePath], 
+    [StudentEnrollmentView].[CareerId] AS [CareerId], 
+    [StudentEnrollmentView].[CareerCode] AS [CareerCode], 
+    [StudentEnrollmentView].[CareerName] AS [CareerName], 
+    [StudentEnrollmentView].[FringeName] AS [FringeName], 
+    [StudentEnrollmentView].[TeacherDocumentNumber] AS [TeacherDocumentNumber], 
+    [StudentEnrollmentView].[TeacherCode] AS [TeacherCode], 
+    [StudentEnrollmentView].[TeacherName] AS [TeacherName], 
+    [StudentEnrollmentView].[TeacherLastName] AS [TeacherLastName], 
+    [StudentEnrollmentView].[TeacherEmail] AS [TeacherEmail], 
+    [StudentEnrollmentView].[TeacherTelephoneNumber] AS [TeacherTelephoneNumber], 
+    [StudentEnrollmentView].[TeacherAddress] AS [TeacherAddress], 
+    [StudentEnrollmentView].[TeacherImageRelativePath] AS [TeacherImageRelativePath], 
+    [StudentEnrollmentView].[TeacherFullName] AS [TeacherFullName], 
+    [StudentEnrollmentView].[CourseId] AS [CourseId], 
+    [StudentEnrollmentView].[CourseName] AS [CourseName], 
+    [StudentEnrollmentView].[CourseCredits] AS [CourseCredits], 
+    [StudentEnrollmentView].[DayOfTheWeek] AS [DayOfTheWeek], 
+    [StudentEnrollmentView].[DayOfTheWeekName] AS [DayOfTheWeekName], 
+    [StudentEnrollmentView].[StartTime] AS [StartTime], 
+    [StudentEnrollmentView].[EndTime] AS [EndTime], 
+    [StudentEnrollmentView].[AcademicPeriod] AS [AcademicPeriod], 
+    [StudentEnrollmentView].[AcademicSemester] AS [AcademicSemester], 
+    [StudentEnrollmentView].[StartDate] AS [StartDate], 
+    [StudentEnrollmentView].[EndDate] AS [EndDate], 
+    [StudentEnrollmentView].[EnrollmentStatus] AS [EnrollmentStatus]
+    FROM [Integration].[StudentEnrollmentView] AS [StudentEnrollmentView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="Fk_AttachmentIdExcuse" Association="Self.Fk_AttachmentIdExcuse">
+            <End Role="Excuse" EntitySet="Excuse" />
+            <End Role="Attachment" EntitySet="Attachment" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Enrollment_IdAcademicPeriod" Association="Self.Fk_Enrollment_IdAcademicPeriod">
+            <End Role="AcademicPeriod" EntitySet="AcademicPeriod" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Enrollment_IdEnrollmentStatus" Association="Self.Fk_Enrollment_IdEnrollmentStatus">
+            <End Role="EnrollmentStatus" EntitySet="EnrollmentStatus" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Enrollment_IdStudent" Association="Self.Fk_Enrollment_IdStudent">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_EnrollmentDetail_IdEnrollment" Association="Self.Fk_EnrollmentDetail_IdEnrollment">
+            <End Role="Enrollment" EntitySet="Enrollment" />
+            <End Role="EnrollmentDetail" EntitySet="EnrollmentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_EnrollmentDetail_IdSchedule" Association="Self.Fk_EnrollmentDetail_IdSchedule">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="EnrollmentDetail" EntitySet="EnrollmentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseClassification" Association="Self.Fk_ExcuseClassification">
+            <End Role="Classification" EntitySet="Classification" />
+            <End Role="Excuse" EntitySet="Excuse" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseDetailIdUserApprover" Association="Self.Fk_ExcuseDetailIdUserApprover">
+            <End Role="User" EntitySet="User" />
+            <End Role="ExcuseDetail" EntitySet="ExcuseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseDetailState" Association="Self.Fk_ExcuseDetailState">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="ExcuseDetail" EntitySet="ExcuseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseIdExcuse" Association="Self.Fk_ExcuseIdExcuse">
+            <End Role="Excuse" EntitySet="Excuse" />
+            <End Role="ExcuseDetail" EntitySet="ExcuseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseIdUserOwner" Association="Self.Fk_ExcuseIdUserOwner">
+            <End Role="User" EntitySet="User" />
+            <End Role="Excuse" EntitySet="Excuse" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseStatus" Association="Self.Fk_ExcuseStatus">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Excuse" EntitySet="Excuse" />
+          </AssociationSet>
           <AssociationSet Name="Fk_PagePermission" Association="Self.Fk_PagePermission">
             <End Role="Page" EntitySet="Page" />
             <End Role="PagePermissionByRole" EntitySet="PagePermissionByRole" />
@@ -121,6 +708,38 @@
           <AssociationSet Name="Fk_RoleUser" Association="Self.Fk_RoleUser">
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_IdAcademicPeriod" Association="Self.Fk_Schedule_IdAcademicPeriod">
+            <End Role="AcademicPeriod" EntitySet="AcademicPeriod" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_IdCourse" Association="Self.Fk_Schedule_IdCourse">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_IdSchedule" Association="Self.Fk_Schedule_IdSchedule">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="ScheduleDetail" EntitySet="ScheduleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_TeacherDocumentNumber" Association="Self.Fk_Schedule_TeacherDocumentNumber">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_StatusApproverByRole_IdRole" Association="Self.Fk_StatusApproverByRole_IdRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="StatusApproverByRole" EntitySet="StatusApproverByRole" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_StatusApproverByRole_IdStatus" Association="Self.Fk_StatusApproverByRole_IdStatus">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="StatusApproverByRole" EntitySet="StatusApproverByRole" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Student_IdCareer" Association="Self.Fk_Student_IdCareer">
+            <End Role="Career" EntitySet="Career" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Student_IdFringe" Association="Self.Fk_Student_IdFringe">
+            <End Role="Fringe" EntitySet="Fringe" />
+            <End Role="Student" EntitySet="Student" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -137,6 +756,7 @@
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Users" Relationship="UASModel.Fk_RoleUser" FromRole="Role" ToRole="User" />
           <NavigationProperty Name="PagePermissionByRoles" Relationship="UASModel.Fk_RolePagePermission" FromRole="Role" ToRole="PagePermissionByRole" />
+          <NavigationProperty Name="StatusApproverByRoles" Relationship="UASModel.Fk_StatusApproverByRole_IdRole" FromRole="Role" ToRole="StatusApproverByRole" />
         </EntityType>
         <EntityContainer Name="UASEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Roles" EntityType="Self.Role" />
@@ -156,6 +776,108 @@
             <End Role="PagePermissionByRole" EntitySet="PagePermissionByRoles" />
           </AssociationSet>
           <EntitySet Name="Movements" EntityType="UASModel.Movement" />
+          <EntitySet Name="AcademicPeriods" EntityType="UASModel.AcademicPeriod" />
+          <EntitySet Name="Careers" EntityType="UASModel.Career" />
+          <EntitySet Name="Courses" EntityType="UASModel.Course" />
+          <EntitySet Name="Enrollments" EntityType="UASModel.Enrollment" />
+          <EntitySet Name="EnrollmentStatus" EntityType="UASModel.EnrollmentStatu" />
+          <EntitySet Name="Fringes" EntityType="UASModel.Fringe" />
+          <EntitySet Name="HolidayExceptions" EntityType="UASModel.HolidayException" />
+          <EntitySet Name="Schedules" EntityType="UASModel.Schedule" />
+          <EntitySet Name="ScheduleDetails" EntityType="UASModel.ScheduleDetail" />
+          <EntitySet Name="Students" EntityType="UASModel.Student" />
+          <EntitySet Name="Teachers" EntityType="UASModel.Teacher" />
+          <EntitySet Name="Attachments" EntityType="UASModel.Attachment" />
+          <EntitySet Name="Classifications" EntityType="UASModel.Classification" />
+          <EntitySet Name="Excuses" EntityType="UASModel.Excuse" />
+          <EntitySet Name="ExcuseDetails" EntityType="UASModel.ExcuseDetail" />
+          <EntitySet Name="Status" EntityType="UASModel.Status" />
+          <EntitySet Name="StatusApproverByRoles" EntityType="UASModel.StatusApproverByRole" />
+          <EntitySet Name="EnrollmentDetails" EntityType="UASModel.EnrollmentDetail" />
+          <AssociationSet Name="Fk_Enrollment_IdAcademicPeriod" Association="UASModel.Fk_Enrollment_IdAcademicPeriod">
+            <End Role="AcademicPeriod" EntitySet="AcademicPeriods" />
+            <End Role="Enrollment" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_IdAcademicPeriod" Association="UASModel.Fk_Schedule_IdAcademicPeriod">
+            <End Role="AcademicPeriod" EntitySet="AcademicPeriods" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Student_IdCareer" Association="UASModel.Fk_Student_IdCareer">
+            <End Role="Career" EntitySet="Careers" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_IdCourse" Association="UASModel.Fk_Schedule_IdCourse">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Enrollment_IdEnrollmentStatus" Association="UASModel.Fk_Enrollment_IdEnrollmentStatus">
+            <End Role="EnrollmentStatu" EntitySet="EnrollmentStatus" />
+            <End Role="Enrollment" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Enrollment_IdStudent" Association="UASModel.Fk_Enrollment_IdStudent">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Enrollment" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_EnrollmentDetail_IdEnrollment" Association="UASModel.Fk_EnrollmentDetail_IdEnrollment">
+            <End Role="Enrollment" EntitySet="Enrollments" />
+            <End Role="EnrollmentDetail" EntitySet="EnrollmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Student_IdFringe" Association="UASModel.Fk_Student_IdFringe">
+            <End Role="Fringe" EntitySet="Fringes" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_EnrollmentDetail_IdSchedule" Association="UASModel.Fk_EnrollmentDetail_IdSchedule">
+            <End Role="Schedule" EntitySet="Schedules" />
+            <End Role="EnrollmentDetail" EntitySet="EnrollmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_IdSchedule" Association="UASModel.Fk_Schedule_IdSchedule">
+            <End Role="Schedule" EntitySet="Schedules" />
+            <End Role="ScheduleDetail" EntitySet="ScheduleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_TeacherDocumentNumber" Association="UASModel.Fk_Schedule_TeacherDocumentNumber">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_AttachmentIdExcuse" Association="UASModel.Fk_AttachmentIdExcuse">
+            <End Role="Excuse" EntitySet="Excuses" />
+            <End Role="Attachment" EntitySet="Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseClassification" Association="UASModel.Fk_ExcuseClassification">
+            <End Role="Classification" EntitySet="Classifications" />
+            <End Role="Excuse" EntitySet="Excuses" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseIdExcuse" Association="UASModel.Fk_ExcuseIdExcuse">
+            <End Role="Excuse" EntitySet="Excuses" />
+            <End Role="ExcuseDetail" EntitySet="ExcuseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseIdUserOwner" Association="UASModel.Fk_ExcuseIdUserOwner">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Excuse" EntitySet="Excuses" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseStatus" Association="UASModel.Fk_ExcuseStatus">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Excuse" EntitySet="Excuses" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseDetailIdUserApprover" Association="UASModel.Fk_ExcuseDetailIdUserApprover">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ExcuseDetail" EntitySet="ExcuseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseDetailState" Association="UASModel.Fk_ExcuseDetailState">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="ExcuseDetail" EntitySet="ExcuseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_StatusApproverByRole_IdStatus" Association="UASModel.Fk_StatusApproverByRole_IdStatus">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="StatusApproverByRole" EntitySet="StatusApproverByRoles" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_StatusApproverByRole_IdRole" Association="UASModel.Fk_StatusApproverByRole_IdRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="StatusApproverByRole" EntitySet="StatusApproverByRoles" />
+          </AssociationSet>
+          <EntitySet Name="StudentEnrollmentViews" EntityType="UASModel.StudentEnrollmentView" />
+          <FunctionImport Name="GetAllStudentMovementsByTeacherDocumentNumber" ReturnType="Collection(UASModel.GetAllStudentMovementsByTeacherDocumentNumber_Result)">
+          <Parameter Name="TeacherDocumentNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -175,6 +897,10 @@
           <Property Name="LastModiticationDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Role" Relationship="UASModel.Fk_RoleUser" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_ExcuseIdUserOwner" FromRole="User" ToRole="Excuse" />
+          <NavigationProperty Name="ExcuseDetails" Relationship="UASModel.Fk_ExcuseDetailIdUserApprover" FromRole="User" ToRole="ExcuseDetail" />
+          <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="ImageRelativePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="Fk_RoleUser">
           <End Type="UASModel.Role" Role="Role" Multiplicity="1" />
@@ -246,11 +972,527 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AcademicPeriod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Period" Type="Int32" Nullable="false" />
+          <Property Name="Semester" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Enrollments" Relationship="UASModel.Fk_Enrollment_IdAcademicPeriod" FromRole="AcademicPeriod" ToRole="Enrollment" />
+          <NavigationProperty Name="Schedules" Relationship="UASModel.Fk_Schedule_IdAcademicPeriod" FromRole="AcademicPeriod" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Career">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Students" Relationship="UASModel.Fk_Student_IdCareer" FromRole="Career" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOfCredits" Type="Int32" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Schedules" Relationship="UASModel.Fk_Schedule_IdCourse" FromRole="Course" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentDocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="IdEnrollmentStatus" Type="Int32" Nullable="false" />
+          <Property Name="IdAcademicPeriod" Type="Int32" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AcademicPeriod" Relationship="UASModel.Fk_Enrollment_IdAcademicPeriod" FromRole="Enrollment" ToRole="AcademicPeriod" />
+          <NavigationProperty Name="EnrollmentStatu" Relationship="UASModel.Fk_Enrollment_IdEnrollmentStatus" FromRole="Enrollment" ToRole="EnrollmentStatu" />
+          <NavigationProperty Name="Student" Relationship="UASModel.Fk_Enrollment_IdStudent" FromRole="Enrollment" ToRole="Student" />
+          <NavigationProperty Name="EnrollmentDetails" Relationship="UASModel.Fk_EnrollmentDetail_IdEnrollment" FromRole="Enrollment" ToRole="EnrollmentDetail" />
+        </EntityType>
+        <EntityType Name="EnrollmentStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Observation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Enrollments" Relationship="UASModel.Fk_Enrollment_IdEnrollmentStatus" FromRole="EnrollmentStatu" ToRole="Enrollment" />
+        </EntityType>
+        <EntityType Name="Fringe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Students" Relationship="UASModel.Fk_Student_IdFringe" FromRole="Fringe" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="HolidayException">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExceptionDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeacherDocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="IdCourse" Type="Int32" Nullable="false" />
+          <Property Name="IdAcademicPeriod" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AcademicPeriod" Relationship="UASModel.Fk_Schedule_IdAcademicPeriod" FromRole="Schedule" ToRole="AcademicPeriod" />
+          <NavigationProperty Name="Course" Relationship="UASModel.Fk_Schedule_IdCourse" FromRole="Schedule" ToRole="Course" />
+          <NavigationProperty Name="EnrollmentDetails" Relationship="UASModel.Fk_EnrollmentDetail_IdSchedule" FromRole="Schedule" ToRole="EnrollmentDetail" />
+          <NavigationProperty Name="ScheduleDetails" Relationship="UASModel.Fk_Schedule_IdSchedule" FromRole="Schedule" ToRole="ScheduleDetail" />
+          <NavigationProperty Name="Teacher" Relationship="UASModel.Fk_Schedule_TeacherDocumentNumber" FromRole="Schedule" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="ScheduleDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdSchedule" Type="Int32" Nullable="false" />
+          <Property Name="DayOfTheWeek" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Schedule" Relationship="UASModel.Fk_Schedule_IdSchedule" FromRole="ScheduleDetail" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="DocumentNumber" />
+          </Key>
+          <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IdCareer" Type="Int32" Nullable="false" />
+          <Property Name="IdFringe" Type="Int32" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Career" Relationship="UASModel.Fk_Student_IdCareer" FromRole="Student" ToRole="Career" />
+          <NavigationProperty Name="Enrollments" Relationship="UASModel.Fk_Enrollment_IdStudent" FromRole="Student" ToRole="Enrollment" />
+          <NavigationProperty Name="Fringe" Relationship="UASModel.Fk_Student_IdFringe" FromRole="Student" ToRole="Fringe" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNumber" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ImageRelativePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="DocumentNumber" />
+          </Key>
+          <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Schedules" Relationship="UASModel.Fk_Schedule_TeacherDocumentNumber" FromRole="Teacher" ToRole="Schedule" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNumber" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ImageRelativePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Attachment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdExcuse" Type="Int32" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Excuse" Relationship="UASModel.Fk_AttachmentIdExcuse" FromRole="Attachment" ToRole="Excuse" />
+        </EntityType>
+        <EntityType Name="Classification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Classification1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsRequiredDescription" Type="Boolean" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_ExcuseClassification" FromRole="Classification" ToRole="Excuse" />
+        </EntityType>
+        <EntityType Name="Excuse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="IdClassification" Type="Int32" Nullable="false" />
+          <Property Name="IdUserOwner" Type="Int32" Nullable="false" />
+          <Property Name="Justification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Observation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="LastModificationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Attachments" Relationship="UASModel.Fk_AttachmentIdExcuse" FromRole="Excuse" ToRole="Attachment" />
+          <NavigationProperty Name="Classification" Relationship="UASModel.Fk_ExcuseClassification" FromRole="Excuse" ToRole="Classification" />
+          <NavigationProperty Name="ExcuseDetails" Relationship="UASModel.Fk_ExcuseIdExcuse" FromRole="Excuse" ToRole="ExcuseDetail" />
+          <NavigationProperty Name="User" Relationship="UASModel.Fk_ExcuseIdUserOwner" FromRole="Excuse" ToRole="User" />
+          <NavigationProperty Name="Status" Relationship="UASModel.Fk_ExcuseStatus" FromRole="Excuse" ToRole="Status" />
+        </EntityType>
+        <EntityType Name="ExcuseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdExcuse" Type="Int32" Nullable="false" />
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="IdUserApprover" Type="Int32" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Excuse" Relationship="UASModel.Fk_ExcuseIdExcuse" FromRole="ExcuseDetail" ToRole="Excuse" />
+          <NavigationProperty Name="User" Relationship="UASModel.Fk_ExcuseDetailIdUserApprover" FromRole="ExcuseDetail" ToRole="User" />
+          <NavigationProperty Name="Status" Relationship="UASModel.Fk_ExcuseDetailState" FromRole="ExcuseDetail" ToRole="Status" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsLast" Type="Boolean" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_ExcuseStatus" FromRole="Status" ToRole="Excuse" />
+          <NavigationProperty Name="ExcuseDetails" Relationship="UASModel.Fk_ExcuseDetailState" FromRole="Status" ToRole="ExcuseDetail" />
+          <NavigationProperty Name="StatusApproverByRoles" Relationship="UASModel.Fk_StatusApproverByRole_IdStatus" FromRole="Status" ToRole="StatusApproverByRole" />
+        </EntityType>
+        <EntityType Name="StatusApproverByRole">
+          <Key>
+            <PropertyRef Name="IdStatus" />
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="IsVisible" Type="Boolean" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Status" Relationship="UASModel.Fk_StatusApproverByRole_IdStatus" FromRole="StatusApproverByRole" ToRole="Status" />
+          <NavigationProperty Name="Role" Relationship="UASModel.Fk_StatusApproverByRole_IdRole" FromRole="StatusApproverByRole" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="EnrollmentDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IdEnrollment" />
+            <PropertyRef Name="IdSchedule" />
+            <PropertyRef Name="RegisterDate" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEnrollment" Type="Int32" Nullable="false" />
+          <Property Name="IdSchedule" Type="Int32" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Enrollment" Relationship="UASModel.Fk_EnrollmentDetail_IdEnrollment" FromRole="EnrollmentDetail" ToRole="Enrollment" />
+          <NavigationProperty Name="Schedule" Relationship="UASModel.Fk_EnrollmentDetail_IdSchedule" FromRole="EnrollmentDetail" ToRole="Schedule" />
+        </EntityType>
+        <Association Name="Fk_Enrollment_IdAcademicPeriod">
+          <End Type="UASModel.AcademicPeriod" Role="AcademicPeriod" Multiplicity="1" />
+          <End Type="UASModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicPeriod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="IdAcademicPeriod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Schedule_IdAcademicPeriod">
+          <End Type="UASModel.AcademicPeriod" Role="AcademicPeriod" Multiplicity="1" />
+          <End Type="UASModel.Schedule" Role="Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicPeriod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="IdAcademicPeriod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Student_IdCareer">
+          <End Type="UASModel.Career" Role="Career" Multiplicity="1" />
+          <End Type="UASModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Career">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdCareer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Schedule_IdCourse">
+          <End Type="UASModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="UASModel.Schedule" Role="Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="IdCourse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Enrollment_IdEnrollmentStatus">
+          <End Type="UASModel.EnrollmentStatu" Role="EnrollmentStatu" Multiplicity="1" />
+          <End Type="UASModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EnrollmentStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="IdEnrollmentStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Enrollment_IdStudent">
+          <End Type="UASModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="UASModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="DocumentNumber" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="StudentDocumentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_EnrollmentDetail_IdEnrollment">
+          <End Type="UASModel.Enrollment" Role="Enrollment" Multiplicity="1" />
+          <End Type="UASModel.EnrollmentDetail" Role="EnrollmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrollmentDetail">
+              <PropertyRef Name="IdEnrollment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Student_IdFringe">
+          <End Type="UASModel.Fringe" Role="Fringe" Multiplicity="1" />
+          <End Type="UASModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fringe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdFringe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_EnrollmentDetail_IdSchedule">
+          <End Type="UASModel.Schedule" Role="Schedule" Multiplicity="1" />
+          <End Type="UASModel.EnrollmentDetail" Role="EnrollmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrollmentDetail">
+              <PropertyRef Name="IdSchedule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Schedule_IdSchedule">
+          <End Type="UASModel.Schedule" Role="Schedule" Multiplicity="1" />
+          <End Type="UASModel.ScheduleDetail" Role="ScheduleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduleDetail">
+              <PropertyRef Name="IdSchedule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Schedule_TeacherDocumentNumber">
+          <End Type="UASModel.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="UASModel.Schedule" Role="Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="DocumentNumber" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="TeacherDocumentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_AttachmentIdExcuse">
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="1" />
+          <End Type="UASModel.Attachment" Role="Attachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Excuse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attachment">
+              <PropertyRef Name="IdExcuse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseClassification">
+          <End Type="UASModel.Classification" Role="Classification" Multiplicity="1" />
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdClassification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseIdExcuse">
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="1" />
+          <End Type="UASModel.ExcuseDetail" Role="ExcuseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Excuse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseDetail">
+              <PropertyRef Name="IdExcuse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseIdUserOwner">
+          <End Type="UASModel.User" Role="User" Multiplicity="1" />
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdUserOwner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseStatus">
+          <End Type="UASModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseDetailIdUserApprover">
+          <End Type="UASModel.User" Role="User" Multiplicity="1" />
+          <End Type="UASModel.ExcuseDetail" Role="ExcuseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseDetail">
+              <PropertyRef Name="IdUserApprover" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseDetailState">
+          <End Type="UASModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="UASModel.ExcuseDetail" Role="ExcuseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseDetail">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_StatusApproverByRole_IdStatus">
+          <End Type="UASModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="UASModel.StatusApproverByRole" Role="StatusApproverByRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StatusApproverByRole">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_StatusApproverByRole_IdRole">
+          <End Type="UASModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="UASModel.StatusApproverByRole" Role="StatusApproverByRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StatusApproverByRole">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StudentEnrollmentView">
+          <Key>
+            <PropertyRef Name="StudentFullName" />
+            <PropertyRef Name="TeacherFullName" />
+          </Key>
+          <Property Name="StudentDocumentNumber" Type="Int32" />
+          <Property Name="StudentCode" Type="Int32" />
+          <Property Name="StudentName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StudentLastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StudentFullName" Type="String" Nullable="false" MaxLength="301" FixedLength="false" Unicode="true" />
+          <Property Name="StudentEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StudentTelephoneNumber" Type="Int32" />
+          <Property Name="StudentAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StudentImageRelativePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CareerId" Type="Int32" />
+          <Property Name="CareerCode" Type="Int32" />
+          <Property Name="CareerName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FringeName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherDocumentNumber" Type="Int32" />
+          <Property Name="TeacherCode" Type="Int32" />
+          <Property Name="TeacherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherLastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherTelephoneNumber" Type="Int32" />
+          <Property Name="TeacherAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherImageRelativePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherFullName" Type="String" Nullable="false" MaxLength="301" FixedLength="false" Unicode="true" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="CourseName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CourseCredits" Type="Int32" />
+          <Property Name="DayOfTheWeek" Type="Int32" />
+          <Property Name="DayOfTheWeekName" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="AcademicPeriod" Type="Int32" />
+          <Property Name="AcademicSemester" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="EnrollmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="GetAllStudentMovementsByTeacherDocumentNumber_Result">
+          <Property Type="Int32" Name="StudentDocumentNumber" Nullable="true" />
+          <Property Type="Int32" Name="StudentCode" Nullable="true" />
+          <Property Type="String" Name="StudentFullName" Nullable="true" />
+          <Property Type="String" Name="StudentEmail" Nullable="true" />
+          <Property Type="Int32" Name="StudentTelephoneNumber" Nullable="true" />
+          <Property Type="String" Name="StudentAddress" Nullable="true" />
+          <Property Type="String" Name="StudentImageRelativePath" Nullable="true" />
+          <Property Type="String" Name="CareerName" Nullable="true" />
+          <Property Type="String" Name="CourseName" Nullable="true" />
+          <Property Type="String" Name="EnrollmentStatus" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -270,6 +1512,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="UASModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ImageRelativePath" ColumnName="ImageRelativePath" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="LastModiticationDate" ColumnName="LastModiticationDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -317,13 +1561,270 @@
             <EntityTypeMapping TypeName="UASModel.Movement">
               <MappingFragment StoreEntitySet="Movement">
                 <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AcademicPeriods">
+            <EntityTypeMapping TypeName="UASModel.AcademicPeriod">
+              <MappingFragment StoreEntitySet="AcademicPeriod">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Careers">
+            <EntityTypeMapping TypeName="UASModel.Career">
+              <MappingFragment StoreEntitySet="Career">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="UASModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="NumberOfCredits" ColumnName="NumberOfCredits" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enrollments">
+            <EntityTypeMapping TypeName="UASModel.Enrollment">
+              <MappingFragment StoreEntitySet="Enrollment">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IdAcademicPeriod" ColumnName="IdAcademicPeriod" />
+                <ScalarProperty Name="IdEnrollmentStatus" ColumnName="IdEnrollmentStatus" />
+                <ScalarProperty Name="StudentDocumentNumber" ColumnName="StudentDocumentNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EnrollmentStatus">
+            <EntityTypeMapping TypeName="UASModel.EnrollmentStatu">
+              <MappingFragment StoreEntitySet="EnrollmentStatus">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Observation" ColumnName="Observation" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fringes">
+            <EntityTypeMapping TypeName="UASModel.Fringe">
+              <MappingFragment StoreEntitySet="Fringe">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HolidayExceptions">
+            <EntityTypeMapping TypeName="UASModel.HolidayException">
+              <MappingFragment StoreEntitySet="HolidayException">
+                <ScalarProperty Name="ExceptionDate" ColumnName="ExceptionDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="UASModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IdAcademicPeriod" ColumnName="IdAcademicPeriod" />
+                <ScalarProperty Name="IdCourse" ColumnName="IdCourse" />
+                <ScalarProperty Name="TeacherDocumentNumber" ColumnName="TeacherDocumentNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScheduleDetails">
+            <EntityTypeMapping TypeName="UASModel.ScheduleDetail">
+              <MappingFragment StoreEntitySet="ScheduleDetail">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="DayOfTheWeek" ColumnName="DayOfTheWeek" />
+                <ScalarProperty Name="IdSchedule" ColumnName="IdSchedule" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="UASModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="ImageRelativePath" ColumnName="ImageRelativePath" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IdFringe" ColumnName="IdFringe" />
+                <ScalarProperty Name="IdCareer" ColumnName="IdCareer" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="UASModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="ImageRelativePath" ColumnName="ImageRelativePath" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attachments">
+            <EntityTypeMapping TypeName="UASModel.Attachment">
+              <MappingFragment StoreEntitySet="Attachment">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="IdExcuse" ColumnName="IdExcuse" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classifications">
+            <EntityTypeMapping TypeName="UASModel.Classification">
+              <MappingFragment StoreEntitySet="Classification">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IsRequiredDescription" ColumnName="IsRequiredDescription" />
+                <ScalarProperty Name="Classification1" ColumnName="Classification" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Excuses">
+            <EntityTypeMapping TypeName="UASModel.Excuse">
+              <MappingFragment StoreEntitySet="Excuse">
+                <ScalarProperty Name="LastModificationDate" ColumnName="LastModificationDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Observation" ColumnName="Observation" />
+                <ScalarProperty Name="Justification" ColumnName="Justification" />
+                <ScalarProperty Name="IdUserOwner" ColumnName="IdUserOwner" />
+                <ScalarProperty Name="IdClassification" ColumnName="IdClassification" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExcuseDetails">
+            <EntityTypeMapping TypeName="UASModel.ExcuseDetail">
+              <MappingFragment StoreEntitySet="ExcuseDetail">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IdUserApprover" ColumnName="IdUserApprover" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="IdExcuse" ColumnName="IdExcuse" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="UASModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IsLast" ColumnName="IsLast" />
+                <ScalarProperty Name="Status1" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusApproverByRoles">
+            <EntityTypeMapping TypeName="UASModel.StatusApproverByRole">
+              <MappingFragment StoreEntitySet="StatusApproverByRole">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EnrollmentDetails">
+            <EntityTypeMapping TypeName="UASModel.EnrollmentDetail">
+              <MappingFragment StoreEntitySet="EnrollmentDetail">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IdSchedule" ColumnName="IdSchedule" />
+                <ScalarProperty Name="IdEnrollment" ColumnName="IdEnrollment" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentEnrollmentViews">
+            <EntityTypeMapping TypeName="UASModel.StudentEnrollmentView">
+              <MappingFragment StoreEntitySet="StudentEnrollmentView">
+                <ScalarProperty Name="EnrollmentStatus" ColumnName="EnrollmentStatus" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="AcademicSemester" ColumnName="AcademicSemester" />
+                <ScalarProperty Name="AcademicPeriod" ColumnName="AcademicPeriod" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="DayOfTheWeekName" ColumnName="DayOfTheWeekName" />
+                <ScalarProperty Name="DayOfTheWeek" ColumnName="DayOfTheWeek" />
+                <ScalarProperty Name="CourseCredits" ColumnName="CourseCredits" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="TeacherFullName" ColumnName="TeacherFullName" />
+                <ScalarProperty Name="TeacherImageRelativePath" ColumnName="TeacherImageRelativePath" />
+                <ScalarProperty Name="TeacherAddress" ColumnName="TeacherAddress" />
+                <ScalarProperty Name="TeacherTelephoneNumber" ColumnName="TeacherTelephoneNumber" />
+                <ScalarProperty Name="TeacherEmail" ColumnName="TeacherEmail" />
+                <ScalarProperty Name="TeacherLastName" ColumnName="TeacherLastName" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="TeacherCode" ColumnName="TeacherCode" />
+                <ScalarProperty Name="TeacherDocumentNumber" ColumnName="TeacherDocumentNumber" />
+                <ScalarProperty Name="FringeName" ColumnName="FringeName" />
+                <ScalarProperty Name="CareerName" ColumnName="CareerName" />
+                <ScalarProperty Name="CareerCode" ColumnName="CareerCode" />
+                <ScalarProperty Name="CareerId" ColumnName="CareerId" />
+                <ScalarProperty Name="StudentImageRelativePath" ColumnName="StudentImageRelativePath" />
+                <ScalarProperty Name="StudentAddress" ColumnName="StudentAddress" />
+                <ScalarProperty Name="StudentTelephoneNumber" ColumnName="StudentTelephoneNumber" />
+                <ScalarProperty Name="StudentEmail" ColumnName="StudentEmail" />
+                <ScalarProperty Name="StudentFullName" ColumnName="StudentFullName" />
+                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="StudentCode" ColumnName="StudentCode" />
+                <ScalarProperty Name="StudentDocumentNumber" ColumnName="StudentDocumentNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAllStudentMovementsByTeacherDocumentNumber" FunctionName="UASModel.Store.GetAllStudentMovementsByTeacherDocumentNumber">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetAllStudentMovementsByTeacherDocumentNumber_Result">
+                <ScalarProperty Name="StudentDocumentNumber" ColumnName="StudentDocumentNumber" />
+                <ScalarProperty Name="StudentCode" ColumnName="StudentCode" />
+                <ScalarProperty Name="StudentFullName" ColumnName="StudentFullName" />
+                <ScalarProperty Name="StudentEmail" ColumnName="StudentEmail" />
+                <ScalarProperty Name="StudentTelephoneNumber" ColumnName="StudentTelephoneNumber" />
+                <ScalarProperty Name="StudentAddress" ColumnName="StudentAddress" />
+                <ScalarProperty Name="StudentImageRelativePath" ColumnName="StudentImageRelativePath" />
+                <ScalarProperty Name="CareerName" ColumnName="CareerName" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="EnrollmentStatus" ColumnName="EnrollmentStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

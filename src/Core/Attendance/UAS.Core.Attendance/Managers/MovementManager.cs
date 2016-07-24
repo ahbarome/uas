@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UAS.Core.DAL.Common.Model;
 using UAS.Core.DAL.Persisters;
@@ -7,18 +8,21 @@ namespace UAS.Core.Attendance.Managers
 {
     internal class MovementManager
     {
+        private UserPersister _userPersister;
         /// <summary>
         /// 
         /// </summary>
-        private MovementPersister _persister;
+        private MovementPersister _movementPersister;
         private Action<string> _dispatcher;
         /// <summary>
         /// 
         /// </summary>
         public MovementManager()
         {
-            _persister = new MovementPersister();
-            _persister.SqlNotification += SqlDependencyNotifier;
+            _movementPersister = new MovementPersister();
+            _movementPersister.SqlNotification += SqlDependencyNotifier;
+
+            _userPersister = new UserPersister();
         }
 
         /// <summary>
@@ -27,8 +31,11 @@ namespace UAS.Core.Attendance.Managers
         public MovementManager(Action<string> attendanceDispatcher = null)
         {
             _dispatcher = attendanceDispatcher;
-            _persister = new MovementPersister();
-            _persister.SqlNotification += SqlDependencyNotifier;
+
+            _movementPersister = new MovementPersister();
+            _movementPersister.SqlNotification += SqlDependencyNotifier;
+
+            _userPersister = new UserPersister();
 
             ActivateNotifications();
         }
@@ -38,7 +45,7 @@ namespace UAS.Core.Attendance.Managers
         /// </summary>
         public void ActivateNotifications()
         {
-            _persister.GetAllMovementsWithNotifications();
+            _movementPersister.GetAllMovementsWithNotifications();
         }
 
         /// <summary>
@@ -47,7 +54,17 @@ namespace UAS.Core.Attendance.Managers
         /// <returns></returns>
         public IQueryable<Movement> GetAllMovementsWithNotifications()
         {
-            return _persister.GetAllMovementsWithNotifications();
+            return _movementPersister.GetAllMovementsWithNotifications();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<StudentMovement> GetAllStudentMovementsWithoutNotificationsByTeacherId(int teacherId)
+        {
+            var teacher = _userPersister.GetUserById(teacherId);
+            return _movementPersister.GetAllStudentMovementsWithoutNotificationsByTeacherDocumentNumber(teacher.DocumentNumber);
         }
 
         /// <summary>
@@ -56,7 +73,7 @@ namespace UAS.Core.Attendance.Managers
         /// <returns></returns>
         public IQueryable<Movement> GetAllMovementsWithoutNotifications()
         {
-            return _persister.GetAllMovementsWithoutNotifications();
+            return _movementPersister.GetAllMovementsWithoutNotifications();
         }
 
         private void SqlDependencyNotifier(object sender, System.Data.SqlClient.SqlNotificationEventArgs e)

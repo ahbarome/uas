@@ -19,14 +19,15 @@ GO
 ALTER TABLE [Security].[Role] ADD  CONSTRAINT [DF_Role_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
---INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Administrator', 'Administrador')
---INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Director', 'Director')
---INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Teacher', 'Profesor')
---INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Student', 'Estudiante')
+INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Administrator', 'Administrador')
+INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Director', 'Director')
+INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Teacher', 'Profesor')
+INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Student', 'Estudiante')
 
 
 CREATE TABLE [Security].[User](
 	[Id] 					[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[DocumentNumber]		[int]				NOT NULL,
 	[Username] 				[nvarchar](80) 		NOT NULL,
 	[Password] 				[nvarchar](150) 	NOT NULL,
 	[IdRole] 				INT 				NOT NULL,
@@ -43,12 +44,11 @@ CREATE TABLE [Security].[User](
 	)
 GO
 
-
 ALTER TABLE [Security].[User] ADD  CONSTRAINT [DF_User_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
---INSERT INTO [Security].[User]([Username], [Password], [IdRole], [IsActive], [CreatedBy]) 
---	VALUES ('admin', 'NXo/ao4xL5ix30tACkl6jg==', 1, 1, 'admin') 
+INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy]) VALUES (1130677677, 'admin', 'NXo/ao4xL5ix30tACkl6jg==', 1, 1, 'admin') 
+INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy]) VALUES (980034765, 'dmarin', 'NXo/ao4xL5ix30tACkl6jg==', 1, 1, 'admin') 
 
 
 --DROP TABLE [Security].[Page]
@@ -65,10 +65,16 @@ GO
 ALTER TABLE [Security].[Page] ADD  CONSTRAINT [DF_Page_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
---INSERT INTO [Security].[Page]([Title], [MenuItem])  VALUES('Dashboard', '~/Home' )
---INSERT INTO [Security].[Page]([Title], [MenuItem])  VALUES('Asistencia', '#' )
---INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Aula Virtual', '~/Attendance/VirtualStudentsClassRoom', 2 )
---INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Salón de Docentes', '~/Attendance/VirtualTeachersClassRoom', 2 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Dashboard', '~/Home', 'fa fa-th-large' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Asistencia', '#', 'fa fa-th-large' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Aula Virtual', '~/Attendance/VirtualStudentsClassRoom', 2 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Salón de Docentes', '~/Attendance/VirtualTeachersClassRoom', 2 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Ausentismo', '#', 'fa fa-th-large' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Creacar Excusa', '#', 5 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Administrar Excusas', '#', 5 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Reportes', '#', 'fa fa-th-large' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Asistencia', '#', 8 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Ausentismo', '#', 8 )
 
 --DROP TABLE [Security].[PagePermissionByRole]
 CREATE TABLE [Security].[PagePermissionByRole](
@@ -86,10 +92,21 @@ CREATE TABLE [Security].[PagePermissionByRole](
 	 )
 GO
 
---INSERT INTO [Security].[PagePermissionByRole] VALUES(1,1,1,1,1,1,1,1)
---INSERT INTO [Security].[PagePermissionByRole] VALUES(2,1,1,1,1,1,1,1)
---INSERT INTO [Security].[PagePermissionByRole] VALUES(3,1,1,1,1,1,1,1)
---INSERT INTO [Security].[PagePermissionByRole] VALUES(4,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(1,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(2,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(3,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(4,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(5,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(6,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(7,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(8,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(9,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(10,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(11,1,1,1,1,1,1,1)
+
+INSERT INTO [Security].[PagePermissionByRole] VALUES(1,2,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(2,2,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(4,2,1,1,1,1,1,1)
 
 --*******************************************************************
 CREATE SCHEMA Attendance
@@ -98,9 +115,8 @@ CREATE SCHEMA Attendance
 --The foreign key was not create because the movement could be from a no registered user
 CREATE TABLE [Attendance].[Movement](
 	[Id] 						[int]			IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[IdUser] 					[int]			NOT NULL,
-	[RegisterDate] 				[datetime] 		NULL,
-	CONSTRAINT Fk_Movement_IdUser FOREIGN KEY  (IdUser) REFERENCES [Security].[User](Id)
+	[DocumentNumber] 			[int]			NOT NULL,
+	[RegisterDate] 				[datetime] 		NULL
 )
 
 ALTER TABLE  [Attendance].[Movement] ADD  CONSTRAINT [DF_Movement_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
@@ -256,12 +272,17 @@ CREATE TABLE [Integration].[Student](
 	[Code]						INT					NOT NULL,
 	[Name] 						[nvarchar](150) 	NULL,
 	[LastName] 					[nvarchar](150) 	NULL,
+	[Email] 					[nvarchar](150) 	NULL,
+	[TelephoneNumber] 			INT 				NULL,
+	[Address] 					[nvarchar](250) 	NULL,
 	[IdCareer]					INT					NOT NULL,
 	[IdFringe]					INT					NOT NULL, --NOT SURE IF WE PUT THIS HERE
 	[RegisterDate] 				[datetime] 			NULL,
 	CONSTRAINT Fk_Student_IdCareer FOREIGN KEY  (IdCareer) REFERENCES [Integration].[Career](Id),
 	CONSTRAINT Fk_Student_IdFringe FOREIGN KEY  (IdFringe) REFERENCES [Integration].[Fringe](Id)
 );
+
+--ALTER TABLE [Integration].[Student] ADD [ImageRelativePath] NVARCHAR(256)
 
 ALTER TABLE  [Integration].[Student] ADD  CONSTRAINT [DF_Student_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -281,9 +302,13 @@ CREATE TABLE [Integration].[Teacher](
 	[Code]						INT					NOT NULL,
 	[Name] 						[nvarchar](150) 	NULL,
 	[LastName] 					[nvarchar](150) 	NULL,
+	[Email] 					[nvarchar](150) 	NULL,
+	[TelephoneNumber] 			INT 				NULL,
+	[Address] 					[nvarchar](250) 	NULL,
 	[RegisterDate] 				[datetime] 			NULL
 );
 GO
+
 
 ALTER TABLE  [Integration].[Teacher] ADD  CONSTRAINT [DF_Teacher_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -418,6 +443,7 @@ GO
 INSERT INTO [Integration].[Enrollment]([StudentDocumentNumber], [IdEnrollmentStatus], [IdAcademicPeriod]) VALUES(1144402939, 2, 2);
 INSERT INTO [Integration].[Enrollment]([StudentDocumentNumber], [IdEnrollmentStatus], [IdAcademicPeriod]) VALUES(1130402236, 2, 2);
 INSERT INTO [Integration].[Enrollment]([StudentDocumentNumber], [IdEnrollmentStatus], [IdAcademicPeriod]) VALUES(1130412231, 2, 2);
+INSERT INTO [Integration].[Enrollment]([StudentDocumentNumber], [IdEnrollmentStatus], [IdAcademicPeriod]) VALUES(1130419934, 2, 1);
 
 --EnrollmentDetail (Matrícula)
 --=> IdEnrollment, IdSchedule, RegisterDate 
@@ -441,7 +467,8 @@ INSERT INTO [Integration].[EnrollmentDetail]([IdEnrollment], [IdSchedule]) VALUE
 INSERT INTO [Integration].[EnrollmentDetail]([IdEnrollment], [IdSchedule]) VALUES(2, 1);
 INSERT INTO [Integration].[EnrollmentDetail]([IdEnrollment], [IdSchedule]) VALUES(2, 2);
 INSERT INTO [Integration].[EnrollmentDetail]([IdEnrollment], [IdSchedule]) VALUES(2, 3);
-
+INSERT INTO [Integration].[EnrollmentDetail]([IdEnrollment], [IdSchedule]) VALUES(3, 3);
+INSERT INTO [Integration].[EnrollmentDetail]([IdEnrollment], [IdSchedule]) VALUES(4, 1);
 --HolidayException
 --Id, Date
 CREATE TABLE [Integration].[HolidayException](
@@ -468,18 +495,31 @@ SELECT * FROM [NonAttendance].[Status]
 SELECT * FROM [NonAttendance].[StatusApproverByRole]
 
 --*******************************************************************
-
+SELECT * FROM [Integration].[StudentEnrollmentView]
 CREATE VIEW [Integration].[StudentEnrollmentView] AS
 SELECT	[STU].[DocumentNumber]							AS StudentDocumentNumber
+		, [STU].[Code]									AS StudentCode
 		, [STU].[Name]									AS StudentName
 		, [STU].[LastName]								AS StudentLastName
 		, CONCAT([STU].[Name], ' ', [STU].[LastName])	AS StudentFullName
+		, [STU].[Email]									AS StudentEmail
+		, [STU].[TelephoneNumber]						AS StudentTelephoneNumber
+		, [STU].[Address]								AS StudentAddress
+		, [STU].[ImageRelativePath]						AS StudentImageRelativePath
+		, [CAR].[Id]									AS CareerId
+		, [CAR].[Code]									AS CareerCode
 		, [CAR].[Name]									AS CareerName
 		, [FRI].[Name]									AS FringeName
 		, [TEA].[DocumentNumber]						AS TeacherDocumentNumber
+		, [TEA].[Code]									AS TeacherCode
 		, [TEA].[Name]									AS TeacherName
 		, [TEA].[LastName]								AS TeacherLastName
+		, [TEA].[Email]									AS TeacherEmail
+		, [TEA].[TelephoneNumber]						AS TeacherTelephoneNumber
+		, [TEA].[Address]								AS TeacherAddress
+		, [TEA].[ImageRelativePath]						AS TeacherImageRelativePath
 		, CONCAT([TEA].[Name], ' ', [TEA].[LastName])	AS TeacherFullName
+		, [COU].[Id]									AS CourseId
 		, [COU].[Name]									AS CourseName
 		, [COU].[NumberOfCredits]						AS CourseCredits
 		, [SCD].[DayOfTheWeek]
@@ -498,15 +538,15 @@ SELECT	[STU].[DocumentNumber]							AS StudentDocumentNumber
 		, [ACA].[EndDate]
 		, [ENS].[Name]									AS EnrollmentStatus
 FROM		[Integration].[Enrollment]			[ENR]
-INNER JOIN	[Integration].[EnrollmentDetail]	[END] ON [END].[IdEnrollment]	= [ENR].Id
-INNER JOIN	[Integration].[Schedule]			[SCH] ON [SCH].[Id]				= [END].[IdSchedule]
-INNER JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
-INNER JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
-INNER JOIN	[Integration].[Course]				[COU] ON [COU].[Id]				= [SCH].[IdCourse]	
-INNER JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
-INNER JOIN	[Integration].[Student]				[STU] ON [STU].[DocumentNumber] = [ENR].[StudentDocumentNumber]
-INNER JOIN	[Integration].[Career]				[CAR] ON [CAR].[Id]				= [STU].[IdCareer]
-INNER JOIN	[Integration].[Fringe]				[FRI] ON [FRI].[Id]				= [STU].[IdFringe]
-INNER JOIN	[Integration].[EnrollmentStatus]	[ENS] ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus]
+LEFT JOIN	[Integration].[EnrollmentDetail]	[END] ON [END].[IdEnrollment]	= [ENR].Id
+LEFT JOIN	[Integration].[Student]				[STU] ON [STU].[DocumentNumber] = [ENR].[StudentDocumentNumber]
+LEFT JOIN	[Integration].[Schedule]			[SCH] ON [SCH].[Id]				= [END].[IdSchedule]
+LEFT JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
+LEFT JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
+LEFT JOIN	[Integration].[Course]				[COU] ON [COU].[Id]				= [SCH].[IdCourse]	
+LEFT JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
+LEFT JOIN	[Integration].[Career]				[CAR] ON [CAR].[Id]				= [STU].[IdCareer]
+LEFT JOIN	[Integration].[Fringe]				[FRI] ON [FRI].[Id]				= [STU].[IdFringe]
+LEFT JOIN	[Integration].[EnrollmentStatus]	[ENS] ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus]
 
 

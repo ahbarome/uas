@@ -12,10 +12,13 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Movement
+    public partial class Attachment
     {
         public int Id { get; set; }
-        public int DocumentNumber { get; set; }
+        public int IdExcuse { get; set; }
+        public string Path { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
+    
+        public virtual Excuse Excuse { get; set; }
     }
 }

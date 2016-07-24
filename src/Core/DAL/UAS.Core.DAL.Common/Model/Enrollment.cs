@@ -12,23 +12,24 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Page
+    public partial class Enrollment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Page()
+        public Enrollment()
         {
-            this.PagePermissionByRoles = new HashSet<PagePermissionByRole>();
+            this.EnrollmentDetails = new HashSet<EnrollmentDetail>();
         }
     
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string MenuItem { get; set; }
-        public Nullable<int> ParentId { get; set; }
-        public string Icon { get; set; }
-        public Nullable<int> Order { get; set; }
-        public Nullable<System.DateTime> RegisterDate { get; set; }
+        public int StudentDocumentNumber { get; set; }
+        public int IdEnrollmentStatus { get; set; }
+        public int IdAcademicPeriod { get; set; }
+        public System.DateTime RegisterDate { get; set; }
     
+        public virtual AcademicPeriod AcademicPeriod { get; set; }
+        public virtual EnrollmentStatu EnrollmentStatu { get; set; }
+        public virtual Student Student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagePermissionByRole> PagePermissionByRoles { get; set; }
+        public virtual ICollection<EnrollmentDetail> EnrollmentDetails { get; set; }
     }
 }

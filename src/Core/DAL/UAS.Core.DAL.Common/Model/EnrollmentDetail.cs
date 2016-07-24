@@ -12,10 +12,14 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Movement
+    public partial class EnrollmentDetail
     {
         public int Id { get; set; }
-        public int DocumentNumber { get; set; }
-        public Nullable<System.DateTime> RegisterDate { get; set; }
+        public int IdEnrollment { get; set; }
+        public int IdSchedule { get; set; }
+        public System.DateTime RegisterDate { get; set; }
+    
+        public virtual Enrollment Enrollment { get; set; }
+        public virtual Schedule Schedule { get; set; }
     }
 }

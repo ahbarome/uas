@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b6c51e1aa85d4c9098263752da3c9741" Name="Diagram1">
+      <Diagram DiagramId="b6c51e1aa85d4c9098263752da3c9741" Name="ERM" ZoomLevel="77">
         <EntityTypeShape EntityType="UASModel.Role" Width="1.5" PointX="6.375" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="UASModel.User" Width="1.5" PointX="3" PointY="4.5" />
         <AssociationConnector Association="UASModel.Fk_RoleUser" />
@@ -12,7 +12,46 @@
         <EntityTypeShape EntityType="UASModel.PagePermissionByRole" Width="1.5" PointX="8.625" PointY="2.25" />
         <AssociationConnector Association="UASModel.Fk_PagePermission" />
         <AssociationConnector Association="UASModel.Fk_RolePagePermission" />
-        <EntityTypeShape EntityType="UASModel.Movement" Width="1.5" PointX="4.25" PointY="1.125" />
+        <EntityTypeShape EntityType="UASModel.Movement" Width="1.5" PointX="1.75" PointY="0.5" />
+        <EntityTypeShape EntityType="UASModel.AcademicPeriod" Width="1.5" PointX="12.75" PointY="16" />
+        <EntityTypeShape EntityType="UASModel.Career" Width="1.5" PointX="13.5" PointY="23.375" />
+        <EntityTypeShape EntityType="UASModel.Course" Width="1.5" PointX="12.75" PointY="19.75" />
+        <EntityTypeShape EntityType="UASModel.Enrollment" Width="1.5" PointX="18" PointY="15.875" />
+        <EntityTypeShape EntityType="UASModel.EnrollmentStatu" Width="1.5" PointX="15.75" PointY="12.625" />
+        <EntityTypeShape EntityType="UASModel.Fringe" Width="1.5" PointX="13.5" PointY="26" />
+        <EntityTypeShape EntityType="UASModel.HolidayException" Width="1.5" PointX="3.75" PointY="0.5" />
+        <EntityTypeShape EntityType="UASModel.Schedule" Width="1.5" PointX="15" PointY="15.625" />
+        <EntityTypeShape EntityType="UASModel.ScheduleDetail" Width="1.5" PointX="17.25" PointY="20" />
+        <EntityTypeShape EntityType="UASModel.Student" Width="1.5" PointX="15.75" PointY="24.125" />
+        <EntityTypeShape EntityType="UASModel.Teacher" Width="1.5" PointX="12.75" PointY="29.5" />
+        <EntityTypeShape EntityType="UASModel.Attachment" Width="1.5" PointX="12.875" PointY="10.625" />
+        <EntityTypeShape EntityType="UASModel.Classification" Width="1.5" PointX="8.375" PointY="11.25" />
+        <EntityTypeShape EntityType="UASModel.Excuse" Width="1.5" PointX="10.625" PointY="6.375" />
+        <EntityTypeShape EntityType="UASModel.ExcuseDetail" Width="1.5" PointX="12.875" PointY="6" />
+        <EntityTypeShape EntityType="UASModel.Status" Width="1.5" PointX="10.75" PointY="13.375" />
+        <EntityTypeShape EntityType="UASModel.StatusApproverByRole" Width="1.5" PointX="13" PointY="2.5" />
+        <EntityTypeShape EntityType="UASModel.EnrollmentDetail" Width="1.5" PointX="20.25" PointY="16.125" />
+        <AssociationConnector Association="UASModel.Fk_Enrollment_IdAcademicPeriod" />
+        <AssociationConnector Association="UASModel.Fk_Schedule_IdAcademicPeriod" />
+        <AssociationConnector Association="UASModel.Fk_Student_IdCareer" />
+        <AssociationConnector Association="UASModel.Fk_Schedule_IdCourse" />
+        <AssociationConnector Association="UASModel.Fk_Enrollment_IdEnrollmentStatus" />
+        <AssociationConnector Association="UASModel.Fk_Enrollment_IdStudent" />
+        <AssociationConnector Association="UASModel.Fk_EnrollmentDetail_IdEnrollment" />
+        <AssociationConnector Association="UASModel.Fk_Student_IdFringe" />
+        <AssociationConnector Association="UASModel.Fk_EnrollmentDetail_IdSchedule" />
+        <AssociationConnector Association="UASModel.Fk_Schedule_IdSchedule" />
+        <AssociationConnector Association="UASModel.Fk_Schedule_TeacherDocumentNumber" />
+        <AssociationConnector Association="UASModel.Fk_AttachmentIdExcuse" />
+        <AssociationConnector Association="UASModel.Fk_ExcuseClassification" />
+        <AssociationConnector Association="UASModel.Fk_ExcuseIdExcuse" />
+        <AssociationConnector Association="UASModel.Fk_ExcuseIdUserOwner" />
+        <AssociationConnector Association="UASModel.Fk_ExcuseStatus" />
+        <AssociationConnector Association="UASModel.Fk_ExcuseDetailIdUserApprover" />
+        <AssociationConnector Association="UASModel.Fk_ExcuseDetailState" />
+        <AssociationConnector Association="UASModel.Fk_StatusApproverByRole_IdStatus" />
+        <AssociationConnector Association="UASModel.Fk_StatusApproverByRole_IdRole" />
+        <EntityTypeShape EntityType="UASModel.StudentEnrollmentView" Width="1.5" PointX="0.75" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

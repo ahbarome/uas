@@ -12,26 +12,29 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Student
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Student()
         {
-            this.Users = new HashSet<User>();
-            this.PagePermissionByRoles = new HashSet<PagePermissionByRole>();
-            this.StatusApproverByRoles = new HashSet<StatusApproverByRole>();
+            this.Enrollments = new HashSet<Enrollment>();
         }
     
-        public int Id { get; set; }
+        public int DocumentNumber { get; set; }
+        public int Code { get; set; }
         public string Name { get; set; }
-        public string Alias { get; set; }
+        public string LastName { get; set; }
+        public int IdCareer { get; set; }
+        public int IdFringe { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
+        public string Email { get; set; }
+        public Nullable<int> TelephoneNumber { get; set; }
+        public string Address { get; set; }
+        public string ImageRelativePath { get; set; }
     
+        public virtual Career Career { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagePermissionByRole> PagePermissionByRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StatusApproverByRole> StatusApproverByRoles { get; set; }
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public virtual Fringe Fringe { get; set; }
     }
 }

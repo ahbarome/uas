@@ -52,6 +52,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\AcademicPeriod.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Attachment.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Career.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Classification.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Course.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Enrollment.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EnrollmentDetail.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EnrollmentStatu.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Excuse.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ExcuseDetail.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fringe.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetAllStudentMovementsByTeacherDocumentNumber_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HolidayException.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Movement.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
@@ -61,7 +100,30 @@
     <Compile Include="Model\PagePermissionByRole.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Partials\Movement.cs" />
+    <Compile Include="Model\Partials\StudentMovement.cs" />
     <Compile Include="Model\Role.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Schedule.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ScheduleDetail.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Status.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\StatusApproverByRole.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Student.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\StudentEnrollmentView.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Teacher.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UASModel.Context.cs">

@@ -12,26 +12,20 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Classification
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Classification()
         {
-            this.Users = new HashSet<User>();
-            this.PagePermissionByRoles = new HashSet<PagePermissionByRole>();
-            this.StatusApproverByRoles = new HashSet<StatusApproverByRole>();
+            this.Excuses = new HashSet<Excuse>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Alias { get; set; }
+        public string Classification1 { get; set; }
+        public Nullable<bool> IsRequiredDescription { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagePermissionByRole> PagePermissionByRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StatusApproverByRole> StatusApproverByRoles { get; set; }
+        public virtual ICollection<Excuse> Excuses { get; set; }
     }
 }

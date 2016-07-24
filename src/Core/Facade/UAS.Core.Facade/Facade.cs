@@ -45,5 +45,25 @@
         {
             return _attendanceFacade.GetAllMovementsWithoutNotifications();
         }
+
+        public dynamic GetAllStudentMovementsWithoutNotificationsByTeacherId(int teacherId)
+        {
+            return _attendanceFacade.GetAllStudentMovementsWithoutNotificationsByTeacherId(teacherId);
+        }
+
+        public dynamic GetCourseByTeacherId(int teacherId)
+        {
+            return _attendanceFacade.GetCourseByTeacherId(teacherId);
+        }
+
+        public dynamic GetStatisticsByCourseAndTeacherId(int courseId, int teacherId)
+        {
+            return _attendanceFacade.GetStatisticsByCourseAndTeacherId(courseId, teacherId);
+        }
+
+        public dynamic GetTeacherById(int teacherId)
+        {
+            return _attendanceFacade.GetTeacherById(teacherId);
+        }
     }
 }

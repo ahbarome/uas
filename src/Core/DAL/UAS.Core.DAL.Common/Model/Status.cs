@@ -12,25 +12,25 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Status
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Status()
         {
-            this.Users = new HashSet<User>();
-            this.PagePermissionByRoles = new HashSet<PagePermissionByRole>();
+            this.Excuses = new HashSet<Excuse>();
+            this.ExcuseDetails = new HashSet<ExcuseDetail>();
             this.StatusApproverByRoles = new HashSet<StatusApproverByRole>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Alias { get; set; }
+        public string Status1 { get; set; }
+        public bool IsLast { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Excuse> Excuses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagePermissionByRole> PagePermissionByRoles { get; set; }
+        public virtual ICollection<ExcuseDetail> ExcuseDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StatusApproverByRole> StatusApproverByRoles { get; set; }
     }

@@ -1,5 +1,8 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Linq;
 using UAS.Core.DAL.Common.Model;
@@ -13,7 +16,7 @@ namespace UAS.Core.DAL.Persisters
         /// 
         /// </summary>
         public event SqlNotificationEventHandler SqlNotification;
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -26,6 +29,46 @@ namespace UAS.Core.DAL.Persisters
 
             return query;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<StudentMovement> GetAllStudentMovementsWithoutNotificationsByTeacherDocumentNumber(int teacherDocumentNumber)
+        {
+            var data = base.Entities.GetAllStudentMovementsByTeacherDocumentNumber(teacherDocumentNumber);
+            var studentMovements = getStudentEnrollmentView(data);
+            return studentMovements;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private List<StudentMovement> getStudentEnrollmentView(ObjectResult<GetAllStudentMovementsByTeacherDocumentNumber_Result> data)
+        {
+            var studentMovements = new List<StudentMovement>();
+
+            foreach (var studentMovementRow in data)
+            {
+                studentMovements.Add(new StudentMovement
+                {
+                    Code = studentMovementRow.StudentCode ?? 0,
+                    DocumentNumber = studentMovementRow.StudentDocumentNumber ?? 0,
+                    FullName = studentMovementRow.StudentFullName,
+                    CareerName = studentMovementRow.CareerName,
+                    EnrollmentStatus = studentMovementRow.EnrollmentStatus,
+                    Email = studentMovementRow.StudentEmail,
+                    TelephoneNumber = studentMovementRow.StudentTelephoneNumber ?? 0,
+                    Address = studentMovementRow.StudentAddress,
+                    ImageRelativePath = studentMovementRow.StudentImageRelativePath
+                });
+            }
+
+            return studentMovements;
+        }
+
         /// <summary>
         /// 
         /// </summary>

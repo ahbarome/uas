@@ -12,10 +12,14 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Movement
+    public partial class StatusApproverByRole
     {
-        public int Id { get; set; }
-        public int DocumentNumber { get; set; }
+        public int IdStatus { get; set; }
+        public int IdRole { get; set; }
+        public bool IsVisible { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
+    
+        public virtual Status Status { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

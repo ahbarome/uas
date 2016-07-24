@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttendanceFacade.cs" />
+    <Compile Include="Managers\CourseManager.cs" />
     <Compile Include="Managers\MovementManager.cs" />
+    <Compile Include="Managers\TeacherManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

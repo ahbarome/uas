@@ -12,10 +12,16 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Movement
+    public partial class ExcuseDetail
     {
         public int Id { get; set; }
-        public int DocumentNumber { get; set; }
+        public int IdExcuse { get; set; }
+        public int IdStatus { get; set; }
+        public int IdUserApprover { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
+    
+        public virtual Excuse Excuse { get; set; }
+        public virtual User User { get; set; }
+        public virtual Status Status { get; set; }
     }
 }
