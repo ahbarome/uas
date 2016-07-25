@@ -2,12 +2,19 @@ CREATE DATABASE [UAS]
 GO
 
 ALTER DATABASE [UAS] SET ENABLE_BROKER 
+ALTER DATABASE [UAS] SET ALLOW_SNAPSHOT_ISOLATION ON
+ALTER DATABASE [UAS] SET READ_COMMITTED_SNAPSHOT ON
+ALTER DATABASE [UAS] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+ALTER DATABASE [UAS] COLLATE SQL_Latin1_General_CP1_CS_AS
+ALTER DATABASE [UAS] SET MULTI_USER
+
 GO
 --*******************************************************************
 USE [UAS]
 GO
 --*******************************************************************
 CREATE SCHEMA Security
+GO
 
 CREATE TABLE [Security].[Role](
 	[Id] 			[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -24,7 +31,6 @@ INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Director', 'Director')
 INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Teacher', 'Profesor')
 INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Student', 'Estudiante')
 
-
 CREATE TABLE [Security].[User](
 	[Id] 					[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	[DocumentNumber]		[int]				NOT NULL,
@@ -35,6 +41,7 @@ CREATE TABLE [Security].[User](
 	[LastName] 				[nvarchar](150) 	NULL,
 	[Email] 				[nvarchar](150) 	NULL,
 	[TelephoneNumber] 		INT 				NULL,
+	[ImageRelativePath]		[nvarchar](256)		NULL,
 	[IsActive] 				BIT					NOT NULL,
 	[RegisterDate] 			[datetime] 			NULL,
 	[CreatedBy] 			[nvarchar](80) 		NOT NULL,
@@ -47,8 +54,9 @@ GO
 ALTER TABLE [Security].[User] ADD  CONSTRAINT [DF_User_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
-INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy]) VALUES (1130677677, 'admin', 'NXo/ao4xL5ix30tACkl6jg==', 1, 1, 'admin') 
-INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy]) VALUES (980034765, 'dmarin', 'NXo/ao4xL5ix30tACkl6jg==', 1, 1, 'admin') 
+INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy], [ImageRelativePath]) VALUES (1130677677, 'admin', 'NXo/ao4xL5ix30tACkl6jg==', 1, 1, 'admin', '~/Images/a1.jpg') 
+INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy], [ImageRelativePath]) VALUES (1130677677, 'fcastillo', 'NXo/ao4xL5ix30tACkl6jg==', 2, 1, 'admin','~/Images/a2.jpg')
+INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy], [ImageRelativePath]) VALUES (980034765, 'dmarin', 'NXo/ao4xL5ix30tACkl6jg==', 3, 1, 'admin','~/Images/a3.jpg') 
 
 
 --DROP TABLE [Security].[Page]
@@ -70,7 +78,7 @@ INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Asistencia',
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Aula Virtual', '~/Attendance/VirtualStudentsClassRoom', 2 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Salón de Docentes', '~/Attendance/VirtualTeachersClassRoom', 2 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Ausentismo', '#', 'fa fa-th-large' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Creacar Excusa', '#', 5 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Crear Excusa', '#', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Administrar Excusas', '#', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Reportes', '#', 'fa fa-th-large' )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Asistencia', '#', 8 )
@@ -89,7 +97,7 @@ CREATE TABLE [Security].[PagePermissionByRole](
 	CONSTRAINT Pk_PagePermissionByRole PRIMARY KEY ([IdPage], [IdRole]),
 	CONSTRAINT Fk_RolePagePermission FOREIGN KEY  ([IdRole]) REFERENCES [Security].[Role](Id),
 	CONSTRAINT Fk_PagePermission FOREIGN KEY  ([IdPage]) REFERENCES [Security].[Page](Id)
-	 )
+);
 GO
 
 INSERT INTO [Security].[PagePermissionByRole] VALUES(1,1,1,1,1,1,1,1)
@@ -102,7 +110,6 @@ INSERT INTO [Security].[PagePermissionByRole] VALUES(7,1,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(8,1,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(9,1,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(10,1,1,1,1,1,1,1)
-INSERT INTO [Security].[PagePermissionByRole] VALUES(11,1,1,1,1,1,1,1)
 
 INSERT INTO [Security].[PagePermissionByRole] VALUES(1,2,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(2,2,1,1,1,1,1,1)
@@ -110,6 +117,7 @@ INSERT INTO [Security].[PagePermissionByRole] VALUES(4,2,1,1,1,1,1,1)
 
 --*******************************************************************
 CREATE SCHEMA Attendance
+GO
 
 --DROP TABLE [Attendance].[Movement]
 --The foreign key was not create because the movement could be from a no registered user
@@ -117,7 +125,8 @@ CREATE TABLE [Attendance].[Movement](
 	[Id] 						[int]			IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	[DocumentNumber] 			[int]			NOT NULL,
 	[RegisterDate] 				[datetime] 		NULL
-)
+);
+GO
 
 ALTER TABLE  [Attendance].[Movement] ADD  CONSTRAINT [DF_Movement_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -125,13 +134,15 @@ GO
 --*******************************************************************
 
 CREATE SCHEMA NonAttendance
+GO
 
 CREATE TABLE [NonAttendance].[Status](
 	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	[Status]					[nvarchar](150) 	NULL,
 	[IsLast]					[bit]				NOT NULL,
 	[RegisterDate] 				[datetime] 			NULL
-)
+);
+GO
 
 ALTER TABLE  [NonAttendance].[Status] ADD  CONSTRAINT [DF_Status_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -150,7 +161,9 @@ CREATE TABLE [NonAttendance].[StatusApproverByRole](
 	CONSTRAINT Pk_StatusApproverByRole PRIMARY KEY ([IdStatus], [IdRole]),
 	CONSTRAINT Fk_StatusApproverByRole_IdStatus FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id),
 	CONSTRAINT Fk_StatusApproverByRole_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
-)
+);
+GO
+
 
 ALTER TABLE  [NonAttendance].[StatusApproverByRole] ADD  CONSTRAINT [DF_StatusApproverByRole_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -172,7 +185,8 @@ CREATE TABLE [NonAttendance].[Classification](
 	[Classification]			[nvarchar](150) 	NULL,
 	[IsRequiredDescription]		[bit]				NULL,
 	[RegisterDate] 				[datetime] 			NULL
-)
+);
+GO
 
 ALTER TABLE  [NonAttendance].[Classification] ADD  CONSTRAINT [DF_ExcuseClassification_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -197,7 +211,8 @@ CREATE TABLE [NonAttendance].[Excuse](
 	CONSTRAINT Fk_ExcuseStatus FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id),
 	CONSTRAINT Fk_ExcuseClassification FOREIGN KEY  (IdClassification) REFERENCES [NonAttendance].[Classification](Id),
 	CONSTRAINT Fk_ExcuseIdUserOwner FOREIGN KEY  (IdUserOwner) REFERENCES [Security].[User](Id)
-)
+);
+GO
 
 ALTER TABLE  [NonAttendance].[Excuse] ADD  CONSTRAINT [DF_NonAttendanceExcuse_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -232,7 +247,8 @@ ALTER TABLE  [NonAttendance].[Attachment] ADD  CONSTRAINT [DF_ExcuseAttachment_R
 GO
 
 --*******************************************************************
-CREATE SCHEMA Integration
+CREATE SCHEMA Integration;
+GO
 
 --Career
 --=> Name
@@ -242,6 +258,7 @@ CREATE TABLE [Integration].[Career](
 	[Name]						[nvarchar](250)		NOT NULL,
 	[RegisterDate] 				[datetime] 			NULL
 );
+GO
 
 ALTER TABLE  [Integration].[Career] ADD  CONSTRAINT [DF_Career_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -275,12 +292,14 @@ CREATE TABLE [Integration].[Student](
 	[Email] 					[nvarchar](150) 	NULL,
 	[TelephoneNumber] 			INT 				NULL,
 	[Address] 					[nvarchar](250) 	NULL,
+	[ImageRelativePath]			[nvarchar](256)		NULL,
 	[IdCareer]					INT					NOT NULL,
 	[IdFringe]					INT					NOT NULL, --NOT SURE IF WE PUT THIS HERE
 	[RegisterDate] 				[datetime] 			NULL,
 	CONSTRAINT Fk_Student_IdCareer FOREIGN KEY  (IdCareer) REFERENCES [Integration].[Career](Id),
 	CONSTRAINT Fk_Student_IdFringe FOREIGN KEY  (IdFringe) REFERENCES [Integration].[Fringe](Id)
 );
+GO
 
 --ALTER TABLE [Integration].[Student] ADD [ImageRelativePath] NVARCHAR(256)
 
@@ -305,6 +324,7 @@ CREATE TABLE [Integration].[Teacher](
 	[Email] 					[nvarchar](150) 	NULL,
 	[TelephoneNumber] 			INT 				NULL,
 	[Address] 					[nvarchar](250) 	NULL,
+	[ImageRelativePath]			[nvarchar](256)		NULL,
 	[RegisterDate] 				[datetime] 			NULL
 );
 GO
@@ -317,11 +337,13 @@ INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]
 INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(90394760, 101101, 'Carlos Arturo', 'Cano');
 INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(31263799, 101102, 'María Mercedes', 'Sinisterra');
 INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1263229, 101103, 'Gonzalo', 'Becerra');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677677, 101104, 'Fabian', 'Castillo Peña');
 
 --Course
 --=> Name, CreditsNumber
 CREATE TABLE [Integration].[Course](
 	[Id]						INT					PRIMARY KEY NOT NULL,
+	[Code]						INT					NOT NULL,
 	[Name]						[nvarchar](250)		NOT NULL,
 	[NumberOfCredits]			INT					NOT NULL,
 	[RegisterDate] 				[datetime] 			NULL
@@ -331,16 +353,97 @@ GO
 ALTER TABLE  [Integration].[Course] ADD  CONSTRAINT [DF_Course_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(1, 'Cálculo Diferencial', 3);
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(2, 'Cálculo Integral', 3);
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(3, 'Cálculo Multivariado', 3);
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(4, 'Programación Orientada a Objetos', 3);
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(5, 'Sistemas Operativos', 3);
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(6, 'Base de Datos', 3);
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(7, 'Investigación de Operaciones', 3);
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(8, 'Fisica Mecánica y Laboratorio', 3);
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(9, 'Fisica Térmica y Laboratorio', 3);
-INSERT INTO [Integration].[Course]([Id], [Name], [NumberOfCredits]) VALUES(10, 'Fisica Eléctrica y Laboratorio', 3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(1,10000,'Álgebra y Trigonometría',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(2,10001,'Introdución a la Ingeniería',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(3,10002,'Geometría Descriptiva',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(4,10003,'Lógica y Algoritmos',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(5,10004,'Aprendizaje Autónomo',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(6,10005,'Inglés I',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(7,10006,'Cátedra Unilibrista',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(8,10007,'Instituciones Colombianas',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(9,10008,'Calculo Diferencial',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(10,10009,'Física Mecánica y Laboratorio',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(11,10010,'Lógica Matemática',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(12,10011,'Estructura de Lenguajes',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(13,10012,'Lenguaje y Comunicación',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(14,10013,'Inglés II',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(15,10014,'Calculo Integral',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(16,10015,'Física Térmica y Laboratorio',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(17,10016,'Arquitectura de Computadores',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(18,10017,'Pensamiento Sistémico',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(19,10018,'Estructura de Datos',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(20,10019,'Inglés III',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(21,10020,'Calculo Multivariado-Vectorial',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(22,10021,'Electricidad y Magnetismo y Laboratorio',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(23,10022,'Sistemas Operativos',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(24,10023,'Análisis y Diseño de Sistemas',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(25,10024,'Programación Orientada a Objetos',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(26,10025,'Inglés IV',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(27,10026,'Introducción a la Investigación',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(28,10027,'Ecuaciones Diferenciales',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(29,10028,'Circuitos Digitales',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(30,10029,'Redes de Computadores',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(31,10030,'Bases de Datos',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(32,10031,'Inglés V',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(33,10032,'Metodología de la Investigación',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(34,10033,'Arquitectura de Software',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(35,10034,'Química General y Laboratorio',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(36,10035,'Estadística Descriptiva',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(37,10036,'Métodos Numéricos',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(38,10037,'Sistemas Distribuidos',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(39,10038,'Electiva de Formación Integral I',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(40,10039,'Investigación Aplicada I',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(41,10040,'Estadística Inferencial',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(42,10041,'Programación Lineal',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(43,10042,'Fundamentos de la Economía',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(44,10043,'Ética',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(45,10044,'Electiva de Formación Integral II',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(46,10045,'Investigación Aplicada II',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(47,10046,'Electiva Profesional I',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(48,10047,'Sistemas de Información',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(49,10048,'Sistemas Multimedia',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(50,10049,'Investigación de Operaciones',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(51,10050,'Ingeniería Económica',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(52,10051,'Aplicaciones en Internet',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(53,10052,'Electiva de Formación Integral III',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(54,10053,'Investigación Aplicada III',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(55,10054,'Electiva Profesional II',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(56,10055,'Proyección Social',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(57,10056,'Dinámica de Sistemas',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(58,10057,'Métricas de Software',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(59,10058,'Formulación y Evaluación de Proyectos',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(60,10059,'Investigación Aplicada IV',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(61,10060,'Electiva Profesional III',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(62,10061,'Práctica Empresarial',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(63,10062,'Gestión de Tecnología',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(64,10063,'Gestión y Control de Calidad',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(65,10064,'Investigación Aplicada V',1);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(66,10065,'Electiva Profesional IV',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(67,10066,'Administración Empresarial',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(68,10067,'Fundamentos de Informática',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(69,10068,'Electiva de Informática Aplicada I',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(70,10069,'Dibujo Asistido',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(71,10070,'Electiva de Informática Aplicada II',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(72,10071,'Química Industrial y Laboratorio',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(73,10072,'Procesos Industriales',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(74,10073,'Contabilidad y Presupuesto',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(75,10074,'Fundamentos de Administración',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(76,10075,'Costos de Producción',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(77,10076,'Mercadeo Básico',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(78,10077,'Ingenieria de Métodos',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(79,10078,'Planeación y Organización de la Producción',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(80,10079,'Control Estadístico de Calidad',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(81,10080,'Mercadeo Estratégico',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(82,10081,'Legislación Empresarial y Laboral',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(83,10082,'Modelos Matemáticos de Producción',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(84,10083,'Gestion Financiera',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(85,10084,'Control de ProducciónEmpresarial y Laboral',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(86,10085,'Diseño de Plantas',3);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(87,10086,'Psicología Empresarial',2);
+INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(88,10087,'Gerencia de Talento Humano',3);
+
+
+
 
 --AcademicPeriod
 --=> Period
@@ -374,6 +477,7 @@ CREATE TABLE [Integration].[Schedule](
 	CONSTRAINT Fk_Schedule_IdCourse FOREIGN KEY  (IdCourse) REFERENCES [Integration].[Course](Id),
 	CONSTRAINT Fk_Schedule_IdAcademicPeriod FOREIGN KEY  (IdAcademicPeriod) REFERENCES [Integration].[AcademicPeriod](Id)
 );
+GO
 
 ALTER TABLE  [Integration].[Schedule] ADD  CONSTRAINT [DF_Schedule_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -398,6 +502,7 @@ CREATE TABLE [Integration].[ScheduleDetail](
 	[RegisterDate] 				[datetime] 	NULL,
 	CONSTRAINT Fk_Schedule_IdSchedule FOREIGN KEY  (IdSchedule) REFERENCES [Integration].[Schedule](Id)
 );
+GO
 
 ALTER TABLE  [Integration].[ScheduleDetail] ADD  CONSTRAINT [DF_ScheduleDetail_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -411,8 +516,9 @@ CREATE TABLE [Integration].[EnrollmentStatus](
 	[Id] 			[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	[Name] 			[nvarchar](80) 		NOT NULL,
 	[Observation]	[nvarchar](250)		NULL,
-	[RegisterDate] 	[datetime] 			NULL)
+	[RegisterDate] 	[datetime] 			NULL);
 GO
+
 
 ALTER TABLE [Integration].[EnrollmentStatus] ADD  CONSTRAINT [DF_EnrollmentStatus_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
@@ -456,6 +562,7 @@ CREATE TABLE [Integration].[EnrollmentDetail](
 	CONSTRAINT Fk_EnrollmentDetail_IdEnrollment FOREIGN KEY  (IdEnrollment) REFERENCES [Integration].[Enrollment](Id),
 	CONSTRAINT Fk_EnrollmentDetail_IdSchedule FOREIGN KEY  (IdSchedule) REFERENCES [Integration].[Schedule](Id)
 );
+GO
 
 	
 ALTER TABLE [Integration].[EnrollmentDetail] ADD  CONSTRAINT [DF_EnrollmentDetail_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
@@ -471,15 +578,23 @@ INSERT INTO [Integration].[EnrollmentDetail]([IdEnrollment], [IdSchedule]) VALUE
 INSERT INTO [Integration].[EnrollmentDetail]([IdEnrollment], [IdSchedule]) VALUES(4, 1);
 --HolidayException
 --Id, Date
+--DROP TABLE [Integration].[HolidayException]
 CREATE TABLE [Integration].[HolidayException](
 	[Id]						INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	[ExceptionDate]				[DATETIME] NOT NULL
 );
+GO
 
-INSERT INTO [Integration].[HolidayException]([ExceptionDate]) VALUES('2016-15-08');
-INSERT INTO [Integration].[HolidayException]([ExceptionDate]) VALUES('2016-17-10');
-INSERT INTO [Integration].[HolidayException]([ExceptionDate]) VALUES('2016-07-11');
-INSERT INTO [Integration].[HolidayException]([ExceptionDate]) VALUES('2016-14-11');
+INSERT INTO [Integration].[HolidayException]([ExceptionDate]) VALUES('2016-08-15');
+INSERT INTO [Integration].[HolidayException]([ExceptionDate]) VALUES('2016-10-17');
+INSERT INTO [Integration].[HolidayException]([ExceptionDate]) VALUES('2016-11-07');
+INSERT INTO [Integration].[HolidayException]([ExceptionDate]) VALUES('2016-11-14');
+
+
+
+INSERT INTO [Attendance].[Movement]([DocumentNumber]) VALUES(1130419934)
+INSERT INTO [Attendance].[Movement]([DocumentNumber]) VALUES(1144402939)
+
 --*******************************************************************
 
 
@@ -490,12 +605,60 @@ SELECT * FROM [Security].[PagePermissionByRole]
 
 --SELECT * FROM [Attendance].[Trace]
 SELECT * FROM [Attendance].[Movement]
-
+SELECT * FROM [Integration].[Course]
 SELECT * FROM [NonAttendance].[Status]
 SELECT * FROM [NonAttendance].[StatusApproverByRole]
 
 --*******************************************************************
-SELECT * FROM [Integration].[StudentEnrollmentView]
+CREATE VIEW [Attendance].[StudentMovementView] AS
+SELECT	[MOV].[DocumentNumber]							AS DocumentNumber
+		, [STU].[Code]									AS Code
+		, [STU].[Name]									AS Name
+		, [STU].[LastName]								AS LastName
+		, CONCAT([STU].[Name], ' ', [STU].[LastName])	AS FullName
+		, [STU].[Email]									AS Email
+		, [STU].[TelephoneNumber]						AS TelephoneNumber
+		, [STU].[Address]								AS Address
+		, [STU].[ImageRelativePath]						AS ImageRelativePath
+		, 4												AS RoleId
+		, 'Student'										AS RoleName
+		, 'Estudiante'									AS RoleAlias
+		, [MOV].[RegisterDate]							AS MovementDateTime
+		, CONVERT(DATE, [MOV].[RegisterDate])			AS MovementDate
+		, CONVERT(TIME, [MOV].[RegisterDate])			AS MovementTime
+FROM		[Attendance].[Movement]				[MOV]
+INNER JOIN	[Integration].[Student]				[STU] ON [STU].[DocumentNumber] = [MOV].[DocumentNumber]
+
+
+CREATE VIEW [Attendance].[TeacherMovementView] AS
+SELECT	 [MOV].[DocumentNumber]							AS DocumentNumber
+		, [TEA].[Code]									AS Code
+		, [TEA].[Name]									AS Name
+		, [TEA].[LastName]								AS LastName
+		, CONCAT([TEA].[Name], ' ', [TEA].[LastName])	AS FullName
+		, [TEA].[Email]									AS Email
+		, [TEA].[TelephoneNumber]						AS TelephoneNumber
+		, [TEA].[Address]								AS Address
+		, [TEA].[ImageRelativePath]						AS ImageRelativePath
+		, 3												AS RoleId
+		, 'Teacher'										AS RoleName
+		, 'Profesor'									AS RoleAlias
+		, [MOV].[RegisterDate]							AS MovementDateTime
+		, CONVERT(DATE, [MOV].[RegisterDate])			AS MovementDate
+		, CONVERT(TIME, [MOV].[RegisterDate])			AS MovementTime
+FROM		[Attendance].[Movement]				[MOV]
+INNER JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [MOV].[DocumentNumber]
+
+
+CREATE VIEW [Attendance].[MovementView] AS
+SELECT	*
+FROM	[Attendance].[StudentMovementView]
+UNION
+SELECT	*
+FROM	[Attendance].[TeacherMovementView]
+
+
+--SELECT * FROM [Integration].[StudentEnrollmentView]
 CREATE VIEW [Integration].[StudentEnrollmentView] AS
 SELECT	[STU].[DocumentNumber]							AS StudentDocumentNumber
 		, [STU].[Code]									AS StudentCode
@@ -548,5 +711,145 @@ LEFT JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcad
 LEFT JOIN	[Integration].[Career]				[CAR] ON [CAR].[Id]				= [STU].[IdCareer]
 LEFT JOIN	[Integration].[Fringe]				[FRI] ON [FRI].[Id]				= [STU].[IdFringe]
 LEFT JOIN	[Integration].[EnrollmentStatus]	[ENS] ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus]
+
+
+--
+
+USE [UAS]
+GO
+
+/****** Object:  StoredProcedure [Attendance].[GetAllStudentMovementsByTeacherDocumentNumber]    Script Date: 25/07/2016 12:52:14 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-24
+-- Description:	Get all student movements by 
+--				teacher document number
+-- =============================================
+--[Attendance].[GetAllStudentMovementsByTeacherDocumentNumber] 980034765
+CREATE PROCEDURE [Attendance].[GetAllStudentMovementsByTeacherDocumentNumber] 
+	@TeacherDocumentNumber INT
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	--==================================================
+	--Filters
+	DECLARE @CurrentDocumentNumberOfTheMovement INT = 0,
+			@CurrentSemester					INT = 0,
+			@CurrentDayOfTheWeek				INT = 0,
+			@CourseId							INT = 0,
+			@CourseStartTime					TIME,
+			@CourseEndTime						TIME
+	--==================================================
+	DECLARE @StudentMovements TABLE (
+		StudentDocumentNumber		INT,
+		StudentCode					INT,
+		StudentFullName				NVARCHAR(MAX),
+		StudentEmail				NVARCHAR(MAX),
+		StudentTelephoneNumber		INT,
+		StudentAddress				NVARCHAR(MAX),
+		StudentImageRelativePath	NVARCHAR(MAX),
+		CareerName					NVARCHAR(MAX),
+		CourseName					NVARCHAR(MAX),
+		EnrollmentStatus			NVARCHAR(MAX));
+	--==================================================
+
+	--Apply refactoring make a function
+	IF( DATEPART(MONTH, GETDATE()) > 6)
+	BEGIN
+		SET @CurrentSemester = 2;
+	END
+	ELSE
+		SET @CurrentSemester = 1;
+
+	SET @CurrentDayOfTheWeek = DATEPART(WEEKDAY, GETDATE());
+
+	--==================================================
+	--Apply refactoring make a function or openquery
+	SELECT		 @CourseStartTime = [SCD].[StartTime]
+				, @CourseEndTime = [SCD].[EndTime]
+				, @CourseId = [COU].[Id]
+	FROM		[Integration].[Schedule]			[SCH] WITH(NOLOCK)
+	INNER JOIN	[Integration].[ScheduleDetail]		[SCD] WITH(NOLOCK) ON [SCD].[IdSchedule]		= [SCH].[Id]
+	INNER JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]								= [SCH].[IdAcademicPeriod]	
+	INNER JOIN	[Integration].[Course]				[COU] WITH(NOLOCK) ON [COU].[Id]				= [SCH].[IdCourse] 
+	WHERE	[ACA].[Semester]				= @CurrentSemester AND
+			--@TODO: Enable this after tests
+			--[SCD].[DayOfTheWeek]			= @CurrentDayOfTheWeek AND 
+			[SCH].[TeacherDocumentNumber]	= @TeacherDocumentNumber
+
+
+	--Get the movements of the current day
+	DECLARE MovementsCursor CURSOR FOR
+		SELECT	DISTINCT [MOV].[DocumentNumber]
+		FROM	[Attendance].[Movement] [MOV] WITH(NOLOCK)
+		WHERE	CONVERT(DATE, [MOV].[RegisterDate]) = CONVERT(DATE, GETDATE());
+	
+	OPEN MovementsCursor;
+	
+	FETCH NEXT FROM MovementsCursor   
+	INTO @CurrentDocumentNumberOfTheMovement;
+
+	WHILE @@FETCH_STATUS = 0  
+	BEGIN
+		
+		INSERT INTO @StudentMovements (
+			StudentDocumentNumber, 
+			StudentCode, 
+			StudentFullName,
+			StudentEmail,
+			StudentTelephoneNumber,
+			StudentAddress,
+			StudentImageRelativePath,
+			CareerName,
+			CourseName,
+			EnrollmentStatus) 
+		SELECT	[SEV].[StudentDocumentNumber]
+				, [SEV].[StudentCode]
+				, [SEV].[StudentFullName]
+				, [SEV].[StudentEmail]
+				, [SEV].[StudentTelephoneNumber]
+				, [SEV].[StudentAddress]
+				, [SEV].[StudentImageRelativePath]
+				, [SEV].[CareerName]
+				, [SEV].[CourseName]
+				, [SEV].[EnrollmentStatus]
+		FROM	[Integration].[StudentEnrollmentView] [SEV] WITH(NOLOCK)
+		WHERE	[SEV].[CourseId]				= @CourseId AND 
+				[SEV].[StartTime]				= @CourseStartTime AND
+				[SEV].[EndTime]					= @CourseEndTime  AND
+				[SEV].[StudentDocumentNumber]	= @CurrentDocumentNumberOfTheMovement;   
+		
+		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement;
+	END
+
+	CLOSE MovementsCursor;  
+	DEALLOCATE MovementsCursor;  
+
+	SELECT	[StudentDocumentNumber]
+			, [StudentCode]
+			, [StudentFullName]
+			, [StudentEmail]
+			, [StudentTelephoneNumber]
+			, [StudentAddress]
+			, [StudentImageRelativePath]
+			, [CareerName]
+			, [CourseName]
+			, [EnrollmentStatus]
+	FROM	@StudentMovements;
+	--==================================================
+
+END
+
+GO
 
 
