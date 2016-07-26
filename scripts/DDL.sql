@@ -338,6 +338,17 @@ INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]
 INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(31263799, 101102, 'María Mercedes', 'Sinisterra');
 INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1263229, 101103, 'Gonzalo', 'Becerra');
 INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677677, 101104, 'Fabian', 'Castillo Peña');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677678, 101105, 'Walter', 'Magaña');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677679, 101106, 'Muhammed', 'Dawood');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677680, 101107, 'Geremías', 'Gonzalez');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677681, 101108, 'Fernando', 'Velez');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677682, 101109, 'Fredy Wilson', 'Londoño');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677683, 101109, 'Pablo', 'Chacón');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677684, 101110, 'Juan Carlos', 'Cruz');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677685, 101111, 'Enrique', 'Echeverri');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677686, 101112, 'Liliana', 'Rancruel');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677687, 101113, 'Germán', 'Cordoba');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677688, 101114, 'Rafael', 'Moreno');
 
 --Course
 --=> Name, CreditsNumber
@@ -352,6 +363,8 @@ GO
 
 ALTER TABLE  [Integration].[Course] ADD  CONSTRAINT [DF_Course_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
+
+--DBCC CHECKIDENT ('Integration.Course', RESEED, 0);  
 
 INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(1,10000,'Álgebra y Trigonometría',3);
 INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(2,10001,'Introdución a la Ingeniería',2);
@@ -594,7 +607,7 @@ INSERT INTO [Integration].[HolidayException]([ExceptionDate]) VALUES('2016-11-14
 
 INSERT INTO [Attendance].[Movement]([DocumentNumber]) VALUES(1130419934)
 INSERT INTO [Attendance].[Movement]([DocumentNumber]) VALUES(1144402939)
-
+INSERT INTO [Attendance].[Movement]([DocumentNumber]) VALUES(980034765)
 --*******************************************************************
 
 
@@ -606,6 +619,8 @@ SELECT * FROM [Security].[PagePermissionByRole]
 --SELECT * FROM [Attendance].[Trace]
 SELECT * FROM [Attendance].[Movement]
 SELECT * FROM [Integration].[Course]
+SELECT * FROM [Integration].[Schedule]
+SELECT * FROM [Integration].[Enrollment]
 SELECT * FROM [NonAttendance].[Status]
 SELECT * FROM [NonAttendance].[StatusApproverByRole]
 
@@ -648,14 +663,83 @@ SELECT	 [MOV].[DocumentNumber]							AS DocumentNumber
 		, CONVERT(TIME, [MOV].[RegisterDate])			AS MovementTime
 FROM		[Attendance].[Movement]				[MOV]
 INNER JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [MOV].[DocumentNumber]
+GO
 
-
+--SELECT * FROM [Attendance].[MovementView] 
 CREATE VIEW [Attendance].[MovementView] AS
 SELECT	*
 FROM	[Attendance].[StudentMovementView]
 UNION
 SELECT	*
 FROM	[Attendance].[TeacherMovementView]
+
+SELECT * FROM [Integration].[ScheduleDetailView] 
+CREATE VIEW [Integration].[ScheduleDetailView] AS
+SELECT	 [TEA].[DocumentNumber]						AS TeacherDocumentNumber
+		, CONCAT([TEA].[Name], ' ', [TEA].[LastName])	AS TeacherFullName
+		, [COU].[Id]									AS CourseId
+		, [COU].[Name]									AS CourseName
+		, [COU].[NumberOfCredits]						AS CourseCredits
+		, [SCD].[DayOfTheWeek]
+		, CASE	WHEN [SCD].[DayOfTheWeek] = 1 THEN 'Lunes' 
+				WHEN [SCD].[DayOfTheWeek] = 2 THEN 'Martes' 
+				WHEN [SCD].[DayOfTheWeek] = 3 THEN 'Miércoles'
+				WHEN [SCD].[DayOfTheWeek] = 4 THEN 'Jueves'
+				WHEN [SCD].[DayOfTheWeek] = 5 THEN 'Viernes'
+				WHEN [SCD].[DayOfTheWeek] = 6 THEN 'Sábado'
+				END										AS DayOfTheWeekName
+		, [SCD].[StartTime]
+		, [SCD].[EndTime]
+		, [ACA].[Period]								AS AcademicPeriod
+		, [ACA].[Semester]								AS AcademicSemester
+		, [ACA].[StartDate]
+		, [ACA].[EndDate]
+FROM		[Integration].[Schedule]			[SCH] 
+LEFT JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
+LEFT JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
+LEFT JOIN	[Integration].[Course]				[COU] ON [COU].[Id]				= [SCH].[IdCourse]	
+LEFT JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
+
+--SELECT * FROM [Integration].[EnrollmentDetailView]
+CREATE VIEW [Integration].[EnrollmentDetailView] AS
+SELECT	[STU].[DocumentNumber]							AS StudentDocumentNumber
+		, CONCAT([STU].[Name], ' ', [STU].[LastName])	AS StudentFullName
+		, [CAR].[Id]									AS CareerId
+		, [CAR].[Code]									AS CareerCode
+		, [CAR].[Name]									AS CareerName
+		, [FRI].[Name]									AS FringeName
+		, [TEA].[DocumentNumber]						AS TeacherDocumentNumber
+		, CONCAT([TEA].[Name], ' ', [TEA].[LastName])	AS TeacherFullName
+		, [COU].[Id]									AS CourseId
+		, [COU].[Name]									AS CourseName
+		, [COU].[NumberOfCredits]						AS CourseCredits
+		, [SCD].[DayOfTheWeek]
+		, CASE	WHEN [SCD].[DayOfTheWeek] = 1 THEN 'Lunes' 
+				WHEN [SCD].[DayOfTheWeek] = 2 THEN 'Martes' 
+				WHEN [SCD].[DayOfTheWeek] = 3 THEN 'Miércoles'
+				WHEN [SCD].[DayOfTheWeek] = 4 THEN 'Jueves'
+				WHEN [SCD].[DayOfTheWeek] = 5 THEN 'Viernes'
+				WHEN [SCD].[DayOfTheWeek] = 6 THEN 'Sábado'
+				END										AS DayOfTheWeekName
+		, [SCD].[StartTime]
+		, [SCD].[EndTime]
+		, [ACA].[Period]								AS AcademicPeriod
+		, [ACA].[Semester]								AS AcademicSemester
+		, [ACA].[StartDate]
+		, [ACA].[EndDate]
+		, [ENS].[Name]									AS EnrollmentStatus
+FROM		[Integration].[Enrollment]			[ENR]
+LEFT JOIN	[Integration].[EnrollmentDetail]	[END] ON [END].[IdEnrollment]	= [ENR].Id
+LEFT JOIN	[Integration].[Student]				[STU] ON [STU].[DocumentNumber] = [ENR].[StudentDocumentNumber]
+LEFT JOIN	[Integration].[Schedule]			[SCH] ON [SCH].[Id]				= [END].[IdSchedule]
+LEFT JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
+LEFT JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
+LEFT JOIN	[Integration].[Course]				[COU] ON [COU].[Id]				= [SCH].[IdCourse]	
+LEFT JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
+LEFT JOIN	[Integration].[Career]				[CAR] ON [CAR].[Id]				= [STU].[IdCareer]
+LEFT JOIN	[Integration].[Fringe]				[FRI] ON [FRI].[Id]				= [STU].[IdFringe]
+LEFT JOIN	[Integration].[EnrollmentStatus]	[ENS] ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus]
+
 
 
 --SELECT * FROM [Integration].[StudentEnrollmentView]
@@ -744,6 +828,8 @@ BEGIN
 	--==================================================
 	--Filters
 	DECLARE @CurrentDocumentNumberOfTheMovement INT = 0,
+			@CurrentDateOfTheMovement			DATE,
+			@CurrentTimeOfTheMovement			TIME,
 			@CurrentSemester					INT = 0,
 			@CurrentDayOfTheWeek				INT = 0,
 			@CourseId							INT = 0,
@@ -791,13 +877,16 @@ BEGIN
 	--Get the movements of the current day
 	DECLARE MovementsCursor CURSOR FOR
 		SELECT	DISTINCT [MOV].[DocumentNumber]
+				, CONVERT(DATE, MIN( [MOV].[RegisterDate] ))
+				, CONVERT(TIME, MIN( [MOV].[RegisterDate] ))
 		FROM	[Attendance].[Movement] [MOV] WITH(NOLOCK)
-		WHERE	CONVERT(DATE, [MOV].[RegisterDate]) = CONVERT(DATE, GETDATE());
+		WHERE	CONVERT(DATE, [MOV].[RegisterDate]) = CONVERT(DATE, GETDATE())
+		GROUP BY [MOV].[DocumentNumber];
 	
 	OPEN MovementsCursor;
 	
 	FETCH NEXT FROM MovementsCursor   
-	INTO @CurrentDocumentNumberOfTheMovement;
+	INTO @CurrentDocumentNumberOfTheMovement, @CurrentDateOfTheMovement, @CurrentTimeOfTheMovement;
 
 	WHILE @@FETCH_STATUS = 0  
 	BEGIN
@@ -829,7 +918,7 @@ BEGIN
 				[SEV].[EndTime]					= @CourseEndTime  AND
 				[SEV].[StudentDocumentNumber]	= @CurrentDocumentNumberOfTheMovement;   
 		
-		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement;
+		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement, @CurrentDateOfTheMovement, @CurrentTimeOfTheMovement;
 	END
 
 	CLOSE MovementsCursor;  
@@ -845,6 +934,8 @@ BEGIN
 			, [CareerName]
 			, [CourseName]
 			, [EnrollmentStatus]
+			, @CurrentDateOfTheMovement AS MovementDate
+			, @CurrentTimeOfTheMovement AS MovementTime
 	FROM	@StudentMovements;
 	--==================================================
 
