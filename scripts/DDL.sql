@@ -54,9 +54,24 @@ GO
 ALTER TABLE [Security].[User] ADD  CONSTRAINT [DF_User_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
-INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy], [ImageRelativePath]) VALUES (1130677677, 'admin', 'NXo/ao4xL5ix30tACkl6jg==', 1, 1, 'admin', '~/Images/a1.jpg') 
-INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy], [ImageRelativePath]) VALUES (1130677677, 'fcastillo', 'NXo/ao4xL5ix30tACkl6jg==', 2, 1, 'admin','~/Images/a2.jpg')
-INSERT INTO [Security].[User]([DocumentNumber],[Username], [Password], [IdRole], [IsActive], [CreatedBy], [ImageRelativePath]) VALUES (980034765, 'dmarin', 'NXo/ao4xL5ix30tACkl6jg==', 3, 1, 'admin','~/Images/a3.jpg') 
+SELECT * FROM [Security].[User]
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('gbecerra','NXo/ao4xL5ix30tACkl6jg==',3,'Gonzalo','Becerra','gonzalo.becerra@unilibrecali.edu.co',311001113,1,'admin',1130677677,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('msinisterra','NXo/ao4xL5ix30tACkl6jg==',3,'María Mercedes','Sinisterra','maria.mercedes.sinisterra@unilibrecali.edu.co',311001114,1,'admin',1130677678,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('ccano','NXo/ao4xL5ix30tACkl6jg==',3,'Carlos Arturo','Cano','carlos.arturo.cano@unilibrecali.edu.co',311001115,1,'admin',1130677679,'~/Images/a5.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('dmarin','NXo/ao4xL5ix30tACkl6jg==',3,'Diego Fernando','Marín','diego.fernando.marin@unilibrecali.edu.co',311001116,1,'admin',1130677680,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('wmagana','NXo/ao4xL5ix30tACkl6jg==',3,'Walter','Magaña','walter.magana@unilibrecali.edu.co',311001117,1,'admin',1130677681,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('mdawood','NXo/ao4xL5ix30tACkl6jg==',3,'Muhammed','Dawood','muhammed.dawood@unilibrecali.edu.co',311001118,1,'admin',1130677682,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('ggonzalez','NXo/ao4xL5ix30tACkl6jg==',3,'Geremías','Gonzalez','geremias.gonzalez@unilibrecali.edu.co',311001119,1,'admin',1130677683,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('fvelez','NXo/ao4xL5ix30tACkl6jg==',3,'Fernando','Velez','fernando.velez@unilibrecali.edu.co',311001120,1,'admin',1130677684,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('flondono','NXo/ao4xL5ix30tACkl6jg==',3,'Fredy Wilson','Londoño','fredy.wilson.londono@unilibrecali.edu.co',311001121,1,'admin',1130677685,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('pchacon','NXo/ao4xL5ix30tACkl6jg==',3,'Pablo','Chacón','pablo.chacon@unilibrecali.edu.co',311001122,1,'admin',1130677686,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('jcruz','NXo/ao4xL5ix30tACkl6jg==',3,'Juan Carlos','Cruz','juan.carlos.cruz@unilibrecali.edu.co',311001123,1,'admin',1130677687,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('eecheverri','NXo/ao4xL5ix30tACkl6jg==',3,'Enrique','Echeverri','enrique.echeverri@unilibrecali.edu.co',311001124,1,'admin',1130677688,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('lrancruel','NXo/ao4xL5ix30tACkl6jg==',3,'Liliana','Rancruel','liliana.rancruel@unilibrecali.edu.co',311001125,1,'admin',1130677689,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('gcordoba','NXo/ao4xL5ix30tACkl6jg==',3,'Germán','Cordoba','german.cordoba@unilibrecali.edu.co',311001126,1,'admin',1130677690,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('rmoreno','NXo/ao4xL5ix30tACkl6jg==',3,'Rafael','Moreno','rafael.moreno@unilibrecali.edu.co',311001127,1,'admin',1130677691,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('fcastillo','NXo/ao4xL5ix30tACkl6jg==',3,'Fabian','Castillo','fabian.castillo@unilibrecali.edu.co',311001128,1,'admin',1130677692,'~/Images/a7.jpg')
+
 
 
 --DROP TABLE [Security].[Page]
@@ -114,6 +129,7 @@ INSERT INTO [Security].[PagePermissionByRole] VALUES(10,1,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(1,2,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(2,2,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(4,2,1,1,1,1,1,1)
+GO
 
 --*******************************************************************
 CREATE SCHEMA Attendance
@@ -333,22 +349,24 @@ GO
 ALTER TABLE  [Integration].[Teacher] ADD  CONSTRAINT [DF_Teacher_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(980034765, 101100, 'Diego Fernando', 'Marín');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(90394760, 101101, 'Carlos Arturo', 'Cano');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(31263799, 101102, 'María Mercedes', 'Sinisterra');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1263229, 101103, 'Gonzalo', 'Becerra');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677677, 101104, 'Fabian', 'Castillo Peña');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677678, 101105, 'Walter', 'Magaña');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677679, 101106, 'Muhammed', 'Dawood');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677680, 101107, 'Geremías', 'Gonzalez');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677681, 101108, 'Fernando', 'Velez');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677682, 101109, 'Fredy Wilson', 'Londoño');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677683, 101109, 'Pablo', 'Chacón');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677684, 101110, 'Juan Carlos', 'Cruz');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677685, 101111, 'Enrique', 'Echeverri');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677686, 101112, 'Liliana', 'Rancruel');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677687, 101113, 'Germán', 'Cordoba');
-INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName]) VALUES(1130677688, 101114, 'Rafael', 'Moreno');
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677677,101100,'Gonzalo','Becerra','gonzalo.becerra@unilibrecali.edu.co',311001113,'Cra. 37a #3-29','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677678,101101,'María Mercedes','Sinisterra','maria.mercedes.sinisterra@unilibrecali.edu.co',311001114,'Cra. 37a #3-30','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677679,101102,'Carlos Arturo','Cano','carlos.arturo.cano@unilibrecali.edu.co',311001115,'Cra. 37a #3-31','~/Images/a5.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677680,101103,'Diego Fernando','Marín','diego.fernando.marin@unilibrecali.edu.co',311001116,'Cra. 37a #3-32','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677681,101104,'Walter','Magaña','walter.magana@unilibrecali.edu.co',311001117,'Cra. 37a #3-33','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677682,101105,'Muhammed','Dawood','muhammed.dawood@unilibrecali.edu.co',311001118,'Cra. 37a #3-34','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677683,101106,'Geremías','Gonzalez','geremias.gonzalez@unilibrecali.edu.co',311001119,'Cra. 37a #3-35','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677684,101107,'Fernando','Velez','fernando.velez@unilibrecali.edu.co',311001120,'Cra. 37a #3-36','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677685,101108,'Fredy Wilson','Londoño','fredy.wilson.londono@unilibrecali.edu.co',311001121,'Cra. 37a #3-37','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677686,101109,'Pablo','Chacón','pablo.chacon@unilibrecali.edu.co',311001122,'Cra. 37a #3-38','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677687,101110,'Juan Carlos','Cruz','juan.carlos.cruz@unilibrecali.edu.co',311001123,'Cra. 37a #3-39','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677688,101111,'Enrique','Echeverri','enrique.echeverri@unilibrecali.edu.co',311001124,'Cra. 37a #3-40','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677689,101112,'Liliana','Rancruel','liliana.rancruel@unilibrecali.edu.co',311001125,'Cra. 37a #3-41','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677690,101113,'Germán','Cordoba','german.cordoba@unilibrecali.edu.co',311001126,'Cra. 37a #3-42','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677691,101114,'Rafael','Moreno','rafael.moreno@unilibrecali.edu.co',311001127,'Cra. 37a #3-43','~/Images/a7.jpg')
+INSERT INTO [Integration].[Teacher]([DocumentNumber], [Code], [Name], [LastName], [Email], [TelephoneNumber], [Address], [ImageRelativePath]) VALUES(1130677692,101115,'Fabian','Castillo','fabian.castillo@unilibrecali.edu.co',311001128,'Cra. 37a #3-43','~/Images/a7.jpg')
+
+
 
 --Course
 --=> Name, CreditsNumber
@@ -456,8 +474,6 @@ INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALU
 INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(88,10087,'Gerencia de Talento Humano',3);
 
 
-
-
 --AcademicPeriod
 --=> Period
 CREATE TABLE [Integration].[AcademicPeriod](
@@ -501,6 +517,7 @@ INSERT INTO [Integration].[Schedule]([TeacherDocumentNumber], [IdCourse], [IdAca
 INSERT INTO [Integration].[Schedule]([TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(1263229, 8, 2);
 INSERT INTO [Integration].[Schedule]([TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(1263229, 9, 2);
 INSERT INTO [Integration].[Schedule]([TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(1263229, 10, 2);
+INSERT INTO [Integration].[Schedule]([TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(1130677692, 17, 2);
 
 
 --ScheduleDetail
@@ -524,6 +541,11 @@ INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartT
 INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(1,5,'18:30:00', '21:30:00');
 INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(2,2,'18:30:00', '21:30:00');
 INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(3,2,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(7,4,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(4,1,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(5,3,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(6,5,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(7,6,'7:30:00', '9:30:00');
 
 CREATE TABLE [Integration].[EnrollmentStatus](
 	[Id] 			[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -624,6 +646,9 @@ SELECT * FROM [Integration].[Enrollment]
 SELECT * FROM [NonAttendance].[Status]
 SELECT * FROM [NonAttendance].[StatusApproverByRole]
 
+--SELECT * FROM [Integration].[ScheduleDetailView]
+--SELECT * FROM [Integration].[EnrollmentDetailView]
+
 --*******************************************************************
 CREATE VIEW [Attendance].[StudentMovementView] AS
 SELECT	[MOV].[DocumentNumber]							AS DocumentNumber
@@ -673,21 +698,16 @@ UNION
 SELECT	*
 FROM	[Attendance].[TeacherMovementView]
 
-SELECT * FROM [Integration].[ScheduleDetailView] 
+--SELECT * FROM [Integration].[ScheduleDetailView] 
 CREATE VIEW [Integration].[ScheduleDetailView] AS
-SELECT	 [TEA].[DocumentNumber]						AS TeacherDocumentNumber
+SELECT	 [SCH].[Id]										AS ScheduleId
+		, [TEA].[DocumentNumber]						AS TeacherDocumentNumber
 		, CONCAT([TEA].[Name], ' ', [TEA].[LastName])	AS TeacherFullName
 		, [COU].[Id]									AS CourseId
 		, [COU].[Name]									AS CourseName
 		, [COU].[NumberOfCredits]						AS CourseCredits
 		, [SCD].[DayOfTheWeek]
-		, CASE	WHEN [SCD].[DayOfTheWeek] = 1 THEN 'Lunes' 
-				WHEN [SCD].[DayOfTheWeek] = 2 THEN 'Martes' 
-				WHEN [SCD].[DayOfTheWeek] = 3 THEN 'Miércoles'
-				WHEN [SCD].[DayOfTheWeek] = 4 THEN 'Jueves'
-				WHEN [SCD].[DayOfTheWeek] = 5 THEN 'Viernes'
-				WHEN [SCD].[DayOfTheWeek] = 6 THEN 'Sábado'
-				END										AS DayOfTheWeekName
+		, DATENAME(WEEKDAY, [SCD].[DayOfTheWeek] - 1)   AS DayOfTheWeekName
 		, [SCD].[StartTime]
 		, [SCD].[EndTime]
 		, [ACA].[Period]								AS AcademicPeriod
@@ -698,11 +718,13 @@ FROM		[Integration].[Schedule]			[SCH]
 LEFT JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
 LEFT JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
 LEFT JOIN	[Integration].[Course]				[COU] ON [COU].[Id]				= [SCH].[IdCourse]	
-LEFT JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
+LEFT JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]
+	
 
 --SELECT * FROM [Integration].[EnrollmentDetailView]
 CREATE VIEW [Integration].[EnrollmentDetailView] AS
-SELECT	[STU].[DocumentNumber]							AS StudentDocumentNumber
+SELECT	[ENR].[Id]										AS EnrollmentId
+		, [STU].[DocumentNumber]						AS StudentDocumentNumber
 		, CONCAT([STU].[Name], ' ', [STU].[LastName])	AS StudentFullName
 		, [CAR].[Id]									AS CareerId
 		, [CAR].[Code]									AS CareerCode
@@ -714,13 +736,7 @@ SELECT	[STU].[DocumentNumber]							AS StudentDocumentNumber
 		, [COU].[Name]									AS CourseName
 		, [COU].[NumberOfCredits]						AS CourseCredits
 		, [SCD].[DayOfTheWeek]
-		, CASE	WHEN [SCD].[DayOfTheWeek] = 1 THEN 'Lunes' 
-				WHEN [SCD].[DayOfTheWeek] = 2 THEN 'Martes' 
-				WHEN [SCD].[DayOfTheWeek] = 3 THEN 'Miércoles'
-				WHEN [SCD].[DayOfTheWeek] = 4 THEN 'Jueves'
-				WHEN [SCD].[DayOfTheWeek] = 5 THEN 'Viernes'
-				WHEN [SCD].[DayOfTheWeek] = 6 THEN 'Sábado'
-				END										AS DayOfTheWeekName
+		, DATENAME(WEEKDAY, [SCD].[DayOfTheWeek] - 1)   AS DayOfTheWeekName
 		, [SCD].[StartTime]
 		, [SCD].[EndTime]
 		, [ACA].[Period]								AS AcademicPeriod
@@ -770,13 +786,7 @@ SELECT	[STU].[DocumentNumber]							AS StudentDocumentNumber
 		, [COU].[Name]									AS CourseName
 		, [COU].[NumberOfCredits]						AS CourseCredits
 		, [SCD].[DayOfTheWeek]
-		, CASE	WHEN [SCD].[DayOfTheWeek] = 1 THEN 'Lunes' 
-				WHEN [SCD].[DayOfTheWeek] = 2 THEN 'Martes' 
-				WHEN [SCD].[DayOfTheWeek] = 3 THEN 'Miércoles'
-				WHEN [SCD].[DayOfTheWeek] = 4 THEN 'Jueves'
-				WHEN [SCD].[DayOfTheWeek] = 5 THEN 'Viernes'
-				WHEN [SCD].[DayOfTheWeek] = 6 THEN 'Sábado'
-				END										AS DayOfTheWeekName
+		, DATENAME(WEEKDAY, [SCD].[DayOfTheWeek] - 1)   AS DayOfTheWeekName
 		, [SCD].[StartTime]
 		, [SCD].[EndTime]
 		, [ACA].[Period]								AS AcademicPeriod
@@ -940,6 +950,186 @@ BEGIN
 	--==================================================
 
 END
+
+GO
+
+
+
+
+--
+
+USE [UAS]
+GO
+
+/****** Object:  StoredProcedure [Attendance].[GetAllStudentMovementsByTeacherDocumentNumber]    Script Date: 25/07/2016 12:52:14 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-26
+-- Description:	Get the current course
+-- 
+-- =============================================
+--[Integration].[GetCurrentCourseByTeacherDocumentNumber] 980034765
+CREATE PROCEDURE [Integration].[GetCurrentCourseByTeacherDocumentNumber]
+	@TeacherDocumentNumber INT 
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	SELECT	* 
+	FROM	[Integration].[ScheduleDetailView] [SDV]
+	WHERE	( [SDV].[EndDate] >= GETDATE() AND [SDV].[StartDate] <=  GETDATE() ) AND-- Course of the semester
+			[SDV].[DayOfTheWeek] = DATEPART(WEEKDAY, GETDATE())	AND -- Course for today
+			( [SDV].[EndTime] >= CONVERT(TIME, GETDATE()) AND  [SDV].[StartTime] <=  CONVERT(TIME, GETDATE())) AND-- Current course
+			[SDV].[TeacherDocumentNumber] = @TeacherDocumentNumber 
+	ORDER BY [SDV].[StartTime] DESC
+END
+GO
+
+
+USE [UAS]
+GO
+
+/****** Object:  StoredProcedure [Attendance].[GetAllStudentMovementsByTeacherDocumentNumberAndCourseId]    Script Date: 26/07/2016 21:33:40 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-24
+-- Description:	Get all student movements by 
+--				teacher document number and 
+--				course id
+-- =============================================
+ --[Attendance].[GetAllStudentMovementsByTeacherDocumentNumberAndCourseId]  980034765, 6
+CREATE PROCEDURE [Attendance].[GetAllStudentMovementsByTeacherDocumentNumberAndCourseId] 
+	@TeacherDocumentNumber	INT,
+	@CourseId				INT
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	--==================================================
+	--Filters
+	DECLARE @CurrentDocumentNumberOfTheMovement INT = 0,
+			@CurrentSemester					INT = 0,
+			@CurrentDayOfTheWeek				INT = 0,
+			@CourseStartTime					TIME,
+			@CourseEndTime						TIME
+	--==================================================
+	DECLARE @StudentMovements TABLE (
+		StudentDocumentNumber		INT,
+		StudentCode					INT,
+		StudentFullName				NVARCHAR(MAX),
+		StudentEmail				NVARCHAR(MAX),
+		StudentTelephoneNumber		INT,
+		StudentAddress				NVARCHAR(MAX),
+		StudentImageRelativePath	NVARCHAR(MAX),
+		CareerName					NVARCHAR(MAX),
+		CourseName					NVARCHAR(MAX),
+		EnrollmentStatus			NVARCHAR(MAX));
+	--==================================================
+
+	--Apply refactoring make a function
+	IF( DATEPART(MONTH, GETDATE()) > 6)
+	BEGIN
+		SET @CurrentSemester = 2;
+	END
+	ELSE
+		SET @CurrentSemester = 1;
+
+	SET @CurrentDayOfTheWeek = DATEPART(WEEKDAY, GETDATE());
+
+	--==================================================
+	
+	SELECT  TOP 1 @CourseStartTime		= [EDV].[StartTime]
+				, @CourseEndTime	= [EDV].[EndTime]
+				, @CourseId			= [EDV].[CourseId] 
+	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	WHERE	( [EDV].EndDate >= GETDATE() AND 
+			[EDV].StartDate <= GETDATE() ) AND-- Materias del semestre
+			[EDV].DayOfTheWeek = DATEPART(WEEKDAY, GETDATE()) AND -- Materias de hoy
+			( [EDV].EndTime >= CONVERT(TIME, GETDATE()) AND 
+			[EDV].StartTime <=  CONVERT(TIME, GETDATE() ))-- Materias en curso
+	ORDER BY [EDV].[StartTime] DESC
+
+	--Get the movements of the current day
+	DECLARE MovementsCursor CURSOR FOR
+		SELECT	DISTINCT [MOV].[DocumentNumber]
+		FROM	[Attendance].[Movement] [MOV] WITH(NOLOCK)
+		WHERE	CONVERT(DATE, [MOV].[RegisterDate]) = CONVERT(DATE, GETDATE())
+		GROUP BY [MOV].[DocumentNumber];
+	
+	OPEN MovementsCursor;
+	
+	FETCH NEXT FROM MovementsCursor   
+	INTO @CurrentDocumentNumberOfTheMovement
+
+	WHILE @@FETCH_STATUS = 0  
+	BEGIN
+		
+		INSERT INTO @StudentMovements (
+			StudentDocumentNumber, 
+			StudentCode, 
+			StudentFullName,
+			StudentEmail,
+			StudentTelephoneNumber,
+			StudentAddress,
+			StudentImageRelativePath,
+			CareerName,
+			CourseName,
+			EnrollmentStatus) 
+		SELECT	[SEV].[StudentDocumentNumber]
+				, [SEV].[StudentCode]
+				, [SEV].[StudentFullName]
+				, [SEV].[StudentEmail]
+				, [SEV].[StudentTelephoneNumber]
+				, [SEV].[StudentAddress]
+				, [SEV].[StudentImageRelativePath]
+				, [SEV].[CareerName]
+				, [SEV].[CourseName]
+				, [SEV].[EnrollmentStatus]
+		FROM	[Integration].[StudentEnrollmentView] [SEV] WITH(NOLOCK)
+		WHERE	[SEV].[CourseId]				= @CourseId AND 
+				[SEV].[StartTime]				= @CourseStartTime AND
+				[SEV].[EndTime]					= @CourseEndTime  AND
+				[SEV].[StudentDocumentNumber]	= @CurrentDocumentNumberOfTheMovement;   
+		
+		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement
+	END
+
+	CLOSE MovementsCursor;  
+	DEALLOCATE MovementsCursor;  
+
+	SELECT	[StudentDocumentNumber]
+			, [StudentCode]
+			, [StudentFullName]
+			, [StudentEmail]
+			, [StudentTelephoneNumber]
+			, [StudentAddress]
+			, [StudentImageRelativePath]
+			, [CareerName]
+			, [CourseName]
+			, [EnrollmentStatus]
+	FROM	@StudentMovements;
+	--==================================================
+
+END
+
 
 GO
 
