@@ -15,6 +15,13 @@ GO
 --*******************************************************************
 CREATE SCHEMA Security
 GO
+CREATE SCHEMA Attendance
+GO
+CREATE SCHEMA NonAttendance
+GO
+CREATE SCHEMA Integration;
+GO
+GO
 
 CREATE TABLE [Security].[Role](
 	[Id] 			[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -54,7 +61,7 @@ GO
 ALTER TABLE [Security].[User] ADD  CONSTRAINT [DF_User_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
-SELECT * FROM [Security].[User]
+
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('gbecerra','NXo/ao4xL5ix30tACkl6jg==',3,'Gonzalo','Becerra','gonzalo.becerra@unilibrecali.edu.co',311001113,1,'admin',1130677677,'~/Images/a7.jpg')
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('msinisterra','NXo/ao4xL5ix30tACkl6jg==',3,'María Mercedes','Sinisterra','maria.mercedes.sinisterra@unilibrecali.edu.co',311001114,1,'admin',1130677678,'~/Images/a7.jpg')
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('ccano','NXo/ao4xL5ix30tACkl6jg==',3,'Carlos Arturo','Cano','carlos.arturo.cano@unilibrecali.edu.co',311001115,1,'admin',1130677679,'~/Images/a5.jpg')
@@ -71,7 +78,6 @@ INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('gcordoba','NXo/ao4xL5ix30tACkl6jg==',3,'Germán','Cordoba','german.cordoba@unilibrecali.edu.co',311001126,1,'admin',1130677690,'~/Images/a7.jpg')
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('rmoreno','NXo/ao4xL5ix30tACkl6jg==',3,'Rafael','Moreno','rafael.moreno@unilibrecali.edu.co',311001127,1,'admin',1130677691,'~/Images/a7.jpg')
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('fcastillo','NXo/ao4xL5ix30tACkl6jg==',3,'Fabian','Castillo','fabian.castillo@unilibrecali.edu.co',311001128,1,'admin',1130677692,'~/Images/a7.jpg')
-
 
 
 --DROP TABLE [Security].[Page]
@@ -129,23 +135,14 @@ INSERT INTO [Security].[PagePermissionByRole] VALUES(10,1,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(1,2,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(2,2,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(4,2,1,1,1,1,1,1)
+
+
+INSERT INTO [Security].[PagePermissionByRole] VALUES(1,3,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(2,3,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(3,3,1,1,1,1,1,1)
+
 GO
 
---*******************************************************************
-CREATE SCHEMA Attendance
-GO
-
---DROP TABLE [Attendance].[Movement]
---The foreign key was not create because the movement could be from a no registered user
-CREATE TABLE [Attendance].[Movement](
-	[Id] 						[int]			IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[DocumentNumber] 			[int]			NOT NULL,
-	[RegisterDate] 				[datetime] 		NULL
-);
-GO
-
-ALTER TABLE  [Attendance].[Movement] ADD  CONSTRAINT [DF_Movement_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
-GO
 
 --*******************************************************************
 
@@ -263,8 +260,6 @@ ALTER TABLE  [NonAttendance].[Attachment] ADD  CONSTRAINT [DF_ExcuseAttachment_R
 GO
 
 --*******************************************************************
-CREATE SCHEMA Integration;
-GO
 
 --Career
 --=> Name
@@ -321,6 +316,9 @@ GO
 
 ALTER TABLE  [Integration].[Student] ADD  CONSTRAINT [DF_Student_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
+SELECT * FROM  [Integration].[Student]
+INSERT INTO [Integration].[Student]([DocumentNumber], [Code], [Name], [LastName], [Email],[TelephoneNumber],[Address],[IdCareer], [IdFringe] ) VALUES(52006066,117201,'PAOLA ANDREA','LOPEZ SANCHEZ','plopez@hotmail.com',3732948,'CARRERA 81 #26-48',1,1)
+
 
 INSERT INTO [Integration].[Student]([DocumentNumber], [Code], [Name], [LastName], [IdCareer], [IdFringe] ) VALUES(1144402939, 117200, 'Pedro Alexis', 'Alegría', 1, 2);
 INSERT INTO [Integration].[Student]([DocumentNumber], [Code], [Name], [LastName], [IdCareer], [IdFringe] ) VALUES(1130402236, 117201, 'Ginna Alejandra', 'Chacón', 1, 2);
@@ -474,6 +472,65 @@ INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALU
 INSERT INTO [Integration].[Course]([Id], [Code], [Name], [NumberOfCredits]) VALUES(88,10087,'Gerencia de Talento Humano',3);
 
 
+
+--ClassRoom
+--=> Name, CreditsNumber
+CREATE TABLE [Integration].[SpaceType](
+	[Id]						INT					PRIMARY KEY NOT NULL,
+	[Type]						[nvarchar](250)		NOT NULL,
+	[Description]				[nvarchar](250)		NULL,
+	[RegisterDate] 				[datetime] 			NULL
+);
+GO
+
+ALTER TABLE  [Integration].[SpaceType] ADD  CONSTRAINT [DF_SpaceType_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+INSERT INTO [Integration].[SpaceType]([Id], [Type], [Description]) VALUES(1, 'Oficina Decanatura', 'Oficina Facultad de Ingeniería');
+INSERT INTO [Integration].[SpaceType]([Id], [Type], [Description]) VALUES(2, 'Salón', 'Salón de Clase');
+INSERT INTO [Integration].[SpaceType]([Id], [Type], [Description]) VALUES(3, 'Sala', 'Sala de Sistemas');
+
+CREATE TABLE [Integration].[Space](
+	[Id]						INT					PRIMARY KEY NOT NULL,
+	[Name]						[nvarchar](250)		NOT NULL,
+	[IdSpaceType]				[int]				NOT NULL,
+	[RegisterDate] 				[datetime] 			NULL,
+	CONSTRAINT Fk_Space_IdSpaceType FOREIGN KEY  (IdSpaceType) REFERENCES [Integration].[SpaceType](Id)
+);
+GO
+
+ALTER TABLE  [Integration].[Space] ADD  CONSTRAINT [DF_Space_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10000, 2,'301');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10001, 2,'302');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10002, 2,'303');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10003, 2,'304');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10004, 2,'401');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10005, 2,'402');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10006, 2,'403');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10007, 3,'501');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10008, 3,'502');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10009, 3,'503');
+INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10010, 3,'504');
+
+
+--*******************************************************************
+--DROP TABLE [Attendance].[Movement]
+--The foreign key was not create because the movement could be from a no registered user
+CREATE TABLE [Attendance].[Movement](
+	[Id] 						[int]			IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[IdSpace]					[int]			NOT NULL,
+	[DocumentNumber] 			[int]			NOT NULL,
+	[RegisterDate] 				[datetime] 		NULL,
+	CONSTRAINT Fk_Movement_IdSpace FOREIGN KEY  ([IdSpace]) REFERENCES [Integration].[Space](Id)
+);
+GO
+
+ALTER TABLE  [Attendance].[Movement] ADD  CONSTRAINT [DF_Movement_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+--*******************************************************************
+
 --AcademicPeriod
 --=> Period
 CREATE TABLE [Integration].[AcademicPeriod](
@@ -526,26 +583,28 @@ INSERT INTO [Integration].[Schedule]([TeacherDocumentNumber], [IdCourse], [IdAca
 CREATE TABLE [Integration].[ScheduleDetail](
 	[Id]						INT			PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	[IdSchedule]				INT			NOT NULL,
+	[IdSpace]					INT			NOT NULL,
 	[DayOfTheWeek]				INT			NOT NULL,
 	[StartTime]					TIME		NOT NULL,
 	[EndTime]					TIME		NOT NULL,
 	[RegisterDate] 				[datetime] 	NULL,
-	CONSTRAINT Fk_Schedule_IdSchedule FOREIGN KEY  (IdSchedule) REFERENCES [Integration].[Schedule](Id)
+	CONSTRAINT Fk_Schedule_IdSchedule FOREIGN KEY  (IdSchedule) REFERENCES [Integration].[Schedule](Id),
+	CONSTRAINT Fk_Space_IdSpaceType FOREIGN KEY  (IdSpace) REFERENCES [Integration].[Space](Id)
 );
 GO
 
 ALTER TABLE  [Integration].[ScheduleDetail] ADD  CONSTRAINT [DF_ScheduleDetail_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
-INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(1,1,'18:30:00', '21:30:00');
-INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(1,5,'18:30:00', '21:30:00');
-INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(2,2,'18:30:00', '21:30:00');
-INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(3,2,'18:30:00', '21:30:00');
-INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(7,4,'18:30:00', '21:30:00');
-INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(4,1,'18:30:00', '21:30:00');
-INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(5,3,'18:30:00', '21:30:00');
-INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(6,5,'18:30:00', '21:30:00');
-INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(7,6,'7:30:00', '9:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(1,2,1,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(1,2,5,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(2,2,2,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(3,2,2,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(7,2,4,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(4,2,1,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(5,2,3,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(6,2,5,'18:30:00', '21:30:00');
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(7,2,6,'7:30:00', '9:30:00');
 
 CREATE TABLE [Integration].[EnrollmentStatus](
 	[Id] 			[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
