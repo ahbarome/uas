@@ -56,6 +56,11 @@
             return _attendanceFacade.GetCourseByTeacherId(teacherId);
         }
 
+        public dynamic GetCurrentCourseByTeacherDocumentNumber(int teacherDocumentNumber)
+        {
+            return _attendanceFacade.GetCurrentCourseByTeacherDocumentNumber(teacherDocumentNumber);
+        }
+
         public dynamic GetStatisticsByCourseAndTeacherId(int courseId, int teacherId)
         {
             return _attendanceFacade.GetStatisticsByCourseAndTeacherId(courseId, teacherId);

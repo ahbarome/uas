@@ -1336,7 +1336,7 @@ SELECT * FROM [NonAttendance].[StatusApproverByRole]
 --SELECT * FROM [Integration].[EnrollmentDetailView]
 
 --*******************************************************************
-CREATE VIEW [Attendance].[StudentMovementView] AS
+ALTER VIEW [Attendance].[StudentMovementView] AS
 SELECT	[MOV].[DocumentNumber]							AS DocumentNumber
 		, [STU].[Code]									AS Code
 		, [STU].[Name]									AS Name
@@ -1349,11 +1349,16 @@ SELECT	[MOV].[DocumentNumber]							AS DocumentNumber
 		, 4												AS RoleId
 		, 'Student'										AS RoleName
 		, 'Estudiante'									AS RoleAlias
+		, [SPA].[Id]									AS SpaceId
+		, [SPA].[Name]									AS SpaceName
+		, [SPT].[Type]									AS SpaceType
 		, [MOV].[RegisterDate]							AS MovementDateTime
 		, CONVERT(DATE, [MOV].[RegisterDate])			AS MovementDate
 		, CONVERT(TIME, [MOV].[RegisterDate])			AS MovementTime
 FROM		[Attendance].[Movement]				[MOV]
 INNER JOIN	[Integration].[Student]				[STU] ON [STU].[DocumentNumber] = [MOV].[DocumentNumber]
+INNER JOIN	[Integration].[Space]				[SPA] ON [SPA].[Id]				= [MOV].[IdSpace]
+INNER JOIN	[Integration].[SpaceType]			[SPT] ON [SPT].[Id]				= [SPA].[IdSpaceType]
 
 
 CREATE VIEW [Attendance].[TeacherMovementView] AS
@@ -1369,11 +1374,16 @@ SELECT	 [MOV].[DocumentNumber]							AS DocumentNumber
 		, 3												AS RoleId
 		, 'Teacher'										AS RoleName
 		, 'Profesor'									AS RoleAlias
+		, [SPA].[Id]									AS SpaceId
+		, [SPA].[Name]									AS SpaceName
+		, [SPT].[Type]									AS SpaceType
 		, [MOV].[RegisterDate]							AS MovementDateTime
 		, CONVERT(DATE, [MOV].[RegisterDate])			AS MovementDate
 		, CONVERT(TIME, [MOV].[RegisterDate])			AS MovementTime
 FROM		[Attendance].[Movement]				[MOV]
 INNER JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [MOV].[DocumentNumber]
+INNER JOIN	[Integration].[Space]				[SPA] ON [SPA].[Id]				= [MOV].[IdSpace]
+INNER JOIN	[Integration].[SpaceType]			[SPT] ON [SPT].[Id]				= [SPA].[IdSpaceType]
 GO
 
 --SELECT * FROM [Attendance].[MovementView] 
@@ -1396,6 +1406,7 @@ SELECT	 [SCH].[Id]										AS ScheduleId
 		, DATENAME(WEEKDAY, [SCD].[DayOfTheWeek] - 1)   AS DayOfTheWeekName
 		, [SCD].[StartTime]
 		, [SCD].[EndTime]
+		, [SPA].[Id]									AS SpaceId
 		, [SPA].[Name]									AS SpaceName
 		, [SPT].[Type]									AS SpaceType
 		, [ACA].[Period]								AS AcademicPeriod
@@ -1428,6 +1439,7 @@ SELECT	[ENR].[Id]										AS EnrollmentId
 		, DATENAME(WEEKDAY, [SCD].[DayOfTheWeek] - 1)   AS DayOfTheWeekName
 		, [SCD].[StartTime]
 		, [SCD].[EndTime]
+		, [SPA].[Id]									AS SpaceId
 		, [SPA].[Name]									AS SpaceName
 		, [SPT].[Type]									AS SpaceType
 		, [ACA].[Period]								AS AcademicPeriod
@@ -1500,6 +1512,122 @@ LEFT JOIN	[Integration].[Fringe]				[FRI] ON [FRI].[Id]				= [STU].[IdFringe]
 LEFT JOIN	[Integration].[EnrollmentStatus]	[ENS] ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus]
 
 
+--*******************************************************************
+
+USE [UAS]
+GO
+
+/****** Object:  UserDefinedFunction [Integration].[GetCurrentSemester]    Script Date: 28/7/2016 5:43:44 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-28
+-- Description:	Get the current semester
+-- =============================================
+CREATE FUNCTION [Integration].[GetCurrentSemester]()
+
+RETURNS INT
+AS
+BEGIN
+	DECLARE @Semester INT
+	IF( DATEPART(MONTH, GETDATE()) > 6)
+	BEGIN
+		SET @Semester = 2;
+	END
+	ELSE
+		SET @Semester = 1;
+
+	RETURN @Semester
+
+END
+
+GO
+
+-- =============================================
+
+
+USE [UAS]
+GO
+
+/****** Object:  UserDefinedFunction [Attendance].[GetTodayMovements]    Script Date: 28/7/2016 5:44:01 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-28
+-- Description:	Get only the movements for today
+-- =============================================
+
+CREATE FUNCTION [Attendance].[GetTodayMovements]()
+RETURNS TABLE
+AS
+RETURN 
+(
+	SELECT	DISTINCT [MOV].[DocumentNumber]
+	FROM	[Attendance].[Movement] [MOV] WITH(NOLOCK)
+	WHERE	CONVERT(DATE, [MOV].[RegisterDate]) = CONVERT(DATE, GETDATE())
+	GROUP BY [MOV].[DocumentNumber]
+)
+
+GO
+
+
+-- =============================================
+
+
+USE [UAS]
+GO
+
+/****** Object:  UserDefinedFunction [Integration].[GetEnrollmentStudents]    Script Date: 28/7/2016 5:46:11 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-28
+-- Description:	Get enrollment students by
+--				course id, start time, end time
+--				and student document				
+-- =============================================
+
+CREATE FUNCTION [Integration].[GetEnrollmentStudents](@CourseId INT, @CourseStartTime TIME, @CourseEndTime TIME, @CurrentDocumentNumberOfTheMovement INT)
+RETURNS TABLE
+AS
+RETURN 
+(
+	SELECT	[SEV].[StudentDocumentNumber]
+				, [SEV].[StudentCode]
+				, [SEV].[StudentFullName]
+				, [SEV].[StudentEmail]
+				, [SEV].[StudentTelephoneNumber]
+				, [SEV].[StudentAddress]
+				, [SEV].[StudentImageRelativePath]
+				, [SEV].[CareerName]
+				, [SEV].[CourseName]
+				, [SEV].[EnrollmentStatus]
+		FROM	[Integration].[StudentEnrollmentView] [SEV] WITH(NOLOCK)
+		WHERE	[SEV].[CourseId]				= @CourseId AND 
+				[SEV].[StartTime]				= @CourseStartTime AND
+				[SEV].[EndTime]					= @CourseEndTime  AND
+				[SEV].[StudentDocumentNumber]	= @CurrentDocumentNumberOfTheMovement
+)
+
+GO
+
+
+--*******************************************************************
 --
 
 USE [UAS]
@@ -1552,44 +1680,26 @@ BEGIN
 		EnrollmentStatus			NVARCHAR(MAX));
 	--==================================================
 
-	--Apply refactoring make a function
-	IF( DATEPART(MONTH, GETDATE()) > 6)
-	BEGIN
-		SET @CurrentSemester = 2;
-	END
-	ELSE
-		SET @CurrentSemester = 1;
+	SET @CurrentSemester = [Integration].GetCurrentSemester()
 
 	SET @CurrentDayOfTheWeek = DATEPART(WEEKDAY, GETDATE());
 
 	--==================================================
-	--Apply refactoring make a function or openquery
-	SELECT		 @CourseStartTime = [SCD].[StartTime]
-				, @CourseEndTime = [SCD].[EndTime]
-				, @CourseId = [COU].[Id]
-	FROM		[Integration].[Schedule]			[SCH] WITH(NOLOCK)
-	INNER JOIN	[Integration].[ScheduleDetail]		[SCD] WITH(NOLOCK) ON [SCD].[IdSchedule]		= [SCH].[Id]
-	INNER JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]								= [SCH].[IdAcademicPeriod]	
-	INNER JOIN	[Integration].[Course]				[COU] WITH(NOLOCK) ON [COU].[Id]				= [SCH].[IdCourse] 
-	WHERE	[ACA].[Semester]				= @CurrentSemester AND
-			--@TODO: Enable this after tests
-			--[SCD].[DayOfTheWeek]			= @CurrentDayOfTheWeek AND 
-			[SCH].[TeacherDocumentNumber]	= @TeacherDocumentNumber
+	
+	SELECT  TOP 1 @CourseStartTime		= [CCT].[StartTime]
+				, @CourseEndTime		= [CCT].[EndTime]
+				, @CourseId				= [CCT].[CourseId] 
+	FROM	 [Integration].GetCurrentCoursesByTeacherDocumentNumber( @TeacherDocumentNumber ) [CCT]
 
-
+	--==================================================
 	--Get the movements of the current day
 	DECLARE MovementsCursor CURSOR FOR
-		SELECT	DISTINCT [MOV].[DocumentNumber]
-				, CONVERT(DATE, MIN( [MOV].[RegisterDate] ))
-				, CONVERT(TIME, MIN( [MOV].[RegisterDate] ))
-		FROM	[Attendance].[Movement] [MOV] WITH(NOLOCK)
-		WHERE	CONVERT(DATE, [MOV].[RegisterDate]) = CONVERT(DATE, GETDATE())
-		GROUP BY [MOV].[DocumentNumber];
+		SELECT * FROM [Attendance].GetTodayMovements()
 	
 	OPEN MovementsCursor;
 	
 	FETCH NEXT FROM MovementsCursor   
-	INTO @CurrentDocumentNumberOfTheMovement, @CurrentDateOfTheMovement, @CurrentTimeOfTheMovement;
+	INTO @CurrentDocumentNumberOfTheMovement
 
 	WHILE @@FETCH_STATUS = 0  
 	BEGIN
@@ -1605,23 +1715,10 @@ BEGIN
 			CareerName,
 			CourseName,
 			EnrollmentStatus) 
-		SELECT	[SEV].[StudentDocumentNumber]
-				, [SEV].[StudentCode]
-				, [SEV].[StudentFullName]
-				, [SEV].[StudentEmail]
-				, [SEV].[StudentTelephoneNumber]
-				, [SEV].[StudentAddress]
-				, [SEV].[StudentImageRelativePath]
-				, [SEV].[CareerName]
-				, [SEV].[CourseName]
-				, [SEV].[EnrollmentStatus]
-		FROM	[Integration].[StudentEnrollmentView] [SEV] WITH(NOLOCK)
-		WHERE	[SEV].[CourseId]				= @CourseId AND 
-				[SEV].[StartTime]				= @CourseStartTime AND
-				[SEV].[EndTime]					= @CourseEndTime  AND
-				[SEV].[StudentDocumentNumber]	= @CurrentDocumentNumberOfTheMovement;   
+		SELECT	*
+		FROM	[Integration].GetEnrollmentStudents(@CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement );   
 		
-		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement, @CurrentDateOfTheMovement, @CurrentTimeOfTheMovement;
+		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement
 	END
 
 	CLOSE MovementsCursor;  
@@ -1643,7 +1740,6 @@ BEGIN
 	--==================================================
 
 END
-
 GO
 
 
@@ -1737,35 +1833,21 @@ BEGIN
 		EnrollmentStatus			NVARCHAR(MAX));
 	--==================================================
 
-	--Apply refactoring make a function
-	IF( DATEPART(MONTH, GETDATE()) > 6)
-	BEGIN
-		SET @CurrentSemester = 2;
-	END
-	ELSE
-		SET @CurrentSemester = 1;
+	SET @CurrentSemester = [Integration].GetCurrentSemester()
 
 	SET @CurrentDayOfTheWeek = DATEPART(WEEKDAY, GETDATE());
 
 	--==================================================
 	
-	SELECT  TOP 1 @CourseStartTime		= [EDV].[StartTime]
-				, @CourseEndTime	= [EDV].[EndTime]
-				, @CourseId			= [EDV].[CourseId] 
-	FROM	[Integration].[EnrollmentDetailView] [EDV]
-	WHERE	( [EDV].EndDate >= GETDATE() AND 
-			[EDV].StartDate <= GETDATE() ) AND-- Materias del semestre
-			[EDV].DayOfTheWeek = DATEPART(WEEKDAY, GETDATE()) AND -- Materias de hoy
-			( [EDV].EndTime >= CONVERT(TIME, GETDATE()) AND 
-			[EDV].StartTime <=  CONVERT(TIME, GETDATE() ))-- Materias en curso
-	ORDER BY [EDV].[StartTime] DESC
+	SELECT  TOP 1 @CourseStartTime		= [CCT].[StartTime]
+				, @CourseEndTime		= [CCT].[EndTime]
+				, @CourseId				= [CCT].[CourseId] 
+	FROM	 [Integration].GetCurrentCoursesByTeacherDocumentNumber( @TeacherDocumentNumber ) [CCT]
 
+	--==================================================
 	--Get the movements of the current day
 	DECLARE MovementsCursor CURSOR FOR
-		SELECT	DISTINCT [MOV].[DocumentNumber]
-		FROM	[Attendance].[Movement] [MOV] WITH(NOLOCK)
-		WHERE	CONVERT(DATE, [MOV].[RegisterDate]) = CONVERT(DATE, GETDATE())
-		GROUP BY [MOV].[DocumentNumber];
+		SELECT * FROM [Attendance].GetTodayMovements()
 	
 	OPEN MovementsCursor;
 	
@@ -1786,21 +1868,8 @@ BEGIN
 			CareerName,
 			CourseName,
 			EnrollmentStatus) 
-		SELECT	[SEV].[StudentDocumentNumber]
-				, [SEV].[StudentCode]
-				, [SEV].[StudentFullName]
-				, [SEV].[StudentEmail]
-				, [SEV].[StudentTelephoneNumber]
-				, [SEV].[StudentAddress]
-				, [SEV].[StudentImageRelativePath]
-				, [SEV].[CareerName]
-				, [SEV].[CourseName]
-				, [SEV].[EnrollmentStatus]
-		FROM	[Integration].[StudentEnrollmentView] [SEV] WITH(NOLOCK)
-		WHERE	[SEV].[CourseId]				= @CourseId AND 
-				[SEV].[StartTime]				= @CourseStartTime AND
-				[SEV].[EndTime]					= @CourseEndTime  AND
-				[SEV].[StudentDocumentNumber]	= @CurrentDocumentNumberOfTheMovement;   
+		SELECT	*
+		FROM	[Integration].GetEnrollmentStudents(@CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement );
 		
 		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement
 	END
@@ -1822,8 +1891,6 @@ BEGIN
 	--==================================================
 
 END
-
-
 GO
 
 

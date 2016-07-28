@@ -1,0 +1,25 @@
+﻿@{
+    var session = @ViewData[UAS.Core.Configuration.ConfigurationManager.SESSION_KEY] as UAS.Core.Session.Entities.Session;
+    var course = ViewBag.Course as UAS.Core.DAL.Common.Model.Course;
+    var teacher = ViewBag.Teacher as UAS.Core.DAL.Common.Model.Teacher;
+}
+
+<div class="profile-image">
+    <img src="@Url.Content(teacher.ImageRelativePath)" class="img-circle circle-border m-b-md" alt="profile">
+</div>
+<div class="profile-info">
+    <div class="">
+        <div>
+            <h2 class="no-margins">
+                @Html.Raw(session.SessionUser.FullName)
+            </h2>
+            <h4>@Html.Raw(session.SessionUser.RoleName)</h4>
+            <small>
+                <strong>Asignatura: </strong> @course.Name<br />
+                <strong>Número de Créditos: </strong> @course.NumberOfCredits<br />
+                <strong>Espacio: </strong> @course.SpaceDescription<br />
+                <strong>Horario: </strong> @string.Concat(course.StartTime, " - ", @course.EndTime)<br />
+            </small>
+        </div>
+    </div>
+</div>

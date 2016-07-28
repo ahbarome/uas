@@ -1,9 +1,6 @@
 ﻿@model IEnumerable<UAS.Core.DAL.Common.Model.StudentMovement>
 @{
     ViewBag.Title = "Aula Virtual";
-    var session = @ViewData[UAS.Core.Configuration.ConfigurationManager.SESSION_KEY] as UAS.Core.Session.Entities.Session;
-    var course = ViewBag.Course as UAS.Core.DAL.Common.Model.Course;
-    var teacher = ViewBag.Teacher as UAS.Core.DAL.Common.Model.Teacher;
 }
 
 <div id="wrapper">
@@ -23,49 +20,10 @@
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row m-b-lg m-t-lg">
             <div class="col-md-6">
-
-                <div class="profile-image">
-                    <img src="@Url.Content(teacher.ImageRelativePath)" class="img-circle circle-border m-b-md" alt="profile">
-                </div>
-                <div class="profile-info">
-                    <div class="">
-                        <div>
-                            <h2 class="no-margins">
-                                @Html.Raw(session.SessionUser.FullName)
-                            </h2>
-                            <h4>@Html.Raw(session.SessionUser.RoleName)</h4>
-                            <small>
-                                <strong>Asignatura: </strong> @course.Name<br/>
-                                <strong>Número de Créditos: </strong> @course.NumberOfCredits<br />
-                                <strong>Descripción: </strong> There are many variations of passages of Lorem Ipsum available, but the majority
-                                have suffered alteration in some form Ipsum available.
-                            </small>
-                        </div>
-                    </div>
-                </div>
+                @Html.Partial("CourseDetailPartial")
             </div>
             <div class="col-md-3">
-                <table class="table small m-b-xs">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong><span class="label label-success">14</span></strong> Asistentes
-                            </td>
-                            <td>
-                                <strong><span class="label label-warning">22</span></strong> Inasistentes
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong><span class="label label-primary">61</span></strong> Matriculados
-                            </td>
-                            <td>
-                                <strong><span class="label label-danger">4</span></strong> No matriculados
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                @Html.Partial("StudentsStatisticPartial")
             </div>
             <div class="col-md-3">
                 <small>Comportamiento Asistencia 24h</small>

@@ -10,6 +10,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdSpace" Type="int" Nullable="false" />
           <Property Name="DocumentNumber" Type="int" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
@@ -38,8 +39,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="NumberOfCredits" Type="int" Nullable="false" />
+          <Property Name="Semester" Type="int" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Enrollment">
@@ -52,8 +55,8 @@
           <Property Name="IdAcademicPeriod" Type="int" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Integration.EnrollmentDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="EnrollmentDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -94,7 +97,7 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TeacherDocumentNumber" Type="int" Nullable="false" />
           <Property Name="IdCourse" Type="int" Nullable="false" />
           <Property Name="IdAcademicPeriod" Type="int" Nullable="false" />
@@ -107,9 +110,28 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdSchedule" Type="int" Nullable="false" />
+          <Property Name="IdSpace" Type="int" Nullable="false" />
           <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
           <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Space">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IdSpaceType" Type="int" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SpaceType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
           <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Student">
@@ -120,13 +142,13 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="LastName" Type="nvarchar" MaxLength="150" />
-          <Property Name="IdCareer" Type="int" Nullable="false" />
-          <Property Name="IdFringe" Type="int" Nullable="false" />
-          <Property Name="RegisterDate" Type="datetime" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" />
           <Property Name="TelephoneNumber" Type="int" />
           <Property Name="Address" Type="nvarchar" MaxLength="250" />
           <Property Name="ImageRelativePath" Type="nvarchar" MaxLength="256" />
+          <Property Name="IdCareer" Type="int" Nullable="false" />
+          <Property Name="IdFringe" Type="int" Nullable="false" />
+          <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Teacher">
           <Key>
@@ -136,11 +158,11 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="LastName" Type="nvarchar" MaxLength="150" />
-          <Property Name="RegisterDate" Type="datetime" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" />
           <Property Name="TelephoneNumber" Type="int" />
           <Property Name="Address" Type="nvarchar" MaxLength="250" />
           <Property Name="ImageRelativePath" Type="nvarchar" MaxLength="256" />
+          <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Attachment">
           <Key>
@@ -244,6 +266,7 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocumentNumber" Type="int" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="80" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="IdRole" Type="int" Nullable="false" />
@@ -251,16 +274,15 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           <Property Name="LastName" Type="nvarchar" MaxLength="150" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" />
           <Property Name="TelephoneNumber" Type="int" />
+          <Property Name="ImageRelativePath" Type="nvarchar" MaxLength="256" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="80" Nullable="false" />
           <Property Name="LastModiticationDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="80" />
-          <Property Name="DocumentNumber" Type="int" Nullable="false" />
-          <Property Name="ImageRelativePath" Type="nvarchar" MaxLength="256" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="StudentEnrollmentView">
           <Key>
             <PropertyRef Name="StudentFullName" />
@@ -292,7 +314,7 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <Property Name="CourseName" Type="nvarchar" MaxLength="250" />
           <Property Name="CourseCredits" Type="int" />
           <Property Name="DayOfTheWeek" Type="int" />
-          <Property Name="DayOfTheWeekName" Type="varchar" MaxLength="9" />
+          <Property Name="DayOfTheWeekName" Type="nvarchar" MaxLength="30" />
           <Property Name="StartTime" Type="time" Precision="7" />
           <Property Name="EndTime" Type="time" Precision="7" />
           <Property Name="AcademicPeriod" Type="int" />
@@ -445,6 +467,18 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Fk_Movement_IdSpace">
+          <End Role="Space" Type="Self.Space" Multiplicity="1" />
+          <End Role="Movement" Type="Self.Movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Space">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movement">
+              <PropertyRef Name="IdSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_PagePermission">
           <End Role="Page" Type="Self.Page" Multiplicity="1" />
           <End Role="PagePermissionByRole" Type="Self.PagePermissionByRole" Multiplicity="*" />
@@ -517,6 +551,18 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Fk_Schedule_IdSpaceType">
+          <End Role="Space" Type="Self.Space" Multiplicity="1" />
+          <End Role="ScheduleDetail" Type="Self.ScheduleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Space">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduleDetail">
+              <PropertyRef Name="IdSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_Schedule_TeacherDocumentNumber">
           <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
           <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
@@ -526,6 +572,18 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
             </Principal>
             <Dependent Role="Schedule">
               <PropertyRef Name="TeacherDocumentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Space_IdSpaceType">
+          <End Role="SpaceType" Type="Self.SpaceType" Multiplicity="1" />
+          <End Role="Space" Type="Self.Space" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpaceType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Space">
+              <PropertyRef Name="IdSpaceType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -580,6 +638,9 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
         <Function Name="GetAllStudentMovementsByTeacherDocumentNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Attendance">
           <Parameter Name="TeacherDocumentNumber" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetCurrentCourseByTeacherDocumentNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
+          <Parameter Name="TeacherDocumentNumber" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="UASModelStoreContainer">
           <EntitySet Name="Movement" EntityType="Self.Movement" Schema="Attendance" store:Type="Tables" />
           <EntitySet Name="AcademicPeriod" EntityType="Self.AcademicPeriod" Schema="Integration" store:Type="Tables" />
@@ -591,6 +652,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <EntitySet Name="HolidayException" EntityType="Self.HolidayException" Schema="Integration" store:Type="Tables" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="Integration" store:Type="Tables" />
           <EntitySet Name="ScheduleDetail" EntityType="Self.ScheduleDetail" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="Space" EntityType="Self.Space" Schema="Integration" store:Type="Tables" />
+          <EntitySet Name="SpaceType" EntityType="Self.SpaceType" Schema="Integration" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="Integration" store:Type="Tables" />
           <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="Integration" store:Type="Tables" />
           <EntitySet Name="Attachment" EntityType="Self.Attachment" Schema="NonAttendance" store:Type="Tables" />
@@ -697,6 +760,10 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
             <End Role="Status" EntitySet="Status" />
             <End Role="Excuse" EntitySet="Excuse" />
           </AssociationSet>
+          <AssociationSet Name="Fk_Movement_IdSpace" Association="Self.Fk_Movement_IdSpace">
+            <End Role="Space" EntitySet="Space" />
+            <End Role="Movement" EntitySet="Movement" />
+          </AssociationSet>
           <AssociationSet Name="Fk_PagePermission" Association="Self.Fk_PagePermission">
             <End Role="Page" EntitySet="Page" />
             <End Role="PagePermissionByRole" EntitySet="PagePermissionByRole" />
@@ -721,9 +788,17 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
             <End Role="Schedule" EntitySet="Schedule" />
             <End Role="ScheduleDetail" EntitySet="ScheduleDetail" />
           </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_IdSpaceType" Association="Self.Fk_Schedule_IdSpaceType">
+            <End Role="Space" EntitySet="Space" />
+            <End Role="ScheduleDetail" EntitySet="ScheduleDetail" />
+          </AssociationSet>
           <AssociationSet Name="Fk_Schedule_TeacherDocumentNumber" Association="Self.Fk_Schedule_TeacherDocumentNumber">
             <End Role="Teacher" EntitySet="Teacher" />
             <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Space_IdSpaceType" Association="Self.Fk_Space_IdSpaceType">
+            <End Role="SpaceType" EntitySet="SpaceType" />
+            <End Role="Space" EntitySet="Space" />
           </AssociationSet>
           <AssociationSet Name="Fk_StatusApproverByRole_IdRole" Association="Self.Fk_StatusApproverByRole_IdRole">
             <End Role="Role" EntitySet="Role" />
@@ -878,6 +953,23 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <FunctionImport Name="GetAllStudentMovementsByTeacherDocumentNumber" ReturnType="Collection(UASModel.GetAllStudentMovementsByTeacherDocumentNumber_Result)">
           <Parameter Name="TeacherDocumentNumber" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Spaces" EntityType="UASModel.Space" />
+          <EntitySet Name="SpaceTypes" EntityType="UASModel.SpaceType" />
+          <AssociationSet Name="Fk_Movement_IdSpace" Association="UASModel.Fk_Movement_IdSpace">
+            <End Role="Space" EntitySet="Spaces" />
+            <End Role="Movement" EntitySet="Movements" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Schedule_IdSpaceType" Association="UASModel.Fk_Schedule_IdSpaceType">
+            <End Role="Space" EntitySet="Spaces" />
+            <End Role="ScheduleDetail" EntitySet="ScheduleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Space_IdSpaceType" Association="UASModel.Fk_Space_IdSpaceType">
+            <End Role="SpaceType" EntitySet="SpaceTypes" />
+            <End Role="Space" EntitySet="Spaces" />
+          </AssociationSet>
+          <FunctionImport Name="GetCurrentCourseByTeacherDocumentNumber" ReturnType="Collection(UASModel.GetCurrentCourseByTeacherDocumentNumber_Result)">
+            <Parameter Name="TeacherDocumentNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -974,6 +1066,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <Property Name="IdSpace" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Space" Relationship="UASModel.Fk_Movement_IdSpace" FromRole="Movement" ToRole="Space" />
         </EntityType>
         <EntityType Name="AcademicPeriod">
           <Key>
@@ -1007,6 +1101,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <Property Name="NumberOfCredits" Type="Int32" Nullable="false" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Schedules" Relationship="UASModel.Fk_Schedule_IdCourse" FromRole="Course" ToRole="Schedule" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Semester" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Enrollment">
           <Key>
@@ -1075,6 +1171,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Schedule" Relationship="UASModel.Fk_Schedule_IdSchedule" FromRole="ScheduleDetail" ToRole="Schedule" />
+          <Property Name="IdSpace" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Space" Relationship="UASModel.Fk_Schedule_IdSpaceType" FromRole="ScheduleDetail" ToRole="Space" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -1472,7 +1570,7 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <Property Name="CourseName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CourseCredits" Type="Int32" />
           <Property Name="DayOfTheWeek" Type="Int32" />
-          <Property Name="DayOfTheWeekName" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="DayOfTheWeekName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="StartTime" Type="Time" Precision="7" />
           <Property Name="EndTime" Type="Time" Precision="7" />
           <Property Name="AcademicPeriod" Type="Int32" />
@@ -1492,6 +1590,83 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <Property Type="String" Name="CareerName" Nullable="true" />
           <Property Type="String" Name="CourseName" Nullable="true" />
           <Property Type="String" Name="EnrollmentStatus" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Space">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IdSpaceType" Type="Int32" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Movements" Relationship="UASModel.Fk_Movement_IdSpace" FromRole="Space" ToRole="Movement" />
+          <NavigationProperty Name="ScheduleDetails" Relationship="UASModel.Fk_Schedule_IdSpaceType" FromRole="Space" ToRole="ScheduleDetail" />
+          <NavigationProperty Name="SpaceType" Relationship="UASModel.Fk_Space_IdSpaceType" FromRole="Space" ToRole="SpaceType" />
+        </EntityType>
+        <EntityType Name="SpaceType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Spaces" Relationship="UASModel.Fk_Space_IdSpaceType" FromRole="SpaceType" ToRole="Space" />
+        </EntityType>
+        <Association Name="Fk_Movement_IdSpace">
+          <End Type="UASModel.Space" Role="Space" Multiplicity="1" />
+          <End Type="UASModel.Movement" Role="Movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Space">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movement">
+              <PropertyRef Name="IdSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Schedule_IdSpaceType">
+          <End Type="UASModel.Space" Role="Space" Multiplicity="1" />
+          <End Type="UASModel.ScheduleDetail" Role="ScheduleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Space">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduleDetail">
+              <PropertyRef Name="IdSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Space_IdSpaceType">
+          <End Type="UASModel.SpaceType" Role="SpaceType" Multiplicity="1" />
+          <End Type="UASModel.Space" Role="Space" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpaceType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Space">
+              <PropertyRef Name="IdSpaceType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetCurrentCourseByTeacherDocumentNumber_Result">
+          <Property Type="Int32" Name="ScheduleId" Nullable="false" />
+          <Property Type="Int32" Name="TeacherDocumentNumber" Nullable="false" />
+          <Property Type="String" Name="TeacherFullName" Nullable="false" MaxLength="301" />
+          <Property Type="Int32" Name="CourseId" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="CourseCredits" Nullable="false" />
+          <Property Type="Int32" Name="DayOfTheWeek" Nullable="false" />
+          <Property Type="String" Name="DayOfTheWeekName" Nullable="true" MaxLength="30" />
+          <Property Type="Time" Name="StartTime" Nullable="false" />
+          <Property Type="Time" Name="EndTime" Nullable="false" />
+          <Property Type="Int32" Name="SpaceId" Nullable="false" />
+          <Property Type="String" Name="SpaceName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="SpaceType" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="AcademicPeriod" Nullable="false" />
+          <Property Type="Int32" Name="AcademicSemester" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1560,6 +1735,7 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <EntitySetMapping Name="Movements">
             <EntityTypeMapping TypeName="UASModel.Movement">
               <MappingFragment StoreEntitySet="Movement">
+                <ScalarProperty Name="IdSpace" ColumnName="IdSpace" />
                 <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
                 <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1591,6 +1767,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="UASModel.Course">
               <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
                 <ScalarProperty Name="NumberOfCredits" ColumnName="NumberOfCredits" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1651,6 +1829,7 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <EntitySetMapping Name="ScheduleDetails">
             <EntityTypeMapping TypeName="UASModel.ScheduleDetail">
               <MappingFragment StoreEntitySet="ScheduleDetail">
+                <ScalarProperty Name="IdSpace" ColumnName="IdSpace" />
                 <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
@@ -1822,6 +2001,49 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
                 <ScalarProperty Name="CareerName" ColumnName="CareerName" />
                 <ScalarProperty Name="CourseName" ColumnName="CourseName" />
                 <ScalarProperty Name="EnrollmentStatus" ColumnName="EnrollmentStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Spaces">
+            <EntityTypeMapping TypeName="UASModel.Space">
+              <MappingFragment StoreEntitySet="Space">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IdSpaceType" ColumnName="IdSpaceType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpaceTypes">
+            <EntityTypeMapping TypeName="UASModel.SpaceType">
+              <MappingFragment StoreEntitySet="SpaceType">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetCurrentCourseByTeacherDocumentNumber" FunctionName="UASModel.Store.GetCurrentCourseByTeacherDocumentNumber">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetCurrentCourseByTeacherDocumentNumber_Result">
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+                <ScalarProperty Name="TeacherDocumentNumber" ColumnName="TeacherDocumentNumber" />
+                <ScalarProperty Name="TeacherFullName" ColumnName="TeacherFullName" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseCredits" ColumnName="CourseCredits" />
+                <ScalarProperty Name="DayOfTheWeek" ColumnName="DayOfTheWeek" />
+                <ScalarProperty Name="DayOfTheWeekName" ColumnName="DayOfTheWeekName" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="SpaceId" ColumnName="SpaceId" />
+                <ScalarProperty Name="SpaceName" ColumnName="SpaceName" />
+                <ScalarProperty Name="SpaceType" ColumnName="SpaceType" />
+                <ScalarProperty Name="AcademicPeriod" ColumnName="AcademicPeriod" />
+                <ScalarProperty Name="AcademicSemester" ColumnName="AcademicSemester" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

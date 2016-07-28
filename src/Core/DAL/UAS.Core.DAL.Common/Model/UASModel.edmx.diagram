@@ -52,6 +52,11 @@
         <AssociationConnector Association="UASModel.Fk_StatusApproverByRole_IdStatus" />
         <AssociationConnector Association="UASModel.Fk_StatusApproverByRole_IdRole" />
         <EntityTypeShape EntityType="UASModel.StudentEnrollmentView" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="UASModel.Space" Width="1.5" PointX="0.75" PointY="10.5" />
+        <EntityTypeShape EntityType="UASModel.SpaceType" Width="1.5" PointX="1.5" PointY="6.625" />
+        <AssociationConnector Association="UASModel.Fk_Movement_IdSpace" />
+        <AssociationConnector Association="UASModel.Fk_Schedule_IdSpaceType" />
+        <AssociationConnector Association="UASModel.Fk_Space_IdSpaceType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

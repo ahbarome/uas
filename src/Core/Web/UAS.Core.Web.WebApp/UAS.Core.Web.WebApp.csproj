@@ -1773,6 +1773,8 @@
     <Content Include="Views\Attendance\VirtualStudentsClassRoom.cshtml" />
     <Content Include="Views\Attendance\VirtualTeachersClassRoom.cshtml" />
     <Content Include="Views\Attendance\VirtualStudentsClassRoomPartial.cshtml" />
+    <Content Include="Views\Attendance\StudentsStatisticPartial.cshtml" />
+    <Content Include="Views\Attendance\CourseDetailPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1808,6 +1810,9 @@
       <Project>{9611af93-e264-4366-aa99-1b7712c3148a}</Project>
       <Name>UAS.Core.Session</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
