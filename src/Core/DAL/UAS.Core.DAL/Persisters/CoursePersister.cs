@@ -26,18 +26,23 @@ namespace UAS.Core.DAL.Persisters
         {
             var current = base.Entities.GetCurrentCourseByTeacherDocumentNumber(teacherDocumentNumber).FirstOrDefault();
 
-            var course = new Course
+            if (current != null)
             {
-                Id = current.CourseId,
-                Name = current.CourseName,
-                NumberOfCredits = current.CourseCredits,
-                Semester = current.AcademicSemester,
-                SpaceDescription = string.Format("{0} {1}", current.SpaceType, current.SpaceName),
-                StartTime = current.StartTime,
-                EndTime = current.EndTime
-            };
+                var course = new Course
+                {
+                    Id = current.CourseId,
+                    Name = current.CourseName,
+                    NumberOfCredits = current.CourseCredits,
+                    Semester = current.AcademicSemester,
+                    SpaceDescription = string.Format("{0} {1}", current.SpaceType, current.SpaceName),
+                    StartTime = current.StartTime,
+                    EndTime = current.EndTime
+                };
 
-            return course;
+                return course;
+            }
+
+            return null;
         }
     }
 }

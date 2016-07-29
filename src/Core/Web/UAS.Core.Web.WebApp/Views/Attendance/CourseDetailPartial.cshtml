@@ -15,10 +15,10 @@
             </h2>
             <h4>@Html.Raw(session.SessionUser.RoleName)</h4>
             <small>
-                <strong>Asignatura: </strong> @course.Name<br />
-                <strong>Número de Créditos: </strong> @course.NumberOfCredits<br />
-                <strong>Espacio: </strong> @course.SpaceDescription<br />
-                <strong>Horario: </strong> @string.Concat(course.StartTime, " - ", @course.EndTime)<br />
+                <strong>Asignatura: </strong> @if (course != null) { Html.Raw(course.Name); }<br />
+                <strong>Número de Créditos: </strong> @if (course != null) { Html.Raw(course.NumberOfCredits); }<br />
+                <strong>Espacio: </strong> @if (course != null) { Html.Raw(course.SpaceDescription); }<br />
+                <strong>Horario: </strong> @if (course != null) { Html.Raw(string.Concat(course.StartTime, " - ", @course.EndTime)); }<br />
             </small>
         </div>
     </div>
