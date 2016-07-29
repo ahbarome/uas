@@ -60,14 +60,18 @@
         {
             var user = GetUser(username, password);
 
-            foreach (var pagePermission in user.Role.PagePermissionByRoles)
+            if(user.Role != null && user.Role.PagePermissionByRoles != null)
             {
-                var allowedPage = pagePermission.Page.MenuItem.Replace(ABSOLUTE_PATH_CHAR_INDICATOR, string.Empty);
-                if (allowedPage.Equals(page))
+                foreach (var pagePermission in user.Role.PagePermissionByRoles)
                 {
-                    return true;
+                    var allowedPage = pagePermission.Page.MenuItem.Replace(ABSOLUTE_PATH_CHAR_INDICATOR, string.Empty);
+                    if (allowedPage.Equals(page))
+                    {
+                        return true;
+                    }
                 }
             }
+            
             return false;
         }
 

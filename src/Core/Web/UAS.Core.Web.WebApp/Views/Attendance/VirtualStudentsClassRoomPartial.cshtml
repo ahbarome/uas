@@ -34,6 +34,11 @@
                     <h3><strong>@movement.FullName</strong></h3>
                     <h4><strong>Estudiante</strong></h4>
                     <small>
+                        <strong># Documento: </strong>
+                        <br />
+                        @movement.DocumentNumber<br />
+                    </small>
+                    <small>
                         <strong>Matrícula: </strong>
                         <br />
                         <span class="@GetLabelForEnrollmentStatus(@movement.EnrollmentStatus)">@movement.EnrollmentStatus</span>

@@ -42,6 +42,59 @@ GO
 --INTEGRATION SCHEMA
 --*******************************************************************
 --*******************************************************************
+--GETCURRENTDAY FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-29
+-- Description:	Get the current day
+-- =============================================
+CREATE FUNCTION [Integration].[GetCurrentDay]()
+
+RETURNS INT
+AS
+BEGIN
+	
+	RETURN DATEPART(WEEKDAY, GETDATE() - 1)
+
+END
+
+GO
+
+--*******************************************************************
+--GETCURRENTCOURSESBYDATE FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-28
+-- Description:	Get the courses by specific date
+-- =============================================
+CREATE FUNCTION [Integration].[GetCurrentCoursesByDate](@Date DATE = NULL)
+RETURNS TABLE
+AS
+RETURN 
+(
+	SELECT	* 
+	FROM	[Integration].[ScheduleDetailView] [SDV]
+	WHERE	( CONVERT(DATE, [SDV].[EndDate]) >= @Date AND CONVERT(DATE,[SDV].[StartDate]) <=  @Date ) AND-- Course of the semester
+			[SDV].[DayOfTheWeek] = DATEPART(WEEKDAY, CONVERT(DATETIME, @Date) - 1)
+)
+
+GO
+
+--*******************************************************************
 --GETCURRENTCOURSESBYTEACHERDOCUMENTNUMBER FUNCTION
 --*******************************************************************
 SET ANSI_NULLS ON
@@ -150,4 +203,71 @@ END
 
 GO
 
+--*******************************************************************
+--GETSTUDENTSSUMMARYBYCOURSEID FUNCTION
+--*******************************************************************
+USE [UAS]
+GO
+
+/****** Object:  UserDefinedFunction [Integration].[GetStudentsSummaryByCourseId]    Script Date: 29/7/2016 5:48:21 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-29
+-- Description:	Get the	students summary for
+--				each course	
+-- =============================================
+
+CREATE FUNCTION [Integration].[GetStudentsSummaryByCourseId](@CourseId INT)
+RETURNS TABLE
+AS
+RETURN 
+(
+	SELECT	[CAE].[CourseId]
+		, [CAE].[CourseName]
+		, [CAE].[EnrollmentStatus]
+		, ISNULL([CAE].[TotalActive], 0)			AS TotalStudentsActive
+		, ISNULL([CCE].[TotalCanceled], 0)			AS TotalStudentsCanceled
+		, ISNULL([CPE].[TotalPendingByPayment], 0)	AS TotalStudentsPendingByPayment
+	FROM	(
+	SELECT	[EDV].[CourseId]
+			,  [EDV].[CourseName]
+			, [EDV].[EnrollmentStatus]
+			, COUNT( [EDV].[EnrollmentStatus] ) AS TotalActive
+	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	WHERE	[EDV].[EnrollmentStatus]	= 'Activa'
+	GROUP BY [EDV].[CourseId]
+			,  [EDV].[CourseName]
+			, [EDV].[EnrollmentStatus] ) [CAE] --Couses with active enrollment
+	LEFT JOIN (
+				SELECT	[EDV].[CourseId]
+						, [EDV].[CourseName]
+						, [EDV].[EnrollmentStatus]
+						, COUNT( [EDV].[EnrollmentStatus] ) AS TotalCanceled
+				FROM	[Integration].[EnrollmentDetailView] [EDV]
+				WHERE	[EDV].[EnrollmentStatus]	= 'Cancelada' 
+				GROUP BY [EDV].[CourseId]
+						,  [EDV].[CourseName]
+						, [EDV].[EnrollmentStatus] ) AS [CCE] --Couses with cancel enrollment 
+				ON [CAE].[CourseId] = [CCE].[CourseId]
+	LEFT JOIN (
+				SELECT	[EDV].[CourseId]
+						, [EDV].[CourseName]
+						, [EDV].[EnrollmentStatus]
+						, COUNT( [EDV].[EnrollmentStatus] ) AS TotalPendingByPayment
+				FROM	[Integration].[EnrollmentDetailView] [EDV]
+				WHERE	[EDV].[EnrollmentStatus]	= 'Pendiente por pago'
+				GROUP BY [EDV].[CourseId]
+						,  [EDV].[CourseName]
+						, [EDV].[EnrollmentStatus] ) AS [CPE]
+				ON [CAE].[CourseId] = [CPE].[CourseId]
+	WHERE	[CAE].[CourseId] = @CourseId
+)
+
+GO
 
