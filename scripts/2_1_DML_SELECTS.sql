@@ -3,6 +3,9 @@
 -- Create date: 2016-07-29
 -- Description: Helper query
 --*******************************************************************
+USE [UAS]
+GO
+--*******************************************************************
 SELECT * FROM [Security].[User]
 SELECT * FROM [Security].[Role]
 SELECT * FROM [Security].[Page]
@@ -20,12 +23,23 @@ SELECT	*
 FROM	Integration.ScheduleDetailView
 WHERE	DayOfTheWeek = [Integration].[GetCurrentDay]()
 
+SELECT  [Integration].[GetCurrentDay]()
+
 SELECT	*
-FROM	[Integration].[GetStudentsSummaryByCourseId](13)
+FROM	[Integration].[GetCourseSummaryById](13)
+
+
+SELECT	*
+FROM	[Integration].[GetCoursesWithTotalStudents]()
+
+SELECT	*
+FROM	[Integration].[GetCourseWithTotalStudentsById](13)
+
 
 SELECT	*
 FROM	[Integration].[EnrollmentDetailView] [EDV]
-WHERE	[EDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]()
+WHERE	[EDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]() AND 
+		[EDV].[CourseId] = 13
 
 SELECT	* 
 FROM	[Attendance].[MovementView]

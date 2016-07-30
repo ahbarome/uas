@@ -1773,8 +1773,10 @@
     <Content Include="Views\Attendance\VirtualStudentsClassRoom.cshtml" />
     <Content Include="Views\Attendance\VirtualTeachersClassRoom.cshtml" />
     <Content Include="Views\Attendance\VirtualStudentsClassRoomPartial.cshtml" />
-    <Content Include="Views\Attendance\StudentsStatisticPartial.cshtml" />
+    <Content Include="Views\Attendance\CourseStatisticPartial.cshtml" />
     <Content Include="Views\Attendance\CourseDetailPartial.cshtml" />
+    <Content Include="Views\Attendance\CourseAttendanceStatisticPartial.cshtml" />
+    <Content Include="Views\Attendance\CourseAttendanceGraphPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

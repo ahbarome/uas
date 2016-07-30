@@ -55,8 +55,8 @@
           <Property Name="IdAcademicPeriod" Type="int" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UAS.Integration.EnrollmentDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="EnrollmentDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -281,8 +281,8 @@ warning 6002: The table/view 'UAS.Integration.EnrollmentDetail' does not have a 
           <Property Name="LastModiticationDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="80" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="StudentEnrollmentView">
           <Key>
             <PropertyRef Name="StudentFullName" />
@@ -638,7 +638,23 @@ warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not ha
         <Function Name="GetAllStudentMovementsByTeacherDocumentNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Attendance">
           <Parameter Name="TeacherDocumentNumber" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetCourseSummaryById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
+          <Parameter Name="CourseId" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="CourseId" Type="int" Nullable="false" />
+                <Property Name="CourseName" Type="nvarchar" MaxLength="250" Nullable="false" />
+                <Property Name="EnrollmentStatus" Type="nvarchar" MaxLength="80" Nullable="false" />
+                <Property Name="Total" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="GetCurrentCourseByTeacherDocumentNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
+          <Parameter Name="TeacherDocumentNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetCurrentCourseSummaryByTeacherDocumentNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
           <Parameter Name="TeacherDocumentNumber" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="UASModelStoreContainer">
@@ -968,6 +984,12 @@ warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not ha
             <End Role="Space" EntitySet="Spaces" />
           </AssociationSet>
           <FunctionImport Name="GetCurrentCourseByTeacherDocumentNumber" ReturnType="Collection(UASModel.GetCurrentCourseByTeacherDocumentNumber_Result)">
+          <Parameter Name="TeacherDocumentNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetCourseSummaryById" IsComposable="true" ReturnType="Collection(UASModel.GetCourseSummaryById_Result)">
+            <Parameter Name="CourseId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetCurrentCourseSummaryByTeacherDocumentNumber" ReturnType="Collection(UASModel.GetCurrentCourseSummaryByTeacherDocumentNumber_Result)">
             <Parameter Name="TeacherDocumentNumber" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -1668,6 +1690,18 @@ warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not ha
           <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
           <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="23" />
         </ComplexType>
+        <ComplexType Name="GetCourseSummaryById_Result">
+          <Property Type="Int32" Name="CourseId" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="EnrollmentStatus" Nullable="false" MaxLength="80" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetCurrentCourseSummaryByTeacherDocumentNumber_Result">
+          <Property Type="Int32" Name="CourseId" Nullable="true" />
+          <Property Type="String" Name="CourseName" Nullable="true" />
+          <Property Type="String" Name="EnrollmentStatus" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2044,6 +2078,26 @@ warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not ha
                 <ScalarProperty Name="AcademicSemester" ColumnName="AcademicSemester" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCourseSummaryById" FunctionName="UASModel.Store.GetCourseSummaryById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetCourseSummaryById_Result">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="EnrollmentStatus" ColumnName="EnrollmentStatus" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCurrentCourseSummaryByTeacherDocumentNumber" FunctionName="UASModel.Store.GetCurrentCourseSummaryByTeacherDocumentNumber">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetCurrentCourseSummaryByTeacherDocumentNumber_Result">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="EnrollmentStatus" ColumnName="EnrollmentStatus" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

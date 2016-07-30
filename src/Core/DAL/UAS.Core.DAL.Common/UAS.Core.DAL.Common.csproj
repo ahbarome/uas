@@ -88,7 +88,13 @@
     <Compile Include="Model\GetAllStudentMovementsByTeacherDocumentNumber_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GetCourseSummaryById_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GetCurrentCourseByTeacherDocumentNumber_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetCurrentCourseSummaryByTeacherDocumentNumber_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\HolidayException.cs">
@@ -103,6 +109,7 @@
     <Compile Include="Model\PagePermissionByRole.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Partials\Statistic.cs" />
     <Compile Include="Model\Partials\Course.cs" />
     <Compile Include="Model\Partials\Movement.cs" />
     <Compile Include="Model\Partials\StudentMovement.cs" />

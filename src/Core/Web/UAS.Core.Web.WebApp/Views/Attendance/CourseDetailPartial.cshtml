@@ -11,14 +11,25 @@
     <div class="">
         <div>
             <h2 class="no-margins">
-                @Html.Raw(session.SessionUser.FullName)
+                <strong>
+                    @Html.Raw(session.SessionUser.FullName.ToUpper())
+                </strong>
             </h2>
             <h4>@Html.Raw(session.SessionUser.RoleName)</h4>
             <small>
-                <strong>Asignatura: </strong> @if (course != null) { @course.Name; }<br />
-                <strong>Número de Créditos: </strong> @if (course != null) { @course.NumberOfCredits; }<br />
-                <strong>Espacio: </strong> @if (course != null) { @course.SpaceDescription; }<br />
-                <strong>Horario: </strong> @if (course != null) { var scheduleTime = new HtmlString(string.Concat(@course.StartTime, " - " , @course.EndTime)); @scheduleTime;  } <br />
+                <strong>Asignatura: </strong> @if (course != null)
+                { @course.Name;
+                }<br />
+                <strong>Número de Créditos: </strong> @if (course != null)
+                { @course.NumberOfCredits;
+                }<br />
+                <strong>Espacio: </strong> @if (course != null)
+                { @course.SpaceDescription;
+                }<br />
+                <strong>Horario: </strong> @if (course != null)
+                {
+                    var scheduleTime = new HtmlString(string.Concat(@course.StartTime, " - ", @course.EndTime)); @scheduleTime;
+                } <br />
             </small>
         </div>
     </div>

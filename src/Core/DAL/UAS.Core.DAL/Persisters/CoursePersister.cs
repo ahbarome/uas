@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UAS.Core.DAL.Common.Model;
 
@@ -43,6 +43,66 @@ namespace UAS.Core.DAL.Persisters
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
+        public Statistic GetCourseStatistics(int courseId)
+        {
+            var currentStatistics = base.Entities.GetCourseSummaryById(courseId);
+
+            var statistic = new Statistic { Summary = new Dictionary<string, int>() };
+
+            foreach (var currentStatistic in currentStatistics)
+            {
+                statistic.Id = currentStatistic.CourseId;
+                statistic.Description = currentStatistic.CourseName;
+
+                if (statistic.Summary.ContainsKey(currentStatistic.EnrollmentStatus))
+                {
+                    statistic.Summary[currentStatistic.EnrollmentStatus] +=
+                        statistic.Summary[currentStatistic.EnrollmentStatus] + currentStatistic.Total ?? 0;
+                }
+                else
+                {
+                    statistic.Summary.Add(currentStatistic.EnrollmentStatus, currentStatistic.Total ?? 0);
+                }
+            }
+
+            return statistic;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="teacherDocumentNumber"></param>
+        /// <returns></returns>
+        public Statistic GetCurrentCourseStatistics(int teacherDocumentNumber)
+        {
+            var currentStatistics = base.Entities.GetCurrentCourseSummaryByTeacherDocumentNumber(teacherDocumentNumber);
+
+            var statistic = new Statistic { Summary = new Dictionary<string, int>() };
+
+            foreach (var currentStatistic in currentStatistics)
+            {
+                statistic.Id = currentStatistic.CourseId ?? 0;
+                statistic.Description = currentStatistic.CourseName;
+
+                if (statistic.Summary.ContainsKey(currentStatistic.EnrollmentStatus))
+                {
+                    statistic.Summary[currentStatistic.EnrollmentStatus] +=
+                        statistic.Summary[currentStatistic.EnrollmentStatus] + currentStatistic.Total ?? 0;
+                }
+                else
+                {
+                    statistic.Summary.Add(currentStatistic.EnrollmentStatus, currentStatistic.Total ?? 0);
+                }
+            }
+
+            return statistic;
         }
     }
 }

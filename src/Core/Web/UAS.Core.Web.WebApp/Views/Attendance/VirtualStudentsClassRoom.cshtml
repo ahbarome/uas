@@ -19,16 +19,17 @@
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row m-b-lg m-t-lg">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 @Html.Partial("CourseDetailPartial")
             </div>
-            <div class="col-md-3">
-                @Html.Partial("StudentsStatisticPartial")
+            <div class="col-md-2">
+                @Html.Partial("CourseStatisticPartial")
+            </div>
+            <div class="col-md-2">
+                @Html.Partial("CourseAttendanceStatisticPartial")
             </div>
             <div class="col-md-3">
-                <small>Comportamiento Asistencia 24h</small>
-                <h2 class="no-margins">2 048</h2>
-                <div id="sparkline1"></div>
+                @Html.Partial("CourseAttendanceGraphPartial")
             </div>
         </div>
 
@@ -43,6 +44,7 @@
 
 @section Scripts {
     @Scripts.Render("~/plugins/sparkLine")
+    @Scripts.Render("~/plugins/chartJs")
     @Scripts.Render("~/plugins/toastr")
     <script src="~/Scripts/knockout-3.4.0.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>

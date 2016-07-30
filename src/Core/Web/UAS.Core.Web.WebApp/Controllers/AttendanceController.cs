@@ -21,7 +21,11 @@ namespace UAS.Core.Web.WebApp.Controllers
             var teacher = _facade.GetTeacherById(session.SessionUser.IdUser);
             var course = _facade.GetCurrentCourseByTeacherDocumentNumber(teacher.DocumentNumber);
             var studentMovements = _facade.GetAllStudentMovementsWithoutNotificationsByTeacherId(session.SessionUser.IdUser);
+            var statistics = _facade.GetCourseStatistics(course.Id);
+            var attendanceStatistics = _facade.GetCourseAttendanceStatistics(teacher.DocumentNumber);
 
+            ViewBag.CourseAttendanceStatistic = attendanceStatistics;
+            ViewBag.CourseStatistic = statistics;
             ViewBag.Teacher = teacher;
             ViewBag.Course = course;
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
@@ -47,15 +51,37 @@ namespace UAS.Core.Web.WebApp.Controllers
             return PartialView();
         }
 
-        public ActionResult StudentsStatisticPartial()
+        public ActionResult CourseStatisticPartial()
         {
             var session = base.CurrentSession;
             var teacher = _facade.GetTeacherById(session.SessionUser.IdUser);
             var course = _facade.GetCurrentCourseByTeacherDocumentNumber(teacher.DocumentNumber);
-            var statistics = _facade.GetStatisticsByCourseAndTeacherId(course.Id, session.SessionUser.IdUser);
-            ViewBag.Statistics = statistics;
+            var statistics = _facade.GetCourseStatistics(course.Id);
+            ViewBag.CourseStatistic = statistics;
             return PartialView();
         }
+
+        public ActionResult CourseAttendanceStatisticPartial()
+        {
+            var session = base.CurrentSession;
+            var teacher = _facade.GetTeacherById(session.SessionUser.IdUser);
+            var course = _facade.GetCurrentCourseByTeacherDocumentNumber(teacher.DocumentNumber);
+            var attendanceStatistics = _facade.GetCourseAttendanceStatistics(teacher.DocumentNumber);
+
+            ViewBag.CourseAttendanceStatistic = attendanceStatistics;
+            return PartialView();
+        }
+
+        public ActionResult CourseAttendanceGraphPartial()
+        {
+            var session = base.CurrentSession;
+            var teacher = _facade.GetTeacherById(session.SessionUser.IdUser);
+            var attendanceStatistics = _facade.GetCourseAttendanceStatistics(teacher.DocumentNumber);
+
+            ViewBag.CourseAttendanceStatistic = attendanceStatistics;
+            return PartialView();
+        }
+
 
         #endregion Virtual Students Class Room
 
@@ -69,11 +95,13 @@ namespace UAS.Core.Web.WebApp.Controllers
 
         #endregion Virtual Teachers Class Room
 
-        [HttpPost]
-        public JsonResult GetMovements()
+        [HttpPost, ActionName("GetStatistics")]
+        public JsonResult GetCourseAttendanceStatistics()
         {
-            var movements = _facade.GetAllMovementsWithoutNotifications();
-            return Json(movements);
+            var session = base.CurrentSession;
+            var teacher = _facade.GetTeacherById(session.SessionUser.IdUser);
+            var courseAttendance = _facade.GetCourseAttendanceStatistics(teacher.DocumentNumber);
+            return Json(courseAttendance);
         }
         #endregion Actions
     }

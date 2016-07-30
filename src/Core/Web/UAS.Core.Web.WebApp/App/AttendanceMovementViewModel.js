@@ -2,10 +2,6 @@
     var self = this;
     self.movements = ko.observableArray();
     self.loading = ko.observable(true);
-
-    $.post("GetMovements", function (data) {
-        self.movements(data);
-    });
 };
 
 var signalRHubInitialized = false;
@@ -13,7 +9,7 @@ var signalRHubInitialized = false;
 $(function () {
     InitializeKnockOutViewModel();
     InitializeSignalRHubStore();
-    InitializeGraphs();
+    DonutChart();
 });
 
 function InitializeKnockOutViewModel() {
@@ -37,21 +33,15 @@ function InitializeSignalRHubStore() {
         movementsHub.client.broadcastMessage = function (message) {
             console.log("broadcastMessage");
             if (message === "Refresh") {
-                toastr.success('Nuevo asistente', 'UAS+');
+                toastr.info('Nuevo movimiento', 'UAS+');
                 ReloadIndexPartial();
+                ReloadCourseAttendanceStatisticPartial();
+                DonutChart();
             }
         };
 
-        //setInterval(function () {
-        //    var message = "New message";
-        //    toastr.info(message, 'UAS+');
-        //    movementsHub.server.broadcastMessages("New message");
-        //}, 5000);
-
         $.connection.hub.start().done(function () {
-            console.log("Begin start");
             movementsHub.server.initialize();
-            console.log("Done");
             signalRHubInitialized = true;
         });
     }
@@ -61,14 +51,23 @@ function InitializeSignalRHubStore() {
 };
 
 function ReloadIndexPartial() {
-    console.log("ReloadIndexPartial");
+
     $.post("VirtualStudentsClassRoomPartial").done(function (response) {
-        console.log(response);
         $("#attendance").html(response);
         if (!signalRHubInitialized)
             InitializeSignalRHubStore();
     });
 };
+
+function ReloadCourseAttendanceStatisticPartial() {
+
+    $.post("CourseAttendanceStatisticPartial").done(function (response) {
+        $("#course-attendance-statistic").html(response);
+        if (!signalRHubInitialized)
+            InitializeSignalRHubStore();
+    });
+};
+
 
 function InitializeGraphs() {
     $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 48], {
@@ -79,3 +78,42 @@ function InitializeGraphs() {
         fillColor: "transparent"
     });
 };
+
+function DonutChart() {
+
+    $.post("GetStatistics").done(function (statistic) {
+
+        var attendance = {
+            value: statistic.Summary.Asistentes,
+            color: "#a3e1d4",
+            highlight: "#1ab394",
+            label: "Asistencia"
+        };
+
+        var nonAttendance = {
+            value: statistic.Summary.Inasistentes,
+            color: "#A4CEE8",
+            highlight: "#1ab394",
+            label: "Inasistencia"
+        };
+
+        var doughnutData = [
+            attendance,
+            nonAttendance
+        ];
+
+        var doughnutOptions = {
+            segmentShowStroke: true,
+            segmentStrokeColor: "#fff",
+            segmentStrokeWidth: 2,
+            percentageInnerCutout: 45, // This is 0 for Pie charts
+            animationSteps: 100,
+            animationEasing: "easeOutBounce",
+            animateRotate: true,
+            animateScale: false
+        };
+
+        var ctx = document.getElementById("doughnutChart").getContext("2d");
+        var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+    });
+}

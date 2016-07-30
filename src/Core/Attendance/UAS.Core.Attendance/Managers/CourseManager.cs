@@ -1,4 +1,5 @@
-﻿using UAS.Core.DAL.Common.Model;
+﻿using System;
+using UAS.Core.DAL.Common.Model;
 using UAS.Core.DAL.Persisters;
 
 namespace UAS.Core.Attendance.Managers
@@ -7,7 +8,8 @@ namespace UAS.Core.Attendance.Managers
     {
         private CoursePersister _coursePersister;
 
-        public CourseManager() {
+        public CourseManager()
+        {
             _coursePersister = new CoursePersister();
         }
 
@@ -24,6 +26,16 @@ namespace UAS.Core.Attendance.Managers
         internal object GetStatisticsByCourseAndTeacherId(int courseId, int teacherId)
         {
             return _coursePersister.GetCourseByTeacherId(teacherId);
+        }
+
+        internal Statistic GetCourseStatistics(int courseId)
+        {
+            return _coursePersister.GetCourseStatistics(courseId);
+        }
+
+        internal Statistic GetCourseAttendanceStatistics(int teacherDocumentNumber)
+        {
+            return _coursePersister.GetCurrentCourseStatistics(teacherDocumentNumber);
         }
     }
 }

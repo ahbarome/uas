@@ -89,7 +89,7 @@ RETURN
 	SELECT	* 
 	FROM	[Integration].[ScheduleDetailView] [SDV]
 	WHERE	( CONVERT(DATE, [SDV].[EndDate]) >= @Date AND CONVERT(DATE,[SDV].[StartDate]) <=  @Date ) AND-- Course of the semester
-			[SDV].[DayOfTheWeek] = DATEPART(WEEKDAY, CONVERT(DATETIME, @Date) - 1)
+			[SDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]()
 )
 
 GO
@@ -204,12 +204,8 @@ END
 GO
 
 --*******************************************************************
---GETSTUDENTSSUMMARYBYCOURSEID FUNCTION
+--GETCOURSESUMMARYBYID FUNCTION
 --*******************************************************************
-USE [UAS]
-GO
-
-/****** Object:  UserDefinedFunction [Integration].[GetStudentsSummaryByCourseId]    Script Date: 29/7/2016 5:48:21 p. m. ******/
 SET ANSI_NULLS ON
 GO
 
@@ -219,55 +215,93 @@ GO
 -- =============================================
 -- Author:		Agustín Barona
 -- Create date: 2016-07-29
--- Description:	Get the	students summary for
---				each course	
+-- Description:	Get the	course summary by id
 -- =============================================
 
-CREATE FUNCTION [Integration].[GetStudentsSummaryByCourseId](@CourseId INT)
+CREATE FUNCTION [Integration].[GetCourseSummaryById](@CourseId INT)
 RETURNS TABLE
 AS
 RETURN 
 (
-	SELECT	[CAE].[CourseId]
-		, [CAE].[CourseName]
-		, [CAE].[EnrollmentStatus]
-		, ISNULL([CAE].[TotalActive], 0)			AS TotalStudentsActive
-		, ISNULL([CCE].[TotalCanceled], 0)			AS TotalStudentsCanceled
-		, ISNULL([CPE].[TotalPendingByPayment], 0)	AS TotalStudentsPendingByPayment
-	FROM	(
 	SELECT	[EDV].[CourseId]
 			,  [EDV].[CourseName]
 			, [EDV].[EnrollmentStatus]
-			, COUNT( [EDV].[EnrollmentStatus] ) AS TotalActive
+			, COUNT( [EDV].[EnrollmentStatus] ) AS Total
 	FROM	[Integration].[EnrollmentDetailView] [EDV]
-	WHERE	[EDV].[EnrollmentStatus]	= 'Activa'
+	WHERE	[EDV].[CourseId] = @CourseId
 	GROUP BY [EDV].[CourseId]
 			,  [EDV].[CourseName]
-			, [EDV].[EnrollmentStatus] ) [CAE] --Couses with active enrollment
-	LEFT JOIN (
-				SELECT	[EDV].[CourseId]
-						, [EDV].[CourseName]
-						, [EDV].[EnrollmentStatus]
-						, COUNT( [EDV].[EnrollmentStatus] ) AS TotalCanceled
-				FROM	[Integration].[EnrollmentDetailView] [EDV]
-				WHERE	[EDV].[EnrollmentStatus]	= 'Cancelada' 
-				GROUP BY [EDV].[CourseId]
-						,  [EDV].[CourseName]
-						, [EDV].[EnrollmentStatus] ) AS [CCE] --Couses with cancel enrollment 
-				ON [CAE].[CourseId] = [CCE].[CourseId]
-	LEFT JOIN (
-				SELECT	[EDV].[CourseId]
-						, [EDV].[CourseName]
-						, [EDV].[EnrollmentStatus]
-						, COUNT( [EDV].[EnrollmentStatus] ) AS TotalPendingByPayment
-				FROM	[Integration].[EnrollmentDetailView] [EDV]
-				WHERE	[EDV].[EnrollmentStatus]	= 'Pendiente por pago'
-				GROUP BY [EDV].[CourseId]
-						,  [EDV].[CourseName]
-						, [EDV].[EnrollmentStatus] ) AS [CPE]
-				ON [CAE].[CourseId] = [CPE].[CourseId]
-	WHERE	[CAE].[CourseId] = @CourseId
+			, [EDV].[EnrollmentStatus]
+	UNION 
+	SELECT	[EDV].[CourseId]
+			,  [EDV].[CourseName]
+			, 'Total'							AS [EnrollmentStatus] 
+			, COUNT( 1 ) AS Total
+	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	WHERE	[EDV].[CourseId] = @CourseId
+	GROUP BY [EDV].[CourseId]
+			,  [EDV].[CourseName]
 )
 
 GO
 
+--*******************************************************************
+--GETCOURSESWITHTOTALSTUDENTS FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-29
+-- Description:	Get the courses with the total
+--				of students in each course
+-- =============================================
+
+CREATE FUNCTION [Integration].[GetCoursesWithTotalStudents]()
+RETURNS TABLE
+AS
+RETURN 
+(
+	SELECT	[EDV].[CourseId]
+			,  [EDV].[CourseName]
+			, 'Total'							AS [EnrollmentStatus] 
+			, COUNT( 1 ) AS Total
+	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	GROUP BY [EDV].[CourseId]
+			,  [EDV].[CourseName]
+)
+
+GO
+
+--*******************************************************************
+--GETCOURSEWITHTOTALSTUDENTSBYID FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-29
+-- Description:	Get a course with the total
+--				of students by course id
+-- =============================================
+
+ALTER FUNCTION [Integration].[GetCourseWithTotalStudentsById](@CourseId INT)
+RETURNS TABLE
+AS
+RETURN 
+(
+	SELECT	*
+	FROM	[Integration].[GetCoursesWithTotalStudents]()
+	WHERE	[CourseId] = @CourseId
+)
+GO
+
+--*******************************************************************

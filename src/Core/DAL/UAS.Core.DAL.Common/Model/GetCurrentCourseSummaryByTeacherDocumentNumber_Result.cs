@@ -10,16 +10,12 @@
 namespace UAS.Core.DAL.Common.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class EnrollmentDetail
+    public partial class GetCurrentCourseSummaryByTeacherDocumentNumber_Result
     {
-        public int Id { get; set; }
-        public int IdEnrollment { get; set; }
-        public int IdSchedule { get; set; }
-        public System.DateTime RegisterDate { get; set; }
-    
-        public virtual Enrollment Enrollment { get; set; }
-        public virtual Schedule Schedule { get; set; }
+        public Nullable<int> CourseId { get; set; }
+        public string CourseName { get; set; }
+        public string EnrollmentStatus { get; set; }
+        public Nullable<int> Total { get; set; }
     }
 }
