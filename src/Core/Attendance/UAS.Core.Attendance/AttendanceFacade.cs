@@ -40,14 +40,29 @@ namespace UAS.Core.Attendance
             return _courseManager.GetCourseByTeacherId(teacherId);
         }
 
+        public Course GetCurrentCourseByTeacherDocumentNumber(int teacherDocumentNumber)
+        {
+            return _courseManager.GetCurrentCourseByTeacherDocumentNumber(teacherDocumentNumber);
+        }
+
         public object GetStatisticsByCourseAndTeacherId(int courseId, int teacherId)
         {
             return _courseManager.GetStatisticsByCourseAndTeacherId(courseId, teacherId);
         }
 
+        public Statistic GetCourseStatistics(int courseId)
+        {
+            return _courseManager.GetCourseStatistics(courseId);
+        }
+
         public Teacher GetTeacherById(int teacherId)
         {
             return _teacherManager.GetTeacherById(teacherId);
+        }
+
+        public object GetCourseAttendanceStatistics(int teacherDocumentNumber)
+        {
+            return _courseManager.GetCourseAttendanceStatistics(teacherDocumentNumber);
         }
     }
 }

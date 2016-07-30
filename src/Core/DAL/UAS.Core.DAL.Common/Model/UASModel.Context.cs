@@ -51,6 +51,8 @@ namespace UAS.Core.DAL.Common.Model
         public virtual DbSet<StatusApproverByRole> StatusApproverByRoles { get; set; }
         public virtual DbSet<EnrollmentDetail> EnrollmentDetails { get; set; }
         public virtual DbSet<StudentEnrollmentView> StudentEnrollmentViews { get; set; }
+        public virtual DbSet<Space> Spaces { get; set; }
+        public virtual DbSet<SpaceType> SpaceTypes { get; set; }
     
         public virtual ObjectResult<GetAllStudentMovementsByTeacherDocumentNumber_Result> GetAllStudentMovementsByTeacherDocumentNumber(Nullable<int> teacherDocumentNumber)
         {
@@ -59,6 +61,34 @@ namespace UAS.Core.DAL.Common.Model
                 new ObjectParameter("TeacherDocumentNumber", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllStudentMovementsByTeacherDocumentNumber_Result>("GetAllStudentMovementsByTeacherDocumentNumber", teacherDocumentNumberParameter);
+        }
+    
+        public virtual ObjectResult<GetCurrentCourseByTeacherDocumentNumber_Result> GetCurrentCourseByTeacherDocumentNumber(Nullable<int> teacherDocumentNumber)
+        {
+            var teacherDocumentNumberParameter = teacherDocumentNumber.HasValue ?
+                new ObjectParameter("TeacherDocumentNumber", teacherDocumentNumber) :
+                new ObjectParameter("TeacherDocumentNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCurrentCourseByTeacherDocumentNumber_Result>("GetCurrentCourseByTeacherDocumentNumber", teacherDocumentNumberParameter);
+        }
+    
+        [DbFunction("UASEntities", "GetCourseSummaryById")]
+        public virtual IQueryable<GetCourseSummaryById_Result> GetCourseSummaryById(Nullable<int> courseId)
+        {
+            var courseIdParameter = courseId.HasValue ?
+                new ObjectParameter("CourseId", courseId) :
+                new ObjectParameter("CourseId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetCourseSummaryById_Result>("[UASEntities].[GetCourseSummaryById](@CourseId)", courseIdParameter);
+        }
+    
+        public virtual ObjectResult<GetCurrentCourseSummaryByTeacherDocumentNumber_Result> GetCurrentCourseSummaryByTeacherDocumentNumber(Nullable<int> teacherDocumentNumber)
+        {
+            var teacherDocumentNumberParameter = teacherDocumentNumber.HasValue ?
+                new ObjectParameter("TeacherDocumentNumber", teacherDocumentNumber) :
+                new ObjectParameter("TeacherDocumentNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCurrentCourseSummaryByTeacherDocumentNumber_Result>("GetCurrentCourseSummaryByTeacherDocumentNumber", teacherDocumentNumberParameter);
         }
     }
 }

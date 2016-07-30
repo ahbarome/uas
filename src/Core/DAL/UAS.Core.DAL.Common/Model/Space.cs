@@ -12,22 +12,24 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Course
+    public partial class Space
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Course()
+        public Space()
         {
-            this.Schedules = new HashSet<Schedule>();
+            this.Movements = new HashSet<Movement>();
+            this.ScheduleDetails = new HashSet<ScheduleDetail>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public int NumberOfCredits { get; set; }
+        public int IdSpaceType { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
-        public int Code { get; set; }
-        public int Semester { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Schedule> Schedules { get; set; }
+        public virtual ICollection<Movement> Movements { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ScheduleDetail> ScheduleDetails { get; set; }
+        public virtual SpaceType SpaceType { get; set; }
     }
 }

@@ -20,7 +20,9 @@ namespace UAS.Core.DAL.Common.Model
         public System.TimeSpan StartTime { get; set; }
         public System.TimeSpan EndTime { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
+        public int IdSpace { get; set; }
     
         public virtual Schedule Schedule { get; set; }
+        public virtual Space Space { get; set; }
     }
 }

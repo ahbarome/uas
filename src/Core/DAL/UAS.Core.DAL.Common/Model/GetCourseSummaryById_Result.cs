@@ -10,15 +10,12 @@
 namespace UAS.Core.DAL.Common.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Movement
+    public partial class GetCourseSummaryById_Result
     {
-        public int Id { get; set; }
-        public int DocumentNumber { get; set; }
-        public Nullable<System.DateTime> RegisterDate { get; set; }
-        public int IdSpace { get; set; }
-    
-        public virtual Space Space { get; set; }
+        public int CourseId { get; set; }
+        public string CourseName { get; set; }
+        public string EnrollmentStatus { get; set; }
+        public Nullable<int> Total { get; set; }
     }
 }

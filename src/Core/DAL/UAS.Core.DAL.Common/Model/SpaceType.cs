@@ -12,13 +12,20 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Movement
+    public partial class SpaceType
     {
-        public int Id { get; set; }
-        public int DocumentNumber { get; set; }
-        public Nullable<System.DateTime> RegisterDate { get; set; }
-        public int IdSpace { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SpaceType()
+        {
+            this.Spaces = new HashSet<Space>();
+        }
     
-        public virtual Space Space { get; set; }
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public string Description { get; set; }
+        public Nullable<System.DateTime> RegisterDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Space> Spaces { get; set; }
     }
 }

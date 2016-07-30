@@ -1,9 +1,26 @@
 ﻿@model IEnumerable<UAS.Core.DAL.Common.Model.StudentMovement>
-
+@functions {
+    public string GetLabelForEnrollmentStatus(string status) {
+        var label = string.Empty;
+        if (status.ToUpper().Equals("ACTIVA"))
+        {
+            label = "label label-primary";
+        }
+        else if (status.ToUpper().Equals("CANCELADA"))
+        {
+            label = "label label-danger";
+        }
+        else
+        {
+            label = "label label-warning";
+        }
+        return label;
+    }
+}
 <div id="attendance" class="row">
 
     @foreach (var movement in Model)
-            {
+    {
         <div class="col-lg-4">
             <div class="contact-box">
 
@@ -16,6 +33,16 @@
                 <div class="col-sm-8">
                     <h3><strong>@movement.FullName</strong></h3>
                     <h4><strong>Estudiante</strong></h4>
+                    <small>
+                        <strong># Documento: </strong>
+                        <br />
+                        @movement.DocumentNumber<br />
+                    </small>
+                    <small>
+                        <strong>Matrícula: </strong>
+                        <br />
+                        <span class="@GetLabelForEnrollmentStatus(@movement.EnrollmentStatus)">@movement.EnrollmentStatus</span>
+                    </small>
                     <address>
                         <small>
                             <strong>Dirección: </strong><br />
@@ -26,7 +53,6 @@
                             <abbr title="Phone">(+057)</abbr> @movement.TelephoneNumber
                         </small>
                     </address>
-                    <p><strong>Matrícula: </strong> @movement.EnrollmentStatus</p>
                 </div>
                 <div class="clearfix"></div>
             </div>

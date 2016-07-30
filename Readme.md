@@ -11,4 +11,5 @@ This is the graduation project broken down into stages.
 + Stage 5: Menu dynamic added and dummy data in dashboards and virtual classroom modules
 + Stage 6: Added RignalR 
 + State 7: Added new entities and solved issues
++ State 8: Ended Virtual student class room functionality
 + Master: Current version of the project
