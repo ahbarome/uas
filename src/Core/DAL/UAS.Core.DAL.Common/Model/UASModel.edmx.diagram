@@ -57,6 +57,9 @@
         <AssociationConnector Association="UASModel.Fk_Movement_IdSpace" />
         <AssociationConnector Association="UASModel.Fk_Schedule_IdSpaceType" />
         <AssociationConnector Association="UASModel.Fk_Space_IdSpaceType" />
+        <EntityTypeShape EntityType="UASModel.AttendanceRegisterView" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="UASModel.NonAttendanceRegisterView" Width="1.5" PointX="5.375" PointY="10.75" />
+        <EntityTypeShape EntityType="UASModel.PersonActivitiesView" Width="1.5" PointX="7.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

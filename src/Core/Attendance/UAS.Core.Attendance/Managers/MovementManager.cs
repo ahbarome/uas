@@ -80,5 +80,10 @@ namespace UAS.Core.Attendance.Managers
         {
             _dispatcher?.Invoke("Refresh");
         }
+
+        public List<TeacherMovement> GetAllTeacherMovementsWithoutNotificationsByDirectorId(int directorId)
+        {
+            return _movementPersister.GetAllTeacherMovementsWithoutNotifications();
+        }
     }
 }

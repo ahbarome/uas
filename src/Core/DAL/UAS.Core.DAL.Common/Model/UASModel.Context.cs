@@ -53,6 +53,9 @@ namespace UAS.Core.DAL.Common.Model
         public virtual DbSet<StudentEnrollmentView> StudentEnrollmentViews { get; set; }
         public virtual DbSet<Space> Spaces { get; set; }
         public virtual DbSet<SpaceType> SpaceTypes { get; set; }
+        public virtual DbSet<AttendanceRegisterView> AttendanceRegisterView { get; set; }
+        public virtual DbSet<NonAttendanceRegisterView> NonAttendanceRegisterView { get; set; }
+        public virtual DbSet<PersonActivitiesView> PersonActivitiesView { get; set; }
     
         public virtual ObjectResult<GetAllStudentMovementsByTeacherDocumentNumber_Result> GetAllStudentMovementsByTeacherDocumentNumber(Nullable<int> teacherDocumentNumber)
         {
@@ -89,6 +92,24 @@ namespace UAS.Core.DAL.Common.Model
                 new ObjectParameter("TeacherDocumentNumber", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCurrentCourseSummaryByTeacherDocumentNumber_Result>("GetCurrentCourseSummaryByTeacherDocumentNumber", teacherDocumentNumberParameter);
+        }
+    
+        [DbFunction("UASEntities", "GetCurrentStudentAttendanceSummary")]
+        public virtual IQueryable<GetCurrentStudentAttendanceSummary_Result> GetCurrentStudentAttendanceSummary()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetCurrentStudentAttendanceSummary_Result>("[UASEntities].[GetCurrentStudentAttendanceSummary]()");
+        }
+    
+        [DbFunction("UASEntities", "GetCurrentTeacherAttendanceSummary")]
+        public virtual IQueryable<GetCurrentTeacherAttendanceSummary_Result> GetCurrentTeacherAttendanceSummary()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetCurrentTeacherAttendanceSummary_Result>("[UASEntities].[GetCurrentTeacherAttendanceSummary]()");
+        }
+    
+        [DbFunction("UASEntities", "GetCurrentTeacherAttendance")]
+        public virtual IQueryable<GetCurrentTeacherAttendance_Result> GetCurrentTeacherAttendance()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetCurrentTeacherAttendance_Result>("[UASEntities].[GetCurrentTeacherAttendance]()");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<UAS.Core.DAL.Common.Model.TeacherMovement>
 @{
     ViewBag.Title = "Salón de Docentes";
 }
@@ -17,4 +17,34 @@
             </ol>
         </div>
     </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row m-b-lg m-t-lg">
+            <div class="col-md-5">
+                @Html.Partial("DirectorProfilePartial")
+            </div>
+            @*<div class="col-md-2">
+                @Html.Partial("TeacherStatisticPartial")
+            </div>*@
+            <div class="col-md-2">
+                @Html.Partial("TeacherAttendanceStatisticPartial")
+            </div>
+            <div class="col-md-4">
+                @Html.Partial("TeacherAttendanceGraphPartial")
+            </div>
+        </div>
+        @Html.Partial("VirtualTeachersClassRoomPartial", Model)
+    </div>
 </div>
+@section Styles {
+    @Styles.Render("~/plugins/toastrStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/sparkLine")
+    @Scripts.Render("~/plugins/chartJs")
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/knockout-3.4.0.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script src="~/App/TeacherAttendanceMovementViewModel.js"></script>
+}

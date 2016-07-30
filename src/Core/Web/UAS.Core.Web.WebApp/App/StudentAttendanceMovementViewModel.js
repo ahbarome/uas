@@ -81,7 +81,7 @@ function InitializeGraphs() {
 
 function DonutChart() {
 
-    $.post("GetStatistics").done(function (statistic) {
+    $.post("GetCurrentStudentStatistics").done(function (statistic) {
 
         var attendance = {
             value: statistic.Summary.Asistentes,

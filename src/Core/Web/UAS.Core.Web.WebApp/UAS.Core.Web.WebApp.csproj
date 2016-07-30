@@ -256,7 +256,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\AttendanceMovementViewModel.js" />
+    <Content Include="App\TeacherAttendanceMovementViewModel.js" />
+    <Content Include="App\StudentAttendanceMovementViewModel.js" />
     <Content Include="App\UserViewModel.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\animate.css" />
@@ -1777,6 +1778,11 @@
     <Content Include="Views\Attendance\CourseDetailPartial.cshtml" />
     <Content Include="Views\Attendance\CourseAttendanceStatisticPartial.cshtml" />
     <Content Include="Views\Attendance\CourseAttendanceGraphPartial.cshtml" />
+    <Content Include="Views\Attendance\DirectorProfilePartial.cshtml" />
+    <Content Include="Views\Attendance\VirtualTeachersClassRoomPartial.cshtml" />
+    <Content Include="Views\Attendance\TeacherStatisticPartial.cshtml" />
+    <Content Include="Views\Attendance\TeacherAttendanceStatisticPartial.cshtml" />
+    <Content Include="Views\Attendance\TeacherAttendanceGraphPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

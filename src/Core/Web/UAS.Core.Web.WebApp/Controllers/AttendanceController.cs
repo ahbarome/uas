@@ -19,10 +19,10 @@ namespace UAS.Core.Web.WebApp.Controllers
         {
             var session = base.CurrentSession;
             var teacher = _facade.GetTeacherById(session.SessionUser.IdUser);
-            var course = _facade.GetCurrentCourseByTeacherDocumentNumber(teacher.DocumentNumber);
+            var course = teacher != null ? _facade.GetCurrentCourseByTeacherDocumentNumber(teacher.DocumentNumber) : null;
             var studentMovements = _facade.GetAllStudentMovementsWithoutNotificationsByTeacherId(session.SessionUser.IdUser);
-            var statistics = _facade.GetCourseStatistics(course.Id);
-            var attendanceStatistics = _facade.GetCourseAttendanceStatistics(teacher.DocumentNumber);
+            var statistics = course != null ? _facade.GetCourseStatistics(course.Id) : null;
+            var attendanceStatistics = teacher != null ? _facade.GetCourseAttendanceStatistics(teacher.DocumentNumber) : null;
 
             ViewBag.CourseAttendanceStatistic = attendanceStatistics;
             ViewBag.CourseStatistic = statistics;
@@ -41,8 +41,8 @@ namespace UAS.Core.Web.WebApp.Controllers
             return PartialView(movements);
         }
 
-
-        public ActionResult CourseDetailPartial() {
+        public ActionResult CourseDetailPartial()
+        {
             var session = base.CurrentSession;
             var teacher = _facade.GetTeacherById(session.SessionUser.IdUser);
             var course = _facade.GetCurrentCourseByTeacherDocumentNumber(teacher.DocumentNumber);
@@ -89,19 +89,71 @@ namespace UAS.Core.Web.WebApp.Controllers
         public ActionResult VirtualTeachersClassRoom()
         {
             var session = base.CurrentSession;
+            var teacherMovements = _facade.GetAllTeacherMovementsWithoutNotificationsByDirectorId(session.SessionUser.IdUser);
+            var attendanceStatistics = _facade.GetTeacherAttendanceStatistics();
+
+            ViewBag.AttendanceStatistic = attendanceStatistics;
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
-            return View();
+            return View(teacherMovements);
+        }
+
+        public ActionResult VirtualTeachersClassRoomPartial()
+        {
+            var session = base.CurrentSession;
+            var teacherMovements = _facade.GetAllTeacherMovementsWithoutNotificationsByDirectorId(session.SessionUser.IdUser);
+
+            ViewData.Add(ConfigurationManager.SESSION_KEY, session);
+            return PartialView(teacherMovements);
+        }
+
+        public ActionResult DirectorProfilePartial()
+        {
+            return PartialView();
+        }
+
+        public ActionResult TeacherStatisticPartial()
+        {
+            var session = base.CurrentSession;
+            //var statistics = _facade.GetTeacherStatistics();
+            //ViewBag.TeacherStatistic = statistics;
+            return PartialView();
+        }
+
+        public ActionResult TeacherAttendanceStatisticPartial()
+        {
+            var session = base.CurrentSession;
+            var attendanceStatistics = _facade.GetTeacherAttendanceStatistics();
+
+            ViewBag.AttendanceStatistic = attendanceStatistics;
+            return PartialView();
+        }
+
+        public ActionResult TeacherAttendanceGraphPartial()
+        {
+            var session = base.CurrentSession;
+            var attendanceStatistics = _facade.GetTeacherAttendanceStatistics();
+
+            ViewBag.AttendanceStatistic = attendanceStatistics;
+            return PartialView();
         }
 
         #endregion Virtual Teachers Class Room
 
-        [HttpPost, ActionName("GetStatistics")]
-        public JsonResult GetCourseAttendanceStatistics()
+        [HttpPost]
+        public JsonResult GetCurrentStudentStatistics()
         {
             var session = base.CurrentSession;
             var teacher = _facade.GetTeacherById(session.SessionUser.IdUser);
-            var courseAttendance = _facade.GetCourseAttendanceStatistics(teacher.DocumentNumber);
-            return Json(courseAttendance);
+            var attendance = _facade.GetCourseAttendanceStatistics(teacher.DocumentNumber);
+            return Json(attendance);
+        }
+
+        [HttpPost]
+        public JsonResult GetCurrentTeacherStatistics()
+        {
+            var session = base.CurrentSession;
+            var attendance = _facade.GetTeacherAttendanceStatistics();
+            return Json(attendance);
         }
         #endregion Actions
     }

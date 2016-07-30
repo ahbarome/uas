@@ -18,5 +18,10 @@ namespace UAS.Core.Attendance.Managers
             var teacher = _userPersister.GetUserById(teacherId);
             return _teacherPersister.GetTeacherByDocumentNumber(teacher.DocumentNumber);
         }
+
+        internal Statistic GetTeacherAttendanceStatistics()
+        {
+            return _teacherPersister.GetTeacherAttendanceStatistics();
+        }
     }
 }

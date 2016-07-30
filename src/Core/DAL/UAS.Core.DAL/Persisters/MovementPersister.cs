@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
@@ -78,6 +77,39 @@ namespace UAS.Core.DAL.Persisters
             var query = base.Entities.Movements;
 
             return query;
+        }
+
+        public List<TeacherMovement> GetAllTeacherMovementsWithoutNotifications()
+        {
+            var teachersAttendance = base.Entities.GetCurrentTeacherAttendance().ToList();
+
+            var movements = new List<TeacherMovement>();
+
+            foreach (var attendance in teachersAttendance)
+            {
+                var movement = new TeacherMovement
+                {
+                    DocumentNumber = attendance.DocumentNumber,
+                    FullName = attendance.FullName,
+                    ImageRelativePath = attendance.ImageRelativePath,
+                    CourseId = attendance.CourseId,
+                    CourseName = attendance.CourseName,
+                    CourseStartTime = attendance.StartTime,
+                    CourseEndTime = attendance.EndTime,
+                    Space = new Space
+                    {
+                        Id = attendance.SpaceId,
+                        Name = attendance.SpaceName,
+                        SpaceType = new SpaceType
+                        {
+                            Type = attendance.SpaceType
+                        }
+                    }
+                };
+                movements.Add(movement);
+            }
+
+            return movements;
         }
 
 

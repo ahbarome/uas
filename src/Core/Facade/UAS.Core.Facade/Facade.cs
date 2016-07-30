@@ -80,5 +80,15 @@
         {
             return _attendanceFacade.GetCourseAttendanceStatistics(teacherDocumentNumber);
         }
+
+        public dynamic GetAllTeacherMovementsWithoutNotificationsByDirectorId(int directorId)
+        {
+            return _attendanceFacade.GetAllTeacherMovementsWithoutNotificationsByDirectorId(directorId);
+        }
+
+        public dynamic GetTeacherAttendanceStatistics()
+        {
+            return _attendanceFacade.GetTeacherAttendanceStatistics();
+        }
     }
 }

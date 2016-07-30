@@ -368,4 +368,120 @@ RETURN
 			@Time BETWEEN [StartTime] AND [EndTime] 
 )
 GO
+
+--*******************************************************************
+--GETATTENDANCESUMMARY FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-31
+-- Description:	Get the attendance summary
+-- =============================================
+CREATE FUNCTION [Attendance].GetAttendanceSummary(@Date DATE, @RoleId INT)
+
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT	'Attendance'				AS [Alias]
+		, 'Asistentes'					AS [Description]
+		, COUNT([ARV].[DocumentNumber]) AS [Total]  
+	FROM	[Attendance].[AttendanceRegisterView] [ARV]
+	WHERE	[ARV].[MovementDate]	= @Date AND
+			[ARV].[RoleId]			= @RoleId
+	UNION 
+	SELECT	'NonAttendance'				AS [Alias]
+		, 'Inasistentes'				AS [Description]
+		, COUNT([NRV].[DocumentNumber]) AS [Total]  
+	FROM	[NonAttendance].[NonAttendanceRegisterView] [NRV]
+	WHERE	[NRV].[DayOfTheWeek]	= DATEPART(WEEKDAY, @Date)  AND
+			[NRV].[RoleId]			= @RoleId
+	UNION 
+	SELECT  'Total'							AS [Alias]
+			, 'Total'						AS [Description]
+			, COUNT([PAV].[DocumentNumber]) AS [Total]
+	FROM	[Integration].[PersonActivitiesView] [PAV]
+	WHERE	[PAV].[DayOfTheWeek]	= DATEPART(WEEKDAY, @Date)  AND
+			[PAV].[RoleId]			= @RoleId
+)
+GO
+
+--*******************************************************************
+--GETCURRENTTEACHERATTENDANCESUMMARY FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-31
+-- Description:	Get the teachers attendance 
+--				summary
+-- =============================================
+CREATE FUNCTION [Attendance].GetCurrentTeacherAttendanceSummary()
+
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT	*
+	FROM [Attendance].GetAttendanceSummary(CONVERT(DATE, GETDATE()), 3)
+)
+GO
+
+--*******************************************************************
+--GETCURRENTSTUDENTATTENDANCESUMMARY FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-31
+-- Description:	Get the student attendance 
+--				summary
+-- =============================================
+CREATE FUNCTION [Attendance].GetCurrentStudentAttendanceSummary()
+
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT	*
+	FROM [Attendance].GetAttendanceSummary(CONVERT(DATE, GETDATE()), 4)
+)
+GO
+
+--*******************************************************************
+--GETCURRENTTEACHERATTENDANCE FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-31
+-- Description:	Get the current teacher attendance 
+-- =============================================
+CREATE FUNCTION [Attendance].GetCurrentTeacherAttendance()
+
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT	*
+	FROM	[Attendance].[AttendanceRegisterView] [ARV]
+	WHERE	[ARV].[DayOfTheWeek]	= [Integration].[GetCurrentDay]() AND
+			CONVERT(TIME, GETDATE())	BETWEEN [ARV].[StartTime] AND [ARV].[EndTime] AND
+			[ARV].[RoleId]			= 3
+)
+GO
+
 --*******************************************************************

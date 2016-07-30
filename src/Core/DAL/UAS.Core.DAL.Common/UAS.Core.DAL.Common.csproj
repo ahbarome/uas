@@ -58,6 +58,9 @@
     <Compile Include="Model\Attachment.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\AttendanceRegisterView.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Career.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
@@ -76,6 +79,7 @@
     <Compile Include="Model\EnrollmentStatu.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Enums\Enumerations.cs" />
     <Compile Include="Model\Excuse.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
@@ -97,10 +101,22 @@
     <Compile Include="Model\GetCurrentCourseSummaryByTeacherDocumentNumber_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GetCurrentStudentAttendanceSummary_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetCurrentTeacherAttendanceSummary_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetCurrentTeacherAttendance_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\HolidayException.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Movement.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NonAttendanceRegisterView.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Page.cs">
@@ -113,6 +129,10 @@
     <Compile Include="Model\Partials\Course.cs" />
     <Compile Include="Model\Partials\Movement.cs" />
     <Compile Include="Model\Partials\StudentMovement.cs" />
+    <Compile Include="Model\Partials\TeacherMovement.cs" />
+    <Compile Include="Model\PersonActivitiesView.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Role.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>

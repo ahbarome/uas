@@ -1,0 +1,37 @@
+﻿@{
+    var attendanceStatistic = ViewBag.AttendanceStatistic as UAS.Core.DAL.Common.Model.Statistic;
+}
+
+@functions{
+    string TranslateKey(string key) {
+        if (key.ToUpper().Equals("ATTENDANCE")) {
+            return "Asistencia";
+        }
+        if (key.ToUpper().Equals("NONATTENDANCE"))
+        {
+            return "Inasistencia";
+        }
+        return key;
+    }
+}
+<table id="teacher-attendance-statistic" class="table small m-b-xs">
+    <tbody>
+        @if (@attendanceStatistic != null)
+        {
+            <tr>
+                <td>
+                    <strong class="text-uppercase">Detalle Asistencia (Hoy)</strong>
+                </td>
+            </tr>
+            foreach (var summary in @attendanceStatistic.Summary)
+            {
+                <tr>
+                    <td>
+                        <strong>@summary.Value</strong> @TranslateKey(summary.Key)
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

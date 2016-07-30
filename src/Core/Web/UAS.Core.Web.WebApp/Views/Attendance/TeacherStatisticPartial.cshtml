@@ -1,0 +1,24 @@
+﻿@{
+    var courseStatistic = ViewBag.CourseStatistic as UAS.Core.DAL.Common.Model.Statistic;
+}
+<table class="table small m-b-xs">
+    <tbody>
+        @if (@courseStatistic != null)
+        {
+            <tr>
+                <td>
+                    <strong class="text-uppercase">Detalle Profesores</strong>
+                </td>
+            </tr>
+            foreach (var summary in @courseStatistic.Summary)
+            {
+                <tr>
+                    <td>
+                        <strong>@summary.Value</strong> @summary.Key
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

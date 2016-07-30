@@ -84,6 +84,7 @@ CREATE VIEW [Integration].[ScheduleDetailView] AS
 (	SELECT	 [SCH].[Id]										AS ScheduleId
 			, [TEA].[DocumentNumber]						AS TeacherDocumentNumber
 			, CONCAT([TEA].[Name], ' ', [TEA].[LastName])	AS TeacherFullName
+			, [TEA].[ImageRelativePath]
 			, [COU].[Id]									AS CourseId
 			, [COU].[Name]									AS CourseName
 			, [COU].[NumberOfCredits]						AS CourseCredits
@@ -114,6 +115,7 @@ CREATE VIEW [Integration].[EnrollmentDetailView] AS
 (	SELECT	[ENR].[Id]										AS EnrollmentId
 			, [STU].[DocumentNumber]						AS StudentDocumentNumber
 			, CONCAT([STU].[Name], ' ', [STU].[LastName])	AS StudentFullName
+			, [STU].[ImageRelativePath]
 			, [CAR].[Id]									AS CareerId
 			, [CAR].[Code]									AS CareerCode
 			, [CAR].[Name]									AS CareerName
@@ -238,10 +240,12 @@ CREATE VIEW [Integration].[PersonActivitiesView] AS
 			, [CourseName]
 			, [TeacherDocumentNumber]		AS DocumentNumber
 			, [TeacherFullName]				AS FullName
+			, [ImageRelativePath]
 			, '3'							AS RoleId
 			, 'Profesor'					AS RoleAlias
 			, [SpaceId]
 			, [SpaceName]
+			, [SpaceType]
 			, [DayOfTheWeek]
 			, [StartTime]
 			, [EndTime]
@@ -251,10 +255,12 @@ CREATE VIEW [Integration].[PersonActivitiesView] AS
 			, [CourseName]
 			, [StudentDocumentNumber]		AS DocumentNumber
 			, [StudentFullName]				AS FullName
+			, [ImageRelativePath]
 			, '4'							AS RoleId
 			, 'Estudiante'					AS RoleAlias
 			, [SpaceId]
 			, [SpaceName]
+			, [SpaceType]
 			, [DayOfTheWeek]
 			, [StartTime]
 			, [EndTime]
@@ -271,6 +277,8 @@ CREATE VIEW [Attendance].[AttendanceRegisterView] AS
 			, [MOV].[Code]
 			, [MOV].[Name]
 			, [MOV].[LastName]
+			, [MOV].[FullName]
+			, [MOV].[ImageRelativePath]
 			, [MOV].[RoleId]
 			, [MOV].[RoleName]
 			, [PAV].[CourseId]
@@ -280,14 +288,15 @@ CREATE VIEW [Attendance].[AttendanceRegisterView] AS
 			, [PAV].[EndTime]
 			, [MOV].[SpaceId]
 			, [MOV].[SpaceName]
+			, [MOV].[SpaceType]
 			, [MOV].[MovementDateTime]
 			, [MOV].[MovementDate]
 			, [MOV].[MovementTime]
 	FROM	[Attendance].[MovementView] [MOV]
 	INNER JOIN [Integration].[PersonActivitiesView] [PAV] ON
-		[MOV].[DocumentNumber]						= [PAV].[DocumentNumber] AND
-		[MOV].[SpaceId]								= [PAV].[SpaceId] AND
-		[MOV].[RoleId]								= [PAV].[RoleId] AND
+		[MOV].[DocumentNumber]						= [PAV].[DocumentNumber]	AND
+		[MOV].[SpaceId]								= [PAV].[SpaceId]			AND
+		[MOV].[RoleId]								= [PAV].[RoleId]			AND
 		DATEPART(WEEKDAY, [MOV].[MovementDate])		= [PAV].[DayOfTheWeek]
 	WHERE	[MOV].[MovementTime] BETWEEN [PAV].[StartTime] AND [PAV].[EndTime]
 )
@@ -299,15 +308,15 @@ GO
 CREATE VIEW [NonAttendance].[NonAttendanceRegisterView] AS
 (	
 	SELECT	[PAV].*
-	FROM	[Integration].[PersonActivitiesView]		[PAV]
-	LEFT OUTER JOIN [Attendance].[RegisterView]	[CMV] ON 
+	FROM	[Integration].[PersonActivitiesView]			[PAV]
+	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] ON 
 		[CMV].[DocumentNumber]	= [PAV].[DocumentNumber] AND
 		[CMV].[CourseId]		= [PAV].[CourseId] AND
 		[CMV].[RoleId]			= [PAV].[RoleId] AND
 		[CMV].[SpaceId]			= [PAV].[SpaceId] AND
 		[CMV].[DayOfTheWeek]	= [PAV].[DayOfTheWeek] 
-	WHERE	[CMV].[DocumentNumber] IS NULL AND
-			[PAV].[DayOfTheWeek] = [Integration].[GetCurrentDay]()
+	WHERE	[CMV].[DocumentNumber] IS NULL 
+			
 )
 GO
 

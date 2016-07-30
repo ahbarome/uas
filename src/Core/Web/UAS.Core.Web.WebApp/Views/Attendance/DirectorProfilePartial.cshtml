@@ -1,0 +1,19 @@
+﻿@{
+    var session = @ViewData[UAS.Core.Configuration.ConfigurationManager.SESSION_KEY] as UAS.Core.Session.Entities.Session;
+}
+
+<div class="profile-image">
+    <img src="@Url.Content(session.SessionUser.ImageRelativePath)" class="img-circle circle-border m-b-md" alt="profile">
+</div>
+<div class="profile-info">
+    <div class="">
+        <div>
+            <h2 class="no-margins">
+                <strong>
+                    @Html.Raw(session.SessionUser.FullName.ToUpper())
+                </strong>
+            </h2>
+            <h4>@Html.Raw(session.SessionUser.RoleName)</h4>
+        </div>
+    </div>
+</div>

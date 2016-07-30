@@ -1,0 +1,11 @@
+﻿@{
+    var attendanceStatistic = ViewBag.AttendanceStatistic as UAS.Core.DAL.Common.Model.Statistic;
+}
+@if (@attendanceStatistic != null)
+{
+    <center>
+        <h5 class="text-uppercase">Gráfica Asistencia</h5>
+        <canvas id="doughnutChart" width="140" height="140"></canvas>
+    </center>
+}
+
