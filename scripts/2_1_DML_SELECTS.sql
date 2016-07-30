@@ -43,10 +43,10 @@ WHERE	[EDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]() AND
 
 SELECT	* 
 FROM	[Attendance].[MovementView]
-WHERE	DocumentNumber IN (SELECT DocumentNumber FROM [Attendance].[GetTodayMovements]())
+WHERE	DocumentNumber IN (SELECT DocumentNumber FROM [Attendance].[GetMovementsByDate](CONVERT(DATE, GETDATE()-1)))
 
 SELECT	* 
 FROM	Integration.GetCurrentCoursesByTeacherDocumentNumber(1130677685)
 
 SELECT	* 
-FROM	[Integration].[GetCurrentCoursesByDate](CONVERT(DATE, GETDATE()))
+FROM	[Integration].[GetCoursesByDate](CONVERT(DATE, GETDATE()-1))

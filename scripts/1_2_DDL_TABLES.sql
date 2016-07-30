@@ -186,6 +186,43 @@ ALTER TABLE  [NonAttendance].[Attachment] ADD  CONSTRAINT [DF_ExcuseAttachment_R
 GO
 
 --*******************************************************************
+--REGISTER TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[Register](
+	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[DocumentNumber]			[int]				NOT NULL,
+	[IdRole]					[int]				NOT NULL,
+	[IdCourse]					[int]				NOT NULL,
+	[NonAttendanceDate]			[date]				NOT NULL,
+	[HasExcuse]					[bit]				NOT NULL,
+	[RegisterDate] 				[datetime] 			NULL,
+	[LastModificationDate]		[datetime] 			NULL,
+	CONSTRAINT Fk_NonAttendanceRegister_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+	CONSTRAINT Fk_NonAttendanceCouse_IdCourse FOREIGN KEY  (IdCourse) REFERENCES [Integration].[Course](Id)
+)
+GO
+
+ALTER TABLE  [NonAttendance].[Register] ADD  CONSTRAINT [DF_NonAttendanceRegister_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
+--COURSEEVALUATE TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[CourseEvaluate](
+	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[DocumentNumber]			[int]				NOT NULL,
+	[IdRole]					[int]				NOT NULL,
+	[IdCourse]					[int]				NOT NULL,
+	[RegisterDate] 				[datetime] 			NULL,
+	CONSTRAINT Fk_NonAttendanceCourse_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+	CONSTRAINT Fk_NonAttendanceCourse_IdCourse FOREIGN KEY  (IdCourse) REFERENCES [Integration].[Course](Id)
+)
+GO
+
+ALTER TABLE  [NonAttendance].[CourseEvaluate] ADD  CONSTRAINT [DF_CourseEvaluate_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
 --INTEGRATION SCHEMA
 --*******************************************************************
 --*******************************************************************

@@ -10,6 +10,35 @@ GO
 --*******************************************************************
 --ATTENDANCE SCHEMA
 --*******************************************************************
+--GETMOVEMENTSBYDATE FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-28
+-- Description:	Get the movements by a specific
+--				date
+-- =============================================
+
+CREATE FUNCTION [Attendance].[GetMovementsByDate](@Date DATE)
+RETURNS TABLE
+AS
+RETURN 
+(
+	SELECT	DISTINCT [MOV].[DocumentNumber]
+	FROM	[Attendance].[MovementView] [MOV] WITH(NOLOCK)
+	WHERE	[MOV].[MovementDate] = @Date
+	GROUP BY [MOV].[DocumentNumber]
+)
+
+GO
+
+--*******************************************************************
 --GETTODAYMOVEMENTS FUNCTION
 --*******************************************************************
 SET ANSI_NULLS ON
@@ -29,11 +58,9 @@ RETURNS TABLE
 AS
 RETURN 
 (
-	-- Add the SELECT statement with parameter references here
-	SELECT	DISTINCT [MOV].[DocumentNumber]
-	FROM	[Attendance].[Movement] [MOV] WITH(NOLOCK)
-	WHERE	CONVERT(DATE, [MOV].[RegisterDate]) = CONVERT(DATE, GETDATE())
-	GROUP BY [MOV].[DocumentNumber]
+	SELECT	[DocumentNumber]
+	FROM	[Attendance].[GetMovementsByDate](CONVERT(DATE, GETDATE()))
+	GROUP BY [DocumentNumber]
 )
 
 GO
@@ -68,7 +95,7 @@ END
 GO
 
 --*******************************************************************
---GETCURRENTCOURSESBYDATE FUNCTION
+--GETCOURSESBYDATE FUNCTION
 --*******************************************************************
 SET ANSI_NULLS ON
 GO
@@ -81,7 +108,7 @@ GO
 -- Create date: 2016-07-28
 -- Description:	Get the courses by specific date
 -- =============================================
-CREATE FUNCTION [Integration].[GetCurrentCoursesByDate](@Date DATE = NULL)
+CREATE FUNCTION [Integration].[GetCoursesByDate](@Date DATE = NULL)
 RETURNS TABLE
 AS
 RETURN 
@@ -89,7 +116,7 @@ RETURN
 	SELECT	* 
 	FROM	[Integration].[ScheduleDetailView] [SDV]
 	WHERE	( CONVERT(DATE, [SDV].[EndDate]) >= @Date AND CONVERT(DATE,[SDV].[StartDate]) <=  @Date ) AND-- Course of the semester
-			[SDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]()
+			[SDV].[DayOfTheWeek] = DATEPART(WEEKDAY, @Date)	
 )
 
 GO
@@ -121,7 +148,7 @@ RETURN
 				, [EDV].[CourseId] 
 	FROM	[Integration].[EnrollmentDetailView] [EDV]
 	WHERE	( [EDV].[EndDate] >= GETDATE() AND [EDV].[StartDate] <=  GETDATE() ) AND-- Course of the semester
-			[EDV].[DayOfTheWeek] = DATEPART(WEEKDAY, GETDATE() - 1)	AND -- Course for today
+			[EDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]()	AND -- Course for today
 			( [EDV].[EndTime] >= CONVERT(TIME, GETDATE()) AND  [EDV].[StartTime] <=  CONVERT(TIME, GETDATE())) AND-- Current course
 			[EDV].[TeacherDocumentNumber] = @TeacherDocumentNumber 
 	ORDER BY [EDV].[StartTime] DESC

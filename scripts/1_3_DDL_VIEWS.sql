@@ -201,3 +201,31 @@ CREATE VIEW [Integration].[StudentEnrollmentView] AS
 	LEFT JOIN	[Integration].[EnrollmentStatus]	[ENS] ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus])
 GO
 --*******************************************************************
+--COURSE VIEW 
+--*******************************************************************
+CREATE VIEW [Integration].[CourseView] AS
+(	SELECT	  [COU].[Id]									AS CourseId
+			, [COU].[Name]									AS CourseName
+			, [COU].[NumberOfCredits]						AS CourseCredits
+			, [TEA].[DocumentNumber]						AS TeacherDocumentNumber
+			, CONCAT([TEA].[Name], ' ', [TEA].[LastName])	AS TeacherFullName
+			, [SCD].[DayOfTheWeek]
+			, DATENAME(WEEKDAY, [SCD].[DayOfTheWeek] - 1)   AS DayOfTheWeekName
+			, [SCD].[StartTime]
+			, [SCD].[EndTime]
+			, [SPA].[Id]									AS SpaceId
+			, [SPA].[Name]									AS SpaceName
+			, [SPT].[Type]									AS SpaceType
+			, [ACA].[Period]								AS AcademicPeriod
+			, [ACA].[Semester]								AS AcademicSemester
+			, [ACA].[StartDate]
+			, [ACA].[EndDate]
+	FROM		[Integration].[Course]				[COU]
+	INNER JOIN	[Integration].[Schedule]			[SCH] ON [COU].[Id]				= [SCH].[IdCourse]	
+	INNER JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
+	INNER JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
+	INNER JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
+	INNER JOIN	[Integration].[Space]				[SPA] ON [SPA].[Id]				= [SCD].[IdSpace]
+	INNER JOIN	[Integration].[SpaceType]			[SPT] ON [SPT].[Id]				= [SPA].[IdSpaceType])
+GO
+--*******************************************************************

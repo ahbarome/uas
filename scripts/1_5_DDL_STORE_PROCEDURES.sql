@@ -57,9 +57,8 @@ BEGIN
 		EnrollmentStatus			NVARCHAR(MAX));
 	--==================================================
 
-	SET @CurrentSemester = [Integration].GetCurrentSemester()
-
-	SET @CurrentDayOfTheWeek = [Integration].[GetCurrentDay]()
+	SET @CurrentSemester		= [Integration].GetCurrentSemester()
+	SET @CurrentDayOfTheWeek	= [Integration].[GetCurrentDay]()
 
 	--==================================================
 	
@@ -92,7 +91,16 @@ BEGIN
 			CareerName,
 			CourseName,
 			EnrollmentStatus) 
-		SELECT	*
+		SELECT	[StudentDocumentNumber], 
+				[StudentCode], 
+				[StudentFullName],
+				[StudentEmail],
+				[StudentTelephoneNumber],
+				[StudentAddress],
+				[StudentImageRelativePath],
+				[CareerName],
+				[CourseName],
+				[EnrollmentStatus]
 		FROM	[Integration].GetEnrollmentStudents(@CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement );   
 		
 		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement
@@ -167,9 +175,8 @@ BEGIN
 		EnrollmentStatus			NVARCHAR(MAX));
 	--==================================================
 
-	SET @CurrentSemester = [Integration].GetCurrentSemester()
-
-	SET @CurrentDayOfTheWeek = [Integration].[GetCurrentDay]()
+	SET @CurrentSemester		= [Integration].GetCurrentSemester()
+	SET @CurrentDayOfTheWeek	= [Integration].[GetCurrentDay]()
 
 	--==================================================
 	
@@ -202,7 +209,16 @@ BEGIN
 			CareerName,
 			CourseName,
 			EnrollmentStatus) 
-		SELECT	*
+		SELECT	[StudentDocumentNumber], 
+				[StudentCode], 
+				[StudentFullName],
+				[StudentEmail],
+				[StudentTelephoneNumber],
+				[StudentAddress],
+				[StudentImageRelativePath],
+				[CareerName],
+				[CourseName],
+				[EnrollmentStatus]
 		FROM	[Integration].GetEnrollmentStudents(@CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement);
 		
 		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement
@@ -323,11 +339,9 @@ BEGIN
 	--==================================================
 
 	SET @CurrentSemester		= [Integration].GetCurrentSemester()
-
 	SET @CurrentDayOfTheWeek	= [Integration].[GetCurrentDay]()
-
 	SET @CourseAttendance		= ( SELECT	[Total]
-				FROM	[Integration].[GetCourseWithTotalStudentsById](@CourseId) )
+									FROM	[Integration].[GetCourseWithTotalStudentsById](@CourseId) )
 
 	--==================================================
 	
@@ -360,7 +374,16 @@ BEGIN
 			CareerName,
 			CourseName,
 			EnrollmentStatus) 
-		SELECT	*
+		SELECT	[StudentDocumentNumber], 
+				[StudentCode], 
+				[StudentFullName],
+				[StudentEmail],
+				[StudentTelephoneNumber],
+				[StudentAddress],
+				[StudentImageRelativePath],
+				[CareerName],
+				[CourseName],
+				[EnrollmentStatus]
 		FROM	[Integration].GetEnrollmentStudents(@CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement);
 		
 		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement
