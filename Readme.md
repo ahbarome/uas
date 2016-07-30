@@ -1,15 +1,16 @@
 UNIVERSITY ATTENDANCE SYSTEM
 ===========
 
-This is the graduation project broken down into stages.
+This is the graduation project broken down into steps.
 
-+ Stage 0: Basic MVC project with a Web Api
-+ Stage 1: Template integration
-+ Stage 2: Added partial security
-+ Stage 3: Added cryptography and refined the security
-+ Stage 4: Refined the security and added dummy data to the home controller
-+ Stage 5: Menu dynamic added and dummy data in dashboards and virtual classroom modules
-+ Stage 6: Added RignalR 
-+ State 7: Added new entities and solved issues
-+ State 8: Ended Virtual student class room functionality
++ Step 0: Basic MVC project with a Web Api
++ Step 1: Template integration
++ Step 2: Added partial security
++ Step 3: Added cryptography and refined the security
++ Step 4: Refined the security and added dummy data to the home controller
++ Step 5: Menu dynamic added and dummy data in dashboards and virtual classroom modules
++ Step 6: Added RignalR 
++ Step 7: Added new entities and solved issues
++ Step 8: Added Virtual student class room functionality
++ Step 9: Added Virtual teacher class room functionality_
 + Master: Current version of the project
