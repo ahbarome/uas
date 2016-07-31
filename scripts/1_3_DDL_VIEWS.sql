@@ -228,4 +228,87 @@ CREATE VIEW [Integration].[CourseView] AS
 	INNER JOIN	[Integration].[Space]				[SPA] ON [SPA].[Id]				= [SCD].[IdSpace]
 	INNER JOIN	[Integration].[SpaceType]			[SPT] ON [SPT].[Id]				= [SPA].[IdSpaceType])
 GO
+
+--*******************************************************************
+--PERSONACTIVITIES VIEW 
+--*******************************************************************
+CREATE VIEW [Integration].[PersonActivitiesView] AS
+(	
+	SELECT	[CourseId] 
+			, [CourseName]
+			, [TeacherDocumentNumber]		AS DocumentNumber
+			, [TeacherFullName]				AS FullName
+			, '3'							AS RoleId
+			, 'Profesor'					AS RoleAlias
+			, [SpaceId]
+			, [SpaceName]
+			, [DayOfTheWeek]
+			, [StartTime]
+			, [EndTime]
+	FROM	[Integration].[ScheduleDetailView] [SCH]
+	UNION
+	SELECT	[CourseId] 
+			, [CourseName]
+			, [StudentDocumentNumber]		AS DocumentNumber
+			, [StudentFullName]				AS FullName
+			, '4'							AS RoleId
+			, 'Estudiante'					AS RoleAlias
+			, [SpaceId]
+			, [SpaceName]
+			, [DayOfTheWeek]
+			, [StartTime]
+			, [EndTime]
+	FROM	[Integration].[EnrollmentDetailView] [EDV]
+)
+GO
+
+--*******************************************************************
+--REGISTER VIEW 
+--*******************************************************************
+CREATE VIEW [Attendance].[AttendanceRegisterView] AS
+(	
+	SELECT [MOV].[DocumentNumber]
+			, [MOV].[Code]
+			, [MOV].[Name]
+			, [MOV].[LastName]
+			, [MOV].[RoleId]
+			, [MOV].[RoleName]
+			, [PAV].[CourseId]
+			, [PAV].[CourseName]
+			, [PAV].[DayOfTheWeek]
+			, [PAV].[StartTime]
+			, [PAV].[EndTime]
+			, [MOV].[SpaceId]
+			, [MOV].[SpaceName]
+			, [MOV].[MovementDateTime]
+			, [MOV].[MovementDate]
+			, [MOV].[MovementTime]
+	FROM	[Attendance].[MovementView] [MOV]
+	INNER JOIN [Integration].[PersonActivitiesView] [PAV] ON
+		[MOV].[DocumentNumber]						= [PAV].[DocumentNumber] AND
+		[MOV].[SpaceId]								= [PAV].[SpaceId] AND
+		[MOV].[RoleId]								= [PAV].[RoleId] AND
+		DATEPART(WEEKDAY, [MOV].[MovementDate])		= [PAV].[DayOfTheWeek]
+	WHERE	[MOV].[MovementTime] BETWEEN [PAV].[StartTime] AND [PAV].[EndTime]
+)
+GO
+
+--*******************************************************************
+--COURSEMOVEMENT VIEW 
+--*******************************************************************
+CREATE VIEW [NonAttendance].[NonAttendanceRegisterView] AS
+(	
+	SELECT	[PAV].*
+	FROM	[Integration].[PersonActivitiesView]		[PAV]
+	LEFT OUTER JOIN [Attendance].[RegisterView]	[CMV] ON 
+		[CMV].[DocumentNumber]	= [PAV].[DocumentNumber] AND
+		[CMV].[CourseId]		= [PAV].[CourseId] AND
+		[CMV].[RoleId]			= [PAV].[RoleId] AND
+		[CMV].[SpaceId]			= [PAV].[SpaceId] AND
+		[CMV].[DayOfTheWeek]	= [PAV].[DayOfTheWeek] 
+	WHERE	[CMV].[DocumentNumber] IS NULL AND
+			[PAV].[DayOfTheWeek] = [Integration].[GetCurrentDay]()
+)
+GO
+
 --*******************************************************************

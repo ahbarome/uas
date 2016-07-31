@@ -23,6 +23,12 @@ SELECT	*
 FROM	Integration.ScheduleDetailView
 WHERE	DayOfTheWeek = [Integration].[GetCurrentDay]()
 
+SELECT	*
+FROM	[Integration].[EnrollmentDetailView] [EDV]
+WHERE	[EDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]() 
+		AND [EDV].[CourseId] = 13
+
+
 SELECT  [Integration].[GetCurrentDay]()
 
 SELECT	*
@@ -36,17 +42,12 @@ SELECT	*
 FROM	[Integration].[GetCourseWithTotalStudentsById](13)
 
 
-SELECT	*
-FROM	[Integration].[EnrollmentDetailView] [EDV]
-WHERE	[EDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]() AND 
-		[EDV].[CourseId] = 13
-
 SELECT	* 
 FROM	[Attendance].[MovementView]
 WHERE	DocumentNumber IN (SELECT DocumentNumber FROM [Attendance].[GetMovementsByDate](CONVERT(DATE, GETDATE()-1)))
 
 SELECT	* 
-FROM	Integration.GetCurrentCoursesByTeacherDocumentNumber(1130677685)
+FROM	Integration.GetCurrentCoursesByTeacherDocumentNumber(1130677682)
 
 SELECT	* 
-FROM	[Integration].[GetCoursesByDate](CONVERT(DATE, GETDATE()-1))
+FROM	[Integration].[GetCoursesByDate](CONVERT(DATE, GETDATE()))

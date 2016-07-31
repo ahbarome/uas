@@ -332,3 +332,40 @@ RETURN
 GO
 
 --*******************************************************************
+--GETCOURSEWITHTOTALSTUDENTSBYID FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-30
+-- Description:	Get the course filtering by 
+--				date, time, document number and 
+--				space 
+-- =============================================
+CREATE FUNCTION [Integration].GetPersonActivities(@Date DATE, @Time TIME, @DocumentNumber INT, @SpaceId INT)
+
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT	[CourseId] 
+		, [CourseName]
+		, [DocumentNumber]
+		, [FullName]
+		, [RoleId]
+		, [RoleAlias]
+		, [SpaceId]
+		, [SpaceName]
+		, [StartTime]
+		, [EndTime]
+	FROM	[Integration].[PersonActivitiesView] [PER]
+	WHERE	[PER].[DayOfTheWeek]			= DATEPART(WEEKDAY, @Date) AND 
+			[PER].[DocumentNumber]			= @DocumentNumber AND
+			[PER].[SpaceId]					= @SpaceId AND
+			@Time BETWEEN [StartTime] AND [EndTime] 
+)
+GO
+--*******************************************************************
