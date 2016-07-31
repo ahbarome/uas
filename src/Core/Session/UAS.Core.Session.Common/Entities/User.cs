@@ -6,6 +6,7 @@ namespace UAS.Core.Session.Entities
     {
         public int IdRole { get; set; }
         public int IdUser { get; set; }
+        public int DocumentNumber { get; set; }
         public bool IsActive { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }

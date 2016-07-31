@@ -40,6 +40,7 @@ namespace UAS.Core.Session.Builders
                 Username = _username,
                 Password = _password,
                 IdRole = _user.IdRole,
+                DocumentNumber = _user.DocumentNumber,
                 RoleName = _user.Role.Alias,
                 Name = _user.Name,
                 LastName = _user.LastName,
