@@ -244,6 +244,7 @@
     <Compile Include="Controllers\FirewallController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
+    <Compile Include="Controllers\NonAttendanceController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1531,6 +1532,8 @@
     <Content Include="Scripts\plugins\d3\d3.min.js" />
     <Content Include="Scripts\plugins\datapicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\plugins\dataTables\datatables.min.js" />
+    <Content Include="Scripts\plugins\dataTables\plugins\i18n\Spanish.txt" />
+    <Content Include="Scripts\plugins\dataTables\plugins\ids-arrays.txt" />
     <Content Include="Scripts\plugins\daterangepicker\daterangepicker.js" />
     <Content Include="Scripts\plugins\diff_match_patch\javascript\diff_match_patch.js" />
     <Content Include="Scripts\plugins\diff_match_patch\README.txt" />
@@ -1783,6 +1786,7 @@
     <Content Include="Views\Attendance\TeacherStatisticPartial.cshtml" />
     <Content Include="Views\Attendance\TeacherAttendanceStatisticPartial.cshtml" />
     <Content Include="Views\Attendance\TeacherAttendanceGraphPartial.cshtml" />
+    <Content Include="Views\NonAttendance\Excuse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

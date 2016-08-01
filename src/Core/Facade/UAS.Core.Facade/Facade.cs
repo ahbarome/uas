@@ -1,6 +1,7 @@
 ﻿namespace UAS.Core.Facade
 {
     using Attendance;
+    using NonAttendance;
     using Session;
     using Session.Interfaces;
     using System;
@@ -10,6 +11,7 @@
         static Facade instance = null;
         private ISessionManager _sessionManager;
         private AttendanceFacade _attendanceFacade;
+        private NonAttendanceFacade _nonAttendanceFacade;
 
         public static Facade Instance(Action<string> attendanceDispatcher) {
             if (instance == null)
@@ -21,6 +23,7 @@
         {
             _sessionManager = new SessionManager();
             _attendanceFacade = new AttendanceFacade();
+            _nonAttendanceFacade = new NonAttendanceFacade();
         }
 
         public Facade(Action<string> attendanceDispatcher = null) {
@@ -89,6 +92,10 @@
         public dynamic GetTeacherAttendanceStatistics()
         {
             return _attendanceFacade.GetTeacherAttendanceStatistics();
+        }
+
+        public dynamic GetNonAttendancePendingForExcuse(int documentNumber, int roleId){
+            return _nonAttendanceFacade.GetNonAttendancePendingForExcuse(documentNumber, roleId);
         }
     }
 }

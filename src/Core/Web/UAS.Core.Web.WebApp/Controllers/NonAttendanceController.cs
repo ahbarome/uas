@@ -13,15 +13,18 @@ namespace UAS.Core.Web.WebApp.Controllers
 
         public ActionResult Excuse()
         {
-            return View();
+            var userDocumentNumber = base.CurrentSession.SessionUser.DocumentNumber;
+            var roleId = base.CurrentSession.SessionUser.IdRole;
+            var nonAttendance = _facade.GetNonAttendancePendingForExcuse(userDocumentNumber, roleId);
+            return View(nonAttendance);
         }
 
         public JsonResult GetNonAttendancePendingForExcuse()
         {
             var userDocumentNumber = base.CurrentSession.SessionUser.DocumentNumber;
             var roleId = base.CurrentSession.SessionUser.IdRole;
-
-            return _facade.GetNonAttendancePendingForExcuse(userDocumentNumber, roleId);
+            var nonAttendance = _facade.GetNonAttendancePendingForExcuse(userDocumentNumber, roleId);
+            return Json(nonAttendance);
         }
     }
 }

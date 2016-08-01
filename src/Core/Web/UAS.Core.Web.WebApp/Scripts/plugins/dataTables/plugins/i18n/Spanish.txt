@@ -1,0 +1,31 @@
+{
+	"sProcessing":     "Cargando acuerdos comerciales...",
+	"sLengthMenu":     "Mostrar _MENU_",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "<small>Mostrando del _START_ al _END_ de un total de _TOTAL_ registros</small>",
+	"sInfoEmpty":      "<small>Mostrando registros del 0 al 0 de un total de 0 registros</small>",
+	"sInfoFiltered":   "<small>(filtrado de un total de _MAX_ registros)</small>",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	},
+	"select": {
+				"rows": {
+					"_": " <small>Seleccionadas %d filas</small>",
+					"0": " <small></small>",
+					"1": " <small>Sólo 1 fila seleccionada</small>"
+				}
+					}
+}

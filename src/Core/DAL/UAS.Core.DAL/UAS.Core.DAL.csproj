@@ -45,6 +45,7 @@
     <Compile Include="Notifiers\SqlNotificationEventHandler.cs" />
     <Compile Include="Persisters\CoursePersister.cs" />
     <Compile Include="Persisters\MovementPersister.cs" />
+    <Compile Include="Persisters\PersonPersister.cs" />
     <Compile Include="Persisters\TeacherPersister.cs" />
     <Compile Include="Persisters\UserPersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

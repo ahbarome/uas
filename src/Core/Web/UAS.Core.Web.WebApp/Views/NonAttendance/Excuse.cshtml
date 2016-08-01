@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<UAS.Core.DAL.Common.Model.NonAttendanceRegisterView>
+@{
     ViewBag.Title = "Creación de Excusa";
 }
 
@@ -43,10 +44,10 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <table id="table-non-attendance" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th class="center"><input type="checkbox" checked class="i-checks" name="input[]"></th>
+                                    <th class="center"><input type="checkbox" class="i-checks" name="input[]"></th>
                                     <th class="center">Curso</th>
                                     <th>Profesor</th>
                                     <th>Horario</th>
@@ -55,31 +56,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="gradeX">
-                                    <td><input type="checkbox" checked class="i-checks" name="input[]"></td>
-                                    <td>Cálculo Integral</td>
-                                    <td>Walter Magaña</td>
-                                    <td>09:00 - 11:00</td>
-                                    <td class="center">Sálon 302</td>
-                                    <td class="center">No</td>
-                                </tr>
-                                <tr class="gradeC">
-                                    <td><input type="checkbox" checked class="i-checks" name="input[]"></td>
-                                    <td>Física Mecánica</td>
-                                    <td>Gonzalo Becerra</td>
-                                    <td>09:00 - 10:45</td>
-                                    <td class="center">Sálon 302</td>
-                                    <td class="center">No</td>
-                                </tr>
+                                @foreach (var nonAttendance in Model)
+                                {
+                                    <tr>
+                                        <td><input type="checkbox" class="i-checks" name="input[]"></td>
+                                        <td>@nonAttendance.CourseName</td>
+                                        <td>@nonAttendance.FullName</td>
+                                        <td>
+                                            @{var scheduleDetail = string.Concat(@nonAttendance.StartTime, " - ", @nonAttendance.EndTime); @scheduleDetail}
+                                        </td>
+                                        <td class="center">
+                                            @{var spaceDetail = string.Concat(@nonAttendance.SpaceType, " ", nonAttendance.SpaceName); @spaceDetail}
+                                        </td>
+                                        <td class="center">No</td>
+                                    </tr>
+                                                }
+                               
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th class="center"><input type="checkbox" checked class="i-checks" name="input[]"></th>
+                                    <th class="center"><input type="checkbox" class="i-checks" name="input[]"></th>
                                     <th class="center">Curso</th>
                                     <th>Profesor</th>
                                     <th>Horario</th>
                                     <th>Espacio</th>
-                                    <th>Tiene Excusa</th>
+                                    <th>¿Excusa?</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -101,28 +102,37 @@
 @section Styles {
     @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/toastrStyles")
 }
 
 @section Scripts {
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/toastr")
 
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
+            function turnOnICheck() {
+                $('input[type=checkbox]').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green'
+                });
+            };
 
-            $('.dataTables-example').DataTable({
+            turnOnICheck();
+
+            $('#table-non-attendance').DataTable({
                 dom: '<"html5buttons"B>lTfgitp',
+                language: {
+                    url: '@Url.Content("~/Scripts/plugins/datatables/plugins/i18n/Spanish.txt")'
+                },
+                "processing": true,
                 buttons: [
                     { extend: 'copy' },
-                    { extend: 'csv' },
-                    { extend: 'excel', title: 'ExampleFile' },
-                    { extend: 'pdf', title: 'ExampleFile' },
-
+                    { extend: 'csv', title: 'Ausentismo' },
+                    { extend: 'excel', title: 'Ausentismo' },
+                    { extend: 'pdf', title: 'Ausentismo' },
                     {
                         extend: 'print',
                         customize: function (win) {
@@ -135,7 +145,14 @@
                         }
                     }
                 ]
+            });
 
+            $('#table-non-attendance tbody ins').on('click', function (e) {
+                toastr.info('Click', 'UAS+');
+            });
+
+            $("#btn-create-excuse").click(function () {
+                toastr.warning('Click', 'UAS+');
             });
         });
     </script>

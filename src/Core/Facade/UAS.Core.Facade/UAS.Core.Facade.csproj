@@ -52,6 +52,10 @@
       <Project>{c529fba8-89f1-4b8d-a3f1-e4d9a37f9b92}</Project>
       <Name>UAS.Core.DAL.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NonAttendance\UAS.Core.NonAttendance\UAS.Core.NonAttendance.csproj">
+      <Project>{55270696-0831-42c4-a03f-f189e092138b}</Project>
+      <Name>UAS.Core.NonAttendance</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Session\UAS.Core.Session.Common\UAS.Core.Session.Common.csproj">
       <Project>{c60e458c-7f4d-4a9d-a43f-c0faf87a6aee}</Project>
       <Name>UAS.Core.Session.Common</Name>
