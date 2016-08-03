@@ -88,7 +88,7 @@ RETURNS INT
 AS
 BEGIN
 	
-	RETURN DATEPART(WEEKDAY, GETDATE() - 1)
+	RETURN DATEPART(WEEKDAY, GETDATE())
 
 END
 
@@ -320,7 +320,7 @@ GO
 --				of students by course id
 -- =============================================
 
-ALTER FUNCTION [Integration].[GetCourseWithTotalStudentsById](@CourseId INT)
+CREATE FUNCTION [Integration].[GetCourseWithTotalStudentsById](@CourseId INT)
 RETURNS TABLE
 AS
 RETURN 
