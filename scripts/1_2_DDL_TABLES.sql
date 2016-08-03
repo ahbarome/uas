@@ -186,6 +186,31 @@ ALTER TABLE  [NonAttendance].[Attachment] ADD  CONSTRAINT [DF_ExcuseAttachment_R
 GO
 
 --*******************************************************************
+--NONATTENDANCE TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[NonAttendance](
+	[Id] 							[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[DocumentNumber]				[int]				NOT NULL,
+	[IdRole]						[int]				NOT NULL,
+	[IdCourse]						[int]				NOT NULL,
+	[IdAcademicPeriod]				[int]				NOT NULL,
+	[IdCareer]						[int]				NOT NULL,
+	[IdFringe]						[int]				NOT NULL,
+	[NonAttendanceRegisterDate] 	[datetime] 			NULL,
+	[RegisterDate] 					[datetime] 			NULL,
+	[HasExcuse]						[bit]				NOT NULL,
+	CONSTRAINT Fk_NonAttendance_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+	CONSTRAINT Fk_NonAttendance_IdCourse FOREIGN KEY  (IdCourse) REFERENCES [Integration].[Course](Id),
+	CONSTRAINT Fk_NonAttendance_IdAcademicPeriod FOREIGN KEY  (IdAcademicPeriod) REFERENCES [Integration].[AcademicPeriod](Id),
+	CONSTRAINT Fk_NonAttendance_IdCareer FOREIGN KEY  (IdCareer) REFERENCES [Integration].[Career](Id),
+	CONSTRAINT Fk_NonAttendance_IdFringe FOREIGN KEY  (IdFringe) REFERENCES [Integration].[Fringe](Id)
+)
+GO
+
+ALTER TABLE  [NonAttendance].[NonAttendance] ADD  CONSTRAINT [DF_NonAttendance_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
 --INTEGRATION SCHEMA
 --*******************************************************************
 --*******************************************************************

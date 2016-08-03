@@ -414,3 +414,87 @@ END
 GO
 
 --*******************************************************************
+--PUTNONATTENDANCE STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-02
+-- Description:	Populate the NonAttendance
+-- =============================================
+ALTER PROCEDURE [NonAttendance].[PutNonAttendance]
+
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+
+	SELECT	[ARV].[DocumentNumber]
+				, [ARV].[RoleId]
+				, [ARV].[CourseId]
+				, [ARV].[SpaceId]
+				, [ARV].[DayOfTheWeek]
+		FROM	[Attendance].[AttendanceRegisterView]	[ARV]
+	WHERE	[ARV].[MovementDate] = CONVERT(DATE, '2016-07-30')	
+
+	DECLARE AttendanceCursor CURSOR FOR
+		SELECT	[ARV].[DocumentNumber]
+				, [ARV].[RoleId]
+				, [ARV].[CourseId]
+				, [ARV].[SpaceId]
+				, [ARV].[DayOfTheWeek]
+		FROM	[Attendance].[AttendanceRegisterView]	[ARV]
+		WHERE	[ARV].[MovementDate] = CONVERT(DATE, '2016-07-30')
+
+	OPEN AttendanceCursor;
+
+	DECLARE	@AttendanceDocumentNumber	INT
+			, @AttendanceRoleId			INT
+			, @AttendanceCourseId		INT
+			, @AttendanceSpaceId		INT
+			, @AttendanceDayOfTheWeek	INT
+
+	FETCH NEXT 
+	FROM	AttendanceCursor   
+	INTO	@AttendanceDocumentNumber
+			, @AttendanceRoleId
+			, @AttendanceCourseId
+			, @AttendanceSpaceId
+			, @AttendanceDayOfTheWeek
+
+	WHILE @@FETCH_STATUS = 0  
+	BEGIN
+		
+		SELECT	*
+		FROM	[Integration].[PersonActivitiesView] [PAV]
+		WHERE	[PAV].[DayOfTheWeek]		= @AttendanceDayOfTheWeek	AND
+				[PAV].[DocumentNumber]		!= @AttendanceDocumentNumber	--AND
+				--[PAV].[RoleId]				!= @AttendanceRoleId			AND
+				--[PAV].[CourseId]			!= @AttendanceCourseId			AND
+				--[PAV].[SpaceId]				!= @AttendanceSpaceId			AND
+				
+
+				--INSERT INTO [NonAttendance].[NonAttendance] ([DocumentNumber], [IdRole], [IdCourse], [IdAcademicPeriod], [IdCareer], [IdFringe], [NonAttendanceRegisterDate], [RegisterDate], [HasExcuse])
+
+	FETCH NEXT 
+	FROM	AttendanceCursor 
+	INTO	@AttendanceDocumentNumber
+			, @AttendanceRoleId
+			, @AttendanceCourseId
+			, @AttendanceSpaceId
+			, @AttendanceDayOfTheWeek
+	END
+
+	CLOSE AttendanceCursor;  
+	DEALLOCATE AttendanceCursor;
+
+
+END
+
+GO
+--*******************************************************************
