@@ -8,7 +8,9 @@ namespace UAS.Core.DAL.Persisters
     {
         public List<NonAttendanceRegisterView> GetNonAttendancePendingForExcuse(int documentNumber, int roleId)
         {
-            var nonAttendance = base.Entities.NonAttendanceRegisterView.ToList();
+            var nonAttendance = base.Entities.NonAttendanceRegisterView.Where(
+                filter => filter.DocumentNumber == documentNumber && filter.RoleId.Equals(roleId.ToString()))
+                .ToList();
 
             return nonAttendance;
         }

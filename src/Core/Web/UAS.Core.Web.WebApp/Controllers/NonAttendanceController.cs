@@ -19,6 +19,14 @@ namespace UAS.Core.Web.WebApp.Controllers
             return View(nonAttendance);
         }
 
+        public ActionResult PendingExcuseGrid() {
+            return PartialView();
+        }
+
+        public ActionResult ExcuseCreator() {
+            return PartialView();
+        }
+
         public JsonResult GetNonAttendancePendingForExcuse()
         {
             var userDocumentNumber = base.CurrentSession.SessionUser.DocumentNumber;

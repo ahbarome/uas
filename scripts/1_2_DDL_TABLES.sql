@@ -193,17 +193,16 @@ CREATE TABLE [NonAttendance].[NonAttendance](
 	[DocumentNumber]				[int]				NOT NULL,
 	[IdRole]						[int]				NOT NULL,
 	[IdCourse]						[int]				NOT NULL,
-	[IdAcademicPeriod]				[int]				NOT NULL,
-	[IdCareer]						[int]				NOT NULL,
-	[IdFringe]						[int]				NOT NULL,
-	[NonAttendanceRegisterDate] 	[datetime] 			NULL,
-	[RegisterDate] 					[datetime] 			NULL,
+	[IdSpace]						[int]				NOT NULL,
+	[DayOfTheWeek]					[int]				NOT NULL,
+	[StartTime]						[time]				NOT NULL,
+	[EndTime]						[time]				NOT NULL,
+	[NonAttendanceDate]				[date]				NOT NULL,
 	[HasExcuse]						[bit]				NOT NULL,
+	[RegisterDate]					[datetime]			NULL,
 	CONSTRAINT Fk_NonAttendance_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
 	CONSTRAINT Fk_NonAttendance_IdCourse FOREIGN KEY  (IdCourse) REFERENCES [Integration].[Course](Id),
-	CONSTRAINT Fk_NonAttendance_IdAcademicPeriod FOREIGN KEY  (IdAcademicPeriod) REFERENCES [Integration].[AcademicPeriod](Id),
-	CONSTRAINT Fk_NonAttendance_IdCareer FOREIGN KEY  (IdCareer) REFERENCES [Integration].[Career](Id),
-	CONSTRAINT Fk_NonAttendance_IdFringe FOREIGN KEY  (IdFringe) REFERENCES [Integration].[Fringe](Id)
+	CONSTRAINT Fk_NonAttendance_IdSpace FOREIGN KEY  (IdSpace) REFERENCES [Integration].[Space](Id),
 )
 GO
 

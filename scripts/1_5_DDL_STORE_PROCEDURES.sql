@@ -427,71 +427,37 @@ GO
 -- Create date: 2016-08-02
 -- Description:	Populate the NonAttendance
 -- =============================================
-ALTER PROCEDURE [NonAttendance].[PutNonAttendance]
+CREATE PROCEDURE [NonAttendance].[PopulateLastNonAttendance]
 
 AS
 BEGIN
+
+	DECLARE @LastDate DATE;
+
+	SET		@LastDate = CONVERT(DATE, GETDATE() - 2);
+
 	SET NOCOUNT ON;
 	
-
-	SELECT	[ARV].[DocumentNumber]
-				, [ARV].[RoleId]
-				, [ARV].[CourseId]
-				, [ARV].[SpaceId]
-				, [ARV].[DayOfTheWeek]
-		FROM	[Attendance].[AttendanceRegisterView]	[ARV]
-	WHERE	[ARV].[MovementDate] = CONVERT(DATE, '2016-07-30')	
-
-	DECLARE AttendanceCursor CURSOR FOR
-		SELECT	[ARV].[DocumentNumber]
-				, [ARV].[RoleId]
-				, [ARV].[CourseId]
-				, [ARV].[SpaceId]
-				, [ARV].[DayOfTheWeek]
-		FROM	[Attendance].[AttendanceRegisterView]	[ARV]
-		WHERE	[ARV].[MovementDate] = CONVERT(DATE, '2016-07-30')
-
-	OPEN AttendanceCursor;
-
-	DECLARE	@AttendanceDocumentNumber	INT
-			, @AttendanceRoleId			INT
-			, @AttendanceCourseId		INT
-			, @AttendanceSpaceId		INT
-			, @AttendanceDayOfTheWeek	INT
-
-	FETCH NEXT 
-	FROM	AttendanceCursor   
-	INTO	@AttendanceDocumentNumber
-			, @AttendanceRoleId
-			, @AttendanceCourseId
-			, @AttendanceSpaceId
-			, @AttendanceDayOfTheWeek
-
-	WHILE @@FETCH_STATUS = 0  
-	BEGIN
-		
-		SELECT	*
-		FROM	[Integration].[PersonActivitiesView] [PAV]
-		WHERE	[PAV].[DayOfTheWeek]		= @AttendanceDayOfTheWeek	AND
-				[PAV].[DocumentNumber]		!= @AttendanceDocumentNumber	--AND
-				--[PAV].[RoleId]				!= @AttendanceRoleId			AND
-				--[PAV].[CourseId]			!= @AttendanceCourseId			AND
-				--[PAV].[SpaceId]				!= @AttendanceSpaceId			AND
-				
-
-				--INSERT INTO [NonAttendance].[NonAttendance] ([DocumentNumber], [IdRole], [IdCourse], [IdAcademicPeriod], [IdCareer], [IdFringe], [NonAttendanceRegisterDate], [RegisterDate], [HasExcuse])
-
-	FETCH NEXT 
-	FROM	AttendanceCursor 
-	INTO	@AttendanceDocumentNumber
-			, @AttendanceRoleId
-			, @AttendanceCourseId
-			, @AttendanceSpaceId
-			, @AttendanceDayOfTheWeek
-	END
-
-	CLOSE AttendanceCursor;  
-	DEALLOCATE AttendanceCursor;
+	
+	INSERT INTO [NonAttendance].[NonAttendance] ([DocumentNumber], [IdRole], [IdCourse], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime], [NonAttendanceDate], [HasExcuse])
+	SELECT	[PAV].[DocumentNumber]
+			, [PAV].[RoleId]
+			, [PAV].[CourseId] 
+			, [PAV].[SpaceId] 
+			, [PAV].[DayOfTheWeek]
+			, [PAV].[StartTime]
+			, [PAV].[EndTime]
+			, @LastDate				AS NonAttendanceDate
+			, 0						AS HasExcuse
+	FROM	[Integration].[PersonActivitiesView]		[PAV]
+	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] ON 
+		[CMV].[DocumentNumber]	= [PAV].[DocumentNumber]	AND
+		[CMV].[CourseId]		= [PAV].[CourseId]			AND
+		[CMV].[RoleId]			= [PAV].[RoleId]			AND
+		[CMV].[SpaceId]			= [PAV].[SpaceId]			AND
+		[CMV].[DayOfTheWeek]	= [PAV].[DayOfTheWeek] 
+	WHERE	[PAV].[DayOfTheWeek] = DATEPART(WEEKDAY, @LastDate) AND
+			[CMV].[DocumentNumber] IS NULL
 
 
 END

@@ -1787,6 +1787,8 @@
     <Content Include="Views\Attendance\TeacherAttendanceStatisticPartial.cshtml" />
     <Content Include="Views\Attendance\TeacherAttendanceGraphPartial.cshtml" />
     <Content Include="Views\NonAttendance\Excuse.cshtml" />
+    <Content Include="Views\NonAttendance\PendingExcuseGrid.cshtml" />
+    <Content Include="Views\NonAttendance\ExcuseCreator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
