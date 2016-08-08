@@ -6,7 +6,7 @@ namespace UAS.Core.NonAttendance.Managers
 {
     internal class PersonManager
     {
-        PersonPersister _personPersister;
+        private PersonPersister _personPersister;
         public PersonManager()
         {
             _personPersister = new PersonPersister();

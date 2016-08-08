@@ -44,6 +44,7 @@
     <Compile Include="BaseContext.cs" />
     <Compile Include="Notifiers\SqlNotificationEventHandler.cs" />
     <Compile Include="Persisters\CoursePersister.cs" />
+    <Compile Include="Persisters\ExcusePersister.cs" />
     <Compile Include="Persisters\MovementPersister.cs" />
     <Compile Include="Persisters\PersonPersister.cs" />
     <Compile Include="Persisters\TeacherPersister.cs" />

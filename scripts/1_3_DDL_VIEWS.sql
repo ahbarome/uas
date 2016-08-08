@@ -321,3 +321,21 @@ CREATE VIEW [NonAttendance].[NonAttendanceRegisterView] AS
 GO
 
 --*******************************************************************
+--NONATTENDANCE VIEW 
+--*******************************************************************
+CREATE VIEW [NonAttendance].[NonAttendanceView] AS
+(	
+	SELECT	[PAV].*
+			, DATENAME(WEEKDAY, [NON].[NonAttendanceDate]) AS NameDayOfTheWeek
+			, [NON].[NonAttendanceDate]
+			, [NON].[HasExcuse]
+	FROM	[NonAttendance].[NonAttendance]				[NON]
+	INNER JOIN [Integration].[PersonActivitiesView]		[PAV]	ON	[PAV].[DocumentNumber]		= [NON].[DocumentNumber]	AND
+																	[PAV].[SpaceId]				= [NON].[IdSpace]			AND
+																	[PAV].[CourseId]			= [NON].[IdCourse]			AND
+																	[PAV].[RoleId]				= [NON].[IdRole]			AND
+																	[PAV].[DayOfTheWeek]		= [NON].[DayOfTheWeek] 	
+)
+GO
+
+--*******************************************************************

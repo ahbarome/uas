@@ -257,6 +257,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\ExcuseViewModel.js" />
     <Content Include="App\TeacherAttendanceMovementViewModel.js" />
     <Content Include="App\StudentAttendanceMovementViewModel.js" />
     <Content Include="App\UserViewModel.js" />
@@ -1807,6 +1808,10 @@
     <ProjectReference Include="..\..\Configuration\UAS.Core.Configuration\UAS.Core.Configuration.csproj">
       <Project>{626bc2d8-40ac-4fb6-9bd4-459a75eabeb0}</Project>
       <Name>UAS.Core.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DAL\UAS.Core.DAL.Common\UAS.Core.DAL.Common.csproj">
+      <Project>{c529fba8-89f1-4b8d-a3f1-e4d9a37f9b92}</Project>
+      <Name>UAS.Core.DAL.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Facade\UAS.Core.Facade\UAS.Core.Facade.csproj">
       <Project>{5dec6cf7-7370-469b-aaee-87b950eabb8a}</Project>

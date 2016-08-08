@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UAS.Core.DAL.Common.Model.NonAttendanceRegisterView>
+﻿@model UAS.Core.DAL.Common.Model.Excuse
 @{
     ViewBag.Title = "Creación de Excusa";
 }
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                      @Html.Partial("PendingExcuseGrid", Model)
+                        @Html.Partial("PendingExcuseGrid")
                     </div>
                 </div>
             </div>
@@ -67,58 +67,16 @@
     @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/wizardStepsStyles")
+    @Styles.Render("~/Content/plugins/dropzone/dropZoneStyles")
 }
 
 @section Scripts {
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/plugins/iCheck")
     @Scripts.Render("~/plugins/toastr")
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            function turnOnICheck() {
-                $('input[type=checkbox]').iCheck({
-                    checkboxClass: 'icheckbox_square-green',
-                    radioClass: 'iradio_square-green'
-                });
-            };
-
-            turnOnICheck();
-
-            $('#grid-pending-excuse').DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                language: {
-                    url: '@Url.Content("~/Scripts/plugins/datatables/plugins/i18n/Spanish.txt")'
-                },
-                "processing": true,
-                buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv', title: 'Ausentismo' },
-                    { extend: 'excel', title: 'Ausentismo' },
-                    { extend: 'pdf', title: 'Ausentismo' },
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-
-            $('#grid-pending-excuse tbody ins').on('click', function (e) {
-                toastr.info('Click', 'UAS+');
-            });
-
-            $("#btn-create-excuse").click(function () {
-                toastr.warning('Click', 'UAS+');
-                $("#modal-excuse-creator").modal("show");
-            });
-        });
-    </script>
+    @Scripts.Render("~/plugins/wizardSteps")
+    @Scripts.Render("~/plugins/validate")
+    @Scripts.Render("~/plugins/dropZone")
+    <script src="~/App/ExcuseViewModel.js"></script>
 }

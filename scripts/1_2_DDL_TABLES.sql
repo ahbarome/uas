@@ -130,10 +130,34 @@ ALTER TABLE  [NonAttendance].[Classification] ADD  CONSTRAINT [DF_ExcuseClassifi
 GO
 
 --*******************************************************************
+--NONATTENDANCE TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[NonAttendance](
+	[Id] 							[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[DocumentNumber]				[int]				NOT NULL,
+	[IdRole]						[int]				NOT NULL,
+	[IdCourse]						[int]				NOT NULL,
+	[IdSpace]						[int]				NOT NULL,
+	[DayOfTheWeek]					[int]				NOT NULL,
+	[StartTime]						[time]				NOT NULL,
+	[EndTime]						[time]				NOT NULL,
+	[NonAttendanceDate]				[date]				NOT NULL,
+	[HasExcuse]						[bit]				NOT NULL,
+	[RegisterDate]					[datetime]			NULL,
+	CONSTRAINT Fk_NonAttendance_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+	CONSTRAINT Fk_NonAttendance_IdCourse FOREIGN KEY  (IdCourse) REFERENCES [Integration].[Course](Id),
+	CONSTRAINT Fk_NonAttendance_IdSpace FOREIGN KEY  (IdSpace) REFERENCES [Integration].[Space](Id),
+)
+GO
+
+ALTER TABLE  [NonAttendance].[NonAttendance] ADD  CONSTRAINT [DF_NonAttendance_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+--*******************************************************************
 --EXCUSE TABLE 
 --*******************************************************************
 CREATE TABLE [NonAttendance].[Excuse](
 	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[IdNonAttendance]			[int]				NOT NULL,
 	[IdStatus]					[int]				NOT NULL,
 	[IdClassification]			[int]				NOT NULL,
 	[IdUserOwner]				[int]				NOT NULL,
@@ -143,6 +167,7 @@ CREATE TABLE [NonAttendance].[Excuse](
 	[RegisterDate] 				[datetime] 			NULL,
 	[ModifiedBy] 				[nvarchar](80) 		NOT NULL,
 	[LastModificationDate] 		[datetime] 			NULL,
+	CONSTRAINT Fk_ExcuseNonAttendance FOREIGN KEY  (IdNonAttendance) REFERENCES [NonAttendance].[NonAttendance](Id),
 	CONSTRAINT Fk_ExcuseStatus FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id),
 	CONSTRAINT Fk_ExcuseClassification FOREIGN KEY  (IdClassification) REFERENCES [NonAttendance].[Classification](Id),
 	CONSTRAINT Fk_ExcuseIdUserOwner FOREIGN KEY  (IdUserOwner) REFERENCES [Security].[User](Id)
@@ -184,31 +209,6 @@ GO
 
 ALTER TABLE  [NonAttendance].[Attachment] ADD  CONSTRAINT [DF_ExcuseAttachment_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
-
---*******************************************************************
---NONATTENDANCE TABLE 
---*******************************************************************
-CREATE TABLE [NonAttendance].[NonAttendance](
-	[Id] 							[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[DocumentNumber]				[int]				NOT NULL,
-	[IdRole]						[int]				NOT NULL,
-	[IdCourse]						[int]				NOT NULL,
-	[IdSpace]						[int]				NOT NULL,
-	[DayOfTheWeek]					[int]				NOT NULL,
-	[StartTime]						[time]				NOT NULL,
-	[EndTime]						[time]				NOT NULL,
-	[NonAttendanceDate]				[date]				NOT NULL,
-	[HasExcuse]						[bit]				NOT NULL,
-	[RegisterDate]					[datetime]			NULL,
-	CONSTRAINT Fk_NonAttendance_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
-	CONSTRAINT Fk_NonAttendance_IdCourse FOREIGN KEY  (IdCourse) REFERENCES [Integration].[Course](Id),
-	CONSTRAINT Fk_NonAttendance_IdSpace FOREIGN KEY  (IdSpace) REFERENCES [Integration].[Space](Id),
-)
-GO
-
-ALTER TABLE  [NonAttendance].[NonAttendance] ADD  CONSTRAINT [DF_NonAttendance_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
-GO
-
 --*******************************************************************
 --INTEGRATION SCHEMA
 --*******************************************************************

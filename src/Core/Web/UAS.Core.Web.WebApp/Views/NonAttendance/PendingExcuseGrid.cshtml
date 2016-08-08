@@ -1,38 +1,38 @@
-﻿@model IEnumerable<UAS.Core.DAL.Common.Model.NonAttendanceRegisterView>
+﻿@{
+    var nonAttendanceCollection = ViewBag.NonAttendance as IEnumerable<UAS.Core.DAL.Common.Model.NonAttendanceRegisterView>;
+}
 <table id="grid-pending-excuse" class="table table-striped table-bordered table-hover">
     <thead>
         <tr>
-            <th class="center"><input type="checkbox" class="i-checks" name="input[]"></th>
+            <th class="center"></th>
             <th class="center">Curso</th>
-            <th>Profesor</th>
+            <th>Nombre</th>
+            <th>Fecha</th>
             <th>Horario</th>
             <th>Espacio</th>
             <th>¿Excusa?</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var nonAttendance in Model)
+        @foreach (var nonAttendance in nonAttendanceCollection)
         {
             <tr>
                 <td><input type="checkbox" class="i-checks" name="input[]"></td>
                 <td>@nonAttendance.CourseName</td>
                 <td>@nonAttendance.FullName</td>
-                <td>
-                    @{var scheduleDetail = string.Concat(@nonAttendance.StartTime, " - ", @nonAttendance.EndTime); @scheduleDetail}
-                </td>
-                <td class="center">
-                    @{var spaceDetail = string.Concat(@nonAttendance.SpaceType, " ", nonAttendance.SpaceName); @spaceDetail}
-                </td>
+                <td>@DateTime.Now.ToString("yyyy-MM-dd")</td>
+                <td>@{var scheduleDetail = string.Concat(@nonAttendance.StartTime, " - ", @nonAttendance.EndTime); @scheduleDetail}</td>
+                <td>@{var spaceDetail = string.Concat(@nonAttendance.SpaceType, " ", nonAttendance.SpaceName); @spaceDetail}</td>
                 <td class="center">No</td>
             </tr>
-                        }
-
+        }
     </tbody>
     <tfoot>
         <tr>
-            <th class="center"><input type="checkbox" class="i-checks" name="input[]"></th>
+            <th class="center"></th>
             <th class="center">Curso</th>
-            <th>Profesor</th>
+            <th>Nombre</th>
+            <th>Fecha</th>
             <th>Horario</th>
             <th>Espacio</th>
             <th>¿Excusa?</th>

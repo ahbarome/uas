@@ -5,6 +5,7 @@
     using Session;
     using Session.Interfaces;
     using System;
+    using DAL.Common.Model;
 
     public class Facade
     {
@@ -96,6 +97,16 @@
 
         public dynamic GetNonAttendancePendingForExcuse(int documentNumber, int roleId){
             return _nonAttendanceFacade.GetNonAttendancePendingForExcuse(documentNumber, roleId);
+        }
+
+        public dynamic GetExcuseClassifications()
+        {
+            return _nonAttendanceFacade.GetExcuseClassifications();
+        }
+
+        public void SaveExcuse(Excuse excuse)
+        {
+            _nonAttendanceFacade.SaveExcuse(excuse);
         }
     }
 }
