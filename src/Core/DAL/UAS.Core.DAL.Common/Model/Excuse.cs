@@ -18,26 +18,23 @@ namespace UAS.Core.DAL.Common.Model
         public Excuse()
         {
             this.Attachments = new HashSet<Attachment>();
-            this.ExcuseDetails = new HashSet<ExcuseDetail>();
         }
     
         public int Id { get; set; }
+        public int IdNonAttendance { get; set; }
+        public int DocumentNumber { get; set; }
         public int IdStatus { get; set; }
         public int IdClassification { get; set; }
-        public int IdUserOwner { get; set; }
         public string Justification { get; set; }
         public string Observation { get; set; }
-        public string CreatedBy { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModificationDate { get; set; }
+        public int IdRole { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attachment> Attachments { get; set; }
         public virtual Classification Classification { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExcuseDetail> ExcuseDetails { get; set; }
-        public virtual User User { get; set; }
+        public virtual NonAttendance NonAttendance { get; set; }
         public virtual Status Status { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

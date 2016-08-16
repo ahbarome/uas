@@ -5,7 +5,7 @@ using UAS.Core.DAL.Common.Model;
 
 namespace UAS.Core.DAL.Persisters
 {
-    public class TeacherPersister : BaseContext
+    public class TeacherPersister : PersonPersister
     {
         public Teacher GetTeacherByDocumentNumber(int teacherDocumentNumber)
         {

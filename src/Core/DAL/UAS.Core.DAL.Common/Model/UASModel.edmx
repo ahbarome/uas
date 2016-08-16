@@ -187,24 +187,29 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdNonAttendance" Type="int" Nullable="false" />
+          <Property Name="DocumentNumber" Type="int" Nullable="false" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
           <Property Name="IdStatus" Type="int" Nullable="false" />
           <Property Name="IdClassification" Type="int" Nullable="false" />
-          <Property Name="IdUserOwner" Type="int" Nullable="false" />
           <Property Name="Justification" Type="nvarchar(max)" />
           <Property Name="Observation" Type="nvarchar(max)" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="80" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="80" Nullable="false" />
-          <Property Name="LastModificationDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="ExcuseDetail">
+        <EntityType Name="NonAttendance">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdExcuse" Type="int" Nullable="false" />
-          <Property Name="IdStatus" Type="int" Nullable="false" />
-          <Property Name="IdUserApprover" Type="int" Nullable="false" />
+          <Property Name="DocumentNumber" Type="int" Nullable="false" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="IdCourse" Type="int" Nullable="false" />
+          <Property Name="IdSpace" Type="int" Nullable="false" />
+          <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="NonAttendanceDate" Type="date" Nullable="false" />
+          <Property Name="HasExcuse" Type="bit" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Status">
@@ -393,6 +398,58 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <Property Name="EnrollmentStatus" Type="nvarchar" MaxLength="80" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseApprovalView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ExcuseApprovalView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IdExcuse" />
+            <PropertyRef Name="IdStatusApproval" />
+            <PropertyRef Name="Approver" />
+            <PropertyRef Name="IdRoleApprover" />
+            <PropertyRef Name="IdNonAttendance" />
+            <PropertyRef Name="TruantDocumentNumber" />
+            <PropertyRef Name="TruantFullName" />
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="CourseName" />
+            <PropertyRef Name="DayOfTheWeek" />
+            <PropertyRef Name="SpaceId" />
+            <PropertyRef Name="SpaceName" />
+            <PropertyRef Name="SpaceType" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="NonAttendanceDate" />
+            <PropertyRef Name="HasExcuse" />
+            <PropertyRef Name="IdStatusExcuse" />
+            <PropertyRef Name="IdClassificationExcuse" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdExcuse" Type="int" Nullable="false" />
+          <Property Name="IdStatusApproval" Type="int" Nullable="false" />
+          <Property Name="StatusApproval" Type="nvarchar" MaxLength="150" />
+          <Property Name="Approver" Type="int" Nullable="false" />
+          <Property Name="IdRoleApprover" Type="int" Nullable="false" />
+          <Property Name="IdNonAttendance" Type="int" Nullable="false" />
+          <Property Name="TruantDocumentNumber" Type="int" Nullable="false" />
+          <Property Name="TruantFullName" Type="nvarchar" MaxLength="301" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
+          <Property Name="NameDayOfTheWeek" Type="nvarchar" MaxLength="30" />
+          <Property Name="SpaceId" Type="int" Nullable="false" />
+          <Property Name="SpaceName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="SpaceType" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="NonAttendanceDate" Type="date" Nullable="false" />
+          <Property Name="HasExcuse" Type="bit" Nullable="false" />
+          <Property Name="IdStatusExcuse" Type="int" Nullable="false" />
+          <Property Name="StatusExcuse" Type="nvarchar" MaxLength="150" />
+          <Property Name="IdClassificationExcuse" Type="int" Nullable="false" />
+          <Property Name="ClassificationExcuse" Type="nvarchar" MaxLength="150" />
+          <Property Name="ExcuseJustification" Type="nvarchar(max)" />
+          <Property Name="ExcuseObservation" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="NonAttendanceRegisterView">
           <Key>
@@ -422,6 +479,44 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
           <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="NonAttendanceView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="CourseName" />
+            <PropertyRef Name="DocumentNumber" />
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RoleAlias" />
+            <PropertyRef Name="SpaceId" />
+            <PropertyRef Name="SpaceName" />
+            <PropertyRef Name="SpaceType" />
+            <PropertyRef Name="DayOfTheWeek" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="NonAttendanceDate" />
+            <PropertyRef Name="HasExcuse" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DocumentNumber" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="301" Nullable="false" />
+          <Property Name="ImageRelativePath" Type="nvarchar" MaxLength="256" />
+          <Property Name="RoleId" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="RoleAlias" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SpaceId" Type="int" Nullable="false" />
+          <Property Name="SpaceName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="SpaceType" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="NameDayOfTheWeek" Type="nvarchar" MaxLength="30" />
+          <Property Name="NonAttendanceDate" Type="date" Nullable="false" />
+          <Property Name="HasExcuse" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="Fk_AttachmentIdExcuse">
           <End Role="Excuse" Type="Self.Excuse" Multiplicity="1" />
@@ -495,7 +590,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_ExcuseClassification">
+        <Association Name="Fk_Excuse_IdClassification">
           <End Role="Classification" Type="Self.Classification" Multiplicity="1" />
           <End Role="Excuse" Type="Self.Excuse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -507,55 +602,31 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_ExcuseDetailIdUserApprover">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="ExcuseDetail" Type="Self.ExcuseDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ExcuseDetail">
-              <PropertyRef Name="IdUserApprover" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_ExcuseDetailState">
-          <End Role="Status" Type="Self.Status" Multiplicity="1" />
-          <End Role="ExcuseDetail" Type="Self.ExcuseDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Status">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ExcuseDetail">
-              <PropertyRef Name="IdStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_ExcuseIdExcuse">
-          <End Role="Excuse" Type="Self.Excuse" Multiplicity="1" />
-          <End Role="ExcuseDetail" Type="Self.ExcuseDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Excuse">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ExcuseDetail">
-              <PropertyRef Name="IdExcuse" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_ExcuseIdUserOwner">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+        <Association Name="Fk_Excuse_IdNonAttendance">
+          <End Role="NonAttendance" Type="Self.NonAttendance" Multiplicity="1" />
           <End Role="Excuse" Type="Self.Excuse" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="NonAttendance">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Excuse">
-              <PropertyRef Name="IdUserOwner" />
+              <PropertyRef Name="IdNonAttendance" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_ExcuseStatus">
+        <Association Name="Fk_Excuse_IdRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Excuse" Type="Self.Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Excuse_IdStatus">
           <End Role="Status" Type="Self.Status" Multiplicity="1" />
           <End Role="Excuse" Type="Self.Excuse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -575,6 +646,42 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Movement">
+              <PropertyRef Name="IdSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_NonAttendance_IdCourse">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="NonAttendance" Type="Self.NonAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonAttendance">
+              <PropertyRef Name="IdCourse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_NonAttendance_IdRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="NonAttendance" Type="Self.NonAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonAttendance">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_NonAttendance_IdSpace">
+          <End Role="Space" Type="Self.Space" Multiplicity="1" />
+          <End Role="NonAttendance" Type="Self.NonAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Space">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonAttendance">
               <PropertyRef Name="IdSpace" />
             </Dependent>
           </ReferentialConstraint>
@@ -742,8 +849,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <ReturnType>
             <CollectionType>
               <RowType>
-                <Property Name="Alias" Type="varchar" MaxLength="10" Nullable="false" />
-                <Property Name="Description" Type="varchar" MaxLength="10" Nullable="false" />
+                <Property Name="Alias" Type="varchar" MaxLength="13" Nullable="false" />
+                <Property Name="Description" Type="varchar" MaxLength="12" Nullable="false" />
                 <Property Name="Total" Type="int" />
               </RowType>
             </CollectionType>
@@ -780,8 +887,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <ReturnType>
             <CollectionType>
               <RowType>
-                <Property Name="Alias" Type="varchar" MaxLength="10" Nullable="false" />
-                <Property Name="Description" Type="varchar" MaxLength="10" Nullable="false" />
+                <Property Name="Alias" Type="varchar" MaxLength="13" Nullable="false" />
+                <Property Name="Description" Type="varchar" MaxLength="12" Nullable="false" />
                 <Property Name="Total" Type="int" />
               </RowType>
             </CollectionType>
@@ -806,6 +913,10 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
         <Function Name="GetCurrentCourseSummaryByTeacherDocumentNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
           <Parameter Name="TeacherDocumentNumber" Type="int" Mode="In" />
         </Function>
+        <Function Name="GenerateApproversRegister" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="NonAttendance">
+          <Parameter Name="NonAttendanceId" Type="int" Mode="In" />
+          <Parameter Name="ExcuseId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="UASModelStoreContainer">
           <EntitySet Name="Movement" EntityType="Self.Movement" Schema="Attendance" store:Type="Tables" />
           <EntitySet Name="AcademicPeriod" EntityType="Self.AcademicPeriod" Schema="Integration" store:Type="Tables" />
@@ -824,7 +935,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <EntitySet Name="Attachment" EntityType="Self.Attachment" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Classification" EntityType="Self.Classification" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Excuse" EntityType="Self.Excuse" Schema="NonAttendance" store:Type="Tables" />
-          <EntitySet Name="ExcuseDetail" EntityType="Self.ExcuseDetail" Schema="NonAttendance" store:Type="Tables" />
+          <EntitySet Name="NonAttendance" EntityType="Self.NonAttendance" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="StatusApproverByRole" EntityType="Self.StatusApproverByRole" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="Security" store:Type="Tables" />
@@ -917,6 +1028,36 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
     [StudentEnrollmentView].[EnrollmentStatus] AS [EnrollmentStatus]
     FROM [Integration].[StudentEnrollmentView] AS [StudentEnrollmentView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ExcuseApprovalView" EntityType="Self.ExcuseApprovalView" store:Type="Views" store:Schema="NonAttendance">
+            <DefiningQuery>SELECT 
+    [ExcuseApprovalView].[Id] AS [Id], 
+    [ExcuseApprovalView].[IdExcuse] AS [IdExcuse], 
+    [ExcuseApprovalView].[IdStatusApproval] AS [IdStatusApproval], 
+    [ExcuseApprovalView].[StatusApproval] AS [StatusApproval], 
+    [ExcuseApprovalView].[Approver] AS [Approver], 
+    [ExcuseApprovalView].[IdRoleApprover] AS [IdRoleApprover], 
+    [ExcuseApprovalView].[IdNonAttendance] AS [IdNonAttendance], 
+    [ExcuseApprovalView].[TruantDocumentNumber] AS [TruantDocumentNumber], 
+    [ExcuseApprovalView].[TruantFullName] AS [TruantFullName], 
+    [ExcuseApprovalView].[CourseId] AS [CourseId], 
+    [ExcuseApprovalView].[CourseName] AS [CourseName], 
+    [ExcuseApprovalView].[DayOfTheWeek] AS [DayOfTheWeek], 
+    [ExcuseApprovalView].[NameDayOfTheWeek] AS [NameDayOfTheWeek], 
+    [ExcuseApprovalView].[SpaceId] AS [SpaceId], 
+    [ExcuseApprovalView].[SpaceName] AS [SpaceName], 
+    [ExcuseApprovalView].[SpaceType] AS [SpaceType], 
+    [ExcuseApprovalView].[StartTime] AS [StartTime], 
+    [ExcuseApprovalView].[EndTime] AS [EndTime], 
+    [ExcuseApprovalView].[NonAttendanceDate] AS [NonAttendanceDate], 
+    [ExcuseApprovalView].[HasExcuse] AS [HasExcuse], 
+    [ExcuseApprovalView].[IdStatusExcuse] AS [IdStatusExcuse], 
+    [ExcuseApprovalView].[StatusExcuse] AS [StatusExcuse], 
+    [ExcuseApprovalView].[IdClassificationExcuse] AS [IdClassificationExcuse], 
+    [ExcuseApprovalView].[ClassificationExcuse] AS [ClassificationExcuse], 
+    [ExcuseApprovalView].[ExcuseJustification] AS [ExcuseJustification], 
+    [ExcuseApprovalView].[ExcuseObservation] AS [ExcuseObservation]
+    FROM [NonAttendance].[ExcuseApprovalView] AS [ExcuseApprovalView]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="NonAttendanceRegisterView" EntityType="Self.NonAttendanceRegisterView" store:Type="Views" store:Schema="NonAttendance">
             <DefiningQuery>SELECT 
     [NonAttendanceRegisterView].[CourseId] AS [CourseId], 
@@ -933,6 +1074,27 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
     [NonAttendanceRegisterView].[StartTime] AS [StartTime], 
     [NonAttendanceRegisterView].[EndTime] AS [EndTime]
     FROM [NonAttendance].[NonAttendanceRegisterView] AS [NonAttendanceRegisterView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="NonAttendanceView" EntityType="Self.NonAttendanceView" store:Type="Views" store:Schema="NonAttendance">
+            <DefiningQuery>SELECT 
+    [NonAttendanceView].[Id] AS [Id], 
+    [NonAttendanceView].[CourseId] AS [CourseId], 
+    [NonAttendanceView].[CourseName] AS [CourseName], 
+    [NonAttendanceView].[DocumentNumber] AS [DocumentNumber], 
+    [NonAttendanceView].[FullName] AS [FullName], 
+    [NonAttendanceView].[ImageRelativePath] AS [ImageRelativePath], 
+    [NonAttendanceView].[RoleId] AS [RoleId], 
+    [NonAttendanceView].[RoleAlias] AS [RoleAlias], 
+    [NonAttendanceView].[SpaceId] AS [SpaceId], 
+    [NonAttendanceView].[SpaceName] AS [SpaceName], 
+    [NonAttendanceView].[SpaceType] AS [SpaceType], 
+    [NonAttendanceView].[DayOfTheWeek] AS [DayOfTheWeek], 
+    [NonAttendanceView].[StartTime] AS [StartTime], 
+    [NonAttendanceView].[EndTime] AS [EndTime], 
+    [NonAttendanceView].[NameDayOfTheWeek] AS [NameDayOfTheWeek], 
+    [NonAttendanceView].[NonAttendanceDate] AS [NonAttendanceDate], 
+    [NonAttendanceView].[HasExcuse] AS [HasExcuse]
+    FROM [NonAttendance].[NonAttendanceView] AS [NonAttendanceView]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="Fk_AttachmentIdExcuse" Association="Self.Fk_AttachmentIdExcuse">
             <End Role="Excuse" EntitySet="Excuse" />
@@ -958,33 +1120,37 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
             <End Role="Schedule" EntitySet="Schedule" />
             <End Role="EnrollmentDetail" EntitySet="EnrollmentDetail" />
           </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseClassification" Association="Self.Fk_ExcuseClassification">
+          <AssociationSet Name="Fk_Excuse_IdClassification" Association="Self.Fk_Excuse_IdClassification">
             <End Role="Classification" EntitySet="Classification" />
             <End Role="Excuse" EntitySet="Excuse" />
           </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseDetailIdUserApprover" Association="Self.Fk_ExcuseDetailIdUserApprover">
-            <End Role="User" EntitySet="User" />
-            <End Role="ExcuseDetail" EntitySet="ExcuseDetail" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseDetailState" Association="Self.Fk_ExcuseDetailState">
-            <End Role="Status" EntitySet="Status" />
-            <End Role="ExcuseDetail" EntitySet="ExcuseDetail" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseIdExcuse" Association="Self.Fk_ExcuseIdExcuse">
-            <End Role="Excuse" EntitySet="Excuse" />
-            <End Role="ExcuseDetail" EntitySet="ExcuseDetail" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseIdUserOwner" Association="Self.Fk_ExcuseIdUserOwner">
-            <End Role="User" EntitySet="User" />
+          <AssociationSet Name="Fk_Excuse_IdNonAttendance" Association="Self.Fk_Excuse_IdNonAttendance">
+            <End Role="NonAttendance" EntitySet="NonAttendance" />
             <End Role="Excuse" EntitySet="Excuse" />
           </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseStatus" Association="Self.Fk_ExcuseStatus">
+          <AssociationSet Name="Fk_Excuse_IdRole" Association="Self.Fk_Excuse_IdRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Excuse" EntitySet="Excuse" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Excuse_IdStatus" Association="Self.Fk_Excuse_IdStatus">
             <End Role="Status" EntitySet="Status" />
             <End Role="Excuse" EntitySet="Excuse" />
           </AssociationSet>
           <AssociationSet Name="Fk_Movement_IdSpace" Association="Self.Fk_Movement_IdSpace">
             <End Role="Space" EntitySet="Space" />
             <End Role="Movement" EntitySet="Movement" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_NonAttendance_IdCourse" Association="Self.Fk_NonAttendance_IdCourse">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="NonAttendance" EntitySet="NonAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_NonAttendance_IdRole" Association="Self.Fk_NonAttendance_IdRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="NonAttendance" EntitySet="NonAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_NonAttendance_IdSpace" Association="Self.Fk_NonAttendance_IdSpace">
+            <End Role="Space" EntitySet="Space" />
+            <End Role="NonAttendance" EntitySet="NonAttendance" />
           </AssociationSet>
           <AssociationSet Name="Fk_PagePermission" Association="Self.Fk_PagePermission">
             <End Role="Page" EntitySet="Page" />
@@ -1054,6 +1220,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <NavigationProperty Name="Users" Relationship="UASModel.Fk_RoleUser" FromRole="Role" ToRole="User" />
           <NavigationProperty Name="PagePermissionByRoles" Relationship="UASModel.Fk_RolePagePermission" FromRole="Role" ToRole="PagePermissionByRole" />
           <NavigationProperty Name="StatusApproverByRoles" Relationship="UASModel.Fk_StatusApproverByRole_IdRole" FromRole="Role" ToRole="StatusApproverByRole" />
+          <NavigationProperty Name="NonAttendances" Relationship="UASModel.Fk_NonAttendance_IdRole" FromRole="Role" ToRole="NonAttendance" />
+          <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_Excuse_IdRole" FromRole="Role" ToRole="Excuse" />
         </EntityType>
         <EntityContainer Name="UASEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Roles" EntityType="Self.Role" />
@@ -1084,10 +1252,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <EntitySet Name="ScheduleDetails" EntityType="UASModel.ScheduleDetail" />
           <EntitySet Name="Students" EntityType="UASModel.Student" />
           <EntitySet Name="Teachers" EntityType="UASModel.Teacher" />
-          <EntitySet Name="Attachments" EntityType="UASModel.Attachment" />
           <EntitySet Name="Classifications" EntityType="UASModel.Classification" />
-          <EntitySet Name="Excuses" EntityType="UASModel.Excuse" />
-          <EntitySet Name="ExcuseDetails" EntityType="UASModel.ExcuseDetail" />
           <EntitySet Name="Status" EntityType="UASModel.Status" />
           <EntitySet Name="StatusApproverByRoles" EntityType="UASModel.StatusApproverByRole" />
           <EntitySet Name="EnrollmentDetails" EntityType="UASModel.EnrollmentDetail" />
@@ -1135,34 +1300,6 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
             <End Role="Teacher" EntitySet="Teachers" />
             <End Role="Schedule" EntitySet="Schedules" />
           </AssociationSet>
-          <AssociationSet Name="Fk_AttachmentIdExcuse" Association="UASModel.Fk_AttachmentIdExcuse">
-            <End Role="Excuse" EntitySet="Excuses" />
-            <End Role="Attachment" EntitySet="Attachments" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseClassification" Association="UASModel.Fk_ExcuseClassification">
-            <End Role="Classification" EntitySet="Classifications" />
-            <End Role="Excuse" EntitySet="Excuses" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseIdExcuse" Association="UASModel.Fk_ExcuseIdExcuse">
-            <End Role="Excuse" EntitySet="Excuses" />
-            <End Role="ExcuseDetail" EntitySet="ExcuseDetails" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseIdUserOwner" Association="UASModel.Fk_ExcuseIdUserOwner">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Excuse" EntitySet="Excuses" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseStatus" Association="UASModel.Fk_ExcuseStatus">
-            <End Role="Status" EntitySet="Status" />
-            <End Role="Excuse" EntitySet="Excuses" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseDetailIdUserApprover" Association="UASModel.Fk_ExcuseDetailIdUserApprover">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ExcuseDetail" EntitySet="ExcuseDetails" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_ExcuseDetailState" Association="UASModel.Fk_ExcuseDetailState">
-            <End Role="Status" EntitySet="Status" />
-            <End Role="ExcuseDetail" EntitySet="ExcuseDetails" />
-          </AssociationSet>
           <AssociationSet Name="Fk_StatusApproverByRole_IdStatus" Association="UASModel.Fk_StatusApproverByRole_IdStatus">
             <End Role="Status" EntitySet="Status" />
             <End Role="StatusApproverByRole" EntitySet="StatusApproverByRoles" />
@@ -1204,6 +1341,47 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <FunctionImport Name="GetCurrentStudentAttendanceSummary" IsComposable="true" ReturnType="Collection(UASModel.GetCurrentStudentAttendanceSummary_Result)" />
           <FunctionImport Name="GetCurrentTeacherAttendanceSummary" IsComposable="true" ReturnType="Collection(UASModel.GetCurrentTeacherAttendanceSummary_Result)" />
           <FunctionImport Name="GetCurrentTeacherAttendance" IsComposable="true" ReturnType="Collection(UASModel.GetCurrentTeacherAttendance_Result)" />
+          <EntitySet Name="NonAttendances" EntityType="UASModel.NonAttendance" />
+          <AssociationSet Name="Fk_NonAttendance_IdCourse" Association="UASModel.Fk_NonAttendance_IdCourse">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="NonAttendance" EntitySet="NonAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_NonAttendance_IdSpace" Association="UASModel.Fk_NonAttendance_IdSpace">
+            <End Role="Space" EntitySet="Spaces" />
+            <End Role="NonAttendance" EntitySet="NonAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_NonAttendance_IdRole" Association="UASModel.Fk_NonAttendance_IdRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="NonAttendance" EntitySet="NonAttendances" />
+          </AssociationSet>
+          <EntitySet Name="Attachments" EntityType="UASModel.Attachment" />
+          <EntitySet Name="Excuses" EntityType="UASModel.Excuse" />
+          <AssociationSet Name="Fk_AttachmentIdExcuse" Association="UASModel.Fk_AttachmentIdExcuse">
+            <End Role="Excuse" EntitySet="Excuses" />
+            <End Role="Attachment" EntitySet="Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseClassification" Association="UASModel.Fk_ExcuseClassification">
+            <End Role="Classification" EntitySet="Classifications" />
+            <End Role="Excuse" EntitySet="Excuses" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseNonAttendance" Association="UASModel.Fk_ExcuseNonAttendance">
+            <End Role="NonAttendance" EntitySet="NonAttendances" />
+            <End Role="Excuse" EntitySet="Excuses" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseStatus" Association="UASModel.Fk_ExcuseStatus">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Excuse" EntitySet="Excuses" />
+          </AssociationSet>
+          <EntitySet Name="NonAttendanceView" EntityType="UASModel.NonAttendanceView" />
+          <AssociationSet Name="Fk_Excuse_IdRole" Association="UASModel.Fk_Excuse_IdRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Excuse" EntitySet="Excuses" />
+          </AssociationSet>
+          <FunctionImport Name="GenerateApproversRegister">
+            <Parameter Name="NonAttendanceId" Mode="In" Type="Int32" />
+            <Parameter Name="ExcuseId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="ExcuseApprovalView" EntityType="UASModel.ExcuseApprovalView" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -1223,8 +1401,6 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <Property Name="LastModiticationDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Role" Relationship="UASModel.Fk_RoleUser" FromRole="User" ToRole="Role" />
-          <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_ExcuseIdUserOwner" FromRole="User" ToRole="Excuse" />
-          <NavigationProperty Name="ExcuseDetails" Relationship="UASModel.Fk_ExcuseDetailIdUserApprover" FromRole="User" ToRole="ExcuseDetail" />
           <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
           <Property Name="ImageRelativePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -1337,6 +1513,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <NavigationProperty Name="Schedules" Relationship="UASModel.Fk_Schedule_IdCourse" FromRole="Course" ToRole="Schedule" />
           <Property Name="Code" Type="Int32" Nullable="false" />
           <Property Name="Semester" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NonAttendances" Relationship="UASModel.Fk_NonAttendance_IdCourse" FromRole="Course" ToRole="NonAttendance" />
         </EntityType>
         <EntityType Name="Enrollment">
           <Key>
@@ -1442,16 +1619,6 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ImageRelativePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Attachment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdExcuse" Type="Int32" Nullable="false" />
-          <Property Name="Path" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Excuse" Relationship="UASModel.Fk_AttachmentIdExcuse" FromRole="Attachment" ToRole="Excuse" />
-        </EntityType>
         <EntityType Name="Classification">
           <Key>
             <PropertyRef Name="Id" />
@@ -1462,39 +1629,6 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_ExcuseClassification" FromRole="Classification" ToRole="Excuse" />
         </EntityType>
-        <EntityType Name="Excuse">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdStatus" Type="Int32" Nullable="false" />
-          <Property Name="IdClassification" Type="Int32" Nullable="false" />
-          <Property Name="IdUserOwner" Type="Int32" Nullable="false" />
-          <Property Name="Justification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Observation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="LastModificationDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Attachments" Relationship="UASModel.Fk_AttachmentIdExcuse" FromRole="Excuse" ToRole="Attachment" />
-          <NavigationProperty Name="Classification" Relationship="UASModel.Fk_ExcuseClassification" FromRole="Excuse" ToRole="Classification" />
-          <NavigationProperty Name="ExcuseDetails" Relationship="UASModel.Fk_ExcuseIdExcuse" FromRole="Excuse" ToRole="ExcuseDetail" />
-          <NavigationProperty Name="User" Relationship="UASModel.Fk_ExcuseIdUserOwner" FromRole="Excuse" ToRole="User" />
-          <NavigationProperty Name="Status" Relationship="UASModel.Fk_ExcuseStatus" FromRole="Excuse" ToRole="Status" />
-        </EntityType>
-        <EntityType Name="ExcuseDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdExcuse" Type="Int32" Nullable="false" />
-          <Property Name="IdStatus" Type="Int32" Nullable="false" />
-          <Property Name="IdUserApprover" Type="Int32" Nullable="false" />
-          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Excuse" Relationship="UASModel.Fk_ExcuseIdExcuse" FromRole="ExcuseDetail" ToRole="Excuse" />
-          <NavigationProperty Name="User" Relationship="UASModel.Fk_ExcuseDetailIdUserApprover" FromRole="ExcuseDetail" ToRole="User" />
-          <NavigationProperty Name="Status" Relationship="UASModel.Fk_ExcuseDetailState" FromRole="ExcuseDetail" ToRole="Status" />
-        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="Id" />
@@ -1503,9 +1637,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <Property Name="Status1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="IsLast" Type="Boolean" Nullable="false" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_ExcuseStatus" FromRole="Status" ToRole="Excuse" />
-          <NavigationProperty Name="ExcuseDetails" Relationship="UASModel.Fk_ExcuseDetailState" FromRole="Status" ToRole="ExcuseDetail" />
           <NavigationProperty Name="StatusApproverByRoles" Relationship="UASModel.Fk_StatusApproverByRole_IdStatus" FromRole="Status" ToRole="StatusApproverByRole" />
+          <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_ExcuseStatus" FromRole="Status" ToRole="Excuse" />
         </EntityType>
         <EntityType Name="StatusApproverByRole">
           <Key>
@@ -1665,90 +1798,6 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_AttachmentIdExcuse">
-          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="1" />
-          <End Type="UASModel.Attachment" Role="Attachment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Excuse">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Attachment">
-              <PropertyRef Name="IdExcuse" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_ExcuseClassification">
-          <End Type="UASModel.Classification" Role="Classification" Multiplicity="1" />
-          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Classification">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Excuse">
-              <PropertyRef Name="IdClassification" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_ExcuseIdExcuse">
-          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="1" />
-          <End Type="UASModel.ExcuseDetail" Role="ExcuseDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Excuse">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ExcuseDetail">
-              <PropertyRef Name="IdExcuse" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_ExcuseIdUserOwner">
-          <End Type="UASModel.User" Role="User" Multiplicity="1" />
-          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Excuse">
-              <PropertyRef Name="IdUserOwner" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_ExcuseStatus">
-          <End Type="UASModel.Status" Role="Status" Multiplicity="1" />
-          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Status">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Excuse">
-              <PropertyRef Name="IdStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_ExcuseDetailIdUserApprover">
-          <End Type="UASModel.User" Role="User" Multiplicity="1" />
-          <End Type="UASModel.ExcuseDetail" Role="ExcuseDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ExcuseDetail">
-              <PropertyRef Name="IdUserApprover" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_ExcuseDetailState">
-          <End Type="UASModel.Status" Role="Status" Multiplicity="1" />
-          <End Type="UASModel.ExcuseDetail" Role="ExcuseDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Status">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ExcuseDetail">
-              <PropertyRef Name="IdStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Fk_StatusApproverByRole_IdStatus">
           <End Type="UASModel.Status" Role="Status" Multiplicity="1" />
           <End Type="UASModel.StatusApproverByRole" Role="StatusApproverByRole" Multiplicity="*" />
@@ -1836,6 +1885,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <NavigationProperty Name="Movements" Relationship="UASModel.Fk_Movement_IdSpace" FromRole="Space" ToRole="Movement" />
           <NavigationProperty Name="ScheduleDetails" Relationship="UASModel.Fk_Schedule_IdSpaceType" FromRole="Space" ToRole="ScheduleDetail" />
           <NavigationProperty Name="SpaceType" Relationship="UASModel.Fk_Space_IdSpaceType" FromRole="Space" ToRole="SpaceType" />
+          <NavigationProperty Name="NonAttendances" Relationship="UASModel.Fk_NonAttendance_IdSpace" FromRole="Space" ToRole="NonAttendance" />
         </EntityType>
         <EntityType Name="SpaceType">
           <Key>
@@ -2039,6 +2089,237 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <Property Type="DateTime" Name="MovementDate" Nullable="true" Precision="10" />
           <Property Type="Time" Name="MovementTime" Nullable="true" />
         </ComplexType>
+        <EntityType Name="NonAttendance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="IdCourse" Type="Int32" Nullable="false" />
+          <Property Name="IdSpace" Type="Int32" Nullable="false" />
+          <Property Name="DayOfTheWeek" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="NonAttendanceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HasExcuse" Type="Boolean" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Course" Relationship="UASModel.Fk_NonAttendance_IdCourse" FromRole="NonAttendance" ToRole="Course" />
+          <NavigationProperty Name="Space" Relationship="UASModel.Fk_NonAttendance_IdSpace" FromRole="NonAttendance" ToRole="Space" />
+          <NavigationProperty Name="Role" Relationship="UASModel.Fk_NonAttendance_IdRole" FromRole="NonAttendance" ToRole="Role" />
+          <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_ExcuseNonAttendance" FromRole="NonAttendance" ToRole="Excuse" />
+        </EntityType>
+        <Association Name="Fk_NonAttendance_IdCourse">
+          <End Type="UASModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="UASModel.NonAttendance" Role="NonAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonAttendance">
+              <PropertyRef Name="IdCourse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_NonAttendance_IdSpace">
+          <End Type="UASModel.Space" Role="Space" Multiplicity="1" />
+          <End Type="UASModel.NonAttendance" Role="NonAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Space">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonAttendance">
+              <PropertyRef Name="IdSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_NonAttendance_IdRole">
+          <End Type="UASModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="UASModel.NonAttendance" Role="NonAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonAttendance">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Attachment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdExcuse" Type="Int32" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Excuse" Relationship="UASModel.Fk_AttachmentIdExcuse" FromRole="Attachment" ToRole="Excuse" />
+        </EntityType>
+        <EntityType Name="Excuse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdNonAttendance" Type="Int32" Nullable="false" />
+          <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="IdClassification" Type="Int32" Nullable="false" />
+          <Property Name="Justification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Observation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Attachments" Relationship="UASModel.Fk_AttachmentIdExcuse" FromRole="Excuse" ToRole="Attachment" />
+          <NavigationProperty Name="Classification" Relationship="UASModel.Fk_ExcuseClassification" FromRole="Excuse" ToRole="Classification" />
+          <NavigationProperty Name="NonAttendance" Relationship="UASModel.Fk_ExcuseNonAttendance" FromRole="Excuse" ToRole="NonAttendance" />
+          <NavigationProperty Name="Status" Relationship="UASModel.Fk_ExcuseStatus" FromRole="Excuse" ToRole="Status" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="UASModel.Fk_Excuse_IdRole" FromRole="Excuse" ToRole="Role" />
+        </EntityType>
+        <Association Name="Fk_AttachmentIdExcuse">
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="1" />
+          <End Type="UASModel.Attachment" Role="Attachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Excuse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attachment">
+              <PropertyRef Name="IdExcuse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseClassification">
+          <End Type="UASModel.Classification" Role="Classification" Multiplicity="1" />
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdClassification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseNonAttendance">
+          <End Type="UASModel.NonAttendance" Role="NonAttendance" Multiplicity="1" />
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NonAttendance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdNonAttendance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseStatus">
+          <End Type="UASModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NonAttendanceView">
+          <Key>
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="CourseName" />
+            <PropertyRef Name="DocumentNumber" />
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RoleAlias" />
+            <PropertyRef Name="SpaceId" />
+            <PropertyRef Name="SpaceName" />
+            <PropertyRef Name="SpaceType" />
+            <PropertyRef Name="DayOfTheWeek" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="NonAttendanceDate" />
+            <PropertyRef Name="HasExcuse" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="CourseName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="301" FixedLength="false" Unicode="true" />
+          <Property Name="ImageRelativePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="RoleAlias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SpaceId" Type="Int32" Nullable="false" />
+          <Property Name="SpaceName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SpaceType" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DayOfTheWeek" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="NameDayOfTheWeek" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="NonAttendanceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HasExcuse" Type="Boolean" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="Fk_Excuse_IdRole">
+          <End Type="UASModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Excuse">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExcuseApprovalView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IdExcuse" />
+            <PropertyRef Name="IdStatusApproval" />
+            <PropertyRef Name="Approver" />
+            <PropertyRef Name="IdRoleApprover" />
+            <PropertyRef Name="IdNonAttendance" />
+            <PropertyRef Name="TruantDocumentNumber" />
+            <PropertyRef Name="TruantFullName" />
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="CourseName" />
+            <PropertyRef Name="DayOfTheWeek" />
+            <PropertyRef Name="SpaceId" />
+            <PropertyRef Name="SpaceName" />
+            <PropertyRef Name="SpaceType" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="NonAttendanceDate" />
+            <PropertyRef Name="HasExcuse" />
+            <PropertyRef Name="IdStatusExcuse" />
+            <PropertyRef Name="IdClassificationExcuse" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdExcuse" Type="Int32" Nullable="false" />
+          <Property Name="IdStatusApproval" Type="Int32" Nullable="false" />
+          <Property Name="StatusApproval" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Approver" Type="Int32" Nullable="false" />
+          <Property Name="IdRoleApprover" Type="Int32" Nullable="false" />
+          <Property Name="IdNonAttendance" Type="Int32" Nullable="false" />
+          <Property Name="TruantDocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="TruantFullName" Type="String" Nullable="false" MaxLength="301" FixedLength="false" Unicode="true" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="CourseName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DayOfTheWeek" Type="Int32" Nullable="false" />
+          <Property Name="NameDayOfTheWeek" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="SpaceId" Type="Int32" Nullable="false" />
+          <Property Name="SpaceName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SpaceType" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="NonAttendanceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HasExcuse" Type="Boolean" Nullable="false" />
+          <Property Name="IdStatusExcuse" Type="Int32" Nullable="false" />
+          <Property Name="StatusExcuse" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IdClassificationExcuse" Type="Int32" Nullable="false" />
+          <Property Name="ClassificationExcuse" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ExcuseJustification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExcuseObservation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2242,49 +2523,12 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Attachments">
-            <EntityTypeMapping TypeName="UASModel.Attachment">
-              <MappingFragment StoreEntitySet="Attachment">
-                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
-                <ScalarProperty Name="IdExcuse" ColumnName="IdExcuse" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Classifications">
             <EntityTypeMapping TypeName="UASModel.Classification">
               <MappingFragment StoreEntitySet="Classification">
                 <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
                 <ScalarProperty Name="IsRequiredDescription" ColumnName="IsRequiredDescription" />
                 <ScalarProperty Name="Classification1" ColumnName="Classification" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Excuses">
-            <EntityTypeMapping TypeName="UASModel.Excuse">
-              <MappingFragment StoreEntitySet="Excuse">
-                <ScalarProperty Name="LastModificationDate" ColumnName="LastModificationDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Observation" ColumnName="Observation" />
-                <ScalarProperty Name="Justification" ColumnName="Justification" />
-                <ScalarProperty Name="IdUserOwner" ColumnName="IdUserOwner" />
-                <ScalarProperty Name="IdClassification" ColumnName="IdClassification" />
-                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ExcuseDetails">
-            <EntityTypeMapping TypeName="UASModel.ExcuseDetail">
-              <MappingFragment StoreEntitySet="ExcuseDetail">
-                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
-                <ScalarProperty Name="IdUserApprover" ColumnName="IdUserApprover" />
-                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
-                <ScalarProperty Name="IdExcuse" ColumnName="IdExcuse" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2544,6 +2788,104 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="NonAttendances">
+            <EntityTypeMapping TypeName="UASModel.NonAttendance">
+              <MappingFragment StoreEntitySet="NonAttendance">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="HasExcuse" ColumnName="HasExcuse" />
+                <ScalarProperty Name="NonAttendanceDate" ColumnName="NonAttendanceDate" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="DayOfTheWeek" ColumnName="DayOfTheWeek" />
+                <ScalarProperty Name="IdSpace" ColumnName="IdSpace" />
+                <ScalarProperty Name="IdCourse" ColumnName="IdCourse" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attachments">
+            <EntityTypeMapping TypeName="UASModel.Attachment">
+              <MappingFragment StoreEntitySet="Attachment">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="IdExcuse" ColumnName="IdExcuse" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Excuses">
+            <EntityTypeMapping TypeName="UASModel.Excuse">
+              <MappingFragment StoreEntitySet="Excuse">
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Observation" ColumnName="Observation" />
+                <ScalarProperty Name="Justification" ColumnName="Justification" />
+                <ScalarProperty Name="IdClassification" ColumnName="IdClassification" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+                <ScalarProperty Name="IdNonAttendance" ColumnName="IdNonAttendance" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NonAttendanceView">
+            <EntityTypeMapping TypeName="UASModel.NonAttendanceView">
+              <MappingFragment StoreEntitySet="NonAttendanceView">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HasExcuse" ColumnName="HasExcuse" />
+                <ScalarProperty Name="NonAttendanceDate" ColumnName="NonAttendanceDate" />
+                <ScalarProperty Name="NameDayOfTheWeek" ColumnName="NameDayOfTheWeek" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="DayOfTheWeek" ColumnName="DayOfTheWeek" />
+                <ScalarProperty Name="SpaceType" ColumnName="SpaceType" />
+                <ScalarProperty Name="SpaceName" ColumnName="SpaceName" />
+                <ScalarProperty Name="SpaceId" ColumnName="SpaceId" />
+                <ScalarProperty Name="RoleAlias" ColumnName="RoleAlias" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ImageRelativePath" ColumnName="ImageRelativePath" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GenerateApproversRegister" FunctionName="UASModel.Store.GenerateApproversRegister" />
+          <EntitySetMapping Name="ExcuseApprovalView">
+            <EntityTypeMapping TypeName="UASModel.ExcuseApprovalView">
+              <MappingFragment StoreEntitySet="ExcuseApprovalView">
+                <ScalarProperty Name="ExcuseObservation" ColumnName="ExcuseObservation" />
+                <ScalarProperty Name="ExcuseJustification" ColumnName="ExcuseJustification" />
+                <ScalarProperty Name="ClassificationExcuse" ColumnName="ClassificationExcuse" />
+                <ScalarProperty Name="IdClassificationExcuse" ColumnName="IdClassificationExcuse" />
+                <ScalarProperty Name="StatusExcuse" ColumnName="StatusExcuse" />
+                <ScalarProperty Name="IdStatusExcuse" ColumnName="IdStatusExcuse" />
+                <ScalarProperty Name="HasExcuse" ColumnName="HasExcuse" />
+                <ScalarProperty Name="NonAttendanceDate" ColumnName="NonAttendanceDate" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="SpaceType" ColumnName="SpaceType" />
+                <ScalarProperty Name="SpaceName" ColumnName="SpaceName" />
+                <ScalarProperty Name="SpaceId" ColumnName="SpaceId" />
+                <ScalarProperty Name="NameDayOfTheWeek" ColumnName="NameDayOfTheWeek" />
+                <ScalarProperty Name="DayOfTheWeek" ColumnName="DayOfTheWeek" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="TruantFullName" ColumnName="TruantFullName" />
+                <ScalarProperty Name="TruantDocumentNumber" ColumnName="TruantDocumentNumber" />
+                <ScalarProperty Name="IdNonAttendance" ColumnName="IdNonAttendance" />
+                <ScalarProperty Name="IdRoleApprover" ColumnName="IdRoleApprover" />
+                <ScalarProperty Name="Approver" ColumnName="Approver" />
+                <ScalarProperty Name="StatusApproval" ColumnName="StatusApproval" />
+                <ScalarProperty Name="IdStatusApproval" ColumnName="IdStatusApproval" />
+                <ScalarProperty Name="IdExcuse" ColumnName="IdExcuse" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2558,7 +2900,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />

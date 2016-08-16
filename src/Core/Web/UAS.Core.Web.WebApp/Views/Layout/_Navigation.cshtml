@@ -1,5 +1,8 @@
-﻿@{
-    var session = @ViewData[UAS.Core.Configuration.ConfigurationManager.SESSION_KEY] as UAS.Core.Session.Entities.Session;
+﻿@using UAS.Core.Configuration;
+@using UAS.Core.Session.Entities;
+
+@{
+    var session = @ViewData[ConfigurationManager.SESSION_KEY] as Session;
 }
 @functions{
 

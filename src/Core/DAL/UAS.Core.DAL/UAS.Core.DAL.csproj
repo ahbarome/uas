@@ -46,6 +46,7 @@
     <Compile Include="Persisters\CoursePersister.cs" />
     <Compile Include="Persisters\ExcusePersister.cs" />
     <Compile Include="Persisters\MovementPersister.cs" />
+    <Compile Include="Persisters\NonAttendancePersister.cs" />
     <Compile Include="Persisters\PersonPersister.cs" />
     <Compile Include="Persisters\TeacherPersister.cs" />
     <Compile Include="Persisters\UserPersister.cs" />

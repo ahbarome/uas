@@ -414,7 +414,7 @@ END
 GO
 
 --*******************************************************************
---PUTNONATTENDANCE STORE PROCEDURE
+--POPULATELASTNONATTENDANCE STORE PROCEDURE
 --*******************************************************************
 SET ANSI_NULLS ON
 GO
@@ -434,7 +434,7 @@ BEGIN
 
 	DECLARE @LastDate DATE;
 
-	SET		@LastDate = CONVERT(DATE, GETDATE() - 2);
+	SET		@LastDate = CONVERT(DATE, GETDATE() - 1);
 
 	SET NOCOUNT ON;
 	
@@ -459,6 +459,123 @@ BEGIN
 	WHERE	[PAV].[DayOfTheWeek] = DATEPART(WEEKDAY, @LastDate) AND
 			[CMV].[DocumentNumber] IS NULL
 
+
+END
+
+GO
+
+--*******************************************************************
+--POPULATENONATTENDANCE STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-02
+-- Description:	Populate the NonAttendance
+-- =============================================
+CREATE PROCEDURE [NonAttendance].[PopulateNonAttendance] 
+	@Date DATE
+
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+	
+	INSERT INTO [NonAttendance].[NonAttendance] ([DocumentNumber], [IdRole], [IdCourse], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime], [NonAttendanceDate], [HasExcuse])
+	SELECT	[PAV].[DocumentNumber]
+			, [PAV].[RoleId]
+			, [PAV].[CourseId] 
+			, [PAV].[SpaceId] 
+			, [PAV].[DayOfTheWeek]
+			, [PAV].[StartTime]
+			, [PAV].[EndTime]
+			, @Date					AS NonAttendanceDate
+			, 0						AS HasExcuse
+	FROM	[Integration].[PersonActivitiesView]		[PAV]
+	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] ON 
+		[CMV].[DocumentNumber]	= [PAV].[DocumentNumber]	AND
+		[CMV].[CourseId]		= [PAV].[CourseId]			AND
+		[CMV].[RoleId]			= [PAV].[RoleId]			AND
+		[CMV].[SpaceId]			= [PAV].[SpaceId]			AND
+		[CMV].[DayOfTheWeek]	= [PAV].[DayOfTheWeek] 
+	WHERE	[PAV].[DayOfTheWeek] = DATEPART(WEEKDAY, @Date) AND
+			[CMV].[DocumentNumber] IS NULL
+
+
+END
+
+GO
+
+--*******************************************************************
+--GENERATEAPPROVERSREGISTER STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-15
+-- Description:	Generate the register for the
+--				approvers excuse
+-- =============================================
+CREATE PROCEDURE [NonAttendance].[GenerateApproversRegister]
+	@NonAttendanceId	INT,
+	@ExcuseId			INT
+AS
+BEGIN
+
+	DECLARE @SQLQuery							NVARCHAR(500),
+			@NonAttendanceDocumentNumber		INT,
+			@NonAttendanceRoleId				INT,
+			@NonAttendanceCourseId				INT,
+			@NonAttendanceSpaceId				INT,
+			@NonAttendanceDayOfTheWeek			INT;
+
+	SET NOCOUNT ON;
+	
+	SELECT	@NonAttendanceDocumentNumber = [DocumentNumber]
+			, @NonAttendanceRoleId		 = [IdRole] 
+			, @NonAttendanceCourseId	 = [IdCourse]
+			, @NonAttendanceSpaceId		 = [IdSpace]
+			, @NonAttendanceDayOfTheWeek = [DayOfTheWeek]
+	FROM	[NonAttendance].[NonAttendance] WITH(NOLOCK)
+	WHERE	[Id] = @NonAttendanceId
+
+	--Insert a director for the approval
+	IF( [Security].[DirectorExist]() > 0 )
+	BEGIN
+		INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
+		SELECT  @ExcuseId
+				, 1
+				, [DocumentNumber]
+				, [IdRole] 
+		FROM	[Security].[User] WITH(NOLOCK)
+		WHERE	[IdRole] = 2
+	END
+	--Student
+	IF(@NonAttendanceRoleId = 4)
+	BEGIN
+
+		--Insert a director for the approval
+		INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
+		SELECT TOP 1 @ExcuseId
+				, 1
+				, [DocumentNumber]
+				, [RoleId] 
+		FROM	[Integration].[PersonActivitiesView] WITH(NOLOCK)
+		WHERE	[CourseId]		= @NonAttendanceCourseId		AND
+				[SpaceId]		= @NonAttendanceSpaceId			AND
+				[DayOfTheWeek]	= @NonAttendanceDayOfTheWeek	AND
+				[RoleId]		= 3 
+	END
 
 END
 

@@ -43,10 +43,7 @@ namespace UAS.Core.DAL.Common.Model
         public virtual DbSet<ScheduleDetail> ScheduleDetails { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
-        public virtual DbSet<Attachment> Attachments { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
-        public virtual DbSet<Excuse> Excuses { get; set; }
-        public virtual DbSet<ExcuseDetail> ExcuseDetails { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<StatusApproverByRole> StatusApproverByRoles { get; set; }
         public virtual DbSet<EnrollmentDetail> EnrollmentDetails { get; set; }
@@ -56,6 +53,11 @@ namespace UAS.Core.DAL.Common.Model
         public virtual DbSet<AttendanceRegisterView> AttendanceRegisterView { get; set; }
         public virtual DbSet<NonAttendanceRegisterView> NonAttendanceRegisterView { get; set; }
         public virtual DbSet<PersonActivitiesView> PersonActivitiesView { get; set; }
+        public virtual DbSet<NonAttendance> NonAttendances { get; set; }
+        public virtual DbSet<Attachment> Attachments { get; set; }
+        public virtual DbSet<Excuse> Excuses { get; set; }
+        public virtual DbSet<NonAttendanceView> NonAttendanceView { get; set; }
+        public virtual DbSet<ExcuseApprovalView> ExcuseApprovalView { get; set; }
     
         public virtual ObjectResult<GetAllStudentMovementsByTeacherDocumentNumber_Result> GetAllStudentMovementsByTeacherDocumentNumber(Nullable<int> teacherDocumentNumber)
         {
@@ -110,6 +112,19 @@ namespace UAS.Core.DAL.Common.Model
         public virtual IQueryable<GetCurrentTeacherAttendance_Result> GetCurrentTeacherAttendance()
         {
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetCurrentTeacherAttendance_Result>("[UASEntities].[GetCurrentTeacherAttendance]()");
+        }
+    
+        public virtual int GenerateApproversRegister(Nullable<int> nonAttendanceId, Nullable<int> excuseId)
+        {
+            var nonAttendanceIdParameter = nonAttendanceId.HasValue ?
+                new ObjectParameter("NonAttendanceId", nonAttendanceId) :
+                new ObjectParameter("NonAttendanceId", typeof(int));
+    
+            var excuseIdParameter = excuseId.HasValue ?
+                new ObjectParameter("ExcuseId", excuseId) :
+                new ObjectParameter("ExcuseId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GenerateApproversRegister", nonAttendanceIdParameter, excuseIdParameter);
         }
     }
 }

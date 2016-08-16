@@ -7,12 +7,55 @@
 USE [UAS]
 GO
 --*******************************************************************
+--SECURITY SCHEMA
+--*******************************************************************
+--USER VIEW 
+--*******************************************************************
+CREATE VIEW [Security].[UserView] AS
+(	SELECT	[USR].[Id]
+			, [USR].[DocumentNumber] 
+			, CONCAT([USR].[Name], ' ', [USR].[LastName])	AS FullName
+			, [USR].[Name]
+			, [USR].[LastName]
+			, [USR].[Username]
+			, [USR].[Password]
+			, [USR].[IdRole]
+			, [ROL].[Name]									AS RoleName
+			, [ROL].[Alias]		
+			, [USR].[ImageRelativePath]
+			, [USR].[IsActive]
+	FROM	[Security].[User]		[USR] WITH(NOLOCK)
+	INNER JOIN [Security].[Role]	[ROL] WITH(NOLOCK) ON [USR].[IdRole] = [ROL].[Id]
+);
+GO
+
+--*******************************************************************
+--PAGEPERMISSION VIEW 
+--*******************************************************************
+CREATE VIEW [Security].[PagePermissionView] AS
+(	SELECT	[USV].*
+			, [PAG].[Id]			AS IdPage
+			, [PAG].[Title]
+			, [PAG].[MenuItem]
+			, [PAG].[ParentId]
+			, [PAG].[Icon]
+			, [PPR].[IsVisible]
+			, [PPR].[CanSelect]
+			, [PPR].[CanEdit]
+			, [PPR].[CanDelete]
+			, [PPR].[IsDefault]
+	FROM	[Security].[UserView]					[USV]
+	INNER JOIN	[Security].[PagePermissionByRole]	[PPR] WITH(NOLOCK) ON	[PPR].[IdRole]	= [USV].[IdRole]
+	INNER JOIN	[Security].[Page]					[PAG] WITH(NOLOCK) ON	[PAG].[Id]		= [PPR].[IdPage]
+);
+GO
+--*******************************************************************
 --ATTENDANCE SCHEMA
 --*******************************************************************
 --STUDENTMOVEMENT VIEW 
 --*******************************************************************
 CREATE VIEW [Attendance].[StudentMovementView] AS
-SELECT	[MOV].[DocumentNumber]							AS DocumentNumber
+(	SELECT	[MOV].[DocumentNumber]							AS DocumentNumber
 		, [STU].[Code]									AS Code
 		, [STU].[Name]									AS Name
 		, [STU].[LastName]								AS LastName
@@ -30,10 +73,10 @@ SELECT	[MOV].[DocumentNumber]							AS DocumentNumber
 		, [MOV].[RegisterDate]							AS MovementDateTime
 		, CONVERT(DATE, [MOV].[RegisterDate])			AS MovementDate
 		, CONVERT(TIME, [MOV].[RegisterDate])			AS MovementTime
-FROM		[Attendance].[Movement]				[MOV]
-INNER JOIN	[Integration].[Student]				[STU] ON [STU].[DocumentNumber] = [MOV].[DocumentNumber]
-INNER JOIN	[Integration].[Space]				[SPA] ON [SPA].[Id]				= [MOV].[IdSpace]
-INNER JOIN	[Integration].[SpaceType]			[SPT] ON [SPT].[Id]				= [SPA].[IdSpaceType]
+FROM		[Attendance].[Movement]				[MOV] WITH(NOLOCK)
+INNER JOIN	[Integration].[Student]				[STU] WITH(NOLOCK) ON [STU].[DocumentNumber] = [MOV].[DocumentNumber]
+INNER JOIN	[Integration].[Space]				[SPA] WITH(NOLOCK) ON [SPA].[Id]				= [MOV].[IdSpace]
+INNER JOIN	[Integration].[SpaceType]			[SPT] WITH(NOLOCK) ON [SPT].[Id]				= [SPA].[IdSpaceType] )
 GO
 
 --*******************************************************************
@@ -325,7 +368,8 @@ GO
 --*******************************************************************
 CREATE VIEW [NonAttendance].[NonAttendanceView] AS
 (	
-	SELECT	[PAV].*
+	SELECT	[NON].Id 
+			, [PAV].*
 			, DATENAME(WEEKDAY, [NON].[NonAttendanceDate]) AS NameDayOfTheWeek
 			, [NON].[NonAttendanceDate]
 			, [NON].[HasExcuse]
@@ -338,4 +382,65 @@ CREATE VIEW [NonAttendance].[NonAttendanceView] AS
 )
 GO
 
+--*******************************************************************
+--EXCUSE VIEW 
+--*******************************************************************
+CREATE VIEW [NonAttendance].[ExcuseView] AS
+(	
+	SELECT	[EXC].[Id]
+			, [EXC].[IdNonAttendance]
+			, [EXC].[DocumentNumber]
+			, [EXC].[IdRole]
+			, [EXC].[IdStatus]
+			, [STA].[Status]
+			, [STA].[IsLast]
+			, [EXC].[IdClassification]
+			, [CLA].[Classification]
+			, [EXC].[Justification]		AS ExcuseJustification
+			, [EXC].[Observation]		AS ExcuseObservation
+	FROM	[NonAttendance].[Excuse]			[EXC] WITH(NOLOCK)
+	INNER JOIN [NonAttendance].[Classification] [CLA] WITH(NOLOCK) ON [CLA].[Id] = [EXC].[IdClassification]
+	INNER JOIN [NonAttendance].[Status]			[STA] WITH(NOLOCK) ON [STA].[Id] = [EXC].[IdStatus]
+ );
+GO
+
+--*******************************************************************
+--EXCUSEAPPROVAL VIEW 
+--*******************************************************************
+CREATE VIEW [NonAttendance].[ExcuseApprovalView] AS
+(	
+	SELECT	[EXA].[Id]
+			, [EXA].[IdExcuse]
+			, [EXA].[IdStatus]				AS IdStatusApproval
+			, [STA].[Status]				AS StatusApproval
+			, [EXA].[Approver]
+			, [EXA].[IdRole]				AS IdRoleApprover
+			, [EXV].[IdNonAttendance]
+			, [EXV].[DocumentNumber]		AS TruantDocumentNumber
+			, [NAV].[FullName]				AS TruantFullName
+			, [NAV].[RoleId]				AS TruantRoleId
+			, [NAV].[RoleAlias]				AS TruantRoleAlias
+			, [NAV].[CourseId]				
+			, [NAV].[CourseName]				
+			, [NAV].[DayOfTheWeek]
+			, [NAV].[NameDayOfTheWeek]
+			, [NAV].[SpaceId]
+			, [NAV].[SpaceName]
+			, [NAV].[SpaceType]
+			, [NAV].[StartTime]
+			, [NAV].[EndTime]
+			, [NAV].[NonAttendanceDate]
+			, [NAV].[HasExcuse]
+			, [EXV].[IdStatus]				AS IdStatusExcuse
+			, [EXV].[Status]				AS StatusExcuse
+			, [EXV].[IdClassification]		AS IdClassificationExcuse
+			, [EXV].[Classification]		AS ClassificationExcuse
+			, [EXV].[ExcuseJustification]	
+			, [EXV].[ExcuseObservation]	
+	FROM	[NonAttendance].[ExcuseApproval]		[EXA] WITH(NOLOCK)
+	INNER JOIN [NonAttendance].[Status]				[STA] WITH(NOLOCK) ON [STA].[Id] = [EXA].[IdStatus]
+	INNER JOIN [NonAttendance].[ExcuseView]			[EXV] ON [EXV].[Id] = [EXA].[IdExcuse]
+	INNER JOIN [NonAttendance].[NonAttendanceView]	[NAV] ON [NAV].[Id] = [EXV].[IdNonAttendance]
+ );
+GO
 --*******************************************************************

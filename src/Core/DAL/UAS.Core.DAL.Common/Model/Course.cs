@@ -18,6 +18,7 @@ namespace UAS.Core.DAL.Common.Model
         public Course()
         {
             this.Schedules = new HashSet<Schedule>();
+            this.NonAttendances = new HashSet<NonAttendance>();
         }
     
         public int Id { get; set; }
@@ -29,5 +30,7 @@ namespace UAS.Core.DAL.Common.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Schedule> Schedules { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NonAttendance> NonAttendances { get; set; }
     }
 }

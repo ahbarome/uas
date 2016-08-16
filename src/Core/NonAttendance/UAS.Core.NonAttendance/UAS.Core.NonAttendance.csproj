@@ -43,10 +43,15 @@
   <ItemGroup>
     <Compile Include="Managers\ExcuseManager.cs" />
     <Compile Include="Managers\MovementManager.cs" />
+    <Compile Include="Managers\NonAttendanceManager.cs" />
     <Compile Include="NonAttendanceFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Configuration\UAS.Core.Configuration\UAS.Core.Configuration.csproj">
+      <Project>{626bc2d8-40ac-4fb6-9bd4-459a75eabeb0}</Project>
+      <Name>UAS.Core.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DAL\UAS.Core.DAL.Common\UAS.Core.DAL.Common.csproj">
       <Project>{c529fba8-89f1-4b8d-a3f1-e4d9a37f9b92}</Project>
       <Name>UAS.Core.DAL.Common</Name>

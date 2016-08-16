@@ -35,7 +35,7 @@ INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('lrancruel','NXo/ao4xL5ix30tACkl6jg==',3,'Liliana','Rancruel','liliana.rancruel@unilibrecali.edu.co',311001125,1,'admin',1130677689,'~/Images/a7.jpg')
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('gcordoba','NXo/ao4xL5ix30tACkl6jg==',3,'Germán','Cordoba','german.cordoba@unilibrecali.edu.co',311001126,1,'admin',1130677690,'~/Images/a7.jpg')
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('rmoreno','NXo/ao4xL5ix30tACkl6jg==',3,'Rafael','Moreno','rafael.moreno@unilibrecali.edu.co',311001127,1,'admin',1130677691,'~/Images/a7.jpg')
-INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('fcastillo','NXo/ao4xL5ix30tACkl6jg==',3,'Fabian','Castillo','fabian.castillo@unilibrecali.edu.co',311001128,1,'admin',1130677692,'~/Images/a7.jpg')
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('fcastillo','NXo/ao4xL5ix30tACkl6jg==',2,'Fabian','Castillo','fabian.castillo@unilibrecali.edu.co',311001128,1,'admin',1130677692,'~/Images/a7.jpg')
 
 --*******************************************************************
 --POPULATE PAGE TABLE 
@@ -45,8 +45,8 @@ INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Asistencia',
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Aula Virtual', '~/Attendance/VirtualStudentsClassRoom', 2 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Salón de Docentes', '~/Attendance/VirtualTeachersClassRoom', 2 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Ausentismo', '#', 'fa fa-th-large' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Crear Excusa', '~/NonAttendance/Excuse', 5 )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Administrar Excusas', '#', 5 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Crear Excusa', '~/NonAttendance/ExcuseCreator', 5 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Administrar Excusas', '~/NonAttendance/ExcuseManager', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Reportes', '#', 'fa fa-th-large' )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Asistencia', '#', 8 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Ausentismo', '#', 8 )
@@ -73,12 +73,18 @@ INSERT INTO [Security].[PagePermissionByRole] VALUES(10,1,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(1,2,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(2,2,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(4,2,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(5,2,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(6,2,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(7,2,1,1,1,1,1,1)
 --===================================================================
 --ROLE: TEACHER
 --===================================================================
 INSERT INTO [Security].[PagePermissionByRole] VALUES(1,3,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(2,3,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(3,3,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(5,3,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(6,3,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(7,3,1,1,1,1,1,1)
 --ROLE: STUDENT
 INSERT INTO [Security].[PagePermissionByRole] VALUES(1,4,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(2,4,1,1,1,1,1,1)

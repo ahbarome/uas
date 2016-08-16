@@ -84,7 +84,7 @@
     <Compile Include="Model\Excuse.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ExcuseDetail.cs">
+    <Compile Include="Model\ExcuseApprovalView.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Fringe.cs">
@@ -117,7 +117,13 @@
     <Compile Include="Model\Movement.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\NonAttendance.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\NonAttendanceRegisterView.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NonAttendanceView.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Page.cs">

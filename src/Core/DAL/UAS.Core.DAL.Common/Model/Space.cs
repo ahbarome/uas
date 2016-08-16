@@ -19,6 +19,7 @@ namespace UAS.Core.DAL.Common.Model
         {
             this.Movements = new HashSet<Movement>();
             this.ScheduleDetails = new HashSet<ScheduleDetail>();
+            this.NonAttendances = new HashSet<NonAttendance>();
         }
     
         public int Id { get; set; }
@@ -31,5 +32,7 @@ namespace UAS.Core.DAL.Common.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ScheduleDetail> ScheduleDetails { get; set; }
         public virtual SpaceType SpaceType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NonAttendance> NonAttendances { get; set; }
     }
 }

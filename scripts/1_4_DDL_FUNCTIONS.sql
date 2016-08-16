@@ -485,3 +485,40 @@ RETURN
 GO
 
 --*******************************************************************
+--INTEGRATION SCHEMA
+--*******************************************************************
+--*******************************************************************
+--GETCURRENTDAY FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-07-29
+-- Description:	Get the current day
+-- =============================================
+CREATE FUNCTION [Security].[DirectorExist]()
+	
+RETURNS BIT
+AS
+BEGIN
+	DECLARE @Count INT;
+	
+	SELECT	@Count = COUNT( 1 )
+	FROM	[Security].[User] WITH(NOLOCK)
+	WHERE	[IdRole] = 2
+
+	IF(@Count > 0)
+	BEGIN
+		RETURN  1;
+	END
+	
+	RETURN  0;
+END
+
+GO
+--*******************************************************************

@@ -8,18 +8,18 @@ namespace UAS.Core.NonAttendance
 {
     public class NonAttendanceFacade
     {
-        private PersonManager _personManager;
+        private NonAttendanceManager _nonAttendanceManager;
         private ExcuseManager _excuseManager;
 
         public NonAttendanceFacade()
         {
-            _personManager = new PersonManager();
+            _nonAttendanceManager = new NonAttendanceManager();
             _excuseManager = new ExcuseManager();
         }
 
-        public List<NonAttendanceRegisterView> GetNonAttendancePendingForExcuse(int documentNumber, int roleId)
+        public List<NonAttendanceView> GetNonAttendancePendingForExcuse(int documentNumber, int roleId)
         {
-            return _personManager.GetNonAttendancePendingForExcuse(documentNumber, roleId);
+            return _nonAttendanceManager.GetNonAttendances(documentNumber, roleId);
         }
 
         public IQueryable<Classification> GetExcuseClassifications()
@@ -30,6 +30,21 @@ namespace UAS.Core.NonAttendance
         public void SaveExcuse(Excuse excuse)
         {
             _excuseManager.Save(excuse);
+        }
+
+        public List<ExcuseApprovalView> GetExcusesForApproval(int documentNumber, int roleId)
+        {
+            return _excuseManager.GetExcusesForApproval(documentNumber, roleId);
+        }
+
+        public ExcuseApprovalView GetExcuseForApproval(int idExcuse)
+        {
+            return _excuseManager.GetExcuseForApproval(idExcuse);
+        }
+
+        public List<Attachment> GetAttachments(int idExcuse)
+        {
+            return _excuseManager.GetAttachments(idExcuse);
         }
     }
 }

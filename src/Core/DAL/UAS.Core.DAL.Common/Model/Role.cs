@@ -20,6 +20,8 @@ namespace UAS.Core.DAL.Common.Model
             this.Users = new HashSet<User>();
             this.PagePermissionByRoles = new HashSet<PagePermissionByRole>();
             this.StatusApproverByRoles = new HashSet<StatusApproverByRole>();
+            this.NonAttendances = new HashSet<NonAttendance>();
+            this.Excuses = new HashSet<Excuse>();
         }
     
         public int Id { get; set; }
@@ -33,5 +35,9 @@ namespace UAS.Core.DAL.Common.Model
         public virtual ICollection<PagePermissionByRole> PagePermissionByRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StatusApproverByRole> StatusApproverByRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NonAttendance> NonAttendances { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Excuse> Excuses { get; set; }
     }
 }

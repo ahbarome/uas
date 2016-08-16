@@ -7,4 +7,12 @@
         TEACHER = 3,
         STUDENT = 4
     };
+
+    public enum Status
+    {
+        PENDING = 1,
+        ACCCEPTED = 2,
+        REQUIRED_CHANGES = 3,
+        REJECTED = 4
+    };
 }

@@ -1,6 +1,6 @@
-﻿@model UAS.Core.DAL.Common.Model.Excuse
+﻿@model UAS.Core.DAL.Common.Model.ExcuseApprovalView
 @{
-    ViewBag.Title = "Creación de Excusa";
+    ViewBag.Title = "Administración de Excusas";
 }
 
 <div id="wrapper">
@@ -22,29 +22,18 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5 class="text-uppercase">Listado de cursos con ausentismo</h5>
+                        <h5 class="text-uppercase">Listado de excusas</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li>
-                                    <a href="#">Config option 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Config option 2</a>
-                                </li>
-                            </ul>
                             <a class="close-link">
                                 <i class="fa fa-times"></i>
                             </a>
                         </div>
                     </div>
                     <div class="ibox-content">
-                        @Html.Partial("PendingExcuseGrid")
+                        @Html.Partial("ApprovalExcuseGrid")
                     </div>
                 </div>
             </div>
@@ -52,12 +41,12 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
-                    <button type="submit" class="btn btn-primary pull-right" id="btn-create-excuse">Crear</button>
+                    <button type="submit" class="btn btn-primary pull-right" id="btn-create-excuse">Cambiar Estado</button>
                 </div>
             </div>
         </div>
 
-        @Html.Partial("ExcuseCreator")
+        @Html.Partial("ApprovalExcuseDetail")
 
     </div>
 
@@ -78,5 +67,5 @@
     @Scripts.Render("~/plugins/wizardSteps")
     @Scripts.Render("~/plugins/validate")
     @Scripts.Render("~/plugins/dropZone")
-    <script src="~/App/ExcuseViewModel.js"></script>
+    <script src="~/App/ExcuseManagerViewModel.js"></script>
 }
