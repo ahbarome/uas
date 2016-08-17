@@ -48,6 +48,7 @@
 
         @Html.Partial("ApprovalExcuseDetail")
 
+        @Html.Partial("ApprovalExcuseStatusChanger")
     </div>
 
 </div>
@@ -57,7 +58,7 @@
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/toastrStyles")
     @Styles.Render("~/plugins/wizardStepsStyles")
-    @Styles.Render("~/Content/plugins/dropzone/dropZoneStyles")
+    @Styles.Render("~/plugins/select2Styles")
 }
 
 @section Scripts {
@@ -66,6 +67,6 @@
     @Scripts.Render("~/plugins/toastr")
     @Scripts.Render("~/plugins/wizardSteps")
     @Scripts.Render("~/plugins/validate")
-    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/select2")
     <script src="~/App/ExcuseManagerViewModel.js"></script>
 }

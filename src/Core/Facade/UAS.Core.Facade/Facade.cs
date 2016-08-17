@@ -123,5 +123,15 @@
         {
             _nonAttendanceFacade.SaveExcuse(excuse);
         }
+
+        public dynamic GetExcuseStatus()
+        {
+            return _nonAttendanceFacade.GetExcuseStatus();
+        }
+
+        public void ApproveExcuse(ExcuseApprovalView excuse)
+        {
+            _nonAttendanceFacade.ApproveExcuse(excuse);
+        }
     }
 }

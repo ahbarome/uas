@@ -82,10 +82,17 @@ namespace UAS.Core.DAL.Persisters
 
         public IQueryable<ExcuseApprovalView> GetExcusesForApproval(int documentNumber, int roleId)
         {
-            var excuses = base.Entities.ExcuseApprovalView.Where(
+            var excusesBase = base.Entities.ExcuseApprovalView.Where(
                 filter => filter.Approver == documentNumber && filter.IdRoleApprover == roleId);
 
+            var excuses = excusesBase.Where(filter => filter.IdStatusApproval == 1);
+
             return excuses;
+        }
+
+        public IQueryable<Status> GetStatus() {
+            var status = base.Entities.Status;
+            return status;
         }
     }
 }

@@ -46,5 +46,15 @@ namespace UAS.Core.NonAttendance
         {
             return _excuseManager.GetAttachments(idExcuse);
         }
+
+        public List<Status> GetExcuseStatus()
+        {
+            return _excuseManager.GetExcuseStatus();
+        }
+
+        public void ApproveExcuse(ExcuseApprovalView excuse)
+        {
+            _excuseManager.ApproveExcuse(excuse);
+        }
     }
 }

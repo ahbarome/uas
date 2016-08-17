@@ -186,17 +186,15 @@ function OnChangeClassification() {
         var self = $(this);
         var requiredObservation = GetValue(self.val(), 1);
         if (requiredObservation.toUpperCase() == "TRUE") {
-            console.log(requiredObservation.toUpperCase());
             $('textarea[name="Observation"').parent().attr("style", "display: block;");
         }
         else {
-            console.log(requiredObservation.toUpperCase());
             $('textarea[name="Observation"').parent().attr("style", "display: none;");
         }
     });
 };
 
-function GetValue(chain , index) {
+function GetValue(chain, index) {
     var fields = chain.split(SEPARATOR);
     try {
         if (fields.length > 0) {
@@ -209,4 +207,4 @@ function GetValue(chain , index) {
     catch (err) {
         return EMPTY_STRING;
     }
-}
+};

@@ -6,22 +6,27 @@ namespace UAS.Core.DAL.Persisters
 {
     public class NonAttendancePersister : BaseContext
     {
-        public List<NonAttendanceView> GetNonAttendances(int documentNumber, int roleId)
+        public IQueryable<NonAttendanceView> GetNonAttendances(int documentNumber, int roleId)
         {
-            var nonAttendances = base.Entities.NonAttendanceView.Where(
-                filter => filter.DocumentNumber == documentNumber && 
-                    filter.RoleId.Equals(roleId.ToString()) &&
-                    !filter.HasExcuse)
-                .ToList();
+            var nonAttendancesBase = base.Entities.NonAttendanceView.Where(
+                filter => filter.DocumentNumber == documentNumber &&
+                    filter.RoleId.Equals(roleId.ToString()));
+
+            var nonAttendances = nonAttendancesBase.Where(filter => !filter.HasExcuse);
 
             return nonAttendances;
         }
 
-        public void UpdateHasExcuse(int id, bool hasExcuse) {
+        public void UpdateHasExcuse(int id, bool hasExcuse)
+        {
             var nonAttendance = base.Entities.NonAttendances.Where(
                 filter => filter.Id == id).FirstOrDefault();
             nonAttendance.HasExcuse = hasExcuse;
             base.Entities.SaveChanges();
+        }
+
+        public void UpdateStatus(int id, int statusId)
+        {
         }
     }
 }

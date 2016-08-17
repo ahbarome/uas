@@ -73,16 +73,20 @@ namespace UAS.Core.Web.WebApp.Controllers
 
         #region Excuse manager
 
-        public ActionResult ExcuseManager() {
+        public ActionResult ExcuseManager()
+        {
             var userDocumentNumber = base.CurrentSession.SessionUser.DocumentNumber;
             var roleId = base.CurrentSession.SessionUser.IdRole;
             var excuses = _facade.GetExcusesForApproval(userDocumentNumber, roleId);
+            var status = _facade.GetExcuseStatus();
+            ViewBag.Status = status;
             ViewBag.Excuses = excuses;
             return View();
         }
 
 
-        public ActionResult ApprovalExcuseGrid() {
+        public ActionResult ApprovalExcuseGrid()
+        {
             var userDocumentNumber = base.CurrentSession.SessionUser.DocumentNumber;
             var roleId = base.CurrentSession.SessionUser.IdRole;
             var excuses = _facade.GetExcusesForApproval(userDocumentNumber, roleId);
@@ -109,6 +113,25 @@ namespace UAS.Core.Web.WebApp.Controllers
             return PartialView();
         }
 
+        public ActionResult ApprovalExcuseStatusChanger()
+        {
+            var userDocumentNumber = base.CurrentSession.SessionUser.DocumentNumber;
+            var roleId = base.CurrentSession.SessionUser.IdRole;
+            var status = _facade.GetExcuseStatus();
+            ViewBag.Status = status;
+            return PartialView();
+        }
+
+        public JsonResult ApproveExcuse(ExcuseApprovalView excuse) {
+            try {
+                _facade.ApproveExcuse(excuse);
+                return Json(new { Success = true, Message = string.Empty });
+            }
+            catch (Exception exception)
+            {
+                return Json(new { Success = false, Message = exception.Message });
+            }
+        }
         #endregion Excuse manager
     }
 }

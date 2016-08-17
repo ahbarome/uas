@@ -7,21 +7,29 @@ $(document).ready(function () {
 
     CreateApprovalsGrid();
 
+    OnChangeStatus();
+
     $("#btn-create-excuse").click(function () {
         var hasSelectedRows = SelectedRowsValidator();
         if (hasSelectedRows) {
-            $("#modal-approval-excuse").modal("show");
+            $("#modal-approval-excuse-status-changer").modal("show");
         }
         else {
             toastr.error(
                 'Por favor seleccione al menos un registro para cambiar el estado de la excusa', 'UAS+');
         }
     });
+
+    $("#btn-update-excuse-status").click(function () {
+        toastr.error(
+             'Por favor seleccione al menos un registro para cambiar el estado de la excusa', 'UAS+');
+    });
 });
 
 function TurnOnToolTips() {
     $('[data-toggle="tooltip"]').tooltip();
 };
+
 
 function TurnOnICheck() {
     $('input[type=checkbox]').iCheck({
@@ -64,7 +72,7 @@ function TurnOnWizard() {
             $("#modal-approval-excuse").modal("hide");
         }
     });
-}
+};
 
 function CreateApprovalsGrid() {
     TurnOnICheck();
@@ -77,9 +85,9 @@ function CreateApprovalsGrid() {
         "processing": true,
         buttons: [
             { extend: 'copy', text: '<span>Copiar</span>', titleAttr: 'Copiar', },
-            { extend: 'csv', title: 'Ausentismo' },
-            { extend: 'excel', title: 'Ausentismo' },
-            { extend: 'pdf', title: 'Ausentismo' },
+            { extend: 'csv', title: 'Excusas' },
+            { extend: 'excel', title: 'Excusas' },
+            { extend: 'pdf', title: 'Excusas' },
             {
                 extend: 'print',
                 text: '<span>Imprimir</span>',
@@ -106,6 +114,20 @@ function CreateAttachmentsGrid() {
             url: '/Scripts/plugins/datatables/plugins/i18n/Spanish.txt'
         },
         "processing": true
+    });
+};
+
+function OnChangeStatus() {
+    $('select[name="IdStatus"').change(function () {
+        var self = $(this);
+        var id = GetValue(self.val(), 0);
+        var isLast = GetValue(self.val(), 1);
+        if (isLast.toUpperCase() == "TRUE" && id != 4) {
+            $('textarea[name="Observation"').parent().attr("style", "display: none;"); 
+        }
+        else {
+            $('textarea[name="Observation"').parent().attr("style", "display: block;");
+        }
     });
 };
 
@@ -136,4 +158,19 @@ function SelectedRowsValidator() {
         }
     });
     return hasCheckedRows > 0;
+};
+
+function GetValue(chain, index) {
+    var fields = chain.split(SEPARATOR);
+    try {
+        if (fields.length > 0) {
+            return fields[index];
+        }
+        else {
+            return EMPTY_STRING;
+        }
+    }
+    catch (err) {
+        return EMPTY_STRING;
+    }
 };

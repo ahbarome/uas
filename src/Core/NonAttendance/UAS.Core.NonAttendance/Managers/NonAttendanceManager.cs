@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using UAS.Core.DAL.Common.Model;
 using UAS.Core.DAL.Persisters;
 
 namespace UAS.Core.NonAttendance.Managers
@@ -12,9 +14,9 @@ namespace UAS.Core.NonAttendance.Managers
             _nonAttendancePersister = new NonAttendancePersister();
         }
 
-        internal List<DAL.Common.Model.NonAttendanceView> GetNonAttendances(int documentNumber, int roleId)
+        internal List<NonAttendanceView> GetNonAttendances(int documentNumber, int roleId)
         {
-            return _nonAttendancePersister.GetNonAttendances(documentNumber, roleId);
+            return _nonAttendancePersister.GetNonAttendances(documentNumber, roleId).ToList();
         }
 
         internal void UpdateHasExcuse(int id, bool hasExcuse)

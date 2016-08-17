@@ -50,6 +50,15 @@ namespace UAS.Core.NonAttendance.Managers
             return _excusePersister.GetAttachments(idExcuse).ToList();
         }
 
+        internal List<Status> GetExcuseStatus()
+        {
+            return _excusePersister.GetStatus().ToList();
+        }
+
+        internal void ApproveExcuse(ExcuseApprovalView excuse)
+        {
+        }
+
         internal List<ExcuseApprovalView> GetExcusesForApproval(int documentNumber, int roleId)
         {
             var excuses = _excusePersister.GetExcusesForApproval(documentNumber, roleId).ToList();
