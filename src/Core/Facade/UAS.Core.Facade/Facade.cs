@@ -6,6 +6,7 @@
     using Session.Interfaces;
     using System;
     using DAL.Common.Model;
+    using System.Collections.Generic;
 
     public class Facade
     {
@@ -129,9 +130,9 @@
             return _nonAttendanceFacade.GetExcuseStatus();
         }
 
-        public void ApproveExcuse(ExcuseApprovalView excuse)
+        public void ApproveExcuses(List<ExcuseApprovalView> excuses)
         {
-            _nonAttendanceFacade.ApproveExcuse(excuse);
+            _nonAttendanceFacade.ApproveExcuses(excuses);
         }
     }
 }

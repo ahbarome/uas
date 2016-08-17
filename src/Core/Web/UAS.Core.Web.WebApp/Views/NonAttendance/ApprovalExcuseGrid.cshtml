@@ -1,5 +1,9 @@
-﻿@{
-    var excuseCollection = ViewBag.Excuses as IEnumerable<UAS.Core.DAL.Common.Model.ExcuseApprovalView>;
+﻿@using UAS.Core.DAL.Common.Model;
+
+@model ExcuseApprovalView
+
+@{
+    var excuseCollection = ViewBag.Excuses as IEnumerable<ExcuseApprovalView>;
 }
 <table id="grid-approval-excuse" class="table table-striped table-bordered table-hover">
     <thead>
@@ -26,7 +30,7 @@
                 <td>@excuse.CourseName</td>
                 <td>@excuse.TruantDocumentNumber</td>
                 <td>@excuse.TruantFullName</td>
-                <td>Profesor</td>
+                <td>@excuse.TruantRoleAlias</td>
                 <td>@excuse.NonAttendanceDate.ToString("yyyy-MM-dd")</td>
                 <td>@{var scheduleDetail = string.Concat(@excuse.StartTime, " - ", @excuse.EndTime); @scheduleDetail}</td>
                 <td>@{var spaceDetail = string.Concat(@excuse.SpaceType, " ", excuse.SpaceName); @spaceDetail}</td>

@@ -1,6 +1,11 @@
 ﻿
 $(document).ready(function () {
 
+    function onErrorShake() {
+        $('#login-container').removeClass('fadeInDown');
+        $('#login-container').addClass('wobble');
+    };
+
     $(window).keydown(function (event) {
         if (event.keyCode == 13) {
             event.preventDefault();
@@ -10,7 +15,7 @@ $(document).ready(function () {
 
     $("#form-login").validate({
         rules: {
-            Username: {
+            Username:{
                 required: true
             },
             Password: {
@@ -48,6 +53,9 @@ $(document).ready(function () {
                 }
             });
         }
-    });
+        else {
+            onErrorShake();
+        }
+    }); 
 
 });

@@ -82,136 +82,6 @@ CREATE TABLE [Security].[PagePermissionByRole](
 GO
 
 --*******************************************************************
---NOONATTENDANCE TABLE 
---*******************************************************************
---*******************************************************************
---STATUS TABLE 
---*******************************************************************
-CREATE TABLE [NonAttendance].[Status](
-	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[Status]					[nvarchar](150) 	NULL,
-	[IsLast]					[bit]				NOT NULL,
-	[RegisterDate] 				[datetime] 			NULL
-);
-GO
-
-ALTER TABLE  [NonAttendance].[Status] ADD  CONSTRAINT [DF_Status_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
-GO
-
---*******************************************************************
---STATUSAPPROVERBYROLE TABLE 
---*******************************************************************
-CREATE TABLE [NonAttendance].[StatusApproverByRole](
-	[IdStatus]					INT 				NOT NULL,
-	[IdRole] 					INT 				NOT NULL,
-	[IsVisible] 				BIT 				NOT NULL,
-	[RegisterDate] 				[datetime] 			NULL,
-	CONSTRAINT Pk_StatusApproverByRole PRIMARY KEY ([IdStatus], [IdRole]),
-	CONSTRAINT Fk_StatusApproverByRole_IdStatus FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id),
-	CONSTRAINT Fk_StatusApproverByRole_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
-);
-GO
-
-ALTER TABLE  [NonAttendance].[StatusApproverByRole] ADD  CONSTRAINT [DF_StatusApproverByRole_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
-GO
-
---*******************************************************************
---CLASSIFICATION TABLE 
---*******************************************************************
-CREATE TABLE [NonAttendance].[Classification](
-	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[Classification]			[nvarchar](150) 	NULL,
-	[IsRequiredDescription]		[bit]				NULL,
-	[RegisterDate] 				[datetime] 			NULL
-);
-GO
-
-ALTER TABLE  [NonAttendance].[Classification] ADD  CONSTRAINT [DF_ExcuseClassification_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
-GO
-
---*******************************************************************
---NONATTENDANCE TABLE 
---*******************************************************************
-CREATE TABLE [NonAttendance].[NonAttendance](
-	[Id] 							[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[DocumentNumber]				[int]				NOT NULL,
-	[IdRole]						[int]				NOT NULL,
-	[IdCourse]						[int]				NOT NULL,
-	[IdSpace]						[int]				NOT NULL,
-	[DayOfTheWeek]					[int]				NOT NULL,
-	[StartTime]						[time]				NOT NULL,
-	[EndTime]						[time]				NOT NULL,
-	[NonAttendanceDate]				[date]				NOT NULL,
-	[HasExcuse]						[bit]				NOT NULL,
-	[RegisterDate]					[datetime]			NULL,
-	CONSTRAINT Fk_NonAttendance_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
-	CONSTRAINT Fk_NonAttendance_IdCourse FOREIGN KEY  (IdCourse) REFERENCES [Integration].[Course](Id),
-	CONSTRAINT Fk_NonAttendance_IdSpace FOREIGN KEY  (IdSpace) REFERENCES [Integration].[Space](Id),
-)
-GO
-
-ALTER TABLE  [NonAttendance].[NonAttendance] ADD  CONSTRAINT [DF_NonAttendance_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
-GO
-
---*******************************************************************
---EXCUSE TABLE 
---*******************************************************************
-CREATE TABLE [NonAttendance].[Excuse](
-	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[IdNonAttendance]			[int]				NOT NULL,
-	[DocumentNumber]			[int]				NOT NULL,
-	[IdRole]					[int]				NOT NULL,
-	[IdStatus]					[int]				NOT NULL,
-	[IdClassification]			[int]				NOT NULL,
-	[Justification]				[nvarchar](MAX) 	NULL,
-	[Observation]				[nvarchar](MAX) 	NULL,
-	[RegisterDate] 				[datetime] 			NULL,
-	CONSTRAINT Fk_Excuse_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
-	CONSTRAINT Fk_Excuse_IdNonAttendance FOREIGN KEY  (IdNonAttendance) REFERENCES [NonAttendance].[NonAttendance](Id),
-	CONSTRAINT Fk_Excuse_IdStatus FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id),
-	CONSTRAINT Fk_Excuse_IdClassification FOREIGN KEY  (IdClassification) REFERENCES [NonAttendance].[Classification](Id)
-);
-GO
-
-ALTER TABLE  [NonAttendance].[Excuse] ADD  CONSTRAINT [DF_NonAttendanceExcuse_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
-GO
-
---*******************************************************************
---EXCUSEAPPROVAL TABLE 
---*******************************************************************
-CREATE TABLE [NonAttendance].[ExcuseApproval](
-	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[IdExcuse]					[int]				NOT NULL,
-	[IdStatus]					[int]				NOT NULL,
-	[Approver]					[int]				NOT NULL,
-	[IdRole]					[int]				NOT NULL,
-	[Observation]				[nvarchar](MAX) 	NULL,
-	[RegisterDate] 				[datetime] 			NULL,
-	CONSTRAINT Fk_ExcuseApproval_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
-	CONSTRAINT Fk_ExcuseApproval_IdExcuse FOREIGN KEY  (IdExcuse) REFERENCES [NonAttendance].[Excuse](Id),
-	CONSTRAINT Fk_ExcuseApproval_IdState FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id)
-)
-GO
-
-ALTER TABLE  [NonAttendance].[ExcuseApproval] ADD  CONSTRAINT [DF_ExcuseApproval_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
-GO
-
---*******************************************************************
---ATTACHMENT TABLE 
---*******************************************************************
-CREATE TABLE [NonAttendance].[Attachment](
-	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[IdExcuse]					[int]				NOT NULL,
-	[Path]						[nvarchar](150) 	NULL,
-	[RegisterDate] 				[datetime] 			NULL,
-	CONSTRAINT Fk_AttachmentIdExcuse FOREIGN KEY  (IdExcuse) REFERENCES [NonAttendance].[Excuse](Id)
-)
-GO
-
-ALTER TABLE  [NonAttendance].[Attachment] ADD  CONSTRAINT [DF_ExcuseAttachment_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
-GO
-
---*******************************************************************
 --INTEGRATION SCHEMA
 --*******************************************************************
 --*******************************************************************
@@ -455,4 +325,135 @@ GO
 
 ALTER TABLE  [Attendance].[Movement] ADD  CONSTRAINT [DF_Movement_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
+--*******************************************************************
+--*******************************************************************
+--NOONATTENDANCE TABLE 
+--*******************************************************************
+--*******************************************************************
+--STATUS TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[Status](
+	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[Status]					[nvarchar](150) 	NULL,
+	[IsLast]					[bit]				NOT NULL,
+	[RegisterDate] 				[datetime] 			NULL
+);
+GO
+
+ALTER TABLE  [NonAttendance].[Status] ADD  CONSTRAINT [DF_Status_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
+--STATUSAPPROVERBYROLE TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[StatusApproverByRole](
+	[IdStatus]					INT 				NOT NULL,
+	[IdRole] 					INT 				NOT NULL,
+	[IsVisible] 				BIT 				NOT NULL,
+	[RegisterDate] 				[datetime] 			NULL,
+	CONSTRAINT Pk_StatusApproverByRole PRIMARY KEY ([IdStatus], [IdRole]),
+	CONSTRAINT Fk_StatusApproverByRole_IdStatus FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id),
+	CONSTRAINT Fk_StatusApproverByRole_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+);
+GO
+
+ALTER TABLE  [NonAttendance].[StatusApproverByRole] ADD  CONSTRAINT [DF_StatusApproverByRole_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
+--CLASSIFICATION TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[Classification](
+	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[Classification]			[nvarchar](150) 	NULL,
+	[IsRequiredDescription]		[bit]				NULL,
+	[RegisterDate] 				[datetime] 			NULL
+);
+GO
+
+ALTER TABLE  [NonAttendance].[Classification] ADD  CONSTRAINT [DF_ExcuseClassification_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
+--NONATTENDANCE TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[NonAttendance](
+	[Id] 							[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[DocumentNumber]				[int]				NOT NULL,
+	[IdRole]						[int]				NOT NULL,
+	[IdCourse]						[int]				NOT NULL,
+	[IdSpace]						[int]				NOT NULL,
+	[DayOfTheWeek]					[int]				NOT NULL,
+	[StartTime]						[time]				NOT NULL,
+	[EndTime]						[time]				NOT NULL,
+	[NonAttendanceDate]				[date]				NOT NULL,
+	[HasExcuse]						[bit]				NOT NULL,
+	[RegisterDate]					[datetime]			NULL,
+	CONSTRAINT Fk_NonAttendance_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+	CONSTRAINT Fk_NonAttendance_IdCourse FOREIGN KEY  (IdCourse) REFERENCES [Integration].[Course](Id),
+	CONSTRAINT Fk_NonAttendance_IdSpace FOREIGN KEY  (IdSpace) REFERENCES [Integration].[Space](Id),
+)
+GO
+
+ALTER TABLE  [NonAttendance].[NonAttendance] ADD  CONSTRAINT [DF_NonAttendance_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
+--EXCUSE TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[Excuse](
+	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[IdNonAttendance]			[int]				NOT NULL,
+	[DocumentNumber]			[int]				NOT NULL,
+	[IdRole]					[int]				NOT NULL,
+	[IdStatus]					[int]				NOT NULL,
+	[IdClassification]			[int]				NOT NULL,
+	[Justification]				[nvarchar](MAX) 	NULL,
+	[Observation]				[nvarchar](MAX) 	NULL,
+	[RegisterDate] 				[datetime] 			NULL,
+	CONSTRAINT Fk_Excuse_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+	CONSTRAINT Fk_Excuse_IdNonAttendance FOREIGN KEY  (IdNonAttendance) REFERENCES [NonAttendance].[NonAttendance](Id),
+	CONSTRAINT Fk_Excuse_IdStatus FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id),
+	CONSTRAINT Fk_Excuse_IdClassification FOREIGN KEY  (IdClassification) REFERENCES [NonAttendance].[Classification](Id)
+);
+GO
+
+ALTER TABLE  [NonAttendance].[Excuse] ADD  CONSTRAINT [DF_NonAttendanceExcuse_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
+--EXCUSEAPPROVAL TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[ExcuseApproval](
+	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[IdExcuse]					[int]				NOT NULL,
+	[IdStatus]					[int]				NOT NULL,
+	[Approver]					[int]				NOT NULL,
+	[IdRole]					[int]				NOT NULL,
+	[Observation]				[nvarchar](MAX) 	NULL,
+	[RegisterDate] 				[datetime] 			NULL,
+	CONSTRAINT Fk_ExcuseApproval_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+	CONSTRAINT Fk_ExcuseApproval_IdExcuse FOREIGN KEY  (IdExcuse) REFERENCES [NonAttendance].[Excuse](Id),
+	CONSTRAINT Fk_ExcuseApproval_IdState FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id)
+)
+GO
+
+ALTER TABLE  [NonAttendance].[ExcuseApproval] ADD  CONSTRAINT [DF_ExcuseApproval_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
+--ATTACHMENT TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[Attachment](
+	[Id] 						[int]				IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[IdExcuse]					[int]				NOT NULL,
+	[Path]						[nvarchar](150) 	NULL,
+	[RegisterDate] 				[datetime] 			NULL,
+	CONSTRAINT Fk_AttachmentIdExcuse FOREIGN KEY  (IdExcuse) REFERENCES [NonAttendance].[Excuse](Id)
+)
+GO
+
+ALTER TABLE  [NonAttendance].[Attachment] ADD  CONSTRAINT [DF_ExcuseAttachment_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
 --*******************************************************************

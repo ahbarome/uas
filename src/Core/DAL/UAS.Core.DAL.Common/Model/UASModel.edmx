@@ -55,8 +55,8 @@
           <Property Name="IdAcademicPeriod" Type="int" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Integration.EnrollmentDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="EnrollmentDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -196,6 +196,18 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           <Property Name="Observation" Type="nvarchar(max)" />
           <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="ExcuseApproval">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdExcuse" Type="int" Nullable="false" />
+          <Property Name="IdStatus" Type="int" Nullable="false" />
+          <Property Name="Approver" Type="int" Nullable="false" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="Observation" Type="nvarchar(max)" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="NonAttendance">
           <Key>
             <PropertyRef Name="Id" />
@@ -286,8 +298,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           <Property Name="LastModiticationDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="80" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceRegisterView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Attendance.AttendanceRegisterView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AttendanceRegisterView">
           <Key>
             <PropertyRef Name="DocumentNumber" />
@@ -324,8 +336,8 @@ advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceRegisterView' no ti
           <Property Name="MovementDate" Type="date" />
           <Property Name="MovementTime" Type="time" Precision="7" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Integration.PersonActivitiesView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Integration.PersonActivitiesView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PersonActivitiesView">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -355,8 +367,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.PersonActivitiesView' no tie
           <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="StudentEnrollmentView">
           <Key>
             <PropertyRef Name="StudentFullName" />
@@ -397,8 +409,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <Property Name="EndDate" Type="datetime" />
           <Property Name="EnrollmentStatus" Type="nvarchar" MaxLength="80" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseApprovalView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.NonAttendance.ExcuseApprovalView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ExcuseApprovalView">
           <Key>
             <PropertyRef Name="Id" />
@@ -409,6 +421,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseApprovalView' no tie
             <PropertyRef Name="IdNonAttendance" />
             <PropertyRef Name="TruantDocumentNumber" />
             <PropertyRef Name="TruantFullName" />
+            <PropertyRef Name="TruantRoleId" />
+            <PropertyRef Name="TruantRoleAlias" />
             <PropertyRef Name="CourseId" />
             <PropertyRef Name="CourseName" />
             <PropertyRef Name="DayOfTheWeek" />
@@ -431,6 +445,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseApprovalView' no tie
           <Property Name="IdNonAttendance" Type="int" Nullable="false" />
           <Property Name="TruantDocumentNumber" Type="int" Nullable="false" />
           <Property Name="TruantFullName" Type="nvarchar" MaxLength="301" Nullable="false" />
+          <Property Name="TruantRoleId" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="TruantRoleAlias" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="CourseName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
@@ -449,8 +465,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseApprovalView' no tie
           <Property Name="ExcuseJustification" Type="nvarchar(max)" />
           <Property Name="ExcuseObservation" Type="nvarchar(max)" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceRegisterView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="NonAttendanceRegisterView">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -480,8 +496,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="NonAttendanceView">
           <Key>
             <PropertyRef Name="Id" />
@@ -634,6 +650,42 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Excuse">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseApproval_IdExcuse">
+          <End Role="Excuse" Type="Self.Excuse" Multiplicity="1" />
+          <End Role="ExcuseApproval" Type="Self.ExcuseApproval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Excuse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseApproval">
+              <PropertyRef Name="IdExcuse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseApproval_IdRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="ExcuseApproval" Type="Self.ExcuseApproval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseApproval">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseApproval_IdState">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="ExcuseApproval" Type="Self.ExcuseApproval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseApproval">
               <PropertyRef Name="IdStatus" />
             </Dependent>
           </ReferentialConstraint>
@@ -935,6 +987,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
           <EntitySet Name="Attachment" EntityType="Self.Attachment" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Classification" EntityType="Self.Classification" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Excuse" EntityType="Self.Excuse" Schema="NonAttendance" store:Type="Tables" />
+          <EntitySet Name="ExcuseApproval" EntityType="Self.ExcuseApproval" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="NonAttendance" EntityType="Self.NonAttendance" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="StatusApproverByRole" EntityType="Self.StatusApproverByRole" Schema="NonAttendance" store:Type="Tables" />
@@ -1039,6 +1092,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
     [ExcuseApprovalView].[IdNonAttendance] AS [IdNonAttendance], 
     [ExcuseApprovalView].[TruantDocumentNumber] AS [TruantDocumentNumber], 
     [ExcuseApprovalView].[TruantFullName] AS [TruantFullName], 
+    [ExcuseApprovalView].[TruantRoleId] AS [TruantRoleId], 
+    [ExcuseApprovalView].[TruantRoleAlias] AS [TruantRoleAlias], 
     [ExcuseApprovalView].[CourseId] AS [CourseId], 
     [ExcuseApprovalView].[CourseName] AS [CourseName], 
     [ExcuseApprovalView].[DayOfTheWeek] AS [DayOfTheWeek], 
@@ -1136,6 +1191,18 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
             <End Role="Status" EntitySet="Status" />
             <End Role="Excuse" EntitySet="Excuse" />
           </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseApproval_IdExcuse" Association="Self.Fk_ExcuseApproval_IdExcuse">
+            <End Role="Excuse" EntitySet="Excuse" />
+            <End Role="ExcuseApproval" EntitySet="ExcuseApproval" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseApproval_IdRole" Association="Self.Fk_ExcuseApproval_IdRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="ExcuseApproval" EntitySet="ExcuseApproval" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseApproval_IdState" Association="Self.Fk_ExcuseApproval_IdState">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="ExcuseApproval" EntitySet="ExcuseApproval" />
+          </AssociationSet>
           <AssociationSet Name="Fk_Movement_IdSpace" Association="Self.Fk_Movement_IdSpace">
             <End Role="Space" EntitySet="Space" />
             <End Role="Movement" EntitySet="Movement" />
@@ -1222,6 +1289,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
           <NavigationProperty Name="StatusApproverByRoles" Relationship="UASModel.Fk_StatusApproverByRole_IdRole" FromRole="Role" ToRole="StatusApproverByRole" />
           <NavigationProperty Name="NonAttendances" Relationship="UASModel.Fk_NonAttendance_IdRole" FromRole="Role" ToRole="NonAttendance" />
           <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_Excuse_IdRole" FromRole="Role" ToRole="Excuse" />
+          <NavigationProperty Name="ExcuseApprovals" Relationship="UASModel.Fk_ExcuseApproval_IdRole" FromRole="Role" ToRole="ExcuseApproval" />
         </EntityType>
         <EntityContainer Name="UASEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Roles" EntityType="Self.Role" />
@@ -1382,6 +1450,19 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
             <Parameter Name="ExcuseId" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="ExcuseApprovalView" EntityType="UASModel.ExcuseApprovalView" />
+          <EntitySet Name="ExcuseApprovals" EntityType="UASModel.ExcuseApproval" />
+          <AssociationSet Name="Fk_ExcuseApproval_IdExcuse" Association="UASModel.Fk_ExcuseApproval_IdExcuse">
+            <End Role="Excuse" EntitySet="Excuses" />
+            <End Role="ExcuseApproval" EntitySet="ExcuseApprovals" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseApproval_IdRole" Association="UASModel.Fk_ExcuseApproval_IdRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="ExcuseApproval" EntitySet="ExcuseApprovals" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_ExcuseApproval_IdState" Association="UASModel.Fk_ExcuseApproval_IdState">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="ExcuseApproval" EntitySet="ExcuseApprovals" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -1639,6 +1720,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="StatusApproverByRoles" Relationship="UASModel.Fk_StatusApproverByRole_IdStatus" FromRole="Status" ToRole="StatusApproverByRole" />
           <NavigationProperty Name="Excuses" Relationship="UASModel.Fk_ExcuseStatus" FromRole="Status" ToRole="Excuse" />
+          <NavigationProperty Name="ExcuseApprovals" Relationship="UASModel.Fk_ExcuseApproval_IdState" FromRole="Status" ToRole="ExcuseApproval" />
         </EntityType>
         <EntityType Name="StatusApproverByRole">
           <Key>
@@ -2173,6 +2255,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
           <NavigationProperty Name="Status" Relationship="UASModel.Fk_ExcuseStatus" FromRole="Excuse" ToRole="Status" />
           <Property Name="IdRole" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="UASModel.Fk_Excuse_IdRole" FromRole="Excuse" ToRole="Role" />
+          <NavigationProperty Name="ExcuseApprovals" Relationship="UASModel.Fk_ExcuseApproval_IdExcuse" FromRole="Excuse" ToRole="ExcuseApproval" />
         </EntityType>
         <Association Name="Fk_AttachmentIdExcuse">
           <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="1" />
@@ -2292,6 +2375,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
             <PropertyRef Name="HasExcuse" />
             <PropertyRef Name="IdStatusExcuse" />
             <PropertyRef Name="IdClassificationExcuse" />
+            <PropertyRef Name="TruantRoleId" />
+            <PropertyRef Name="TruantRoleAlias" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="IdExcuse" Type="Int32" Nullable="false" />
@@ -2319,7 +2404,60 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
           <Property Name="ClassificationExcuse" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ExcuseJustification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ExcuseObservation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TruantRoleId" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TruantRoleAlias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="ExcuseApproval">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdExcuse" Type="Int32" Nullable="false" />
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="Approver" Type="Int32" Nullable="false" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="Observation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Excuse" Relationship="UASModel.Fk_ExcuseApproval_IdExcuse" FromRole="ExcuseApproval" ToRole="Excuse" />
+          <NavigationProperty Name="Role" Relationship="UASModel.Fk_ExcuseApproval_IdRole" FromRole="ExcuseApproval" ToRole="Role" />
+          <NavigationProperty Name="Status" Relationship="UASModel.Fk_ExcuseApproval_IdState" FromRole="ExcuseApproval" ToRole="Status" />
+        </EntityType>
+        <Association Name="Fk_ExcuseApproval_IdExcuse">
+          <End Type="UASModel.Excuse" Role="Excuse" Multiplicity="1" />
+          <End Type="UASModel.ExcuseApproval" Role="ExcuseApproval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Excuse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseApproval">
+              <PropertyRef Name="IdExcuse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseApproval_IdRole">
+          <End Type="UASModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="UASModel.ExcuseApproval" Role="ExcuseApproval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseApproval">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_ExcuseApproval_IdState">
+          <End Type="UASModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="UASModel.ExcuseApproval" Role="ExcuseApproval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExcuseApproval">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2857,6 +2995,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
           <EntitySetMapping Name="ExcuseApprovalView">
             <EntityTypeMapping TypeName="UASModel.ExcuseApprovalView">
               <MappingFragment StoreEntitySet="ExcuseApprovalView">
+                <ScalarProperty Name="TruantRoleAlias" ColumnName="TruantRoleAlias" />
+                <ScalarProperty Name="TruantRoleId" ColumnName="TruantRoleId" />
                 <ScalarProperty Name="ExcuseObservation" ColumnName="ExcuseObservation" />
                 <ScalarProperty Name="ExcuseJustification" ColumnName="ExcuseJustification" />
                 <ScalarProperty Name="ClassificationExcuse" ColumnName="ClassificationExcuse" />
@@ -2886,6 +3026,19 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ExcuseApprovals">
+            <EntityTypeMapping TypeName="UASModel.ExcuseApproval">
+              <MappingFragment StoreEntitySet="ExcuseApproval">
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Observation" ColumnName="Observation" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Approver" ColumnName="Approver" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="IdExcuse" ColumnName="IdExcuse" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2900,7 +3053,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />

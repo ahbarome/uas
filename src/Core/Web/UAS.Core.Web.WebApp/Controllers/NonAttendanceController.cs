@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using UAS.Core.DAL.Common.Model;
 
@@ -122,9 +123,9 @@ namespace UAS.Core.Web.WebApp.Controllers
             return PartialView();
         }
 
-        public JsonResult ApproveExcuse(ExcuseApprovalView excuse) {
+        public JsonResult ApproveExcuses(List<ExcuseApprovalView> excuses) {
             try {
-                _facade.ApproveExcuse(excuse);
+                _facade.ApproveExcuses(excuses);
                 return Json(new { Success = true, Message = string.Empty });
             }
             catch (Exception exception)

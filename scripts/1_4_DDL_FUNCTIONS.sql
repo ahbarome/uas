@@ -485,10 +485,10 @@ RETURN
 GO
 
 --*******************************************************************
---INTEGRATION SCHEMA
+--SECURITY SCHEMA
 --*******************************************************************
 --*******************************************************************
---GETCURRENTDAY FUNCTION
+--DIRECTOREXIST FUNCTION
 --*******************************************************************
 SET ANSI_NULLS ON
 GO
@@ -499,7 +499,8 @@ GO
 -- =============================================
 -- Author:		Agustín Barona
 -- Create date: 2016-07-29
--- Description:	Get the current day
+-- Description:	Validate if the director exist
+--              in the User table
 -- =============================================
 CREATE FUNCTION [Security].[DirectorExist]()
 	
@@ -511,6 +512,45 @@ BEGIN
 	SELECT	@Count = COUNT( 1 )
 	FROM	[Security].[User] WITH(NOLOCK)
 	WHERE	[IdRole] = 2
+
+	IF(@Count > 0)
+	BEGIN
+		RETURN  1;
+	END
+	
+	RETURN  0;
+END
+
+GO
+--*******************************************************************
+--NONATTENDANCE SCHEMA
+--*******************************************************************
+--*******************************************************************
+--EXCUSEAPPROVALEXIST FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-17
+-- Description:	Validate if the excuse exist
+--              in the ExcuseApproval table
+-- =============================================
+CREATE FUNCTION [NonAttendance].[ExcuseApprovalExist](@ExcuseId INT, @RoleId INT)
+	
+RETURNS BIT
+AS
+BEGIN
+	DECLARE @Count INT;
+	
+	SELECT	@Count = COUNT( 1 )
+	FROM	[NonAttendance].[ExcuseApproval] WITH(NOLOCK)
+	WHERE	[IdExcuse]	= @ExcuseId AND
+			[IdRole]	= @RoleId
 
 	IF(@Count > 0)
 	BEGIN

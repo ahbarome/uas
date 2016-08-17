@@ -118,7 +118,7 @@ INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisibl
 --POPULATE CLASSIFICATION TABLE 
 --*******************************************************************
 INSERT INTO [NonAttendance].[Classification]([Classification],[IsRequiredDescription]) VALUES('Inconveniente médico', 0)
-INSERT INTO [NonAttendance].[Classification]([Classification],[IsRequiredDescription]) VALUES('Inconveniente familiar', 0)
+INSERT INTO [NonAttendance].[Classification]([Classification],[IsRequiredDescription]) VALUES('Calamidad doméstica', 0)
 INSERT INTO [NonAttendance].[Classification]([Classification],[IsRequiredDescription]) VALUES('Inconveniente económico', 0)
 INSERT INTO [NonAttendance].[Classification]([Classification],[IsRequiredDescription]) VALUES('Otro', 1)
 

@@ -55,8 +55,11 @@ namespace UAS.Core.NonAttendance.Managers
             return _excusePersister.GetStatus().ToList();
         }
 
-        internal void ApproveExcuse(ExcuseApprovalView excuse)
+        internal void ApproveExcuses(List<ExcuseApprovalView> excuses)
         {
+            excuses.ForEach(
+                excuse => _excusePersister.UpdateExcuseApprovalStatus(
+                    excuse.Id, excuse.IdStatusApproval));
         }
 
         internal List<ExcuseApprovalView> GetExcusesForApproval(int documentNumber, int roleId)
@@ -92,10 +95,10 @@ namespace UAS.Core.NonAttendance.Managers
 
         private List<int> GetNonAttendanceIds(string nonAttendanceIds)
         {
-            var idsToParse = nonAttendanceIds.Split(new[] { "," }, StringSplitOptions.None)
-                .ToList();
-
+            const string ID_SEPARATOR = ",";
             var ids = new List<int>();
+            var idsToParse = nonAttendanceIds.Split(new[] { ID_SEPARATOR }, StringSplitOptions.None)
+                .ToList();
 
             idsToParse.ForEach(idToParse => ids.Add(int.Parse(idToParse)));
 

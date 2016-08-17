@@ -16,13 +16,19 @@ $(document).ready(function () {
         }
         else {
             toastr.error(
-                'Por favor seleccione al menos un registro para cambiar el estado de la excusa', 'UAS+');
+             'Por favor seleccione al menos un registro para cambiar el estado de la excusa', 'UAS+');
         }
     });
 
     $("#btn-update-excuse-status").click(function () {
-        toastr.error(
-             'Por favor seleccione al menos un registro para cambiar el estado de la excusa', 'UAS+');
+
+        var excuseApprovals = GetExcuseApprovals();
+        console.log(excuseApprovals);
+        $.post("ApproveExcuses", { excuses: excuseApprovals }, function (response) {
+            $("#modal-approval-excuse-status-changer").modal("hide");
+            toastr.info(
+             'Se actualizó el estado de la excusa de manera satisfactoria', 'UAS+');
+        });
     });
 });
 
@@ -51,14 +57,12 @@ function TurnOnWizard() {
         bodyTag: "fieldset",
         enableFinishButton: false,
         onStepChanging: function (event, currentIndex, newIndex) {
-            // Always allow going backward even if the current step contains invalid fields!
             if (currentIndex > newIndex) {
                 return true;
             }
             return true;
         },
         onStepChanged: function (event, currentIndex, priorIndex) {
-            // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
             if (currentIndex === 2 && priorIndex === 3) {
                 $(this).steps("previous");
             }
@@ -118,12 +122,12 @@ function CreateAttachmentsGrid() {
 };
 
 function OnChangeStatus() {
-    $('select[name="IdStatus"').change(function () {
+    $('select[name="IdStatusApproval"').change(function () {
         var self = $(this);
         var id = GetValue(self.val(), 0);
         var isLast = GetValue(self.val(), 1);
         if (isLast.toUpperCase() == "TRUE" && id != 4) {
-            $('textarea[name="Observation"').parent().attr("style", "display: none;"); 
+            $('textarea[name="Observation"').parent().attr("style", "display: none;");
         }
         else {
             $('textarea[name="Observation"').parent().attr("style", "display: block;");
@@ -174,3 +178,41 @@ function GetValue(chain, index) {
         return EMPTY_STRING;
     }
 };
+
+function GetSelectedColumn(dataIndex) {
+    var columnsData = []
+    var grid = $('#grid-approval-excuse').DataTable();
+
+    grid.rows().every(function (index) {
+        var node = grid.row(index).node();
+
+        var hasChecked = $(node).find(".icheckbox_square-green.checked");
+        if (hasChecked.length > 0) {
+            var data = grid.row(index).data();
+            var value = data[dataIndex];
+            columnsData.push(value);
+        }
+    });
+
+    return columnsData;
+};
+
+function GetExcuseApprovals() {
+
+    var excuseApprovals = [];
+    var approvalIds = GetSelectedColumn(1);
+    var idStatusApproval = GetStatusApproval();
+
+    $.each(approvalIds, function (index, id) {
+        excuseApprovals.push({ "Id": parseInt(id), "IdStatusApproval": idStatusApproval });
+    });
+
+    return excuseApprovals;
+};
+
+
+function GetStatusApproval() {
+    var statusApproval = $('select[name="IdStatusApproval"]').val();
+    var idStatusApproval = GetValue(statusApproval, 0);
+    return parseInt(idStatusApproval);
+}

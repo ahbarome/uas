@@ -94,5 +94,14 @@ namespace UAS.Core.DAL.Persisters
             var status = base.Entities.Status;
             return status;
         }
+
+        public void UpdateExcuseApprovalStatus(int id, int statusId)
+        {
+            var excuse = base.Entities.ExcuseApprovals.Where(
+                filter => filter.Id == id).FirstOrDefault();
+
+            excuse.IdStatus = statusId;
+            base.Entities.SaveChanges();
+        }
     }
 }

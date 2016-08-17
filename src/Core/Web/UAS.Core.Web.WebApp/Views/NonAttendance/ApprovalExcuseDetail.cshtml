@@ -44,7 +44,7 @@
     }
 }
 <div class="modal inmodal" id="modal-approval-excuse" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog  modal-lg">
         <div class="modal-content animated bounceInRight">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -64,11 +64,11 @@
                                         </div>
                                         <div class="form-group" style="display: @DisplayObservation(excuse)">
                                             <label>Observación</label>
-                                            <textarea class="form-control" rows="5" name="Observation" readonly>@GetJustification(excuse)</textarea>
+                                            <textarea class="form-control" rows="5" name="Observation" readonly>@GetObservation(excuse)</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Justificación</label>
-                                            <textarea class="form-control" rows="10" name="Justification" readonly>@GetObservation(excuse)</textarea>
+                                            <textarea class="form-control" rows="10" name="Justification" readonly>@GetJustification(excuse)</textarea>
                                         </div>
                                     </form>
                                 </div>

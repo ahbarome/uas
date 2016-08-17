@@ -84,6 +84,9 @@
     <Compile Include="Model\Excuse.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ExcuseApproval.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ExcuseApprovalView.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>

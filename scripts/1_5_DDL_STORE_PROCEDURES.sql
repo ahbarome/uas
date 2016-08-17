@@ -537,10 +537,17 @@ BEGIN
 			@NonAttendanceRoleId				INT,
 			@NonAttendanceCourseId				INT,
 			@NonAttendanceSpaceId				INT,
-			@NonAttendanceDayOfTheWeek			INT;
+			@NonAttendanceDayOfTheWeek			INT,
+			@DirectorRoleId						INT,
+			@TeacherRoleId						INT,
+			@StudentRoleId						INT;
 
 	SET NOCOUNT ON;
 	
+	SET @DirectorRoleId = 2;
+	SET @TeacherRoleId	= 3;
+	SET @StudentRoleId	= 4;
+
 	SELECT	@NonAttendanceDocumentNumber = [DocumentNumber]
 			, @NonAttendanceRoleId		 = [IdRole] 
 			, @NonAttendanceCourseId	 = [IdCourse]
@@ -549,33 +556,64 @@ BEGIN
 	FROM	[NonAttendance].[NonAttendance] WITH(NOLOCK)
 	WHERE	[Id] = @NonAttendanceId
 
-	--Insert a director for the approval
-	IF( [Security].[DirectorExist]() > 0 )
+	--IF THE APPROVAL DOES NOT EXIST INSERT THE NEW REGISTERS
+	IF( [NonAttendance].[ExcuseApprovalExist](@ExcuseId, @DirectorRoleId) = 0 )
 	BEGIN
-		INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
-		SELECT  @ExcuseId
-				, 1
-				, [DocumentNumber]
-				, [IdRole] 
-		FROM	[Security].[User] WITH(NOLOCK)
-		WHERE	[IdRole] = 2
-	END
-	--Student
-	IF(@NonAttendanceRoleId = 4)
-	BEGIN
+		--INSERT A DIRECTOR FOR THE APPROVAL
+		IF( [Security].[DirectorExist]() = 1 )
+		BEGIN
+			INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
+			SELECT  @ExcuseId
+					, 1
+					, [DocumentNumber]
+					, [IdRole] 
+			FROM	[Security].[User] WITH(NOLOCK)
+			WHERE	[IdRole] = @DirectorRoleId
+		END
+		--VALIDATE IF THE NONATTENDANCE WAS OF ONE STUDENT
+		IF(@NonAttendanceRoleId = @StudentRoleId)
+		BEGIN
 
-		--Insert a director for the approval
-		INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
-		SELECT TOP 1 @ExcuseId
-				, 1
-				, [DocumentNumber]
-				, [RoleId] 
-		FROM	[Integration].[PersonActivitiesView] WITH(NOLOCK)
-		WHERE	[CourseId]		= @NonAttendanceCourseId		AND
-				[SpaceId]		= @NonAttendanceSpaceId			AND
-				[DayOfTheWeek]	= @NonAttendanceDayOfTheWeek	AND
-				[RoleId]		= 3 
+			--INSERT A DIRECTOR FOR THE APPROVAL
+			INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
+			SELECT TOP 1 @ExcuseId
+					, 1
+					, [DocumentNumber]
+					, [RoleId] 
+			FROM	[Integration].[PersonActivitiesView] WITH(NOLOCK)
+			WHERE	[CourseId]		= @NonAttendanceCourseId		AND
+					[SpaceId]		= @NonAttendanceSpaceId			AND
+					[DayOfTheWeek]	= @NonAttendanceDayOfTheWeek	AND
+					[RoleId]		= @TeacherRoleId 
+		END
 	END
+END
+
+GO
+--*******************************************************************
+--UPDATEEXCUSEAPPROVAL STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-15
+-- Description:	Generate the register for the
+--				approvers excuse
+-- =============================================
+CREATE PROCEDURE [NonAttendance].[UpdateExcuseApproval]
+	@Id					INT,
+	@StatusId			INT,
+	@Observation		NVARCHAR(1) = NULL
+AS
+BEGIN
+
+	SELECT TOP 1 *
+	FROM [NonAttendance].[ExcuseApprovalView]
 
 END
 

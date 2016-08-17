@@ -63,6 +63,10 @@
         <EntityTypeShape EntityType="UASModel.NonAttendanceView" Width="1.5" PointX="10.375" PointY="6.75" />
         <AssociationConnector Association="UASModel.Fk_Excuse_IdRole" />
         <EntityTypeShape EntityType="UASModel.ExcuseApprovalView" Width="1.5" PointX="12.375" PointY="5.75" />
+        <EntityTypeShape EntityType="UASModel.ExcuseApproval" Width="1.5" PointX="23.875" PointY="7.75" />
+        <AssociationConnector Association="UASModel.Fk_ExcuseApproval_IdExcuse" />
+        <AssociationConnector Association="UASModel.Fk_ExcuseApproval_IdRole" />
+        <AssociationConnector Association="UASModel.Fk_ExcuseApproval_IdState" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -24,9 +24,5 @@ namespace UAS.Core.DAL.Persisters
             nonAttendance.HasExcuse = hasExcuse;
             base.Entities.SaveChanges();
         }
-
-        public void UpdateStatus(int id, int statusId)
-        {
-        }
     }
 }
