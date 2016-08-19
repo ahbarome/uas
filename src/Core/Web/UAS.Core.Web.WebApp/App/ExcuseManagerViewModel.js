@@ -127,10 +127,10 @@ function OnChangeStatus() {
         var id = GetValue(self.val(), 0);
         var isLast = GetValue(self.val(), 1);
         if (isLast.toUpperCase() == "TRUE" && id != 4) {
-            $('textarea[name="Observation"').parent().attr("style", "display: none;");
+            $('textarea[name="ObservationApproval"').parent().attr("style", "display: none;");
         }
         else {
-            $('textarea[name="Observation"').parent().attr("style", "display: block;");
+            $('textarea[name="ObservationApproval"').parent().attr("style", "display: block;");
         }
     });
 };
@@ -202,9 +202,11 @@ function GetExcuseApprovals() {
     var excuseApprovals = [];
     var approvalIds = GetSelectedColumn(1);
     var idStatusApproval = GetStatusApproval();
+    var observationApproval = GetObservationApproval();
 
     $.each(approvalIds, function (index, id) {
-        excuseApprovals.push({ "Id": parseInt(id), "IdStatusApproval": idStatusApproval });
+        excuseApprovals.push(
+            { "Id": parseInt(id), "IdStatusApproval": idStatusApproval, "ObservationApproval": observationApproval });
     });
 
     return excuseApprovals;
@@ -215,4 +217,9 @@ function GetStatusApproval() {
     var statusApproval = $('select[name="IdStatusApproval"]').val();
     var idStatusApproval = GetValue(statusApproval, 0);
     return parseInt(idStatusApproval);
-}
+};
+
+function GetObservationApproval() {
+    var observationApproval = $('textarea[name="ObservationApproval"]').val();
+    return observationApproval;
+};
