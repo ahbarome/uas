@@ -24,7 +24,6 @@ GO
 -- Description:	Get all student movements by 
 --				teacher document number
 -- =============================================
---[Attendance].[GetAllStudentMovementsByTeacherDocumentNumber] 1130677687
 CREATE PROCEDURE [Attendance].[GetAllStudentMovementsByTeacherDocumentNumber] 
 	@TeacherDocumentNumber INT
 AS
@@ -144,7 +143,6 @@ GO
 --				teacher document number and 
 --				course id
 -- =============================================
- --[Attendance].[GetAllStudentMovementsByTeacherDocumentNumberAndCourseId]  1130677687, 3
 CREATE PROCEDURE [Attendance].[GetAllStudentMovementsByTeacherDocumentNumberAndCourseId] 
 	@TeacherDocumentNumber	INT,
 	@CourseId				INT
@@ -298,7 +296,6 @@ GO
 -- Description:	Get the current course summary
 --				by teacher document number
 -- =============================================
---[Integration].[GetCurrentCourseSummaryByTeacherDocumentNumber] 1130677685
 CREATE PROCEDURE [Integration].[GetCurrentCourseSummaryByTeacherDocumentNumber]
 	@TeacherDocumentNumber	INT
 AS
@@ -605,7 +602,7 @@ END
 
 GO
 --*******************************************************************
---UPDATEEXCUSEAPPROVAL STORE PROCEDURE
+--GETGENERALSTATISTICSATTENDANCE STORE PROCEDURE
 --*******************************************************************
 SET ANSI_NULLS ON
 GO
@@ -615,19 +612,62 @@ GO
 
 -- =============================================
 -- Author:		Agustín Barona
--- Create date: 2016-08-15
--- Description:	Generate the register for the
---				approvers excuse
+-- Create date: 2016-08-22
+-- Description:	Get the statistics of the 
+--              attendance and the nonattendance
 -- =============================================
-CREATE PROCEDURE [NonAttendance].[UpdateExcuseApproval]
-	@Id					INT,
-	@StatusId			INT,
-	@Observation		NVARCHAR(1) = NULL
+CREATE PROCEDURE [Dashboard].[GetStatistictsAttendanceVsNonAttendance]
 AS
 BEGIN
 
-	SELECT TOP 1 *
-	FROM [NonAttendance].[ExcuseApprovalView]
+	DECLARE	@SemesterStartDate	DATETIME,
+			@SemesterEndDate	DATETIME;
+	
+	DECLARE @GeneralStatistictsAttendance TABLE (
+		EventType			NVARCHAR(15),
+		EventTypeAlias		NVARCHAR(10),
+		EventDate			DATETIME,
+		EventDateMonth		NVARCHAR(10),
+		EventTotal			INT);
+
+	SELECT	@SemesterStartDate = [StartDate]
+			, @SemesterEndDate = [EndDate]
+	FROM	[Integration].[AcademicPeriod]
+	WHERE	[Semester] = [Integration].[GetCurrentSemester]()
+
+	WHILE (@SemesterStartDate < GETDATE())
+	BEGIN
+		
+		INSERT INTO @GeneralStatistictsAttendance 
+		SELECT  'Attendance'							AS EventType
+				, 'Asistencia'							AS EventTypeAlias
+				, @SemesterStartDate					AS EventDate
+				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonth
+				, COUNT (1)				AS EventTotal
+		FROM	[Attendance].[AttendanceView] [ATV]
+		WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate) 
+		UNION
+		SELECT  'NonAttendance'			AS EventType
+				, 'Ausentismo'			AS EventTypeAlias
+				, @SemesterStartDate	AS EventDate
+				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonth
+				, COUNT (1)								AS EventTotal
+		FROM	[NonAttendance].[NonAttendanceView] [NAV]
+		WHERE	[NAV].[NonAttendanceDate] = CONVERT(DATE, @SemesterStartDate) 
+
+
+		SET @SemesterStartDate = DATEADD(DD, 1, @SemesterStartDate);
+	END
+
+
+	SELECT [GST].EventType
+			, [GST].EventTypeAlias
+			, [GST].EventDateMonth
+			, SUM([GST].EventTotal)	AS EventTotal
+	FROM	@GeneralStatistictsAttendance [GST]
+	GROUP BY [GST].EventType
+			, [GST].EventTypeAlias
+			, [GST].EventDateMonth
 
 END
 

@@ -59,3 +59,8 @@ WHERE	[RoleId] = 4
 
 SELECT TOP 10 *
 FROM	[NonAttendance].[ExcuseApprovalView] 
+
+
+SELECT	*
+FROM	[Security].[PagePermissionView]
+ORDER BY [IdRole], [DocumentNumber], [IdPage]

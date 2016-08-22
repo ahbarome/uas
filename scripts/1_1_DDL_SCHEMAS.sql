@@ -14,4 +14,6 @@ CREATE SCHEMA NonAttendance
 GO
 CREATE SCHEMA Integration;
 GO
+CREATE SCHEMA Dashboard;
+GO
 --*******************************************************************

@@ -10,16 +10,12 @@
 namespace UAS.Core.DAL.Common.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class EnrollmentDetail
+    public partial class GetStatistictsAttendanceVsNonAttendance_Result
     {
-        public int Id { get; set; }
-        public int IdEnrollment { get; set; }
-        public int IdSchedule { get; set; }
-        public System.DateTime RegisterDate { get; set; }
-    
-        public virtual Enrollment Enrollment { get; set; }
-        public virtual Schedule Schedule { get; set; }
+        public string EventType { get; set; }
+        public string EventTypeAlias { get; set; }
+        public string EventDateMonth { get; set; }
+        public Nullable<int> EventTotal { get; set; }
     }
 }

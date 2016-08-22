@@ -46,12 +46,12 @@ INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Asistencia',
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Aula Virtual', '~/Attendance/VirtualStudentsClassRoom', 2 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Salón de Docentes', '~/Attendance/VirtualTeachersClassRoom', 2 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Ausentismo', '#', 'fa fa-th-large' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Administrar Excusas', '~/NonAttendance/ExcuseManager', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Crear Excusa', '~/NonAttendance/ExcuseCreator', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Verificar Excusa', '~/NonAttendance/ExcuseVerificator', 5 )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Administrar Excusas', '~/NonAttendance/ExcuseManager', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Reportes', '#', 'fa fa-th-large' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Asistencia', '~/Report/ReportAttendance', 8 )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Ausentismo', '~/Report/ReportNonAttendance', 8 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Asistencia', '~/Report/ReportAttendance', 9 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Ausentismo', '~/Report/ReportNonAttendance', 9 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Administrador Archivos', '~/FileManager/AsyncDownload', 'fa fa-download')
 
 --*******************************************************************
@@ -70,6 +70,8 @@ INSERT INTO [Security].[PagePermissionByRole] VALUES(7,1,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(8,1,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(9,1,1,1,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(10,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(11,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(12,1,1,1,1,1,1,1)
 --===================================================================
 --ROLE: DIRECTOR
 --===================================================================

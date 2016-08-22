@@ -55,8 +55,8 @@
           <Property Name="IdAcademicPeriod" Type="int" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Integration.EnrollmentDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="EnrollmentDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -233,16 +233,6 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           <Property Name="IsLast" Type="bit" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="StatusApproverByRole">
-          <Key>
-            <PropertyRef Name="IdStatus" />
-            <PropertyRef Name="IdRole" />
-          </Key>
-          <Property Name="IdStatus" Type="int" Nullable="false" />
-          <Property Name="IdRole" Type="int" Nullable="false" />
-          <Property Name="IsVisible" Type="bit" Nullable="false" />
-          <Property Name="RegisterDate" Type="datetime" />
-        </EntityType>
         <EntityType Name="Page">
           <Key>
             <PropertyRef Name="Id" />
@@ -298,8 +288,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           <Property Name="LastModiticationDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="80" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceRegisterView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Attendance.AttendanceRegisterView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AttendanceRegisterView">
           <Key>
             <PropertyRef Name="DocumentNumber" />
@@ -336,8 +326,8 @@ advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceRegisterView' no ti
           <Property Name="MovementDate" Type="date" />
           <Property Name="MovementTime" Type="time" Precision="7" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Attendance.AttendanceView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AttendanceView">
           <Key>
             <PropertyRef Name="DocumentNumber" />
@@ -375,8 +365,8 @@ advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceView' no tiene defi
           <Property Name="MovementDate" Type="date" />
           <Property Name="MovementTime" Type="time" Precision="7" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Integration.PersonActivitiesView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Integration.PersonActivitiesView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PersonActivitiesView">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -406,8 +396,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.PersonActivitiesView' no tie
           <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="StudentEnrollmentView">
           <Key>
             <PropertyRef Name="StudentFullName" />
@@ -448,8 +438,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no ti
           <Property Name="EndDate" Type="datetime" />
           <Property Name="EnrollmentStatus" Type="nvarchar" MaxLength="80" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.NonAttendance.ClassificationByRoleView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.NonAttendance.ClassificationByRoleView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ClassificationByRoleView">
           <Key>
             <PropertyRef Name="IdClassification" />
@@ -463,8 +453,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.ClassificationByRoleView' 
           <Property Name="RoleAlias" Type="nvarchar" MaxLength="150" />
           <Property Name="IsRequiredDescription" Type="bit" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseApprovalView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.NonAttendance.ExcuseApprovalView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ExcuseApprovalView">
           <Key>
             <PropertyRef Name="Id" />
@@ -520,8 +510,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseApprovalView' no tie
           <Property Name="ExcuseJustification" Type="nvarchar(max)" />
           <Property Name="ExcuseObservation" Type="nvarchar(max)" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.NonAttendance.ExcuseView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ExcuseView">
           <Key>
             <PropertyRef Name="Id" />
@@ -571,8 +561,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseView' no tiene defin
           <Property Name="ExcuseJustification" Type="nvarchar(max)" />
           <Property Name="ExcuseObservation" Type="nvarchar(max)" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceRegisterView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="NonAttendanceRegisterView">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -602,8 +592,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView'
           <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="NonAttendanceView">
           <Key>
             <PropertyRef Name="Id" />
@@ -640,8 +630,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tien
           <Property Name="NonAttendanceDate" Type="date" Nullable="false" />
           <Property Name="HasExcuse" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UAS.NonAttendance.StatusByRoleView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="StatusByRoleView">
           <Key>
             <PropertyRef Name="IdStatus" />
@@ -970,30 +960,6 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_StatusApproverByRole_IdRole">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="StatusApproverByRole" Type="Self.StatusApproverByRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StatusApproverByRole">
-              <PropertyRef Name="IdRole" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_StatusApproverByRole_IdStatus">
-          <End Role="Status" Type="Self.Status" Multiplicity="1" />
-          <End Role="StatusApproverByRole" Type="Self.StatusApproverByRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Status">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StatusApproverByRole">
-              <PropertyRef Name="IdStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Fk_Student_IdCareer">
           <End Role="Career" Type="Self.Career" Multiplicity="1" />
           <End Role="Student" Type="Self.Student" Multiplicity="*" />
@@ -1070,6 +1036,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="GetStatistictsAttendanceVsNonAttendance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dashboard" />
         <Function Name="GetCourseSummaryById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
           <Parameter Name="CourseId" Type="int" Mode="In" />
           <ReturnType>
@@ -1114,7 +1081,6 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <EntitySet Name="ExcuseApproval" EntityType="Self.ExcuseApproval" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="NonAttendance" EntityType="Self.NonAttendance" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="NonAttendance" store:Type="Tables" />
-          <EntitySet Name="StatusApproverByRole" EntityType="Self.StatusApproverByRole" Schema="NonAttendance" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="Security" store:Type="Tables" />
           <EntitySet Name="PagePermissionByRole" EntityType="Self.PagePermissionByRole" Schema="Security" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="Security" store:Type="Tables" />
@@ -1454,14 +1420,6 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
             <End Role="SpaceType" EntitySet="SpaceType" />
             <End Role="Space" EntitySet="Space" />
           </AssociationSet>
-          <AssociationSet Name="Fk_StatusApproverByRole_IdRole" Association="Self.Fk_StatusApproverByRole_IdRole">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="StatusApproverByRole" EntitySet="StatusApproverByRole" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_StatusApproverByRole_IdStatus" Association="Self.Fk_StatusApproverByRole_IdStatus">
-            <End Role="Status" EntitySet="Status" />
-            <End Role="StatusApproverByRole" EntitySet="StatusApproverByRole" />
-          </AssociationSet>
           <AssociationSet Name="Fk_Student_IdCareer" Association="Self.Fk_Student_IdCareer">
             <End Role="Career" EntitySet="Career" />
             <End Role="Student" EntitySet="Student" />
@@ -1666,6 +1624,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <EntitySet Name="StatusByRoleView" EntityType="UASModel.StatusByRoleView" />
           <EntitySet Name="ExcuseView" EntityType="UASModel.ExcuseView" />
           <EntitySet Name="AttendanceView" EntityType="UASModel.AttendanceView" />
+          <FunctionImport Name="GetStatistictsAttendanceVsNonAttendance" ReturnType="Collection(UASModel.GetStatistictsAttendanceVsNonAttendance_Result)" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -2777,6 +2736,12 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <Property Name="MovementTime" Type="Time" Precision="7" />
           <Property Name="RoleAlias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="GetStatistictsAttendanceVsNonAttendance_Result">
+          <Property Type="String" Name="EventType" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="EventTypeAlias" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="EventDateMonth" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="EventTotal" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2997,16 +2962,6 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
                 <ScalarProperty Name="IsLast" ColumnName="IsLast" />
                 <ScalarProperty Name="Status1" ColumnName="Status" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StatusApproverByRoles">
-            <EntityTypeMapping TypeName="UASModel.StatusApproverByRole">
-              <MappingFragment StoreEntitySet="StatusApproverByRole">
-                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
-                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
-                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
-                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3441,6 +3396,16 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetStatistictsAttendanceVsNonAttendance" FunctionName="UASModel.Store.GetStatistictsAttendanceVsNonAttendance">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetStatistictsAttendanceVsNonAttendance_Result">
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="EventTypeAlias" ColumnName="EventTypeAlias" />
+                <ScalarProperty Name="EventDateMonth" ColumnName="EventDateMonth" />
+                <ScalarProperty Name="EventTotal" ColumnName="EventTotal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3455,7 +3420,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
