@@ -30,16 +30,19 @@ namespace UAS.Core.Web.WebApp.Controllers
 
             if (session == null)
             {
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Index" }));
+                filterContext.Result = new RedirectToRouteResult(
+                    new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Index" }));
             }
             else {
                 // Validate if the user has access to specific controller
                 var absolutePathUrlRequested = filterContext.HttpContext.Request.Url.AbsolutePath;
                 var httpMethod = filterContext.HttpContext.Request.HttpMethod;
-                var allowAccessToUrlRequested = _webSecurity.AllowAccessToPage(absolutePathUrlRequested, session.SessionUser.Username, session.SessionUser.Password);
+                var allowAccessToUrlRequested = _webSecurity.AllowAccessToPage(
+                    absolutePathUrlRequested, session.SessionUser.Username, session.SessionUser.Password);
 
                 if (!allowAccessToUrlRequested && httpMethod.Equals(DENIED_METHOD)) {
-                    filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Error" }));
+                    filterContext.Result = new RedirectToRouteResult(
+                        new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Error" }));
                 }
             }
         }

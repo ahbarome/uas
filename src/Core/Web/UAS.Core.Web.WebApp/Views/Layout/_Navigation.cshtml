@@ -15,36 +15,37 @@
 
 @helper MenuBuilder(List<UAS.Core.Session.Entities.Page> pages, int? parentId = null)
 {
-
-foreach (var page in pages.Where(item => item.ParentId == parentId))
-{
-    var hasChildrens = HasChilds(page, pages);
-
-        <li class="@Html.IsSelected(controller: @page.IdPage.ToString())">
-            <a href="@Url.Content(@page.MenuItem)">
-                <i class="@page.IconClass"></i>
-                <span class="nav-label">@page.Title</span>
+    foreach (var page in pages.Where(item => item.ParentId == parentId))
+    {
+        var hasChildrens = HasChilds(page, pages);
+        if (page.IsVisible)
+        {
+            <li class="@Html.IsSelected(controller: @page.IdPage.ToString())">
+                <a href="@Url.Content(@page.MenuItem)">
+                    <i class="@page.IconClass"></i>
+                    <span class="nav-label">@page.Title</span>
+                    @{
+                        if (hasChildrens)
+                        {
+                            <span class="fa arrow"></span>
+                        }
+                    }
+                </a>
                 @{
                     if (hasChildrens)
                     {
-                        <span class="fa arrow"></span>
+                        <ul class="nav collapse">
+                            @MenuBuilder(pages, page.IdPage)
+                        </ul>
+                    }
+                    else
+                    {
+                        @MenuBuilder(pages, page.IdPage)
                     }
                 }
-            </a>
-            @{
-                if (hasChildrens)
-                {
-                    <ul class="nav collapse">
-                        @MenuBuilder(pages, page.IdPage)
-                    </ul>
-                }
-                else
-                {
-                    @MenuBuilder(pages, page.IdPage)
-                }
-            }
-        </li>
-                }
+            </li>
+        }
+    }
 }
 
 <nav class="navbar-default navbar-static-side" role="navigation">

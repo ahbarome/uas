@@ -12,17 +12,14 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class ExcuseApprovalView
+    public partial class ExcuseView
     {
         public int Id { get; set; }
-        public int IdExcuse { get; set; }
-        public int IdStatusApproval { get; set; }
-        public string StatusApproval { get; set; }
-        public int Approver { get; set; }
-        public int IdRoleApprover { get; set; }
         public int IdNonAttendance { get; set; }
         public int TruantDocumentNumber { get; set; }
         public string TruantFullName { get; set; }
+        public string TruantRoleId { get; set; }
+        public string TruantRoleAlias { get; set; }
         public int CourseId { get; set; }
         public string CourseName { get; set; }
         public int DayOfTheWeek { get; set; }
@@ -34,14 +31,13 @@ namespace UAS.Core.DAL.Common.Model
         public System.TimeSpan EndTime { get; set; }
         public System.DateTime NonAttendanceDate { get; set; }
         public bool HasExcuse { get; set; }
-        public int IdStatusExcuse { get; set; }
-        public string StatusExcuse { get; set; }
-        public int IdClassificationExcuse { get; set; }
-        public string ClassificationExcuse { get; set; }
+        public int IdRole { get; set; }
+        public int IdStatus { get; set; }
+        public string Status { get; set; }
+        public bool IsLast { get; set; }
+        public int IdClassification { get; set; }
+        public string Classification { get; set; }
         public string ExcuseJustification { get; set; }
         public string ExcuseObservation { get; set; }
-        public string TruantRoleId { get; set; }
-        public string TruantRoleAlias { get; set; }
-        public string ApproverFullName { get; set; }
     }
 }

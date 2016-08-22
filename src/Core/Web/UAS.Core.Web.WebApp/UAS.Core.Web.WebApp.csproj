@@ -259,6 +259,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\ExcuseVerificatorViewModel.js" />
     <Content Include="App\ExcuseManagerViewModel.js" />
     <Content Include="App\ExcuseCreatorViewModel.js" />
     <Content Include="App\TeacherAttendanceMovementViewModel.js" />
@@ -1798,6 +1799,9 @@
     <Content Include="Views\NonAttendance\ApprovalExcuseGrid.cshtml" />
     <Content Include="Views\NonAttendance\ApprovalExcuseDetail.cshtml" />
     <Content Include="Views\NonAttendance\ApprovalExcuseStatusChanger.cshtml" />
+    <Content Include="Views\NonAttendance\ExcuseVerificator.cshtml" />
+    <Content Include="Views\NonAttendance\ExcuseVerificatorDetail.cshtml" />
+    <Content Include="Views\NonAttendance\ExcuseVerificatorGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

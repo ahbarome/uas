@@ -7,7 +7,6 @@ namespace UAS.Core.Web.WebApp.Hubs
 
     public class MovementHub : Hub
     {
-        
         /// <summary>
         /// 
         /// </summary>
@@ -32,7 +31,6 @@ namespace UAS.Core.Web.WebApp.Hubs
         {
             Action<string> dispatcher = (t) => { DispatchToClient(); };
             var instance = Facade.Instance(dispatcher);
-            //instance.GetAllMovementsWithNotifications();
         }
     }
 }

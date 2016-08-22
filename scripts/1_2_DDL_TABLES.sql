@@ -344,20 +344,20 @@ ALTER TABLE  [NonAttendance].[Status] ADD  CONSTRAINT [DF_Status_Register_Date] 
 GO
 
 --*******************************************************************
---STATUSAPPROVERBYROLE TABLE 
+--STATUSBYROLE TABLE 
 --*******************************************************************
-CREATE TABLE [NonAttendance].[StatusApproverByRole](
+CREATE TABLE [NonAttendance].[StatusByRole](
 	[IdStatus]					INT 				NOT NULL,
 	[IdRole] 					INT 				NOT NULL,
 	[IsVisible] 				BIT 				NOT NULL,
 	[RegisterDate] 				[datetime] 			NULL,
-	CONSTRAINT Pk_StatusApproverByRole PRIMARY KEY ([IdStatus], [IdRole]),
-	CONSTRAINT Fk_StatusApproverByRole_IdStatus FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id),
-	CONSTRAINT Fk_StatusApproverByRole_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+	CONSTRAINT Pk_StatusByRole PRIMARY KEY ([IdStatus], [IdRole]),
+	CONSTRAINT Fk_StatusByRole_IdStatus FOREIGN KEY  (IdStatus) REFERENCES [NonAttendance].[Status](Id),
+	CONSTRAINT Fk_StatusByRole_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
 );
 GO
 
-ALTER TABLE  [NonAttendance].[StatusApproverByRole] ADD  CONSTRAINT [DF_StatusApproverByRole_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+ALTER TABLE  [NonAttendance].[StatusByRole] ADD  CONSTRAINT [DF_StatusByRole_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
 --*******************************************************************
@@ -372,6 +372,23 @@ CREATE TABLE [NonAttendance].[Classification](
 GO
 
 ALTER TABLE  [NonAttendance].[Classification] ADD  CONSTRAINT [DF_ExcuseClassification_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
+GO
+
+--*******************************************************************
+--CLASSIFICATIONBYROLE TABLE 
+--*******************************************************************
+CREATE TABLE [NonAttendance].[ClassificationByRole](
+	[IdClassification]			INT 				NOT NULL,
+	[IdRole] 					INT 				NOT NULL,
+	[IsVisible] 				BIT 				NOT NULL,
+	[RegisterDate] 				[datetime] 			NULL,
+	CONSTRAINT Pk_ClassificationByRole PRIMARY KEY ([IdClassification], [IdRole]),
+	CONSTRAINT Fk_ClassificationByRole_IdStatus FOREIGN KEY  (IdClassification) REFERENCES [NonAttendance].[Classification](Id),
+	CONSTRAINT Fk_ClassificationByRole_IdRole FOREIGN KEY  (IdRole) REFERENCES [Security].[Role](Id),
+);
+GO
+
+ALTER TABLE  [NonAttendance].[ClassificationByRole] ADD  CONSTRAINT [DF_ClassificationByRole_Register_Date]  DEFAULT (getdate()) FOR [RegisterDate]
 GO
 
 --*******************************************************************

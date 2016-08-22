@@ -22,9 +22,9 @@ namespace UAS.Core.NonAttendance
             return _nonAttendanceManager.GetNonAttendances(documentNumber, roleId);
         }
 
-        public IQueryable<Classification> GetExcuseClassifications()
+        public IQueryable<ClassificationByRoleView> GetExcuseClassifications(int roleId)
         {
-            return _excuseManager.GetExcuseClassifications();
+            return _excuseManager.GetExcuseClassifications(roleId);
         }
 
         public void SaveExcuse(Excuse excuse)
@@ -37,6 +37,11 @@ namespace UAS.Core.NonAttendance
             return _excuseManager.GetExcusesForApproval(documentNumber, roleId);
         }
 
+        public List<ExcuseApprovalView> GetExcusesForApproval(int idExcuse)
+        {
+            return _excuseManager.GetExcusesForApproval(idExcuse);
+        }
+
         public ExcuseApprovalView GetExcuseForApproval(int idExcuse)
         {
             return _excuseManager.GetExcuseForApproval(idExcuse);
@@ -47,14 +52,19 @@ namespace UAS.Core.NonAttendance
             return _excuseManager.GetAttachments(idExcuse);
         }
 
-        public List<Status> GetExcuseStatus()
+        public List<StatusByRoleView> GetExcuseStatus(int roleId)
         {
-            return _excuseManager.GetExcuseStatus();
+            return _excuseManager.GetExcuseStatus(roleId);
         }
 
         public void ApproveExcuses(List<ExcuseApprovalView> excuses)
         {
             _excuseManager.ApproveExcuses(excuses);
+        }
+
+        public List<ExcuseView> GetExcuses(int documentNumber, int roleId)
+        {
+            return _excuseManager.GetExcuses(documentNumber, roleId);
         }
     }
 }

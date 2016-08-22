@@ -12,14 +12,14 @@ namespace UAS.Core.DAL.Common.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class EnrollmentDetail
+    public partial class StatusByRoleView
     {
-        public int Id { get; set; }
-        public int IdEnrollment { get; set; }
-        public int IdSchedule { get; set; }
-        public System.DateTime RegisterDate { get; set; }
-    
-        public virtual Enrollment Enrollment { get; set; }
-        public virtual Schedule Schedule { get; set; }
+        public int IdStatus { get; set; }
+        public string Status { get; set; }
+        public int IdRole { get; set; }
+        public string RoleName { get; set; }
+        public string RoleAlias { get; set; }
+        public bool IsLast { get; set; }
+        public bool IsVisible { get; set; }
     }
 }

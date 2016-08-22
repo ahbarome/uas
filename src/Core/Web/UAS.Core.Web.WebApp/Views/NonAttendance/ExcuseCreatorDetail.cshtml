@@ -1,5 +1,7 @@
-﻿@{
-    var classifications = ViewBag.Classifications as IEnumerable<UAS.Core.DAL.Common.Model.Classification>;
+﻿@using UAS.Core.DAL.Common.Model;
+
+@{
+    var classifications = ViewBag.Classifications as IEnumerable<ClassificationByRoleView>;
     var SEPARATOR = "|";
 }
 <div class="modal inmodal" id="modal-excuse-creator" tabindex="-1" role="dialog" aria-hidden="true">
@@ -25,8 +27,8 @@
                                                 {
                                                     foreach (var classification in classifications)
                                                     {
-                                                        var classificationValue = string.Concat(@classification.Id, SEPARATOR, @classification.IsRequiredDescription);
-                                                        <option value="@classificationValue">@classification.Classification1</option>
+                                                        var classificationValue = string.Concat(@classification.IdClassification, SEPARATOR, @classification.IsRequiredDescription);
+                                                        <option value="@classificationValue">@classification.Classification</option>
                                                     }
                                                 }
                                             </select>

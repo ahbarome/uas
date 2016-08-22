@@ -389,7 +389,21 @@ CREATE VIEW [NonAttendance].[ExcuseView] AS
 (	
 	SELECT	[EXC].[Id]
 			, [EXC].[IdNonAttendance]
-			, [EXC].[DocumentNumber]
+			, [EXC].[DocumentNumber]		AS TruantDocumentNumber
+			, [NAV].[FullName]				AS TruantFullName
+			, [NAV].[RoleId]				AS TruantRoleId
+			, [NAV].[RoleAlias]				AS TruantRoleAlias
+			, [NAV].[CourseId]				
+			, [NAV].[CourseName]				
+			, [NAV].[DayOfTheWeek]
+			, [NAV].[NameDayOfTheWeek]
+			, [NAV].[SpaceId]
+			, [NAV].[SpaceName]
+			, [NAV].[SpaceType]
+			, [NAV].[StartTime]
+			, [NAV].[EndTime]
+			, [NAV].[NonAttendanceDate]
+			, [NAV].[HasExcuse]
 			, [EXC].[IdRole]
 			, [EXC].[IdStatus]
 			, [STA].[Status]
@@ -398,9 +412,10 @@ CREATE VIEW [NonAttendance].[ExcuseView] AS
 			, [CLA].[Classification]
 			, [EXC].[Justification]		AS ExcuseJustification
 			, [EXC].[Observation]		AS ExcuseObservation
-	FROM	[NonAttendance].[Excuse]			[EXC] WITH(NOLOCK)
-	INNER JOIN [NonAttendance].[Classification] [CLA] WITH(NOLOCK) ON [CLA].[Id] = [EXC].[IdClassification]
-	INNER JOIN [NonAttendance].[Status]			[STA] WITH(NOLOCK) ON [STA].[Id] = [EXC].[IdStatus]
+	FROM	[NonAttendance].[Excuse]				[EXC] WITH(NOLOCK)
+	INNER JOIN [NonAttendance].[NonAttendanceView]	[NAV]				ON [NAV].[Id] = [EXC].[IdNonAttendance]
+	INNER JOIN [NonAttendance].[Classification]		[CLA] WITH(NOLOCK)	ON [CLA].[Id] = [EXC].[IdClassification]
+	INNER JOIN [NonAttendance].[Status]				[STA] WITH(NOLOCK)	ON [STA].[Id] = [EXC].[IdStatus]
  );
 GO
 
@@ -414,9 +429,18 @@ CREATE VIEW [NonAttendance].[ExcuseApprovalView] AS
 			, [EXA].[IdStatus]				AS IdStatusApproval
 			, [STA].[Status]				AS StatusApproval
 			, [EXA].[Approver]
+			, CASE 
+				WHEN [EXA].[IdRole] = 3 
+					THEN  	( SELECT	TOP 1 CONCAT([TEA].[Name], ' ', [TEA].[LastName]) 
+							FROM	[Integration].[Teacher] [TEA] WITH(NOLOCK) 
+							WHERE	[TEA].[DocumentNumber] = [EXA].[Approver] )
+					ELSE ( SELECT	TOP 1 CONCAT([USR].[Name], ' ', [USR].[LastName]) 
+							FROM	[Security].[User] [USR] WITH(NOLOCK) 
+							WHERE	[USR].[DocumentNumber] = [EXA].[Approver] )
+				END							AS ApproverFullName
 			, [EXA].[IdRole]				AS IdRoleApprover
 			, [EXV].[IdNonAttendance]
-			, [EXV].[DocumentNumber]		AS TruantDocumentNumber
+			, [EXV].[TruantDocumentNumber]
 			, [NAV].[FullName]				AS TruantFullName
 			, [NAV].[RoleId]				AS TruantRoleId
 			, [NAV].[RoleAlias]				AS TruantRoleAlias
@@ -441,6 +465,40 @@ CREATE VIEW [NonAttendance].[ExcuseApprovalView] AS
 	INNER JOIN [NonAttendance].[Status]				[STA] WITH(NOLOCK) ON [STA].[Id] = [EXA].[IdStatus]
 	INNER JOIN [NonAttendance].[ExcuseView]			[EXV] ON [EXV].[Id] = [EXA].[IdExcuse]
 	INNER JOIN [NonAttendance].[NonAttendanceView]	[NAV] ON [NAV].[Id] = [EXV].[IdNonAttendance]
+ );
+GO
+
+--*******************************************************************
+--CLASSIFICATIONBYROLE VIEW 
+--*******************************************************************
+CREATE VIEW [NonAttendance].[StatusByRoleView] AS
+(	
+	SELECT	[SRB].[IdStatus]
+			, [STA].[Status]
+			, [SRB].[IdRole]
+			, [ROL].[Name]		AS RoleName
+			, [ROL].[Alias]		AS RoleAlias
+			, [STA].[IsLast]
+			, [SRB].[IsVisible]
+	FROM	[NonAttendance].[StatusByRole]	[SRB] WITH(NOLOCK)
+	INNER JOIN [Security].[Role]			[ROL] WITH(NOLOCK) ON [ROL].[Id]	= [SRB].[IdRole]
+	INNER JOIN [NonAttendance].[Status]		[STA] WITH(NOLOCK) ON [STA].[Id]	= [SRB].[IdStatus]
+ );
+GO
+--*******************************************************************
+--CLASSIFICATIONBYROLE VIEW 
+--*******************************************************************
+CREATE VIEW [NonAttendance].[ClassificationByRoleView] AS
+(	
+	SELECT	[CBR].[IdClassification]
+			, [CLA].[Classification]
+			, [CBR].[IdRole]
+			, [ROL].[Name]		AS RoleName
+			, [ROL].[Alias]		AS RoleAlias
+			, [CLA].[IsRequiredDescription]
+	FROM	[NonAttendance].[ClassificationByRole]	[CBR] WITH(NOLOCK)
+	INNER JOIN [Security].[Role]					[ROL] WITH(NOLOCK) ON [ROL].[Id]= [CBR].[IdRole]
+	INNER JOIN [NonAttendance].[Classification]		[CLA] WITH(NOLOCK) ON [CLA].[Id] = [CBR].[IdClassification]
  );
 GO
 --*******************************************************************

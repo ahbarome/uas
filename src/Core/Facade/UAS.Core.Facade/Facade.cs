@@ -96,6 +96,11 @@
             return _nonAttendanceFacade.GetExcusesForApproval(documentNumber, roleId);
         }
 
+        public dynamic GetExcusesForApproval(int idExcuse)
+        {
+            return _nonAttendanceFacade.GetExcusesForApproval(idExcuse);
+        }
+
         public dynamic GetTeacherAttendanceStatistics()
         {
             return _attendanceFacade.GetTeacherAttendanceStatistics();
@@ -105,9 +110,9 @@
             return _nonAttendanceFacade.GetNonAttendancePendingForExcuse(documentNumber, roleId);
         }
 
-        public dynamic GetExcuseClassifications()
+        public dynamic GetExcuseClassifications(int roleId)
         {
-            return _nonAttendanceFacade.GetExcuseClassifications();
+            return _nonAttendanceFacade.GetExcuseClassifications(roleId);
         }
 
         public dynamic GetAttachments(int idExcuse)
@@ -125,14 +130,19 @@
             _nonAttendanceFacade.SaveExcuse(excuse);
         }
 
-        public dynamic GetExcuseStatus()
+        public dynamic GetExcuseStatus(int roleId)
         {
-            return _nonAttendanceFacade.GetExcuseStatus();
+            return _nonAttendanceFacade.GetExcuseStatus(roleId);
         }
 
         public void ApproveExcuses(List<ExcuseApprovalView> excuses)
         {
             _nonAttendanceFacade.ApproveExcuses(excuses);
+        }
+
+        public dynamic GetExcuses(int documentNumber, int roleId)
+        {
+            return _nonAttendanceFacade.GetExcuses(documentNumber, roleId);
         }
     }
 }

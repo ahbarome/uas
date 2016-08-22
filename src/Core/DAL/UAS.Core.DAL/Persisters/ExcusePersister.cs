@@ -10,9 +10,10 @@ namespace UAS.Core.DAL.Persisters
         /// 
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Classification> GetExcuseClassifications()
+        public IQueryable<ClassificationByRoleView> GetExcuseClassifications(int roleId)
         {
-            var classfications = base.Entities.Classifications;
+            var classfications = base.Entities.ClassificationByRoleView.Where(
+                filter=> filter.IdRole == roleId);
             return classfications;
         }
 
@@ -72,7 +73,7 @@ namespace UAS.Core.DAL.Persisters
             return attachments;
         }
 
-        public ExcuseApprovalView GetExcusesForApproval(int idExcuse)
+        public ExcuseApprovalView GetExcuseForApproval(int idExcuse)
         {
             var excuse = base.Entities.ExcuseApprovalView.Where(
                 filter => filter.IdExcuse == idExcuse).FirstOrDefault();
@@ -90,18 +91,43 @@ namespace UAS.Core.DAL.Persisters
             return excuses;
         }
 
-        public IQueryable<Status> GetStatus() {
-            var status = base.Entities.Status;
+        public IQueryable<StatusByRoleView> GetStatus(int roleId)
+        {
+            var status = base.Entities.StatusByRoleView.Where(filter=> filter.IdRole == roleId);
             return status;
+        }
+
+        public void UpdateExcuseStatus(int id, int statusId)
+        {
+            var excuse = base.Entities.Excuses.Where(
+              filter => filter.Id == id).FirstOrDefault();
+
+            excuse.IdStatus = statusId;
+            base.Entities.SaveChanges();
         }
 
         public void UpdateExcuseApprovalStatus(int id, int statusId)
         {
-            var excuse = base.Entities.ExcuseApprovals.Where(
+            var excuseApproval = base.Entities.ExcuseApprovals.Where(
                 filter => filter.Id == id).FirstOrDefault();
 
-            excuse.IdStatus = statusId;
+            excuseApproval.IdStatus = statusId;
             base.Entities.SaveChanges();
+        }
+
+        public IQueryable<ExcuseView> GetExcuses(int documentNumber, int roleId)
+        {
+            var excuses = base.Entities.ExcuseView;
+
+            return excuses;
+        }
+
+        public IQueryable<ExcuseApprovalView> GetExcusesForApproval(int idExcuse)
+        {
+            var excuses = base.Entities.ExcuseApprovalView.Where(
+               filter => filter.IdExcuse == idExcuse);
+
+            return excuses;
         }
     }
 }

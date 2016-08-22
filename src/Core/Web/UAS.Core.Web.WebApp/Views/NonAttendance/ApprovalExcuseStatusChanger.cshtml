@@ -1,6 +1,6 @@
 ﻿@using UAS.Core.DAL.Common.Model;
 @{
-    var status = ViewBag.Status as IEnumerable<Status>;
+    var status = ViewBag.Status as IEnumerable<StatusByRoleView>;
     var SEPARATOR = "|";
 }
 <div class="modal inmodal" id="modal-approval-excuse-status-changer" tabindex="-1" role="dialog" aria-hidden="true">
@@ -22,11 +22,8 @@
                                     {
                                         foreach (var stat in status)
                                         {
-                                            if (stat.Id != 1) //Pending status
-                                            {
-                                                var statValue = string.Concat(@stat.Id, SEPARATOR, @stat.IsLast);
-                                                <option value="@statValue">@stat.Status1</option>
-                                            }
+                                            var statValue = string.Concat(@stat.IdStatus, SEPARATOR, @stat.IsLast);
+                                            <option value="@statValue">@stat.Status</option>
                                         }
                                     }
                                 </select>

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BaseContext.cs" />
     <Compile Include="Notifiers\SqlNotificationEventHandler.cs" />
+    <Compile Include="Parsers\ModelEnumParser.cs" />
     <Compile Include="Persisters\CoursePersister.cs" />
     <Compile Include="Persisters\ExcusePersister.cs" />
     <Compile Include="Persisters\MovementPersister.cs" />

@@ -19,7 +19,6 @@ namespace UAS.Core.Web.WebApp.Controllers
             base.OnAuthentication(filterContext);
 
             _currentSession = SessionManager.GetSession();
-
         }
     }
 }

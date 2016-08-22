@@ -548,19 +548,29 @@ BEGIN
 	SET @TeacherRoleId	= 3;
 	SET @StudentRoleId	= 4;
 
-	SELECT	@NonAttendanceDocumentNumber = [DocumentNumber]
-			, @NonAttendanceRoleId		 = [IdRole] 
-			, @NonAttendanceCourseId	 = [IdCourse]
-			, @NonAttendanceSpaceId		 = [IdSpace]
-			, @NonAttendanceDayOfTheWeek = [DayOfTheWeek]
+	SELECT	TOP 1 @NonAttendanceDocumentNumber	= [DocumentNumber]
+			, @NonAttendanceRoleId				= [IdRole] 
+			, @NonAttendanceCourseId			= [IdCourse]
+			, @NonAttendanceSpaceId				= [IdSpace]
+			, @NonAttendanceDayOfTheWeek		= [DayOfTheWeek]
 	FROM	[NonAttendance].[NonAttendance] WITH(NOLOCK)
-	WHERE	[Id] = @NonAttendanceId
+	WHERE	[Id] = @NonAttendanceId 
 
-	--IF THE APPROVAL DOES NOT EXIST INSERT THE NEW REGISTERS
-	IF( [NonAttendance].[ExcuseApprovalExist](@ExcuseId, @DirectorRoleId) = 0 )
+	
+	IF([NonAttendance].[TeacherExcuseApprovalExist](@ExcuseId) = 1  AND [Security].[DirectorExist]() = 1 )
 	BEGIN
-		--INSERT A DIRECTOR FOR THE APPROVAL
-		IF( [Security].[DirectorExist]() = 1 )
+		INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
+		SELECT  @ExcuseId
+				, 1
+				, [DocumentNumber]
+				, [IdRole] 
+		FROM	[Security].[User] WITH(NOLOCK)
+		WHERE	[IdRole] = @DirectorRoleId
+	END
+	--INSERT A DIRECTOR FOR THE APPROVAL
+	ELSE 
+	BEGIN
+		IF(@NonAttendanceRoleId = @TeacherRoleId  AND [Security].[DirectorExist]() = 1 )
 		BEGIN
 			INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
 			SELECT  @ExcuseId
@@ -571,22 +581,26 @@ BEGIN
 			WHERE	[IdRole] = @DirectorRoleId
 		END
 		--VALIDATE IF THE NONATTENDANCE WAS OF ONE STUDENT
-		IF(@NonAttendanceRoleId = @StudentRoleId)
+		ELSE
 		BEGIN
+			IF(@NonAttendanceRoleId = @StudentRoleId)
+			BEGIN
 
-			--INSERT A DIRECTOR FOR THE APPROVAL
-			INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
-			SELECT TOP 1 @ExcuseId
-					, 1
-					, [DocumentNumber]
-					, [RoleId] 
-			FROM	[Integration].[PersonActivitiesView] WITH(NOLOCK)
-			WHERE	[CourseId]		= @NonAttendanceCourseId		AND
-					[SpaceId]		= @NonAttendanceSpaceId			AND
-					[DayOfTheWeek]	= @NonAttendanceDayOfTheWeek	AND
-					[RoleId]		= @TeacherRoleId 
+				--INSERT A DIRECTOR FOR THE APPROVAL
+				INSERT INTO [NonAttendance].[ExcuseApproval] ([IdExcuse], [IdStatus], [Approver], [IdRole])
+				SELECT TOP 1 @ExcuseId
+						, 1
+						, [DocumentNumber]
+						, [RoleId] 
+				FROM	[Integration].[PersonActivitiesView] WITH(NOLOCK)
+				WHERE	[CourseId]		= @NonAttendanceCourseId		AND
+						[SpaceId]		= @NonAttendanceSpaceId			AND
+						[DayOfTheWeek]	= @NonAttendanceDayOfTheWeek	AND
+						[RoleId]		= @TeacherRoleId 
+			END
 		END
 	END
+
 END
 
 GO

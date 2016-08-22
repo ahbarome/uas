@@ -540,7 +540,7 @@ GO
 -- Description:	Validate if the excuse exist
 --              in the ExcuseApproval table
 -- =============================================
-CREATE FUNCTION [NonAttendance].[ExcuseApprovalExist](@ExcuseId INT, @RoleId INT)
+CREATE FUNCTION [NonAttendance].[ExcuseApprovalExist](@ExcuseId INT, @RoleId INT, @StatusId INT)
 	
 RETURNS BIT
 AS
@@ -550,7 +550,8 @@ BEGIN
 	SELECT	@Count = COUNT( 1 )
 	FROM	[NonAttendance].[ExcuseApproval] WITH(NOLOCK)
 	WHERE	[IdExcuse]	= @ExcuseId AND
-			[IdRole]	= @RoleId
+			[IdRole]	= @RoleId	AND
+			[IdStatus]	= @StatusId
 
 	IF(@Count > 0)
 	BEGIN
@@ -558,6 +559,30 @@ BEGIN
 	END
 	
 	RETURN  0;
+END
+
+GO
+--*******************************************************************
+--TEACHEREXCUSEAPPROVALEXIST FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-20
+-- Description:	Validate if the teacher approval
+--              exist in the ExcuseApproval table
+-- =============================================
+CREATE FUNCTION [NonAttendance].[TeacherExcuseApprovalExist](@ExcuseId INT)
+	
+RETURNS BIT
+AS
+BEGIN
+	RETURN  [NonAttendance].[ExcuseApprovalExist](@ExcuseId, 3, 2);
 END
 
 GO

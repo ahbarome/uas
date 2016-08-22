@@ -55,8 +55,8 @@
           <Property Name="IdAcademicPeriod" Type="int" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UAS.Integration.EnrollmentDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="EnrollmentDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -298,8 +298,8 @@ warning 6002: The table/view 'UAS.Integration.EnrollmentDetail' does not have a 
           <Property Name="LastModiticationDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="80" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UAS.Attendance.AttendanceRegisterView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceRegisterView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AttendanceRegisterView">
           <Key>
             <PropertyRef Name="DocumentNumber" />
@@ -336,8 +336,8 @@ warning 6002: The table/view 'UAS.Attendance.AttendanceRegisterView' does not ha
           <Property Name="MovementDate" Type="date" />
           <Property Name="MovementTime" Type="time" Precision="7" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UAS.Integration.PersonActivitiesView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Integration.PersonActivitiesView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PersonActivitiesView">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -367,8 +367,8 @@ warning 6002: The table/view 'UAS.Integration.PersonActivitiesView' does not hav
           <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Integration.StudentEnrollmentView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="StudentEnrollmentView">
           <Key>
             <PropertyRef Name="StudentFullName" />
@@ -409,8 +409,23 @@ warning 6002: The table/view 'UAS.Integration.StudentEnrollmentView' does not ha
           <Property Name="EndDate" Type="datetime" />
           <Property Name="EnrollmentStatus" Type="nvarchar" MaxLength="80" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UAS.NonAttendance.ExcuseApprovalView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.NonAttendance.ClassificationByRoleView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ClassificationByRoleView">
+          <Key>
+            <PropertyRef Name="IdClassification" />
+            <PropertyRef Name="IdRole" />
+            <PropertyRef Name="RoleName" />
+          </Key>
+          <Property Name="IdClassification" Type="int" Nullable="false" />
+          <Property Name="Classification" Type="nvarchar" MaxLength="150" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="RoleAlias" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsRequiredDescription" Type="bit" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseApprovalView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ExcuseApprovalView">
           <Key>
             <PropertyRef Name="Id" />
@@ -441,6 +456,7 @@ warning 6002: The table/view 'UAS.NonAttendance.ExcuseApprovalView' does not hav
           <Property Name="IdStatusApproval" Type="int" Nullable="false" />
           <Property Name="StatusApproval" Type="nvarchar" MaxLength="150" />
           <Property Name="Approver" Type="int" Nullable="false" />
+          <Property Name="ApproverFullName" Type="nvarchar" MaxLength="301" />
           <Property Name="IdRoleApprover" Type="int" Nullable="false" />
           <Property Name="IdNonAttendance" Type="int" Nullable="false" />
           <Property Name="TruantDocumentNumber" Type="int" Nullable="false" />
@@ -465,8 +481,59 @@ warning 6002: The table/view 'UAS.NonAttendance.ExcuseApprovalView' does not hav
           <Property Name="ExcuseJustification" Type="nvarchar(max)" />
           <Property Name="ExcuseObservation" Type="nvarchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceRegisterView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ExcuseView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IdNonAttendance" />
+            <PropertyRef Name="TruantDocumentNumber" />
+            <PropertyRef Name="TruantFullName" />
+            <PropertyRef Name="TruantRoleId" />
+            <PropertyRef Name="TruantRoleAlias" />
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="CourseName" />
+            <PropertyRef Name="DayOfTheWeek" />
+            <PropertyRef Name="SpaceId" />
+            <PropertyRef Name="SpaceName" />
+            <PropertyRef Name="SpaceType" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="NonAttendanceDate" />
+            <PropertyRef Name="HasExcuse" />
+            <PropertyRef Name="IdRole" />
+            <PropertyRef Name="IdStatus" />
+            <PropertyRef Name="IsLast" />
+            <PropertyRef Name="IdClassification" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdNonAttendance" Type="int" Nullable="false" />
+          <Property Name="TruantDocumentNumber" Type="int" Nullable="false" />
+          <Property Name="TruantFullName" Type="nvarchar" MaxLength="301" Nullable="false" />
+          <Property Name="TruantRoleId" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="TruantRoleAlias" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
+          <Property Name="NameDayOfTheWeek" Type="nvarchar" MaxLength="30" />
+          <Property Name="SpaceId" Type="int" Nullable="false" />
+          <Property Name="SpaceName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="SpaceType" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="NonAttendanceDate" Type="date" Nullable="false" />
+          <Property Name="HasExcuse" Type="bit" Nullable="false" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="IdStatus" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsLast" Type="bit" Nullable="false" />
+          <Property Name="IdClassification" Type="int" Nullable="false" />
+          <Property Name="Classification" Type="nvarchar" MaxLength="150" />
+          <Property Name="ExcuseJustification" Type="nvarchar(max)" />
+          <Property Name="ExcuseObservation" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceRegisterView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="NonAttendanceRegisterView">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -496,8 +563,8 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceRegisterView' does 
           <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.NonAttendance.NonAttendanceView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="NonAttendanceView">
           <Key>
             <PropertyRef Name="Id" />
@@ -533,6 +600,24 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
           <Property Name="NameDayOfTheWeek" Type="nvarchar" MaxLength="30" />
           <Property Name="NonAttendanceDate" Type="date" Nullable="false" />
           <Property Name="HasExcuse" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="StatusByRoleView">
+          <Key>
+            <PropertyRef Name="IdStatus" />
+            <PropertyRef Name="IdRole" />
+            <PropertyRef Name="RoleName" />
+            <PropertyRef Name="IsLast" />
+            <PropertyRef Name="IsVisible" />
+          </Key>
+          <Property Name="IdStatus" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="150" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="RoleAlias" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsLast" Type="bit" Nullable="false" />
+          <Property Name="IsVisible" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="Fk_AttachmentIdExcuse">
           <End Role="Excuse" Type="Self.Excuse" Multiplicity="1" />
@@ -1081,6 +1166,16 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
     [StudentEnrollmentView].[EnrollmentStatus] AS [EnrollmentStatus]
     FROM [Integration].[StudentEnrollmentView] AS [StudentEnrollmentView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ClassificationByRoleView" EntityType="Self.ClassificationByRoleView" store:Type="Views" store:Schema="NonAttendance">
+            <DefiningQuery>SELECT 
+    [ClassificationByRoleView].[IdClassification] AS [IdClassification], 
+    [ClassificationByRoleView].[Classification] AS [Classification], 
+    [ClassificationByRoleView].[IdRole] AS [IdRole], 
+    [ClassificationByRoleView].[RoleName] AS [RoleName], 
+    [ClassificationByRoleView].[RoleAlias] AS [RoleAlias], 
+    [ClassificationByRoleView].[IsRequiredDescription] AS [IsRequiredDescription]
+    FROM [NonAttendance].[ClassificationByRoleView] AS [ClassificationByRoleView]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ExcuseApprovalView" EntityType="Self.ExcuseApprovalView" store:Type="Views" store:Schema="NonAttendance">
             <DefiningQuery>SELECT 
     [ExcuseApprovalView].[Id] AS [Id], 
@@ -1088,6 +1183,7 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
     [ExcuseApprovalView].[IdStatusApproval] AS [IdStatusApproval], 
     [ExcuseApprovalView].[StatusApproval] AS [StatusApproval], 
     [ExcuseApprovalView].[Approver] AS [Approver], 
+    [ExcuseApprovalView].[ApproverFullName] AS [ApproverFullName], 
     [ExcuseApprovalView].[IdRoleApprover] AS [IdRoleApprover], 
     [ExcuseApprovalView].[IdNonAttendance] AS [IdNonAttendance], 
     [ExcuseApprovalView].[TruantDocumentNumber] AS [TruantDocumentNumber], 
@@ -1112,6 +1208,35 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
     [ExcuseApprovalView].[ExcuseJustification] AS [ExcuseJustification], 
     [ExcuseApprovalView].[ExcuseObservation] AS [ExcuseObservation]
     FROM [NonAttendance].[ExcuseApprovalView] AS [ExcuseApprovalView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ExcuseView" EntityType="Self.ExcuseView" store:Type="Views" store:Schema="NonAttendance">
+            <DefiningQuery>SELECT 
+    [ExcuseView].[Id] AS [Id], 
+    [ExcuseView].[IdNonAttendance] AS [IdNonAttendance], 
+    [ExcuseView].[TruantDocumentNumber] AS [TruantDocumentNumber], 
+    [ExcuseView].[TruantFullName] AS [TruantFullName], 
+    [ExcuseView].[TruantRoleId] AS [TruantRoleId], 
+    [ExcuseView].[TruantRoleAlias] AS [TruantRoleAlias], 
+    [ExcuseView].[CourseId] AS [CourseId], 
+    [ExcuseView].[CourseName] AS [CourseName], 
+    [ExcuseView].[DayOfTheWeek] AS [DayOfTheWeek], 
+    [ExcuseView].[NameDayOfTheWeek] AS [NameDayOfTheWeek], 
+    [ExcuseView].[SpaceId] AS [SpaceId], 
+    [ExcuseView].[SpaceName] AS [SpaceName], 
+    [ExcuseView].[SpaceType] AS [SpaceType], 
+    [ExcuseView].[StartTime] AS [StartTime], 
+    [ExcuseView].[EndTime] AS [EndTime], 
+    [ExcuseView].[NonAttendanceDate] AS [NonAttendanceDate], 
+    [ExcuseView].[HasExcuse] AS [HasExcuse], 
+    [ExcuseView].[IdRole] AS [IdRole], 
+    [ExcuseView].[IdStatus] AS [IdStatus], 
+    [ExcuseView].[Status] AS [Status], 
+    [ExcuseView].[IsLast] AS [IsLast], 
+    [ExcuseView].[IdClassification] AS [IdClassification], 
+    [ExcuseView].[Classification] AS [Classification], 
+    [ExcuseView].[ExcuseJustification] AS [ExcuseJustification], 
+    [ExcuseView].[ExcuseObservation] AS [ExcuseObservation]
+    FROM [NonAttendance].[ExcuseView] AS [ExcuseView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="NonAttendanceRegisterView" EntityType="Self.NonAttendanceRegisterView" store:Type="Views" store:Schema="NonAttendance">
             <DefiningQuery>SELECT 
@@ -1150,6 +1275,17 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
     [NonAttendanceView].[NonAttendanceDate] AS [NonAttendanceDate], 
     [NonAttendanceView].[HasExcuse] AS [HasExcuse]
     FROM [NonAttendance].[NonAttendanceView] AS [NonAttendanceView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="StatusByRoleView" EntityType="Self.StatusByRoleView" store:Type="Views" store:Schema="NonAttendance">
+            <DefiningQuery>SELECT 
+    [StatusByRoleView].[IdStatus] AS [IdStatus], 
+    [StatusByRoleView].[Status] AS [Status], 
+    [StatusByRoleView].[IdRole] AS [IdRole], 
+    [StatusByRoleView].[RoleName] AS [RoleName], 
+    [StatusByRoleView].[RoleAlias] AS [RoleAlias], 
+    [StatusByRoleView].[IsLast] AS [IsLast], 
+    [StatusByRoleView].[IsVisible] AS [IsVisible]
+    FROM [NonAttendance].[StatusByRoleView] AS [StatusByRoleView]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="Fk_AttachmentIdExcuse" Association="Self.Fk_AttachmentIdExcuse">
             <End Role="Excuse" EntitySet="Excuse" />
@@ -1463,6 +1599,9 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
             <End Role="Status" EntitySet="Status" />
             <End Role="ExcuseApproval" EntitySet="ExcuseApprovals" />
           </AssociationSet>
+          <EntitySet Name="ClassificationByRoleView" EntityType="UASModel.ClassificationByRoleView" />
+          <EntitySet Name="StatusByRoleView" EntityType="UASModel.StatusByRoleView" />
+          <EntitySet Name="ExcuseView" EntityType="UASModel.ExcuseView" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -2406,6 +2545,7 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
           <Property Name="ExcuseObservation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TruantRoleId" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="TruantRoleAlias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ApproverFullName" Type="String" MaxLength="301" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ExcuseApproval">
           <Key>
@@ -2458,6 +2598,84 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ClassificationByRoleView">
+          <Key>
+            <PropertyRef Name="IdClassification" />
+            <PropertyRef Name="IdRole" />
+            <PropertyRef Name="RoleName" />
+          </Key>
+          <Property Name="IdClassification" Type="Int32" Nullable="false" />
+          <Property Name="Classification" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="RoleAlias" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsRequiredDescription" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="StatusByRoleView">
+          <Key>
+            <PropertyRef Name="IdStatus" />
+            <PropertyRef Name="IdRole" />
+            <PropertyRef Name="RoleName" />
+            <PropertyRef Name="IsLast" />
+            <PropertyRef Name="IsVisible" />
+          </Key>
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="RoleAlias" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsLast" Type="Boolean" Nullable="false" />
+          <Property Name="IsVisible" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExcuseView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IdNonAttendance" />
+            <PropertyRef Name="TruantDocumentNumber" />
+            <PropertyRef Name="TruantFullName" />
+            <PropertyRef Name="TruantRoleId" />
+            <PropertyRef Name="TruantRoleAlias" />
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="CourseName" />
+            <PropertyRef Name="DayOfTheWeek" />
+            <PropertyRef Name="SpaceId" />
+            <PropertyRef Name="SpaceName" />
+            <PropertyRef Name="SpaceType" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="NonAttendanceDate" />
+            <PropertyRef Name="HasExcuse" />
+            <PropertyRef Name="IdRole" />
+            <PropertyRef Name="IdStatus" />
+            <PropertyRef Name="IsLast" />
+            <PropertyRef Name="IdClassification" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdNonAttendance" Type="Int32" Nullable="false" />
+          <Property Name="TruantDocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="TruantFullName" Type="String" Nullable="false" MaxLength="301" FixedLength="false" Unicode="true" />
+          <Property Name="TruantRoleId" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TruantRoleAlias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="CourseName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DayOfTheWeek" Type="Int32" Nullable="false" />
+          <Property Name="NameDayOfTheWeek" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="SpaceId" Type="Int32" Nullable="false" />
+          <Property Name="SpaceName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SpaceType" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="NonAttendanceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HasExcuse" Type="Boolean" Nullable="false" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsLast" Type="Boolean" Nullable="false" />
+          <Property Name="IdClassification" Type="Int32" Nullable="false" />
+          <Property Name="Classification" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ExcuseJustification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExcuseObservation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2995,6 +3213,7 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
           <EntitySetMapping Name="ExcuseApprovalView">
             <EntityTypeMapping TypeName="UASModel.ExcuseApprovalView">
               <MappingFragment StoreEntitySet="ExcuseApprovalView">
+                <ScalarProperty Name="ApproverFullName" ColumnName="ApproverFullName" />
                 <ScalarProperty Name="TruantRoleAlias" ColumnName="TruantRoleAlias" />
                 <ScalarProperty Name="TruantRoleId" ColumnName="TruantRoleId" />
                 <ScalarProperty Name="ExcuseObservation" ColumnName="ExcuseObservation" />
@@ -3039,6 +3258,62 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ClassificationByRoleView">
+            <EntityTypeMapping TypeName="UASModel.ClassificationByRoleView">
+              <MappingFragment StoreEntitySet="ClassificationByRoleView">
+                <ScalarProperty Name="IsRequiredDescription" ColumnName="IsRequiredDescription" />
+                <ScalarProperty Name="RoleAlias" ColumnName="RoleAlias" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="IdClassification" ColumnName="IdClassification" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusByRoleView">
+            <EntityTypeMapping TypeName="UASModel.StatusByRoleView">
+              <MappingFragment StoreEntitySet="StatusByRoleView">
+                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+                <ScalarProperty Name="IsLast" ColumnName="IsLast" />
+                <ScalarProperty Name="RoleAlias" ColumnName="RoleAlias" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExcuseView">
+            <EntityTypeMapping TypeName="UASModel.ExcuseView">
+              <MappingFragment StoreEntitySet="ExcuseView">
+                <ScalarProperty Name="ExcuseObservation" ColumnName="ExcuseObservation" />
+                <ScalarProperty Name="ExcuseJustification" ColumnName="ExcuseJustification" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="IdClassification" ColumnName="IdClassification" />
+                <ScalarProperty Name="IsLast" ColumnName="IsLast" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="HasExcuse" ColumnName="HasExcuse" />
+                <ScalarProperty Name="NonAttendanceDate" ColumnName="NonAttendanceDate" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="SpaceType" ColumnName="SpaceType" />
+                <ScalarProperty Name="SpaceName" ColumnName="SpaceName" />
+                <ScalarProperty Name="SpaceId" ColumnName="SpaceId" />
+                <ScalarProperty Name="NameDayOfTheWeek" ColumnName="NameDayOfTheWeek" />
+                <ScalarProperty Name="DayOfTheWeek" ColumnName="DayOfTheWeek" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="TruantRoleAlias" ColumnName="TruantRoleAlias" />
+                <ScalarProperty Name="TruantRoleId" ColumnName="TruantRoleId" />
+                <ScalarProperty Name="TruantFullName" ColumnName="TruantFullName" />
+                <ScalarProperty Name="TruantDocumentNumber" ColumnName="TruantDocumentNumber" />
+                <ScalarProperty Name="IdNonAttendance" ColumnName="IdNonAttendance" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3053,7 +3328,7 @@ warning 6002: The table/view 'UAS.NonAttendance.NonAttendanceView' does not have
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using UAS.Core.Configuration;
-using UAS.Core.DAL.Common.Model;
-using UAS.Core.DAL.Persisters;
 
 namespace UAS.Core.NonAttendance.Managers
 {
+    using Configuration;
+    using DAL.Common.Model;
+    using DAL.Parsers;
+    using DAL.Persisters;
+    using ModelEnums = DAL.Common.Model.Enums;
+
     internal class ExcuseManager
     {
         private ExcusePersister _excusePersister;
@@ -18,16 +21,16 @@ namespace UAS.Core.NonAttendance.Managers
             _nonAttendanceManager = new NonAttendanceManager();
         }
 
-        public IQueryable<Classification> GetExcuseClassifications()
+        public IQueryable<ClassificationByRoleView> GetExcuseClassifications(int roleId)
         {
-            return _excusePersister.GetExcuseClassifications();
+            return _excusePersister.GetExcuseClassifications(roleId);
         }
 
         public void Save(Excuse excuse)
         {
             var nonAttandanceIds = GetNonAttendanceIds(excuse.NonAttendanceIds);
             var excuses = GetExcuses(nonAttandanceIds, excuse);
-            Save(excuses);   
+            Save(excuses);
         }
 
         private void Save(List<Excuse> excuses)
@@ -35,14 +38,14 @@ namespace UAS.Core.NonAttendance.Managers
             excuses.ForEach(excuseToSave =>
             {
                 _excusePersister.Save(excuseToSave);
-                _nonAttendanceManager.UpdateHasExcuse(excuseToSave.IdNonAttendance, true);
                 GenerateApproversRegister(excuseToSave.IdNonAttendance, excuseToSave.Id);
+                _nonAttendanceManager.UpdateHasExcuse(excuseToSave.IdNonAttendance, true);
             });
         }
 
         internal ExcuseApprovalView GetExcuseForApproval(int idExcuse)
         {
-            return _excusePersister.GetExcusesForApproval(idExcuse);
+            return _excusePersister.GetExcuseForApproval(idExcuse);
         }
 
         internal List<Attachment> GetAttachments(int idExcuse)
@@ -50,18 +53,76 @@ namespace UAS.Core.NonAttendance.Managers
             return _excusePersister.GetAttachments(idExcuse).ToList();
         }
 
-        internal List<Status> GetExcuseStatus()
+        internal List<StatusByRoleView> GetExcuseStatus(int roleId)
         {
-            return _excusePersister.GetStatus().ToList();
+            return _excusePersister.GetStatus(roleId).ToList();
         }
 
-        internal void ApproveExcuses(List<ExcuseApprovalView> excuses)
+        internal void ApproveExcuses(List<ExcuseApprovalView> excuseApprovals)
         {
-            excuses.ForEach(
-                excuse => _excusePersister.UpdateExcuseApprovalStatus(
-                    excuse.Id, excuse.IdStatusApproval));
+            excuseApprovals.ForEach(
+                excuseApproval =>
+                {
+                    var approvalStatus = ModelEnumParser.StatusParser(excuseApproval.IdStatusApproval);
+                    var approverRole = ModelEnumParser.RoleParser(excuseApproval.IdRoleApprover);
+                    var wasApprovedByTeacher = WasApprovedByTeacher(approverRole, approvalStatus);
+                    var wasApprovedByDirector = WasApprovedByDirector(approverRole, approvalStatus);
+
+                    if (wasApprovedByTeacher)
+                    {
+                        GenerateApproversRegister(excuseApproval.IdNonAttendance, excuseApproval.IdExcuse);
+                    }
+
+                    _excusePersister.UpdateExcuseApprovalStatus(
+                        excuseApproval.Id, excuseApproval.IdStatusApproval);
+
+                    if (wasApprovedByDirector)
+                    {
+                        _excusePersister.UpdateExcuseStatus(
+                            excuseApproval.IdExcuse, excuseApproval.IdStatusApproval);
+                    }
+
+                    if (approvalStatus == ModelEnums.Status.REJECTED)
+                    {
+                        _nonAttendanceManager.UpdateHasExcuse(excuseApproval.IdNonAttendance, false);
+                    }
+                });
         }
 
+        internal List<ExcuseView> GetExcuses(int documentNumber, int roleId)
+        {
+            var currentRole = ModelEnumParser.RoleParser(roleId);
+            var allExcuses = _excusePersister.GetExcuses(documentNumber, roleId);
+
+            if (currentRole == ModelEnums.Role.ADMIN || currentRole == ModelEnums.Role.DIRECTOR) {
+                return allExcuses.ToList();
+            }
+
+            var excuses = allExcuses.Where(
+                filter => filter.TruantDocumentNumber == documentNumber && filter.IdRole == roleId);
+
+            return excuses.ToList();
+        }
+
+        private bool WasApprovedByTeacher(ModelEnums.Role approverRole, ModelEnums.Status approvalStatus)
+        {
+            var wasApproved = approverRole == ModelEnums.Role.TEACHER &&
+                        approvalStatus == ModelEnums.Status.APPROVED;
+            return wasApproved;
+        }
+
+        private bool WasApprovedByDirector(ModelEnums.Role approverRole, ModelEnums.Status approvalStatus)
+        {
+            var wasApproved = approverRole == ModelEnums.Role.DIRECTOR &&
+                        approvalStatus == ModelEnums.Status.APPROVED;
+            return wasApproved;
+        }
+
+        internal List<ExcuseApprovalView> GetExcusesForApproval(int idExcuse)
+        {
+            var excuses = _excusePersister.GetExcusesForApproval(idExcuse).ToList();
+            return excuses;
+        }
         internal List<ExcuseApprovalView> GetExcusesForApproval(int documentNumber, int roleId)
         {
             var excuses = _excusePersister.GetExcusesForApproval(documentNumber, roleId).ToList();
@@ -77,7 +138,7 @@ namespace UAS.Core.NonAttendance.Managers
                 IdNonAttendance = id,
                 DocumentNumber = excuse.DocumentNumber,
                 IdRole = excuse.IdRole,
-                IdStatus = (int)DAL.Common.Model.Enums.Status.PENDING,
+                IdStatus = (int)ModelEnums.Status.PENDING,
                 IdClassification = excuse.IdClassification,
                 Attachments = StoreAttachments(excuse.Files),
                 Justification = excuse.Justification,
@@ -122,11 +183,18 @@ namespace UAS.Core.NonAttendance.Managers
 
         private string StoreFile(HttpPostedFileBase attachmentFile)
         {
+            const string SEPARATOR = "_";
+
             var attachmentPath =
                     string.Concat(
-                        HttpContext.Current.Server.MapPath(ConfigurationManager.AttachmentServerPath),
-                        attachmentFile.FileName);
+                        HttpContext.Current.Server.MapPath(
+                            ConfigurationManager.AttachmentServerPath),
+                            Guid.NewGuid().ToString().ToUpper(),
+                            SEPARATOR,
+                            attachmentFile.FileName);
+
             attachmentFile.SaveAs(attachmentPath);
+
             return attachmentPath;
         }
 

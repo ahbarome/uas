@@ -46,10 +46,12 @@ INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Aula Vir
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Salón de Docentes', '~/Attendance/VirtualTeachersClassRoom', 2 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Ausentismo', '#', 'fa fa-th-large' )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Crear Excusa', '~/NonAttendance/ExcuseCreator', 5 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Verificar Excusa', '~/NonAttendance/ExcuseVerificator', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Administrar Excusas', '~/NonAttendance/ExcuseManager', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Reportes', '#', 'fa fa-th-large' )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Asistencia', '#', 8 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Ausentismo', '#', 8 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Administrador Archivos', '~/FileManager/AsyncDownload', 'fa fa-download')
 
 --*******************************************************************
 --POPULATE PAGEPERMISSIONBYROLE TABLE 
@@ -97,22 +99,22 @@ INSERT INTO [Security].[PagePermissionByRole] VALUES(4,4,1,1,1,1,1,1)
 --POPULATE STATUS TABLE 
 --*******************************************************************
 INSERT INTO [NonAttendance].[Status]([Status],[IsLast]) VALUES('Pendiente', 0)
-INSERT INTO [NonAttendance].[Status]([Status],[IsLast]) VALUES('Aceptada', 1)
+INSERT INTO [NonAttendance].[Status]([Status],[IsLast]) VALUES('Aprobada', 1)
 INSERT INTO [NonAttendance].[Status]([Status],[IsLast]) VALUES('Para corrección', 0)
 INSERT INTO [NonAttendance].[Status]([Status],[IsLast]) VALUES('Rechazada', 1)
 
 --*******************************************************************
---POPULATE STATUSAPPROVERBYROLE TABLE 
+--POPULATE STATUSBYROLE TABLE 
 --*******************************************************************
-INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(1, 3, 1);
-INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(1, 4, 0);
-INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(2, 2, 1);
-INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(2, 3, 1);
-INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(3, 2, 1);
-INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(3, 3, 1);
-INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(3, 4, 0);
-INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(4, 2, 1);
-INSERT INTO [NonAttendance].[StatusApproverByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(4, 3, 1);
+INSERT INTO [NonAttendance].[StatusByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(1, 3, 1);
+INSERT INTO [NonAttendance].[StatusByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(1, 4, 0);
+INSERT INTO [NonAttendance].[StatusByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(2, 2, 1);
+INSERT INTO [NonAttendance].[StatusByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(2, 3, 1);
+INSERT INTO [NonAttendance].[StatusByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(3, 2, 1);
+INSERT INTO [NonAttendance].[StatusByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(3, 3, 1);
+INSERT INTO [NonAttendance].[StatusByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(3, 4, 0);
+INSERT INTO [NonAttendance].[StatusByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(4, 2, 1);
+INSERT INTO [NonAttendance].[StatusByRole]([IdStatus],[IdRole],[IsVisible]) VALUES(4, 3, 1);
 
 --*******************************************************************
 --POPULATE CLASSIFICATION TABLE 
@@ -122,6 +124,16 @@ INSERT INTO [NonAttendance].[Classification]([Classification],[IsRequiredDescrip
 INSERT INTO [NonAttendance].[Classification]([Classification],[IsRequiredDescription]) VALUES('Inconveniente económico', 0)
 INSERT INTO [NonAttendance].[Classification]([Classification],[IsRequiredDescription]) VALUES('Otro', 1)
 
+--*******************************************************************
+--POPULATE CLASSIFICATIONBYROLE TABLE 
+--*******************************************************************
+INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(1, 3, 1);
+INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(2, 3, 1);
+INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(3, 3, 1);
+INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(1, 4, 1);
+INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(2, 4, 1);
+INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(3, 4, 1);
+INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(4, 4, 1);
 --*******************************************************************
 --INTEGRATION SCHEMA
 --*******************************************************************

@@ -1,5 +1,6 @@
 ﻿var SEPARATOR = "|";
 var EMTPY_STRING = "";
+var APP_ALIAS = 'UAS+';
 
 $(document).ready(function () {
 
@@ -26,8 +27,15 @@ $(document).ready(function () {
         console.log(excuseApprovals);
         $.post("ApproveExcuses", { excuses: excuseApprovals }, function (response) {
             $("#modal-approval-excuse-status-changer").modal("hide");
-            toastr.info(
-             'Se actualizó el estado de la excusa de manera satisfactoria', 'UAS+');
+            if (response.Success) {
+                RefreshGrid();
+                toastr.info(
+                 'Se actualizó el estado de la excusa de manera satisfactoria', APP_ALIAS);
+            }
+            else {
+                toastr.info(
+                 'Se presentaron inconvenientes actualizando el estado de la excusa, por favor inténtelo nuevamente', APP_ALIAS);
+            }
         });
     });
 });
@@ -179,8 +187,8 @@ function GetValue(chain, index) {
     }
 };
 
-function GetSelectedColumn(dataIndex) {
-    var columnsData = []
+function GetExcuseApprovalsSelectedRowsData() {
+    var rowsData = []
     var grid = $('#grid-approval-excuse').DataTable();
 
     grid.rows().every(function (index) {
@@ -189,24 +197,39 @@ function GetSelectedColumn(dataIndex) {
         var hasChecked = $(node).find(".icheckbox_square-green.checked");
         if (hasChecked.length > 0) {
             var data = grid.row(index).data();
-            var value = data[dataIndex];
-            columnsData.push(value);
+            var id = data[1];
+            var idExcuse = data[2];
+            var idNonAttendance = data[3];
+            var idApproverRole = data[4];
+            rowsData.push({
+                "Id": id,
+                "IdExcuse": idExcuse,
+                "IdNonAttendance": idNonAttendance,
+                "IdRoleApprover": idApproverRole
+            });
         }
     });
 
-    return columnsData;
+    return rowsData;
 };
 
 function GetExcuseApprovals() {
 
     var excuseApprovals = [];
-    var approvalIds = GetSelectedColumn(1);
+    var approvals = GetExcuseApprovalsSelectedRowsData();
     var idStatusApproval = GetStatusApproval();
     var observationApproval = GetObservationApproval();
 
-    $.each(approvalIds, function (index, id) {
+    $.each(approvals, function (index, approval) {
         excuseApprovals.push(
-            { "Id": parseInt(id), "IdStatusApproval": idStatusApproval, "ObservationApproval": observationApproval });
+            {
+                "Id": parseInt(approval.Id),
+                "IdExcuse": approval.IdExcuse,
+                "IdRoleApprover": approval.IdRoleApprover,
+                "IdNonAttendance": approval.IdNonAttendance,
+                "IdStatusApproval": idStatusApproval,
+                "ObservationApproval": observationApproval
+            });
     });
 
     return excuseApprovals;
@@ -222,4 +245,23 @@ function GetStatusApproval() {
 function GetObservationApproval() {
     var observationApproval = $('textarea[name="ObservationApproval"]').val();
     return observationApproval;
+};
+
+function DestroyGrid() {
+    var grid = $("#grid-approval-excuse").DataTable();
+    if (grid) {
+        grid.destroy();
+    }
+};
+
+function RefreshGrid() {
+    DestroyGrid();
+    InitPendingExcuseGrid();
+};
+
+function InitPendingExcuseGrid() {
+    $.post("ApprovalExcuseGrid").done(function (response) {
+        $("#grid-approval-excuse").html(response);
+        CreateApprovalsGrid();
+    });
 };

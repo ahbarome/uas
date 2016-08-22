@@ -68,6 +68,9 @@
     <Compile Include="Model\Classification.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ClassificationByRoleView.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Course.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
@@ -88,6 +91,9 @@
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ExcuseApprovalView.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ExcuseView.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Fringe.cs">
@@ -163,6 +169,9 @@
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\StatusApproverByRole.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\StatusByRoleView.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Student.cs">

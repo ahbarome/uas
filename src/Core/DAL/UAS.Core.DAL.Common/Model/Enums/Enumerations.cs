@@ -11,7 +11,7 @@
     public enum Status
     {
         PENDING = 1,
-        ACCCEPTED = 2,
+        APPROVED = 2,
         REQUIRED_CHANGES = 3,
         REJECTED = 4
     };
