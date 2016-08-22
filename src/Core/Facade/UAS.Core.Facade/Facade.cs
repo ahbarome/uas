@@ -8,6 +8,7 @@
     using DAL.Common.Model;
     using System.Collections.Generic;
     using Report;
+    using Dashboard;
 
     public class Facade
     {
@@ -16,6 +17,7 @@
         private AttendanceFacade _attendanceFacade;
         private NonAttendanceFacade _nonAttendanceFacade;
         private ReportFacade _reportFacade;
+        private DashboardFacade _dashboardFacade;
 
         public static Facade Instance(Action<string> attendanceDispatcher) {
             if (instance == null)
@@ -29,6 +31,7 @@
             _attendanceFacade = new AttendanceFacade();
             _nonAttendanceFacade = new NonAttendanceFacade();
             _reportFacade = new ReportFacade();
+            _dashboardFacade = new DashboardFacade();
         }
 
         public Facade(Action<string> attendanceDispatcher = null) {
@@ -36,6 +39,7 @@
             _attendanceFacade = new AttendanceFacade(attendanceDispatcher);
             _nonAttendanceFacade = new NonAttendanceFacade();
             _reportFacade = new ReportFacade();
+            _dashboardFacade = new DashboardFacade();
         }
 
         public void CreateSession(string username, string password) {
