@@ -337,6 +337,45 @@ advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceRegisterView' no ti
           <Property Name="MovementTime" Type="time" Precision="7" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AttendanceView">
+          <Key>
+            <PropertyRef Name="DocumentNumber" />
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RoleName" />
+            <PropertyRef Name="RoleAlias" />
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="CourseName" />
+            <PropertyRef Name="DayOfTheWeek" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="SpaceId" />
+            <PropertyRef Name="SpaceName" />
+            <PropertyRef Name="SpaceType" />
+          </Key>
+          <Property Name="DocumentNumber" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="150" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="301" Nullable="false" />
+          <Property Name="ImageRelativePath" Type="nvarchar" MaxLength="256" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="RoleAlias" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
+          <Property Name="DayOfTheWeekName" Type="nvarchar" MaxLength="30" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="SpaceId" Type="int" Nullable="false" />
+          <Property Name="SpaceName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="SpaceType" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="MovementDateTime" Type="datetime" />
+          <Property Name="MovementDate" Type="date" />
+          <Property Name="MovementTime" Type="time" Precision="7" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'UAS.Integration.PersonActivitiesView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PersonActivitiesView">
           <Key>
@@ -1111,6 +1150,30 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
     [AttendanceRegisterView].[MovementTime] AS [MovementTime]
     FROM [Attendance].[AttendanceRegisterView] AS [AttendanceRegisterView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="AttendanceView" EntityType="Self.AttendanceView" store:Type="Views" store:Schema="Attendance">
+            <DefiningQuery>SELECT 
+    [AttendanceView].[DocumentNumber] AS [DocumentNumber], 
+    [AttendanceView].[Name] AS [Name], 
+    [AttendanceView].[LastName] AS [LastName], 
+    [AttendanceView].[FullName] AS [FullName], 
+    [AttendanceView].[ImageRelativePath] AS [ImageRelativePath], 
+    [AttendanceView].[RoleId] AS [RoleId], 
+    [AttendanceView].[RoleName] AS [RoleName], 
+    [AttendanceView].[RoleAlias] AS [RoleAlias], 
+    [AttendanceView].[CourseId] AS [CourseId], 
+    [AttendanceView].[CourseName] AS [CourseName], 
+    [AttendanceView].[DayOfTheWeek] AS [DayOfTheWeek], 
+    [AttendanceView].[DayOfTheWeekName] AS [DayOfTheWeekName], 
+    [AttendanceView].[StartTime] AS [StartTime], 
+    [AttendanceView].[EndTime] AS [EndTime], 
+    [AttendanceView].[SpaceId] AS [SpaceId], 
+    [AttendanceView].[SpaceName] AS [SpaceName], 
+    [AttendanceView].[SpaceType] AS [SpaceType], 
+    [AttendanceView].[MovementDateTime] AS [MovementDateTime], 
+    [AttendanceView].[MovementDate] AS [MovementDate], 
+    [AttendanceView].[MovementTime] AS [MovementTime]
+    FROM [Attendance].[AttendanceView] AS [AttendanceView]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="PersonActivitiesView" EntityType="Self.PersonActivitiesView" store:Type="Views" store:Schema="Integration">
             <DefiningQuery>SELECT 
     [PersonActivitiesView].[CourseId] AS [CourseId], 
@@ -1602,6 +1665,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <EntitySet Name="ClassificationByRoleView" EntityType="UASModel.ClassificationByRoleView" />
           <EntitySet Name="StatusByRoleView" EntityType="UASModel.StatusByRoleView" />
           <EntitySet Name="ExcuseView" EntityType="UASModel.ExcuseView" />
+          <EntitySet Name="AttendanceView" EntityType="UASModel.AttendanceView" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -2676,6 +2740,43 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <Property Name="ExcuseJustification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ExcuseObservation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="AttendanceView">
+          <Key>
+            <PropertyRef Name="DocumentNumber" />
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RoleName" />
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="CourseName" />
+            <PropertyRef Name="DayOfTheWeek" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="SpaceId" />
+            <PropertyRef Name="SpaceName" />
+            <PropertyRef Name="SpaceType" />
+            <PropertyRef Name="RoleAlias" />
+          </Key>
+          <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="301" FixedLength="false" Unicode="true" />
+          <Property Name="ImageRelativePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="CourseName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DayOfTheWeek" Type="Int32" Nullable="false" />
+          <Property Name="DayOfTheWeekName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="SpaceId" Type="Int32" Nullable="false" />
+          <Property Name="SpaceName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SpaceType" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MovementDateTime" Type="DateTime" Precision="3" />
+          <Property Name="MovementDate" Type="DateTime" Precision="0" />
+          <Property Name="MovementTime" Type="Time" Precision="7" />
+          <Property Name="RoleAlias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3311,6 +3412,32 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
                 <ScalarProperty Name="TruantDocumentNumber" ColumnName="TruantDocumentNumber" />
                 <ScalarProperty Name="IdNonAttendance" ColumnName="IdNonAttendance" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendanceView">
+            <EntityTypeMapping TypeName="UASModel.AttendanceView">
+              <MappingFragment StoreEntitySet="AttendanceView">
+                <ScalarProperty Name="RoleAlias" ColumnName="RoleAlias" />
+                <ScalarProperty Name="MovementTime" ColumnName="MovementTime" />
+                <ScalarProperty Name="MovementDate" ColumnName="MovementDate" />
+                <ScalarProperty Name="MovementDateTime" ColumnName="MovementDateTime" />
+                <ScalarProperty Name="SpaceType" ColumnName="SpaceType" />
+                <ScalarProperty Name="SpaceName" ColumnName="SpaceName" />
+                <ScalarProperty Name="SpaceId" ColumnName="SpaceId" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="DayOfTheWeekName" ColumnName="DayOfTheWeekName" />
+                <ScalarProperty Name="DayOfTheWeek" ColumnName="DayOfTheWeek" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ImageRelativePath" ColumnName="ImageRelativePath" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

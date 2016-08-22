@@ -20,6 +20,7 @@ INSERT INTO [Security].[Role]([Name], [Alias]) VALUES('Student', 'Estudiante')
 --*******************************************************************
 --POPULATE USER TABLE 
 --*******************************************************************
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('admin','NXo/ao4xL5ix30tACkl6jg==',1,'Admin','Admin','admin@unilibrecali.edu.co',311001112,1,'admin',1130677677,'~/Images/a1.jpg')
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('gbecerra','NXo/ao4xL5ix30tACkl6jg==',3,'Gonzalo','Becerra','gonzalo.becerra@unilibrecali.edu.co',311001113,1,'admin',1130677677,'~/Images/a7.jpg')
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('msinisterra','NXo/ao4xL5ix30tACkl6jg==',3,'María Mercedes','Sinisterra','maria.mercedes.sinisterra@unilibrecali.edu.co',311001114,1,'admin',1130677678,'~/Images/a7.jpg')
 INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('ccano','NXo/ao4xL5ix30tACkl6jg==',3,'Carlos Arturo','Cano','carlos.arturo.cano@unilibrecali.edu.co',311001115,1,'admin',1130677679,'~/Images/a5.jpg')
@@ -49,8 +50,8 @@ INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Crear Ex
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Verificar Excusa', '~/NonAttendance/ExcuseVerificator', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Administrar Excusas', '~/NonAttendance/ExcuseManager', 5 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Reportes', '#', 'fa fa-th-large' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Asistencia', '#', 8 )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Ausentismo', '#', 8 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Asistencia', '~/Report/ReportAttendance', 8 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Ausentismo', '~/Report/ReportNonAttendance', 8 )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Administrador Archivos', '~/FileManager/AsyncDownload', 'fa fa-download')
 
 --*******************************************************************

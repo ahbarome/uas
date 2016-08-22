@@ -1,9 +1,10 @@
-﻿@using UAS.Core.DAL.Common.Model;
+﻿
+@using UAS.Core.DAL.Common.Model;
 
-@model IEnumerable<ExcuseView>
+@model IEnumerable<NonAttendanceView>
 
 @{
-    ViewBag.Title = "Verificación de Excusa";
+    ViewBag.Title = "Reporte de Ausentismo";
 }
 
 <div id="wrapper">
@@ -12,7 +13,7 @@
             <h2 class="text-uppercase">@ViewBag.Title</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#">Ausentismo</a>
+                    <a href="#">Reportes</a>
                 </li>
                 <li class="active">
                     <strong>@ViewBag.Title</strong>
@@ -25,7 +26,7 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5 class="text-uppercase">Listado general de excusas</h5>
+                        <h5 class="text-uppercase">Listado general de ausentimo</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -36,26 +37,18 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        @Html.Partial("ExcuseVerificatorGrid", Model)
+                        @Html.Partial("ReportNonAttendanceGrid", Model)
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    @Html.Partial("ExcuseVerificatorDetail")
 </div>
-
 @section Styles {
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
-    @Styles.Render("~/plugins/toastrStyles")
-    @Styles.Render("~/plugins/wizardStepsStyles")
 }
 
 @section Scripts {
     @Scripts.Render("~/plugins/dataTables")
-    @Scripts.Render("~/plugins/toastr")
-    @Scripts.Render("~/plugins/wizardSteps")
-    @Scripts.Render("~/plugins/validate")
-    <script src="~/App/ExcuseVerificatorViewModel.js"></script>
+    <script src="~/App/ReportNonAttendanceViewModel.js"></script>
 }

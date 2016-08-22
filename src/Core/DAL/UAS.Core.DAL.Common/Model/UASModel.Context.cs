@@ -62,6 +62,7 @@ namespace UAS.Core.DAL.Common.Model
         public virtual DbSet<ClassificationByRoleView> ClassificationByRoleView { get; set; }
         public virtual DbSet<StatusByRoleView> StatusByRoleView { get; set; }
         public virtual DbSet<ExcuseView> ExcuseView { get; set; }
+        public virtual DbSet<AttendanceView> AttendanceView { get; set; }
     
         public virtual ObjectResult<GetAllStudentMovementsByTeacherDocumentNumber_Result> GetAllStudentMovementsByTeacherDocumentNumber(Nullable<int> teacherDocumentNumber)
         {

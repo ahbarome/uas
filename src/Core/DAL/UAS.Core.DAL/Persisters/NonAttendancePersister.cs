@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UAS.Core.DAL.Common.Model;
 
@@ -15,6 +16,12 @@ namespace UAS.Core.DAL.Persisters
             var nonAttendances = nonAttendancesBase.Where(filter => !filter.HasExcuse);
 
             return nonAttendances;
+        }
+
+        public IQueryable<NonAttendanceView> GetNonAttendance()
+        {
+            var nonAttendance = base.Entities.NonAttendanceView;
+            return nonAttendance;
         }
 
         public void UpdateHasExcuse(int id, bool hasExcuse)

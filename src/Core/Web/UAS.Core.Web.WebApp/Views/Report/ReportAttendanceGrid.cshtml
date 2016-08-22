@@ -1,0 +1,44 @@
+﻿<table id="grid-attendance" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Curso</th>
+            <th># Documento</th>
+            <th>Nombre</th>
+            <th>Rol</th>
+            <th>Fecha</th>
+            <th>Día</th>
+            <th>Horario</th>
+            <th>Espacio</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var attendance in Model)
+        {
+            <tr>
+                <td></td>
+                <td>@attendance.CourseName</td>
+                <td>@attendance.DocumentNumber</td>
+                <td>@attendance.FullName</td>
+                <td>@attendance.RoleAlias</td>
+                <td>@attendance.MovementDate.ToString("yyyy-MM-dd")</td>
+                <td>@attendance.DayOfTheWeekName</td>
+                <td>@{var scheduleDetail = string.Concat(@attendance.StartTime, " - ", @attendance.EndTime); @scheduleDetail}</td>
+                <td>@{var spaceDetail = string.Concat(@attendance.SpaceType, " ", @attendance.SpaceName); @spaceDetail}</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th></th>
+            <th>Curso</th>
+            <th># Documento</th>
+            <th>Nombre</th>
+            <th>Rol</th>
+            <th>Fecha</th>
+            <th>Día</th>
+            <th>Horario</th>
+            <th>Espacio</th>
+        </tr>
+    </tfoot>
+</table>

@@ -60,7 +60,7 @@
                 <td>@excuse.TruantRoleAlias</td>
                 <td>@excuse.NonAttendanceDate.ToString("yyyy-MM-dd")</td>
                 <td>@{var scheduleDetail = string.Concat(@excuse.StartTime, " - ", @excuse.EndTime); @scheduleDetail}</td>
-                <td>@{var spaceDetail = string.Concat(@excuse.SpaceType, " ", excuse.SpaceName); @spaceDetail}</td>
+                <td>@{var spaceDetail = string.Concat(@excuse.SpaceType, " ", @excuse.SpaceName); @spaceDetail}</td>
                 <td>@HasExcuse(excuse.HasExcuse)</td>
                 <td><span class="@StatusLabel(excuse.IdStatus)">@excuse.Status</span></td>
                 <td>

@@ -7,6 +7,7 @@
     using System;
     using DAL.Common.Model;
     using System.Collections.Generic;
+    using Report;
 
     public class Facade
     {
@@ -14,6 +15,7 @@
         private ISessionManager _sessionManager;
         private AttendanceFacade _attendanceFacade;
         private NonAttendanceFacade _nonAttendanceFacade;
+        private ReportFacade _reportFacade;
 
         public static Facade Instance(Action<string> attendanceDispatcher) {
             if (instance == null)
@@ -26,11 +28,14 @@
             _sessionManager = new SessionManager();
             _attendanceFacade = new AttendanceFacade();
             _nonAttendanceFacade = new NonAttendanceFacade();
+            _reportFacade = new ReportFacade();
         }
 
         public Facade(Action<string> attendanceDispatcher = null) {
             _sessionManager = new SessionManager();
             _attendanceFacade = new AttendanceFacade(attendanceDispatcher);
+            _nonAttendanceFacade = new NonAttendanceFacade();
+            _reportFacade = new ReportFacade();
         }
 
         public void CreateSession(string username, string password) {
@@ -69,6 +74,11 @@
         public dynamic GetStatisticsByCourseAndTeacherId(int courseId, int teacherId)
         {
             return _attendanceFacade.GetStatisticsByCourseAndTeacherId(courseId, teacherId);
+        }
+
+        public dynamic GetNonAttendance(int documentNumber, int roleId)
+        {
+            return _reportFacade.GetNonAttendance(documentNumber, roleId);
         }
 
         public dynamic GetCourseStatistics(int courseId)
@@ -143,6 +153,11 @@
         public dynamic GetExcuses(int documentNumber, int roleId)
         {
             return _nonAttendanceFacade.GetExcuses(documentNumber, roleId);
+        }
+
+        public dynamic GetAttendance(int documentNumber, int roleId)
+        {
+            return _reportFacade.GetAttendance(documentNumber, roleId);
         }
     }
 }

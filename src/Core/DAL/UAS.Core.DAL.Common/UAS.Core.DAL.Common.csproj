@@ -62,6 +62,9 @@
     <Compile Include="Model\AttendanceRegisterView.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\AttendanceView.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Career.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>

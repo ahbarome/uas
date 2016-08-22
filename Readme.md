@@ -14,4 +14,5 @@ This is the graduation project broken down into steps.
 + Step 8: Added Virtual student class room functionality
 + Step 9: Added Virtual teacher class room functionality
 + Step 10: Added Non attendance functionality
++ Step 11: Added Report module
 + Master: Current version of the project

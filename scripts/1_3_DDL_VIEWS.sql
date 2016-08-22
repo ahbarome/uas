@@ -346,6 +346,41 @@ CREATE VIEW [Attendance].[AttendanceRegisterView] AS
 GO
 
 --*******************************************************************
+--REGISTER VIEW 
+--*******************************************************************
+CREATE VIEW [Attendance].[AttendanceView] AS
+(	
+	SELECT [MOV].[DocumentNumber]
+			, [MOV].[Name]
+			, [MOV].[LastName]
+			, [MOV].[FullName]
+			, [MOV].[ImageRelativePath]
+			, [MOV].[RoleId]
+			, [MOV].[RoleName]
+			, [MOV].[RoleAlias]
+			, [PAV].[CourseId]
+			, [PAV].[CourseName]
+			, [PAV].[DayOfTheWeek]
+			, DATENAME(WEEKDAY, [PAV].[DayOfTheWeek] - 1)   AS DayOfTheWeekName
+			, [PAV].[StartTime]
+			, [PAV].[EndTime]
+			, [MOV].[SpaceId]
+			, [MOV].[SpaceName]
+			, [MOV].[SpaceType]
+			, [MOV].[MovementDateTime]
+			, [MOV].[MovementDate]
+			, [MOV].[MovementTime]
+	FROM	[Attendance].[MovementView] [MOV]
+	INNER JOIN [Integration].[PersonActivitiesView] [PAV] ON
+		[MOV].[DocumentNumber]						= [PAV].[DocumentNumber]	AND
+		[MOV].[SpaceId]								= [PAV].[SpaceId]			AND
+		[MOV].[RoleId]								= [PAV].[RoleId]			AND
+		DATEPART(WEEKDAY, [MOV].[MovementDate])		= [PAV].[DayOfTheWeek]
+	WHERE	[MOV].[MovementTime] BETWEEN [PAV].[StartTime] AND [PAV].[EndTime]
+);
+GO
+
+--*******************************************************************
 --COURSEMOVEMENT VIEW 
 --*******************************************************************
 CREATE VIEW [NonAttendance].[NonAttendanceRegisterView] AS
