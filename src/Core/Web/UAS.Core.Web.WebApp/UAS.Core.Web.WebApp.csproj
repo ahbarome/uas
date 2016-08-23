@@ -259,6 +259,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\DashboardViewModel.js" />
     <Content Include="App\ReportNonAttendanceViewModel.js" />
     <Content Include="App\ReportAttendanceViewModel.js" />
     <Content Include="App\ExcuseVerificatorViewModel.js" />

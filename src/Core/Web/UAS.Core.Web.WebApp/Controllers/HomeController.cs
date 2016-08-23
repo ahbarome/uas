@@ -32,15 +32,13 @@ namespace UAS.Core.Web.WebApp.Controllers
         }
 
         public ActionResult GraphStatistictsAttendanceVsNonAttendance() {
-            //var statistics = GetStatistictsAttendanceVsNonAttendance();
-            //ViewBag.StatistictsAttendanceVsNonAttendance = statistics;
             return PartialView();
         }
 
-        private dynamic GetStatistictsAttendanceVsNonAttendance()
+        public JsonResult GetStatistictsAttendanceVsNonAttendance()
         {
             var statistics = _facade.GetStatistictsAttendanceVsNonAttendance();
-            return statistics;
+            return Json(statistics);
         }
 
         public ActionResult DashboardNonAttendance()
