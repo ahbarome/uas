@@ -44,6 +44,16 @@
     <Compile Include="Managers\DashboardAttendanceManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DAL\UAS.Core.DAL.Common\UAS.Core.DAL.Common.csproj">
+      <Project>{c529fba8-89f1-4b8d-a3f1-e4d9a37f9b92}</Project>
+      <Name>UAS.Core.DAL.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DAL\UAS.Core.DAL\UAS.Core.DAL.csproj">
+      <Project>{69B618C7-90F2-4BD6-8618-6CFD1B34BC6F}</Project>
+      <Name>UAS.Core.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

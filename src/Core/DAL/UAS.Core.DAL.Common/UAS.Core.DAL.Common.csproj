@@ -123,6 +123,9 @@
     <Compile Include="Model\GetCurrentTeacherAttendance_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GetStatistictsAttendanceVsNonAttendance_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\HolidayException.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
@@ -169,9 +172,6 @@
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Status.cs">
-      <DependentUpon>UASModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\StatusApproverByRole.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\StatusByRoleView.cs">

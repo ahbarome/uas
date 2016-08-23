@@ -19,10 +19,11 @@
         private ReportFacade _reportFacade;
         private DashboardFacade _dashboardFacade;
 
-        public static Facade Instance(Action<string> attendanceDispatcher) {
+        public static Facade Instance(Action<string> attendanceDispatcher)
+        {
             if (instance == null)
                 instance = new Facade(attendanceDispatcher);
-            return instance; 
+            return instance;
         }
 
         public Facade()
@@ -34,7 +35,8 @@
             _dashboardFacade = new DashboardFacade();
         }
 
-        public Facade(Action<string> attendanceDispatcher = null) {
+        public Facade(Action<string> attendanceDispatcher = null)
+        {
             _sessionManager = new SessionManager();
             _attendanceFacade = new AttendanceFacade(attendanceDispatcher);
             _nonAttendanceFacade = new NonAttendanceFacade();
@@ -42,7 +44,8 @@
             _dashboardFacade = new DashboardFacade();
         }
 
-        public void CreateSession(string username, string password) {
+        public void CreateSession(string username, string password)
+        {
             _sessionManager.CreateSession(username, password);
         }
 
@@ -51,7 +54,8 @@
             _sessionManager.CloseSession();
         }
 
-        public dynamic GetAllMovementsWithNotifications() {
+        public dynamic GetAllMovementsWithNotifications()
+        {
             return _attendanceFacade.GetAllMovementsWithNotifications();
         }
 
@@ -120,7 +124,8 @@
             return _attendanceFacade.GetTeacherAttendanceStatistics();
         }
 
-        public dynamic GetNonAttendancePendingForExcuse(int documentNumber, int roleId){
+        public dynamic GetNonAttendancePendingForExcuse(int documentNumber, int roleId)
+        {
             return _nonAttendanceFacade.GetNonAttendancePendingForExcuse(documentNumber, roleId);
         }
 
@@ -162,6 +167,11 @@
         public dynamic GetAttendance(int documentNumber, int roleId)
         {
             return _reportFacade.GetAttendance(documentNumber, roleId);
+        }
+
+        public dynamic GetStatistictsAttendanceVsNonAttendance()
+        {
+            return _dashboardFacade.GetStatistictsAttendanceVsNonAttendance();
         }
     }
 }

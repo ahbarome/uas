@@ -46,6 +46,7 @@
     <Compile Include="Parsers\ModelEnumParser.cs" />
     <Compile Include="Persisters\AttendancePersister.cs" />
     <Compile Include="Persisters\CoursePersister.cs" />
+    <Compile Include="Persisters\DashboardPersister.cs" />
     <Compile Include="Persisters\ExcusePersister.cs" />
     <Compile Include="Persisters\MovementPersister.cs" />
     <Compile Include="Persisters\NonAttendancePersister.cs" />
