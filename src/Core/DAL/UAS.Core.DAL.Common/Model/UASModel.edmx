@@ -2692,7 +2692,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
         <ComplexType Name="GetStatistictsAttendanceVsNonAttendance_Result">
           <Property Type="String" Name="EventType" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="EventTypeAlias" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="EventDateMonth" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="EventDateMonth" Nullable="true" />
+          <Property Type="String" Name="EventDateMonthName" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="EventTotal" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -3355,6 +3356,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
                 <ScalarProperty Name="EventType" ColumnName="EventType" />
                 <ScalarProperty Name="EventTypeAlias" ColumnName="EventTypeAlias" />
                 <ScalarProperty Name="EventDateMonth" ColumnName="EventDateMonth" />
+                <ScalarProperty Name="EventDateMonthName" ColumnName="EventDateMonthName" />
                 <ScalarProperty Name="EventTotal" ColumnName="EventTotal" />
               </ComplexTypeMapping>
             </ResultMapping>

@@ -28,6 +28,8 @@ namespace UAS.Core.Web.WebApp.Controllers
             var session = base.CurrentSession;
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
             ViewData.Add("USERNAME", session.SessionUser.Username);
+            var attendanceVsNonAttendanceStatistics = _facade.GetStatistictsAttendanceVsNonAttendance();
+            ViewBag.StatisticsAttendanceVsNonAttendance = attendanceVsNonAttendanceStatistics;
             return View();
         }
 

@@ -19,7 +19,7 @@ namespace UAS.Core.DAL.Persisters
             foreach (var statisticAttendanceVsNonAttendance in statisticsAttendanceVsNonAttendance)
             {
                 var statistic = new Statistic() { Summary = new Dictionary<string, int>() };
-                statistic.Description = statisticAttendanceVsNonAttendance.EventDateMonth;
+                statistic.Description = statisticAttendanceVsNonAttendance.EventDateMonthName;
                 statistic.Summary.Add(
                     statisticAttendanceVsNonAttendance.EventType,
                     statisticAttendanceVsNonAttendance.EventTotal ?? 0);

@@ -1,56 +1,152 @@
-﻿<div class="ibox float-e-margins">
-    <div class="ibox-content">
-        <div>
-            <span class="pull-right text-right">
-                <small>Average value of sales in the past month in: <strong>United states</strong></small>
-                <br />
-                All sales: 162,862
-            </span>
-            <h3 class="font-bold no-margins text-uppercase">
-                Comportamiento Asistencia y Ausentismo
-            </h3>
-            <small>Sales marketing.</small>
-        </div>
+﻿@using UAS.Core.DAL.Common.Model;
 
-        <div class="m-t-sm">
+@{
+    var statisticsAttendanceVsNonAttendance = ViewBag.StatisticsAttendanceVsNonAttendance as IEnumerable<Statistic>;
+}
 
-            <div class="row">
-                <div class="col-md-8">
-                    <div>
-                        <canvas id="graphAttendanceVsNonAttendance" height="114"></canvas>
+@functions{
+    public enum StatisticType
+    {
+        TOTAL_GENERAL = 0,
+        TOTAL_ATTENDANCE = 1,
+        TOTAL_NON_ATTENDANCE = 2,
+        TOTAL_PERCENTAGE_ATTENDANCE = 3,
+        TOTAL_PERCENTAGE_NON_ATTENDANCE = 4
+    };
+
+    public static string GetStatisticValue(IEnumerable<Statistic> statistics, StatisticType statisticType)
+    {
+        decimal total = 0;
+        decimal attendance = 0;
+        decimal nonAttendance = 0;
+
+        if (statistics != null)
+        {
+            foreach (var statistic in statistics)
+            {
+                foreach (var eventType in statistic.Summary)
+                {
+                    if (eventType.Key.ToString().ToUpper().Equals("ATTENDANCE"))
+                    {
+                        attendance += eventType.Value;
+                    }
+                    else
+                    {
+                        nonAttendance += eventType.Value;
+                    }
+                    total += eventType.Value;
+                }
+            }
+        }
+
+        switch (statisticType)
+        {
+            case StatisticType.TOTAL_GENERAL: return total.ToString();
+            case StatisticType.TOTAL_ATTENDANCE: return attendance.ToString();
+            case StatisticType.TOTAL_NON_ATTENDANCE: return nonAttendance.ToString();
+            case StatisticType.TOTAL_PERCENTAGE_ATTENDANCE:
+                {
+                    var percentage = (attendance / total) * 100;
+                    var pergentageFormat = string.Concat(percentage.ToString("00"), "%");
+                    return pergentageFormat;
+                }
+
+            case StatisticType.TOTAL_PERCENTAGE_NON_ATTENDANCE:
+                {
+                    var percentage = (nonAttendance / total) * 100;
+                    var pergentageFormat = string.Concat(percentage.ToString("00"), "%");
+                    return pergentageFormat;
+                }
+            default: return string.Empty;
+        }
+    }
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div>
+                    <span class="pull-right text-right">
+                        <small>Movimientos estimados en el periodo: <strong>AGOSTO - DICIEMBRE del 2016</strong></small>
+                        <br />
+                        Total movimientos estimados a la fecha en la facultad: @GetStatisticValue(statisticsAttendanceVsNonAttendance, StatisticType.TOTAL_GENERAL)
+                    </span>
+                    <h3 class="font-bold no-margins text-uppercase">
+                        Comportamiento General Asistencia y Ausentismo
+                    </h3>
+                    <small>Periodo académico AGOSTO - DICIEMBRE del 2016.</small>
+                </div>
+
+                <div class="m-t-sm">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div>
+                                <canvas id="graphLinearAttendanceVsNonAttendance" height="114"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="stat-list m-t-lg">
+                                <li>
+                                    <h2 class="no-margins">@GetStatisticValue(statisticsAttendanceVsNonAttendance, StatisticType.TOTAL_ATTENDANCE)</h2>
+                                    <small>Asistencia(s)</small>
+                                    <div class="progress progress-mini">
+                                        <div class="progress-bar" style="width: @GetStatisticValue(statisticsAttendanceVsNonAttendance, StatisticType.TOTAL_PERCENTAGE_ATTENDANCE);"></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h2 class="no-margins ">@GetStatisticValue(statisticsAttendanceVsNonAttendance, StatisticType.TOTAL_NON_ATTENDANCE)</h2>
+                                    <small>Ausentismo(s)</small>
+                                    <div class="progress progress-mini">
+                                        <div class="progress-bar" style="width: @GetStatisticValue(statisticsAttendanceVsNonAttendance, StatisticType.TOTAL_PERCENTAGE_NON_ATTENDANCE);"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <ul class="stat-list m-t-lg">
-                        <li>
-                            <h2 class="no-margins">2,346</h2>
-                            <small>Total orders in period</small>
-                            <div class="progress progress-mini">
-                                <div class="progress-bar" style="width: 48%;"></div>
-                            </div>
-                        </li>
-                        <li>
-                            <h2 class="no-margins ">4,422</h2>
-                            <small>Orders in last month</small>
-                            <div class="progress progress-mini">
-                                <div class="progress-bar" style="width: 60%;"></div>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="m-t-md">
+                    <small class="pull-right">
+                        <i class="fa fa-clock-o"> </i>
+                        Última actualización @DateTime.Now.ToString("yyyy-MM-dd")
+                    </small>
+                    <small>
+                        <span class="fa fa-square text-navy" ></span>&nbsp;&nbsp;&nbsp;Asistencia<br/>
+                        <span class="fa fa-square"></span>&nbsp;&nbsp;&nbsp;Ausentismo
+                    </small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div>
+                    <h3 class="font-bold no-margins text-uppercase">
+                        Comportamiento Asistencia y Ausentismo
+                    </h3>
+                    <small>Periodo académico AGOSTO - DICIEMBRE del 2016.</small>
+                </div><div>
+                    <canvas id="graphDonutAttendanceVsNonAttendance" height="140"></canvas>
                 </div>
             </div>
-
         </div>
-
-        <div class="m-t-md">
-            <small class="pull-right">
-                <i class="fa fa-clock-o"> </i>
-                Update on 16.07.2015
-            </small>
-            <small>
-                <strong>Analysis of sales:</strong> The value has been changed over time, and last month reached a level over $50,000.
-            </small>
+    </div>
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div>
+                    <h3 class="font-bold no-margins text-uppercase">
+                        Comportamiento Asistencia y Ausentismo
+                    </h3>
+                    <small>Periodo académico AGOSTO - DICIEMBRE del 2016.</small>
+                </div>
+                <div>
+                    <canvas id="graphRadarAttendanceVsNonAttendance" height="140"></canvas>
+                </div>
+            </div>
         </div>
-
     </div>
 </div>

@@ -15,7 +15,8 @@ namespace UAS.Core.DAL.Common.Model
     {
         public string EventType { get; set; }
         public string EventTypeAlias { get; set; }
-        public string EventDateMonth { get; set; }
+        public Nullable<int> EventDateMonth { get; set; }
+        public string EventDateMonthName { get; set; }
         public Nullable<int> EventTotal { get; set; }
     }
 }

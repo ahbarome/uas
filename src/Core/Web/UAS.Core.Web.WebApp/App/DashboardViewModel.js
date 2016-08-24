@@ -2,7 +2,8 @@
 
 $(document).ready(function () {
     $.post("/Home/GetStatistictsAttendanceVsNonAttendance", function (attendanceVsNonAttendanceData) {
-        PopulateGraphStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
+        PopulateGraphLinearStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
+        PopulateGraphDonutStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
     });
 });
 
@@ -14,7 +15,7 @@ function IsValidData(data) {
     return isValid;
 };
 
-function PopulateGraphStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
+function PopulateGraphLinearStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
     if (IsValidData(attendanceVsNonAttendanceData)) {
         
         var attendanceData = GetGraphStatistictsAttendanceData(attendanceVsNonAttendanceData);
@@ -31,7 +32,7 @@ function PopulateGraphStatistictsAttendanceVsNonAttendance(attendanceVsNonAttend
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: attendanceData
+                    data: nonAttendanceData
                 },
                 {
                     fillColor: "rgba(26,179,148,0.5)",
@@ -40,7 +41,7 @@ function PopulateGraphStatistictsAttendanceVsNonAttendance(attendanceVsNonAttend
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(26,179,148,1)",
-                    data: nonAttendanceData
+                    data: attendanceData
                 }
             ]
         };
@@ -61,8 +62,55 @@ function PopulateGraphStatistictsAttendanceVsNonAttendance(attendanceVsNonAttend
             responsive: true,
         };
 
-        var ctx = document.getElementById("graphAttendanceVsNonAttendance").getContext("2d");
-        var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
+        var contextLinear = document.getElementById("graphLinearAttendanceVsNonAttendance").getContext("2d");
+        var linearChart = new Chart(contextLinear).Line(lineData, lineOptions);
+
+
+        var contextRadar = document.getElementById("graphRadarAttendanceVsNonAttendance").getContext("2d");
+        var radarChart = new Chart(contextRadar).Radar(lineData, lineOptions);
+        
+    }
+};
+
+function PopulateGraphDonutStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
+    if (IsValidData(attendanceVsNonAttendanceData)) {
+
+        var attendanceData = GetGraphStatistictsAttendanceData(attendanceVsNonAttendanceData);
+        var nonAttendanceData = GetGraphStatistictsNonAttendanceData(attendanceVsNonAttendanceData);
+        var totalAttendance = Sum(attendanceData);
+        var totalNonAttendance = Sum(nonAttendanceData);
+        var attendance = {
+            value: totalAttendance,
+            color: "#a3e1d4",
+            highlight: "#1ab394",
+            label: "Asistencia"
+        };
+
+        var nonAttendance = {
+            value: totalNonAttendance,
+            color: "#A4CEE8",
+            highlight: "#1ab394",
+            label: "Ausentismo"
+        };
+
+        var doughnutData = [
+            attendance,
+            nonAttendance
+        ];
+
+        var doughnutOptions = {
+            segmentShowStroke: true,
+            segmentStrokeColor: "#fff",
+            segmentStrokeWidth: 2,
+            percentageInnerCutout: 45, // This is 0 for Pie charts
+            animationSteps: 100,
+            animationEasing: "easeOutBounce",
+            animateRotate: true,
+            animateScale: false
+        };
+
+        var ctx = document.getElementById("graphDonutAttendanceVsNonAttendance").getContext("2d");
+        var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
     }
 };
 
@@ -85,7 +133,16 @@ function Contain(array, value) {
         }
     }
     return false;
-}
+};
+
+function Sum(array) {
+    var sum = 0;
+    var length = Object.keys(array).length;
+    for (var i = 0; i < length; i++) {
+        sum += array[i];
+    }
+    return sum;
+};
 
 function GetGraphStatistictsAttendanceData(attendanceVsNonAttendanceData) {
     var data = [];
