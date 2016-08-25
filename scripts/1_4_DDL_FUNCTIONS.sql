@@ -157,6 +157,36 @@ RETURN
 GO
 
 --*******************************************************************
+--GETTEACHERBYCOURSE FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-24
+-- Description:	Get the a teacher by the course
+--				identifier
+-- =============================================
+
+CREATE FUNCTION [Integration].[GetTeacherByCourse](@CourseId INT)
+RETURNS TABLE
+AS
+RETURN 
+(
+	-- Add the SELECT statement with parameter references here
+	SELECT  TeacherDocumentNumber
+			, TeacherFullName
+	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	WHERE	CourseId = @CourseId
+)
+
+GO
+
+--*******************************************************************
 --GETENROLLMENTSTUDENTS FUNCTION
 --*******************************************************************
 SET ANSI_NULLS ON

@@ -616,7 +616,7 @@ GO
 -- Description:	Get the statistics of the 
 --              attendance and the nonattendance
 -- =============================================
-CREATE PROCEDURE [Dashboard].[GetStatistictsAttendanceVsNonAttendance]
+ALTER PROCEDURE [Dashboard].[GetStatistictsAttendanceVsNonAttendance]
 AS
 BEGIN
 
@@ -627,7 +627,8 @@ BEGIN
 		EventType			NVARCHAR(15),
 		EventTypeAlias		NVARCHAR(10),
 		EventDate			DATETIME,
-		EventDateMonth		NVARCHAR(10),
+		EventDateMonth		INT,
+		EventDateMonthName	NVARCHAR(10),
 		EventTotal			INT);
 
 	SELECT	@SemesterStartDate = [StartDate]
@@ -635,14 +636,15 @@ BEGIN
 	FROM	[Integration].[AcademicPeriod]
 	WHERE	[Semester] = [Integration].[GetCurrentSemester]()
 
-	WHILE (@SemesterStartDate < GETDATE())
+	WHILE (@SemesterStartDate < @SemesterEndDate)
 	BEGIN
 		
 		INSERT INTO @GeneralStatistictsAttendance 
 		SELECT  'Attendance'							AS EventType
 				, 'Asistencia'							AS EventTypeAlias
 				, @SemesterStartDate					AS EventDate
-				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonth
+				, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
+				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 				, COUNT (1)				AS EventTotal
 		FROM	[Attendance].[AttendanceView] [ATV]
 		WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate) 
@@ -650,7 +652,8 @@ BEGIN
 		SELECT  'NonAttendance'			AS EventType
 				, 'Ausentismo'			AS EventTypeAlias
 				, @SemesterStartDate	AS EventDate
-				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonth
+				, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
+				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 				, COUNT (1)								AS EventTotal
 		FROM	[NonAttendance].[NonAttendanceView] [NAV]
 		WHERE	[NAV].[NonAttendanceDate] = CONVERT(DATE, @SemesterStartDate) 
@@ -663,11 +666,266 @@ BEGIN
 	SELECT [GST].EventType
 			, [GST].EventTypeAlias
 			, [GST].EventDateMonth
+			, [GST].EventDateMonthName
 			, SUM([GST].EventTotal)	AS EventTotal
 	FROM	@GeneralStatistictsAttendance [GST]
 	GROUP BY [GST].EventType
 			, [GST].EventTypeAlias
 			, [GST].EventDateMonth
+			, [GST].EventDateMonthName
+	ORDER BY  [GST].EventType
+			, [GST].EventDateMonth
+
+
+END
+
+GO
+--*******************************************************************
+--GETTOPSTATISTICTSMAJORMONTHSATTENDANCEANDNONATTENDANCE STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-22
+-- Description:	Get the statistics of the major
+--				month in terms of attendance
+--				and nonattendance
+-- =============================================
+CREATE PROCEDURE [Dashboard].[GetTopStatistictsMajorMonthsAttendanceAndNonAttendance]
+AS
+BEGIN
+
+	DECLARE	@SemesterStartDate	DATETIME,
+			@SemesterEndDate	DATETIME;
+	
+	DECLARE @GeneralStatistictsAttendance TABLE (
+		EventType			NVARCHAR(15),
+		EventTypeAlias		NVARCHAR(10),
+		EventDate			DATETIME,
+		EventDateMonth		INT,
+		EventDateMonthName	NVARCHAR(10),
+		EventTotal			INT);
+
+	DECLARE @AttendanceType		NVARCHAR(15),
+			@AttendanceAlias	NVARCHAR(15),
+			@NonAttendanceType	NVARCHAR(15),
+			@NonAttendanceAlias	NVARCHAR(15);
+
+	SET @AttendanceType			= 'Attendance';
+	SET @AttendanceAlias		= 'Asistencia';
+	SET @NonAttendanceType		= 'NonAttendance';
+	SET @NonAttendanceAlias		= 'Ausentismo';
+
+	SELECT	@SemesterStartDate = [StartDate]
+			, @SemesterEndDate = [EndDate]
+	FROM	[Integration].[AcademicPeriod]
+	WHERE	[Semester] = [Integration].[GetCurrentSemester]()
+
+	WHILE (@SemesterStartDate < @SemesterEndDate)
+	BEGIN
+		
+		INSERT INTO @GeneralStatistictsAttendance 
+		SELECT  @AttendanceType							AS EventType
+				, @AttendanceAlias						AS EventTypeAlias
+				, @SemesterStartDate					AS EventDate
+				, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
+				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
+				, COUNT (1)				AS EventTotal
+		FROM	[Attendance].[AttendanceView] [ATV]
+		WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate) 
+
+		UNION
+
+		SELECT  @NonAttendanceType						AS EventType
+				, @NonAttendanceAlias					AS EventTypeAlias
+				, @SemesterStartDate					AS EventDate
+				, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
+				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
+				, COUNT (1)								AS EventTotal
+		FROM	[NonAttendance].[NonAttendanceView] [NAV]
+		WHERE	[NAV].[NonAttendanceDate] = CONVERT(DATE, @SemesterStartDate) 
+
+
+		SET @SemesterStartDate = DATEADD(DD, 1, @SemesterStartDate);
+	END
+
+
+	SELECT	 DISTINCT TOP 2 EventType
+			, EventDateMonthName
+			, MAX( EventTotal ) AS EventTotal
+	FROM (
+	SELECT [GST].EventType
+			, [GST].EventTypeAlias
+			, [GST].EventDateMonth
+			, [GST].EventDateMonthName
+			, SUM([GST].EventTotal)	AS EventTotal
+	FROM	@GeneralStatistictsAttendance [GST]
+	GROUP BY [GST].EventType
+			, [GST].EventTypeAlias
+			, [GST].EventDateMonth
+			, [GST].EventDateMonthName )  AS Summary
+	WHERE EventTotal IN (
+						SELECT	 MAX( EventTotal ) AS EventTotal
+						FROM (
+						SELECT [GST].EventType
+								, [GST].EventTypeAlias
+								, [GST].EventDateMonth
+								, [GST].EventDateMonthName
+								, SUM([GST].EventTotal)	AS EventTotal
+						FROM	@GeneralStatistictsAttendance [GST]
+						GROUP BY [GST].EventType
+								, [GST].EventTypeAlias
+								, [GST].EventDateMonth
+								, [GST].EventDateMonthName )  AS Summary
+						GROUP BY EventType
+	)
+	GROUP BY EventType
+			, EventDateMonthName
+
+
+END
+
+GO
+
+--*******************************************************************
+--GETSTATISTICTSMAJORMONTHATTENDANCEANDNONATTENDANCE STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-22
+-- Description:	Get the statistics of the
+--				course with the major
+--				attendance and nonattendance
+-- =============================================
+ALTER PROCEDURE [Dashboard].[GetTopStatistictTeacherCourseAttendanceAndNonAttendance]
+AS
+BEGIN
+
+	DECLARE	@SemesterStartDate	DATETIME,
+			@SemesterEndDate	DATETIME;
+	
+	DECLARE @GeneralCourseStatistictsAttendance TABLE (
+			EventType				NVARCHAR(15),
+			EventTypeAlias			NVARCHAR(10),
+			StartDate				DATETIME,
+			CourseId				INT,
+			CourseName				NVARCHAR(250),
+			PersonDocumentNumber	INT,
+			PersonFullName			NVARCHAR(300),
+			PersonRoleId			INT,
+			PersonRoleAlias			NVARCHAR(20),
+			EventTotal				INT
+	);
+
+	DECLARE @AttendanceType		NVARCHAR(15),
+			@AttendanceAlias	NVARCHAR(15),
+			@NonAttendanceType	NVARCHAR(15),
+			@NonAttendanceAlias	NVARCHAR(15);
+
+	SET @AttendanceType			= 'Attendance';
+	SET @AttendanceAlias		= 'Asistencia';
+	SET @NonAttendanceType		= 'NonAttendance';
+	SET @NonAttendanceAlias		= 'Ausentismo';
+
+	SELECT	@SemesterStartDate = [StartDate]
+			, @SemesterEndDate = [EndDate]
+	FROM	[Integration].[AcademicPeriod]
+	WHERE	[Semester] = [Integration].[GetCurrentSemester]()
+
+	WHILE (@SemesterStartDate < @SemesterEndDate)
+	BEGIN
+		
+		INSERT INTO @GeneralCourseStatistictsAttendance 
+		SELECT  @AttendanceType							AS EventType
+				, @AttendanceAlias						AS EventTypeAlias
+				, @SemesterStartDate					AS StartDate
+				, [ATV].CourseId						AS CourseId
+				, [ATV].CourseName						AS CourseName
+				, [ATV].DocumentNumber					AS PersonDocumentNumber
+				, [ATV].FullName						AS PersonFullName
+				, [ATV].RoleId							AS PersonRoleId
+				, [ATV].RoleAlias						AS PersonRoleAlias
+				, COUNT( 1 )							AS EventTotal
+		FROM	[Attendance].[AttendanceView] [ATV]
+		WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate) 
+		GROUP BY  [ATV].CourseId		
+				 , [ATV].CourseName		
+				 , [ATV].DocumentNumber	
+				 , [ATV].FullName		
+				 , [ATV].RoleId			
+				 , [ATV].RoleAlias		
+		
+		UNION
+
+		SELECT @NonAttendanceType						AS EventType
+				, @NonAttendanceAlias					AS EventTypeAlias
+				, @SemesterStartDate					AS StartDate
+				, [NAV].CourseId						AS CourseId
+				, [NAV].CourseName						AS CourseName
+				, [NAV].DocumentNumber					AS PersonDocumentNumber
+				, [NAV].FullName						AS PersonFullName
+				, [NAV].RoleId							AS PersonRoleId
+				, [NAV].RoleAlias						AS PersonRoleAlias
+				, COUNT( 1 )							AS EventTotal
+		FROM	[NonAttendance].[NonAttendanceView] [NAV]
+		WHERE	[NAV].[NonAttendanceDate] = CONVERT(DATE, @SemesterStartDate) 
+		GROUP BY  [NAV].CourseId		
+				 , [NAV].CourseName		
+				 , [NAV].DocumentNumber	
+				 , [NAV].FullName		
+				 , [NAV].RoleId			
+				 , [NAV].RoleAlias	
+
+
+		SET @SemesterStartDate = DATEADD(DD, 1, @SemesterStartDate);
+	END
+
+	SELECT *
+	FROM (
+		SELECT	TOP 5 EventType
+				, EventTypeAlias
+				, CourseId
+				, CourseName
+				, ( SELECT TOP 1 TeacherFullName FROM [Integration].[GetTeacherByCourse](CourseId) ) AS TeacherFullName
+				, SUM( EventTotal ) AS EventTotal
+		FROM	@GeneralCourseStatistictsAttendance
+		WHERE	EventType		= @NonAttendanceType AND
+				PersonRoleId	= 3
+		GROUP BY EventType
+				, EventTypeAlias
+				, CourseId
+				, CourseName
+		ORDER BY SUM( EventTotal ) DESC ) AS Attendance
+	 
+	UNION
+
+	SELECT	*
+	FROM (
+		SELECT	TOP 5 EventType
+				, EventTypeAlias
+				, CourseId
+				, CourseName
+				, ( SELECT TOP 1 TeacherFullName FROM [Integration].[GetTeacherByCourse](CourseId) ) AS TeacherFullName
+				, SUM( EventTotal ) AS EventTotal
+		FROM	@GeneralCourseStatistictsAttendance
+		WHERE	EventType		= @AttendanceType AND
+				PersonRoleId	= 3
+		GROUP BY EventType
+				, EventTypeAlias
+				, CourseId
+				, CourseName
+		ORDER BY SUM( EventTotal ) DESC ) AS NonAttendance
 
 END
 
