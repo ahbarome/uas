@@ -16,4 +16,6 @@ CREATE SCHEMA Integration;
 GO
 CREATE SCHEMA Dashboard;
 GO
+CREATE SCHEMA Utilities;
+GO
 --*******************************************************************

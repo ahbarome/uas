@@ -243,6 +243,121 @@ END
 GO
 
 --*******************************************************************
+--GENERATEATTENDANCEDATA STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Generate all the data for the 
+--				attendance
+-- =============================================
+CREATE PROCEDURE [Attendance].[GenerateAttendanceData]
+AS
+	BEGIN
+	DECLARE @RandomOption			INT,
+			@DocumentNumber			INT,
+			@RoleId					INT,
+			@StartSemesterDate		DATETIME;
+
+	DECLARE PersonsCursor CURSOR FOR(
+		SELECT DISTINCT StudentDocumentNumber	AS DocumentNumber
+				, 4								AS RoleId
+		FROM [Integration].[EnrollmentDetailView]
+		UNION 
+		SELECT	DISTINCT TeacherDocumentNumber	AS DocumentNumber
+				, 3								AS RoleId
+		FROM [Integration].[EnrollmentDetailView]);
+
+	OPEN PersonsCursor;
+	
+	FETCH NEXT FROM PersonsCursor   
+	INTO @DocumentNumber, @RoleId
+
+
+	WHILE @@FETCH_STATUS = 0  
+	BEGIN
+
+		SELECT	@StartSemesterDate = StartDate
+		FROM	[Integration].[AcademicPeriod] WITH(NOLOCK)
+		WHERE	Semester = [Integration].[GetCurrentSemester]()
+
+		SET @RandomOption		= CONVERT(INT, RAND() * 10);
+
+		PRINT ''
+		PRINT CONCAT('********* BEGIN: DOCUMENT NUMBER',@DocumentNumber, ' ROLE ID', @RoleId, ' *********' )
+		PRINT CONCAT('=== EVALUATING DATE ', @StartSemesterDate,'===')
+
+		WHILE (@StartSemesterDate < GETDATE() - 1)
+		BEGIN
+		
+			DECLARE @SpaceId				INT,
+					@StartTime				TIME;
+
+			IF( @RoleId = 4 )
+	
+			BEGIN
+				PRINT '===STUDENTS ROLE (4)=='
+				SELECT	@SpaceId		= SpaceId
+						, @StartTime	= StartTime
+				FROM	[Integration].[EnrollmentDetailView]
+				WHERE	StudentDocumentNumber	= @DocumentNumber AND
+						DayOfTheWeek			= DATEPART(WEEKDAY, @StartSemesterDate)
+			END
+
+			ELSE
+			BEGIN
+				PRINT '===TEACHERS ROLE (3)=='
+				SELECT	@SpaceId		= SpaceId
+						, @StartTime	= StartTime
+				FROM	[Integration].[EnrollmentDetailView]
+				WHERE	TeacherDocumentNumber	= @DocumentNumber AND
+						DayOfTheWeek			= DATEPART(WEEKDAY, @StartSemesterDate)
+			END 
+
+		
+			PRINT CONCAT('===EVALUATING ', @DocumentNumber, ' IN THE SPACE ', @SpaceId, ' FOR THE TIME ', @StartTime, ' AND WITH OPTION ', @RandomOption ) 
+			IF( (@RandomOption % 2) = 0 AND @SpaceId != 0)
+	
+			BEGIN
+				DECLARE @RandomMinutes	INT,
+						@RegisterDate	DATETIME = @StartSemesterDate;
+
+				SET @RandomMinutes		= CONVERT(INT, RAND() * 100);
+			
+				SET @RegisterDate		= DATEADD(HOUR, DATEPART(HOUR, @StartTime), @RegisterDate);
+				SET @RegisterDate		= DATEADD(MINUTE, DATEPART(MINUTE, @StartTime) + @RandomMinutes, @RegisterDate) ;
+
+				PRINT CONCAT( '===ATTENDANCE DATE ', @RegisterDate) 
+				INSERT INTO [Attendance].[Movement](IdSpace, DocumentNumber, RegisterDate)
+				SELECT	@SpaceId
+						, @DocumentNumber
+						, @RegisterDate
+	
+			END
+			
+			SET @StartSemesterDate = DATEADD(DD, 1, @StartSemesterDate);
+		END
+		PRINT CONCAT('=== EVALUATING DATE ', @StartSemesterDate,'===')
+		PRINT CONCAT('********* END: DOCUMENT NUMBER',@DocumentNumber, ' ROLE ID', @RoleId, ' *********' )
+		PRINT ''
+		
+		FETCH NEXT FROM PersonsCursor INTO  @DocumentNumber, @RoleId
+	END
+
+	CLOSE PersonsCursor;  
+	DEALLOCATE PersonsCursor;  
+
+END
+
+GO
+
+--*******************************************************************
 --INTEGRATION SCHEMA
 --*******************************************************************
 --GETCURRENTCOURSEBYTEACHERDOCUMENTNUMBER STORE PROCEDURE
@@ -601,6 +716,111 @@ BEGIN
 END
 
 GO
+
+--*******************************************************************
+--GENERATENONATTENDANCEDATA STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Generate all the data for the 
+--				nonattendance
+-- =============================================
+CREATE PROCEDURE [NonAttendance].[GenerateNonAttendanceData]
+AS
+	BEGIN
+	DECLARE @StartSemesterDate		DATETIME;
+
+	SELECT	@StartSemesterDate = StartDate
+		FROM	[Integration].[AcademicPeriod] WITH(NOLOCK)
+		WHERE	Semester = [Integration].[GetCurrentSemester]()
+
+	WHILE (@StartSemesterDate < GETDATE() - 1)
+	BEGIN
+		EXECUTE [NonAttendance].[PopulateNonAttendance] @StartSemesterDate
+
+	SET @StartSemesterDate = DATEADD(DD, 1, @StartSemesterDate);
+	END
+
+END
+
+GO
+
+--*******************************************************************
+--GENERATEEXCUSEDATA STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Generate all the data for the 
+--				excuses
+-- =============================================
+CREATE PROCEDURE [NonAttendance].[GenerateExcuseData]
+AS
+	BEGIN
+
+	DECLARE @RandomOption			INT,
+			@IdNonAttendance		INT,
+			@DocumentNumber			INT,
+			@RoleId					INT,
+			@IdStatus				INT = 1,
+			@IdClassification		INT = 1;
+
+
+	DECLARE ExcuseCursor CURSOR FOR(
+	SELECT  Id
+			, DocumentNumber
+			, RoleId
+	FROM [NonAttendance].[NonAttendanceView] );
+
+	OPEN ExcuseCursor;
+	
+	FETCH NEXT FROM ExcuseCursor   
+	INTO @IdNonAttendance, @DocumentNumber, @RoleId
+
+	WHILE @@FETCH_STATUS = 0  
+	BEGIN
+		SET @RandomOption		= CONVERT(INT, RAND() * 10);
+
+		IF( (@RandomOption % 2) = 0  )
+		BEGIN
+		
+		SET @IdStatus			=	ISNULL(( SELECT TOP 1 Id 
+									  FROM	[NonAttendance].[GetRandomStatus](RAND()) ), 1 );
+
+		SET @IdClassification	=	ISNULL(( SELECT TOP 1 Id 
+									  FROM	[NonAttendance].[GetRandomClassification](RAND()) ), 1);
+
+		INSERT INTO [NonAttendance].[Excuse](IdNonAttendance, DocumentNumber, IdRole, IdStatus, IdClassification)
+		SELECT @IdNonAttendance
+			, @DocumentNumber
+			, @RoleId
+			, @IdStatus			
+			, @IdClassification 
+		END
+
+		FETCH NEXT FROM ExcuseCursor INTO  @IdNonAttendance, @DocumentNumber, @RoleId
+	END
+
+	CLOSE ExcuseCursor;  
+	DEALLOCATE ExcuseCursor; 
+
+END
+
+GO
+
 --*******************************************************************
 --GETGENERALSTATISTICSATTENDANCE STORE PROCEDURE
 --*******************************************************************
@@ -616,7 +836,7 @@ GO
 -- Description:	Get the statistics of the 
 --              attendance and the nonattendance
 -- =============================================
-ALTER PROCEDURE [Dashboard].[GetStatistictsAttendanceVsNonAttendance]
+CREATE PROCEDURE [Dashboard].[GetStatistictsAttendanceVsNonAttendance]
 AS
 BEGIN
 
@@ -1076,4 +1296,129 @@ END
 
 GO
 
+--*******************************************************************
+--GETSTATISTICTEXCUSESTATES STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get the statistics with the
+--				states of the excuses 
+-- =============================================
+CREATE PROCEDURE [Dashboard].[GetStatistictExcuseStates]
+AS
+
+BEGIN
+
+	DECLARE @Total				DECIMAL,
+			@ExcuseResultAlias	NVARCHAR(20);
+
+
+	SET @ExcuseResultAlias	= 'ExcuseStatus';
+
+	SELECT	@Total  = COUNT( 1 )
+	FROM	[NonAttendance].[ExcuseView] [EXV]
+
+	SELECT	TOP 5 
+			@ExcuseResultAlias								AS ResultAlias
+			, [EXV].[Status]
+			, COUNT( 1 )									AS Total
+			, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
+	FROM	[NonAttendance].[ExcuseView] [EXV]
+	GROUP BY [EXV].[Status]
+	ORDER BY COUNT( 1 ) DESC
+
+END
+
+GO
+
+--*******************************************************************
+--GETSTATISTICTEXCUSECLASSIFICATIONS STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get the statistics with the
+--				classifications of the excuses 
+-- =============================================
+CREATE PROCEDURE [Dashboard].[GetStatistictExcuseClassifications]
+AS
+
+BEGIN
+
+	DECLARE @Total				DECIMAL,
+			@ExcuseResultAlias	NVARCHAR(20)
+
+
+	SET @ExcuseResultAlias	= 'ExcuseClassification';
+
+	SELECT	@Total  = COUNT( 1 )
+	FROM	[NonAttendance].[ExcuseView] [EXV]
+
+	SELECT	@ExcuseResultAlias								AS ResultAlias
+			, [EXV].[Classification]
+			, COUNT( 1 )									AS Total
+			, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
+	FROM	[NonAttendance].[ExcuseView] [EXV]
+	GROUP BY [EXV].[Classification]
+	ORDER BY COUNT( 1 ) DESC
+
+END
+
+GO
+--*******************************************************************
+
+--*******************************************************************
+--GETTOPSTATISTICTEXCUSECLASSIFICATIONS STORE PROCEDURE
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get the statistics with the
+--				classifications of the excuses 
+-- =============================================
+CREATE PROCEDURE [Dashboard].[GetTopStatistictExcuseClassifications]
+AS
+
+BEGIN
+
+	DECLARE @Total				DECIMAL,
+			@ExcuseResultAlias	NVARCHAR(20)
+
+
+	SET @ExcuseResultAlias	= 'ExcuseClassification';
+
+	SELECT	@Total  = COUNT( 1 )
+	FROM	[NonAttendance].[ExcuseView] [EXV]
+
+	SELECT	TOP 5 
+			@ExcuseResultAlias								AS ResultAlias
+			, [EXV].[Classification]
+			, COUNT( 1 )									AS Total
+			, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
+	FROM	[NonAttendance].[ExcuseView] [EXV]
+	GROUP BY [EXV].[Classification]
+	ORDER BY COUNT( 1 ) DESC
+
+END
+
+GO
 --*******************************************************************

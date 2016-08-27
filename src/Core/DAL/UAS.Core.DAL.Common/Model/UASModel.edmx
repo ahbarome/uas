@@ -1036,7 +1036,13 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="GetStatistictExcuseClassifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dashboard" />
+        <Function Name="GetStatistictExcuseStates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dashboard" />
         <Function Name="GetStatistictsAttendanceVsNonAttendance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dashboard" />
+        <Function Name="GetTopStatistictAttendanceAndNonAttendanceStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dashboard" />
+        <Function Name="GetTopStatistictAttendanceAndNonAttendanceTeacherCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dashboard" />
+        <Function Name="GetTopStatistictExcuseClassifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dashboard" />
+        <Function Name="GetTopStatistictsMajorMonthsAttendanceAndNonAttendance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dashboard" />
         <Function Name="GetCourseSummaryById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
           <Parameter Name="CourseId" Type="int" Mode="In" />
           <ReturnType>
@@ -1615,6 +1621,12 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <EntitySet Name="ExcuseView" EntityType="UASModel.ExcuseView" />
           <EntitySet Name="AttendanceView" EntityType="UASModel.AttendanceView" />
           <FunctionImport Name="GetStatistictsAttendanceVsNonAttendance" ReturnType="Collection(UASModel.GetStatistictsAttendanceVsNonAttendance_Result)" />
+          <FunctionImport Name="GetStatistictExcuseClassifications" ReturnType="Collection(UASModel.GetStatistictExcuseClassifications_Result)" />
+          <FunctionImport Name="GetStatistictExcuseStates" ReturnType="Collection(UASModel.GetStatistictExcuseStates_Result)" />
+          <FunctionImport Name="GetTopStatistictAttendanceAndNonAttendanceStudentCourse" ReturnType="Collection(UASModel.GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result)" />
+          <FunctionImport Name="GetTopStatistictAttendanceAndNonAttendanceTeacherCourse" ReturnType="Collection(UASModel.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result)" />
+          <FunctionImport Name="GetTopStatistictExcuseClassifications" ReturnType="Collection(UASModel.GetTopStatistictExcuseClassifications_Result)" />
+          <FunctionImport Name="GetTopStatistictsMajorMonthsAttendanceAndNonAttendance" ReturnType="Collection(UASModel.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result)" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -2696,6 +2708,45 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <Property Type="String" Name="EventDateMonthName" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="EventTotal" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetStatistictExcuseClassifications_Result">
+          <Property Type="String" Name="ResultAlias" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Classification" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="String" Name="Percentage" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="GetStatistictExcuseStates_Result">
+          <Property Type="String" Name="ResultAlias" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="String" Name="Percentage" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result">
+          <Property Type="String" Name="EventType" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="EventTypeAlias" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="CourseId" Nullable="true" />
+          <Property Type="String" Name="CourseName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="PersonFullName" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="EventTotal" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result">
+          <Property Type="String" Name="EventType" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="EventTypeAlias" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="CourseId" Nullable="true" />
+          <Property Type="String" Name="CourseName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="PersonFullName" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="EventTotal" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetTopStatistictExcuseClassifications_Result">
+          <Property Type="String" Name="ResultAlias" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Classification" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="String" Name="Percentage" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result">
+          <Property Type="String" Name="EventType" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="EventDateMonthName" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="EventTotal" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3356,6 +3407,69 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
                 <ScalarProperty Name="EventType" ColumnName="EventType" />
                 <ScalarProperty Name="EventTypeAlias" ColumnName="EventTypeAlias" />
                 <ScalarProperty Name="EventDateMonth" ColumnName="EventDateMonth" />
+                <ScalarProperty Name="EventDateMonthName" ColumnName="EventDateMonthName" />
+                <ScalarProperty Name="EventTotal" ColumnName="EventTotal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStatistictExcuseClassifications" FunctionName="UASModel.Store.GetStatistictExcuseClassifications">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetStatistictExcuseClassifications_Result">
+                <ScalarProperty Name="ResultAlias" ColumnName="ResultAlias" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStatistictExcuseStates" FunctionName="UASModel.Store.GetStatistictExcuseStates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetStatistictExcuseStates_Result">
+                <ScalarProperty Name="ResultAlias" ColumnName="ResultAlias" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTopStatistictAttendanceAndNonAttendanceStudentCourse" FunctionName="UASModel.Store.GetTopStatistictAttendanceAndNonAttendanceStudentCourse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result">
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="EventTypeAlias" ColumnName="EventTypeAlias" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="PersonFullName" ColumnName="PersonFullName" />
+                <ScalarProperty Name="EventTotal" ColumnName="EventTotal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTopStatistictAttendanceAndNonAttendanceTeacherCourse" FunctionName="UASModel.Store.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result">
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="EventTypeAlias" ColumnName="EventTypeAlias" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="PersonFullName" ColumnName="PersonFullName" />
+                <ScalarProperty Name="EventTotal" ColumnName="EventTotal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTopStatistictExcuseClassifications" FunctionName="UASModel.Store.GetTopStatistictExcuseClassifications">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetTopStatistictExcuseClassifications_Result">
+                <ScalarProperty Name="ResultAlias" ColumnName="ResultAlias" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTopStatistictsMajorMonthsAttendanceAndNonAttendance" FunctionName="UASModel.Store.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result">
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
                 <ScalarProperty Name="EventDateMonthName" ColumnName="EventDateMonthName" />
                 <ScalarProperty Name="EventTotal" ColumnName="EventTotal" />
               </ComplexTypeMapping>

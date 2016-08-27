@@ -7,6 +7,32 @@
 USE [UAS]
 GO
 --*******************************************************************
+--UTILITIES SCHEMA
+--*******************************************************************
+--RANDOM FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get a random betweem two values
+-- =============================================
+CREATE FUNCTION [Utilities].[Random] (@Upper INT,@Lower INT, @RandomValue NUMERIC(18,10))
+RETURNS INT
+AS
+BEGIN
+	DECLARE @Random INT
+	SELECT @Random = ROUND(((@Upper - @Lower -1) * @RandomValue + @Lower), 0)
+	RETURN @Random
+END;
+
+GO
+
 --*******************************************************************
 --ATTENDANCE SCHEMA
 --*******************************************************************
@@ -615,5 +641,163 @@ BEGIN
 	RETURN  [NonAttendance].[ExcuseApprovalExist](@ExcuseId, 3, 2);
 END
 
+GO
+
+--*******************************************************************
+--GETMINIDSTATUS FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get the min id status
+-- =============================================
+CREATE FUNCTION [NonAttendance].[GetMinIdStatus]()
+	
+RETURNS INT 
+AS
+BEGIN 
+	RETURN( SELECT MIN(Id) FROM [NonAttendance].[Status] )
+END
+GO
+
+--*******************************************************************
+--GETMAXIDSTATUS FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get the max id status
+-- =============================================
+CREATE FUNCTION [NonAttendance].[GetMaxIdStatus]()
+	
+RETURNS INT 
+AS
+BEGIN 
+	RETURN( SELECT MAX(Id) FROM [NonAttendance].[Status] )
+END
+GO
+
+--*******************************************************************
+
+--*******************************************************************
+--GETRANDOMSTATUS FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get a random status
+-- =============================================
+CREATE FUNCTION [NonAttendance].[GetRandomStatus](@RandomValue NUMERIC(18,10))
+	
+RETURNS TABLE 
+AS
+RETURN 
+(
+
+	SELECT	*
+	FROM	[NonAttendance].[Status] [STA]
+	WHERE	[STA].[Id] =  [Utilities].[Random]( 
+		[NonAttendance].[GetMinIdStatus](),
+		[NonAttendance].[GetMaxIdStatus](),
+		@RandomValue
+	 )
+)
+GO
+
+--*******************************************************************
+--GETMINIDCLASSIFICATION FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get the min id classification
+-- =============================================
+CREATE FUNCTION [NonAttendance].[GetMinIdClassification]()
+	
+RETURNS INT 
+AS
+BEGIN 
+	RETURN( SELECT MIN(Id) FROM [NonAttendance].[Classification] )
+END
+GO
+
+--*******************************************************************
+--GETMAXIDCLASSIFICATION FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get the max id classification
+-- =============================================
+CREATE FUNCTION [NonAttendance].[GetMaxIdClassification]()
+	
+RETURNS INT 
+AS
+BEGIN 
+	RETURN( SELECT MAX(Id) FROM [NonAttendance].[Classification] )
+END
+GO
+
+--*******************************************************************
+
+--*******************************************************************
+--GETRANDOMCLASSIFICATION FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get a random classification
+-- =============================================
+CREATE FUNCTION [NonAttendance].[GetRandomClassification](@RandomValue NUMERIC(18,10))
+	
+RETURNS TABLE 
+AS
+RETURN 
+(
+
+	SELECT	*
+	FROM	[NonAttendance].[Classification] [CLA]
+	WHERE	[CLA].[Id] =  [Utilities].[Random]( 
+		[NonAttendance].[GetMinIdClassification](),
+		[NonAttendance].[GetMaxIdClassification](),
+		@RandomValue
+	 )
+)
 GO
 --*******************************************************************

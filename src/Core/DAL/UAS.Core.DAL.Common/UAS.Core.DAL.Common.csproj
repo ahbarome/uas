@@ -123,7 +123,25 @@
     <Compile Include="Model\GetCurrentTeacherAttendance_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GetStatistictExcuseClassifications_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetStatistictExcuseStates_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GetStatistictsAttendanceVsNonAttendance_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetTopStatistictExcuseClassifications_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\HolidayException.cs">

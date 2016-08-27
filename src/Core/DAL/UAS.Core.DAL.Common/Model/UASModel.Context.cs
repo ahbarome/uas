@@ -135,5 +135,35 @@ namespace UAS.Core.DAL.Common.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictsAttendanceVsNonAttendance_Result>("GetStatistictsAttendanceVsNonAttendance");
         }
+    
+        public virtual ObjectResult<GetStatistictExcuseClassifications_Result> GetStatistictExcuseClassifications()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictExcuseClassifications_Result>("GetStatistictExcuseClassifications");
+        }
+    
+        public virtual ObjectResult<GetStatistictExcuseStates_Result> GetStatistictExcuseStates()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictExcuseStates_Result>("GetStatistictExcuseStates");
+        }
+    
+        public virtual ObjectResult<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result> GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result>("GetTopStatistictAttendanceAndNonAttendanceStudentCourse");
+        }
+    
+        public virtual ObjectResult<GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result>("GetTopStatistictAttendanceAndNonAttendanceTeacherCourse");
+        }
+    
+        public virtual ObjectResult<GetTopStatistictExcuseClassifications_Result> GetTopStatistictExcuseClassifications()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictExcuseClassifications_Result>("GetTopStatistictExcuseClassifications");
+        }
+    
+        public virtual ObjectResult<GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result>("GetTopStatistictsMajorMonthsAttendanceAndNonAttendance");
+        }
     }
 }
