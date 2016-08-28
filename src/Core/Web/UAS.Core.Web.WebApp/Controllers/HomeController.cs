@@ -36,6 +36,12 @@ namespace UAS.Core.Web.WebApp.Controllers
             var statisticsExcuseStatus = _facade.GetStatistictExcuseStatus();
             var topStatistictsMajorMonthsAttendanceAndNonAttendance =
                 _facade.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
+            var topStatistictAttendanceAndNonAttendanceTeacherCourse =
+                _facade.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+            var topStatistictAttendanceAndNonAttendanceStudentCourse =
+                _facade.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+            var topStatistictsMajorCourseAttendanceAndNonAttendance = 
+                _facade.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
 
             ViewBag.StatisticsAttendanceVsNonAttendance = attendanceVsNonAttendanceStatistics;
             ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;
@@ -43,37 +49,56 @@ namespace UAS.Core.Web.WebApp.Controllers
             ViewBag.StatisticsExcuseStatus = statisticsExcuseStatus;
             ViewBag.TopStatistictsMajorMonthsAttendanceAndNonAttendance =
                 topStatistictsMajorMonthsAttendanceAndNonAttendance;
+            ViewBag.TopStatistictAttendanceAndNonAttendanceTeacherCourse =
+                topStatistictAttendanceAndNonAttendanceTeacherCourse;
+            ViewBag.TopStatistictAttendanceAndNonAttendanceStudentCourse =
+                topStatistictAttendanceAndNonAttendanceStudentCourse;
+            ViewBag.TopStatistictsMajorCourseAttendanceAndNonAttendance =
+                topStatistictsMajorCourseAttendanceAndNonAttendance;
 
             return View();
         }
 
-        public ActionResult GraphStatistictsAttendanceVsNonAttendancePartial()
+        public ActionResult StatisticsAttendanceVsNonAttendancePartial()
         {
             var currentAcademicPeriod = _facade.GetCurrentAcademicPeriod();
             var attendanceVsNonAttendanceStatistics = _facade.GetStatistictsAttendanceVsNonAttendance();
+
             ViewBag.StatisticsAttendanceVsNonAttendance = attendanceVsNonAttendanceStatistics;
             ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;
+
             return PartialView();
         }
 
-        public JsonResult GetStatistictsAttendanceVsNonAttendance()
+        public JsonResult GetStatisticsAttendanceVsNonAttendance()
         {
             var statistics = _facade.GetStatistictsAttendanceVsNonAttendance();
             return Json(statistics);
         }
 
-        public ActionResult DashboardNonAttendance()
+        public ActionResult StatisticsNonAttendancePartial()
         {
-            var summary = GetNonAttendanceSummary();
-            return View();
+            var currentAcademicPeriod = _facade.GetCurrentAcademicPeriod();
+            var topStatistictAttendanceAndNonAttendanceTeacherCourse =
+               _facade.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+            var topStatistictAttendanceAndNonAttendanceStudentCourse =
+                _facade.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+            var topStatistictsMajorCourseAttendanceAndNonAttendance =
+                _facade.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+
+            ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;
+            ViewBag.TopStatistictAttendanceAndNonAttendanceTeacherCourse =
+                topStatistictAttendanceAndNonAttendanceTeacherCourse;
+            ViewBag.TopStatistictAttendanceAndNonAttendanceStudentCourse =
+                topStatistictAttendanceAndNonAttendanceStudentCourse;
+            ViewBag.TopStatistictsMajorCourseAttendanceAndNonAttendance =
+                topStatistictsMajorCourseAttendanceAndNonAttendance;
+
+            return PartialView();
         }
 
-        private object GetNonAttendanceSummary()
-        {
-            throw new NotImplementedException();
-        }
 
-        public ActionResult GraphStatistictsExcusesPartial()
+        public ActionResult StatisticsExcusesPartial()
         {
             var topExcuseClassifications = _facade.GetTopStatistictExcuseClassifications();
             var statisticsExcuseStatus = _facade.GetStatistictExcuseStatus();
@@ -84,15 +109,10 @@ namespace UAS.Core.Web.WebApp.Controllers
             return PartialView();
         }
 
-        public JsonResult GetStatistictsExcusesStatus()
+        public JsonResult GetStatisticsExcusesStatus()
         {
             var statistics = _facade.GetStatistictExcuseStatus();
             return Json(statistics);
-        }
-
-        private object GetExcusesSummary()
-        {
-            throw new NotImplementedException();
         }
         #endregion Methods
     }

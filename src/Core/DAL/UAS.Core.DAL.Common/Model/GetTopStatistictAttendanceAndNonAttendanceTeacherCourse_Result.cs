@@ -18,6 +18,7 @@ namespace UAS.Core.DAL.Common.Model
         public Nullable<int> CourseId { get; set; }
         public string CourseName { get; set; }
         public string PersonFullName { get; set; }
+        public string PersonImageRelativePath { get; set; }
         public Nullable<int> EventTotal { get; set; }
     }
 }

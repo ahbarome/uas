@@ -1,0 +1,113 @@
+﻿@using UAS.Core.DAL.Common.Model;
+
+@{
+    var currentAcademicPeriod = ViewBag.CurrentAcademicPeriod as AcademicPeriodView;
+    var topExcuseClassifications = ViewBag.TopExcuseClassifications as List<Statistic>;
+    var statisticsExcuseStatus = ViewBag.StatisticsExcuseStatus as List<Statistic>;
+}
+
+@functions{
+    public static string GetPercentageWithFormat(decimal percentage)
+    {
+        var newPercentage = percentage * 100;
+        return string.Concat(newPercentage.ToString("00"), "%");
+    }
+
+    public static string GetPiePercentage(int currentTotal, List<Statistic> statistics)
+    {
+        var total = statistics.Sum(statistic => statistic.Total);
+        return string.Concat(currentTotal.ToString(), ",", total);
+    }
+
+    public static Statistic GetMajorExcuse(List<Statistic> statistics)
+    {
+        if (statistics != null)
+        {
+            var statistic = statistics.FirstOrDefault();
+            return statistic;
+        }
+        return null;
+    }
+}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div>
+                        <h3 class="font-bold no-margins text-uppercase">
+                            Estado excusas
+                        </h3>
+                        @{
+                            var majorExcuseStatus = GetMajorExcuse(statisticsExcuseStatus);
+                            if (majorExcuseStatus != null)
+                            {
+                                <br />
+                                <small>Actualmente se encuentran en estado: <span class="label label-warning text-uppercase">@majorExcuseStatus.Description</span> más del : <strong>@GetPercentageWithFormat(majorExcuseStatus.Percentage)</strong> de las excusas registradas equivalentes a: <strong>@majorExcuseStatus.Total</strong> durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
+                                <br />
+                                <br />
+                            }
+                        }
+                    </div>
+                    <div>
+                        <center>
+                            <canvas id="graphBarExcuseStatus" height="192"></canvas>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <h3 class="font-bold no-margins text-uppercase">
+                    Total Excusas por Clasificación
+                </h3>
+                @{
+                    var majorExcuseClassification = GetMajorExcuse(topExcuseClassifications);
+                    if (majorExcuseClassification != null)
+                    {
+                        <br />
+                        <small>Mayor fuente de ausentismo: <span class="label label-danger text-uppercase">@majorExcuseClassification.Description</span> con un porcentaje de participación: <strong>@GetPercentageWithFormat(majorExcuseClassification.Percentage)</strong> y un total de: <strong>@majorExcuseClassification.Total</strong> ocurrencias durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
+                        <br />
+                        <br />
+                    }
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Clasificación </th>
+                                <th>Participación </th>
+                                <th>Porcentaje </th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (topExcuseClassifications != null)
+                            {
+                                var counter = 1;
+                                foreach (var statisticExcuseClassification in topExcuseClassifications)
+                                {
+                                    <tr>
+                                        <td>@counter</td>
+                                        <td>@statisticExcuseClassification.Description</td>
+                                        <td><span class="pie">@GetPiePercentage(statisticExcuseClassification.Total, topExcuseClassifications)</span></td>
+                                        <td>@GetPercentageWithFormat(statisticExcuseClassification.Percentage)</td>
+                                        <td>@statisticExcuseClassification.Total</td>
+
+                                    </tr>
+                                    counter++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

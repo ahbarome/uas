@@ -147,16 +147,6 @@ namespace UAS.Core.DAL.Common.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictExcuseStates_Result>("GetStatistictExcuseStates");
         }
     
-        public virtual ObjectResult<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result> GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result>("GetTopStatistictAttendanceAndNonAttendanceStudentCourse");
-        }
-    
-        public virtual ObjectResult<GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result>("GetTopStatistictAttendanceAndNonAttendanceTeacherCourse");
-        }
-    
         public virtual ObjectResult<GetTopStatistictExcuseClassifications_Result> GetTopStatistictExcuseClassifications()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictExcuseClassifications_Result>("GetTopStatistictExcuseClassifications");
@@ -171,6 +161,21 @@ namespace UAS.Core.DAL.Common.Model
         public virtual IQueryable<GetCurrentAcademicPeriod_Result> GetCurrentAcademicPeriod()
         {
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetCurrentAcademicPeriod_Result>("[UASEntities].[GetCurrentAcademicPeriod]()");
+        }
+    
+        public virtual ObjectResult<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result> GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result>("GetTopStatistictAttendanceAndNonAttendanceStudentCourse");
+        }
+    
+        public virtual ObjectResult<GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result>("GetTopStatistictAttendanceAndNonAttendanceTeacherCourse");
+        }
+    
+        public virtual ObjectResult<GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result> GetTopStatistictsMajorCourseAttendanceAndNonAttendance()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result>("GetTopStatistictsMajorCourseAttendanceAndNonAttendance");
         }
     }
 }

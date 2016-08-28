@@ -1,5 +1,6 @@
 ﻿namespace UAS.Core.Dashboard.Managers
 {
+    using System;
     using System.Collections.Generic;
     using DAL.Common.Model;
     using DAL.Persisters;
@@ -25,7 +26,51 @@
 
         internal List<Statistic> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
         {
-            return _dashboardPersister.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
+            var topStatistics =
+                _dashboardPersister.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
+            var totalStatistics = SumStatisticsTotal(topStatistics);
+            UpdateStatisticsPercentage(topStatistics, totalStatistics);
+            return topStatistics;
+        }
+
+        internal List<Statistic> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
+        {
+            var topStatistics =
+                _dashboardPersister.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+            var totalStatistics = SumStatisticsTotal(topStatistics);
+            UpdateStatisticsPercentage(topStatistics, totalStatistics);
+            return topStatistics;
+        }
+
+        internal List<Statistic> GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        {
+            var topStatistics =
+                _dashboardPersister.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+            var totalStatistics = SumStatisticsTotal(topStatistics);
+            UpdateStatisticsPercentage(topStatistics, totalStatistics);
+            return topStatistics;
+        }
+
+        internal List<Statistic> GetTopStatistictsMajorCourseAttendanceAndNonAttendance()
+        {
+            var topStatistics =
+                _dashboardPersister.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+            var totalStatistics = SumStatisticsTotal(topStatistics);
+            UpdateStatisticsPercentage(topStatistics, totalStatistics);
+            return topStatistics;
+        }
+
+        private void UpdateStatisticsPercentage(List<Statistic> statistics, int totalStatistics)
+        {
+            statistics.ForEach(
+                statistic => statistic.Percentage = (decimal)statistic.Total / totalStatistics);
+        }
+
+        private int SumStatisticsTotal(List<Statistic> statistics)
+        {
+            var total = 0;
+            statistics.ForEach(statistic => total += statistic.Total);
+            return total;
         }
     }
 }

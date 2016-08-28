@@ -2,13 +2,13 @@
 
 $(document).ready(function () {
     // Attendance graphs
-    $.post("/Home/GetStatistictsAttendanceVsNonAttendance", function (attendanceVsNonAttendanceData) {
-        PopulateGraphLinearStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
-        PopulateGraphDonutStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
+    $.post("/Home/GetStatisticsAttendanceVsNonAttendance", function (attendanceVsNonAttendanceData) {
+        PopulateGraphLinearStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
+        PopulateGraphDonutStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
     });
 
     // Excuse graphs
-    $.post("/Home/GetStatistictsExcusesStatus", function (excuseStatusData) {
+    $.post("/Home/GetStatisticsExcusesStatus", function (excuseStatusData) {
         PopulateGraphDunutExcuseStatus(excuseStatusData);
     });
 });
@@ -21,12 +21,12 @@ function IsValidData(data) {
     return isValid;
 };
 
-function PopulateGraphLinearStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
+function PopulateGraphLinearStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
     if (IsValidData(attendanceVsNonAttendanceData)) {
         
-        var attendanceData = GetGraphStatistictsAttendanceData(attendanceVsNonAttendanceData);
-        var nonAttendanceData = GetGraphStatistictsNonAttendanceData(attendanceVsNonAttendanceData);
-        var labelsAttendanceVsNonAttendance = GetLabelsGraphStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
+        var attendanceData = GetGraphStatisticsAttendanceData(attendanceVsNonAttendanceData);
+        var nonAttendanceData = GetGraphStatisticsNonAttendanceData(attendanceVsNonAttendanceData);
+        var labelsAttendanceVsNonAttendance = GetLabelsGraphStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
         
         var lineData = {
             labels: labelsAttendanceVsNonAttendance,
@@ -78,11 +78,11 @@ function PopulateGraphLinearStatistictsAttendanceVsNonAttendance(attendanceVsNon
     }
 };
 
-function PopulateGraphDonutStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
+function PopulateGraphDonutStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
     if (IsValidData(attendanceVsNonAttendanceData)) {
 
-        var attendanceData = GetGraphStatistictsAttendanceData(attendanceVsNonAttendanceData);
-        var nonAttendanceData = GetGraphStatistictsNonAttendanceData(attendanceVsNonAttendanceData);
+        var attendanceData = GetGraphStatisticsAttendanceData(attendanceVsNonAttendanceData);
+        var nonAttendanceData = GetGraphStatisticsNonAttendanceData(attendanceVsNonAttendanceData);
         var totalAttendance = Sum(attendanceData);
         var totalNonAttendance = Sum(nonAttendanceData);
 
@@ -128,9 +128,9 @@ function PopulateGraphDunutExcuseStatus(excuseStatusData) {
         var STATUS_APPROVED = "Aprobada";
         var STATUS_REJECTED = "Rechazada";
 
-        var pendingData = Sum(GetGraphStatistictsExcuseStatusData(excuseStatusData, STATUS_PENDING));
-        var approvedData = Sum(GetGraphStatistictsExcuseStatusData(excuseStatusData, STATUS_APPROVED));
-        var rejectedData = Sum(GetGraphStatistictsExcuseStatusData(excuseStatusData, STATUS_REJECTED));
+        var pendingData = Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_PENDING));
+        var approvedData = Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_APPROVED));
+        var rejectedData = Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_REJECTED));
 
         console.log(pendingData);
         console.log(approvedData);
@@ -180,7 +180,7 @@ function PopulateGraphDunutExcuseStatus(excuseStatusData) {
     }
 };
 
-function GetLabelsGraphStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
+function GetLabelsGraphStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
     var labels = [];
     $.each(attendanceVsNonAttendanceData, function (index, attendanceVsNonAttendance) {
         var description = attendanceVsNonAttendance.Description;
@@ -210,7 +210,7 @@ function Sum(array) {
     return sum;
 };
 
-function GetGraphStatistictsAttendanceData(attendanceVsNonAttendanceData) {
+function GetGraphStatisticsAttendanceData(attendanceVsNonAttendanceData) {
     var data = [];
     $.each(attendanceVsNonAttendanceData, function (index, attendanceVsNonAttendance) {
         var attendance = attendanceVsNonAttendance.Summary.Attendance;
@@ -221,7 +221,7 @@ function GetGraphStatistictsAttendanceData(attendanceVsNonAttendanceData) {
     return data;
 };
 
-function GetGraphStatistictsNonAttendanceData(attendanceVsNonAttendanceData) {
+function GetGraphStatisticsNonAttendanceData(attendanceVsNonAttendanceData) {
     var data = [];
     $.each(attendanceVsNonAttendanceData, function (index, attendanceVsNonAttendance) {
         var nonAttendance = attendanceVsNonAttendance.Summary.NonAttendance;
@@ -232,7 +232,7 @@ function GetGraphStatistictsNonAttendanceData(attendanceVsNonAttendanceData) {
     return data;
 };
 
-function GetGraphStatistictsExcuseStatusData(excuseStatusData, status) {
+function GetGraphStatisticsExcuseStatusData(excuseStatusData, status) {
     var data = [];
     $.each(excuseStatusData, function (index, excuseStatus) {
         var total = excuseStatus.Total;

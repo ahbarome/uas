@@ -11,14 +11,11 @@ namespace UAS.Core.DAL.Common.Model
 {
     using System;
     
-    public partial class GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result
+    public partial class GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result
     {
         public string EventType { get; set; }
-        public string EventTypeAlias { get; set; }
-        public Nullable<int> CourseId { get; set; }
-        public string CourseName { get; set; }
-        public string PersonFullName { get; set; }
-        public string PersonImageRelativePath { get; set; }
+        public string EventDateMonthName { get; set; }
+        public string EventCourseName { get; set; }
         public Nullable<int> EventTotal { get; set; }
     }
 }

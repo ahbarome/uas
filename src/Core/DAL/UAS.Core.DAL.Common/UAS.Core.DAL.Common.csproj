@@ -147,6 +147,9 @@
     <Compile Include="Model\GetTopStatistictExcuseClassifications_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>

@@ -64,3 +64,67 @@ FROM	[NonAttendance].[ExcuseApprovalView]
 SELECT	*
 FROM	[Security].[PagePermissionView]
 ORDER BY [IdRole], [DocumentNumber], [IdPage]
+
+
+SELECT TOP 5 [ATV].CourseId						AS CourseId
+	, [ATV].CourseName						AS CourseName
+	, [ATV].DocumentNumber					AS PersonDocumentNumber
+	, [ATV].FullName						AS PersonFullName
+	, [ATV].RoleId							AS PersonRoleId
+	, [ATV].RoleAlias						AS PersonRoleAlias
+	, COUNT( 1 )							AS EventTotal
+FROM	[Attendance].[AttendanceView] [ATV]
+GROUP BY  [ATV].CourseId		
+		, [ATV].CourseName		
+		, [ATV].DocumentNumber	
+		, [ATV].FullName		
+		, [ATV].RoleId			
+		, [ATV].RoleAlias	
+ORDER BY	COUNT( 1 )	DESC
+
+SELECT TOP 5 [NAV].CourseId						AS CourseId
+	, [NAV].CourseName						AS CourseName
+	, [NAV].DocumentNumber					AS PersonDocumentNumber
+	, [NAV].FullName						AS PersonFullName
+	, [NAV].RoleId							AS PersonRoleId
+	, [NAV].RoleAlias						AS PersonRoleAlias
+	, COUNT( 1 )							AS EventTotal
+FROM	[NonAttendance].[NonAttendanceView] [NAV]
+GROUP BY  [NAV].CourseId		
+		, [NAV].CourseName		
+		, [NAV].DocumentNumber	
+		, [NAV].FullName		
+		, [NAV].RoleId			
+		, [NAV].RoleAlias	
+ORDER BY	COUNT( 1 )	DESC
+
+
+SELECT DISTINCT NonAttendanceDate
+		, CourseId
+		, CourseName
+		, (SELECT TeacherFullName FROM [Integration].[GetTeacherByCourse] (CourseId) ) TeacherFullName
+		, MAX(EventTotal) AS EventTotal
+FROM (
+		SELECT DATENAME(MONTH, [NAV].[NonAttendanceDate])	AS NonAttendanceDate
+			, [NAV].CourseId								AS CourseId
+			, [NAV].CourseName								AS CourseName
+			, COUNT( 1 )									AS EventTotal
+		FROM	[NonAttendance].[NonAttendanceView] [NAV]
+		GROUP BY  DATENAME(MONTH, [NAV].[NonAttendanceDate])
+				, [NAV].CourseId		
+				, [NAV].CourseName		) AS Summary
+GROUP BY NonAttendanceDate
+		, CourseId
+		, CourseName
+HAVING CONCAT(NonAttendanceDate, MAX(EventTotal)) IN (
+							SELECT DISTINCT CONCAT(NonAttendanceDate, MAX(EventTotal)) AS EventTotal
+							FROM (
+							SELECT DATENAME(MONTH, [NAV].[NonAttendanceDate])	AS NonAttendanceDate
+									, [NAV].CourseId								AS CourseId
+									, [NAV].CourseName								AS CourseName
+									, COUNT( 1 )									AS EventTotal
+							FROM	[NonAttendance].[NonAttendanceView] [NAV]
+							GROUP BY  DATENAME(MONTH, [NAV].[NonAttendanceDate] )
+									, [NAV].CourseId		
+									, [NAV].CourseName		) AS Summary
+							GROUP BY NonAttendanceDate ) 

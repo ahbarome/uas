@@ -193,5 +193,20 @@
         {
             return _dashboardFacade.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
         }
+
+        public dynamic GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
+        {
+            return _dashboardFacade.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+        }
+
+        public dynamic GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        {
+            return _dashboardFacade.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+        }
+
+        public dynamic GetTopStatistictsMajorCourseAttendanceAndNonAttendance()
+        {
+            return _dashboardFacade.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+        }
     }
 }

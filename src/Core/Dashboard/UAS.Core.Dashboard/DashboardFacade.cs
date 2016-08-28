@@ -38,5 +38,20 @@ namespace UAS.Core.Dashboard
         {
             return _dashboarAttendanceManager.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
         }
+
+        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
+        {
+            return _dashboarAttendanceManager.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+        }
+
+        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        {
+            return _dashboarAttendanceManager.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+        }
+
+        public List<Statistic> GetTopStatistictsMajorCourseAttendanceAndNonAttendance()
+        {
+            return _dashboarAttendanceManager.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+        }
     }
 }

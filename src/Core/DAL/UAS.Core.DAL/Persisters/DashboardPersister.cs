@@ -29,7 +29,6 @@ namespace UAS.Core.DAL.Persisters
             return academicPeriod;
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -77,7 +76,6 @@ namespace UAS.Core.DAL.Persisters
             return statistics;
         }
 
-
         public List<Statistic> GetStatistictExcuseStatus()
         {
             var statistics = new List<Statistic>();
@@ -101,7 +99,8 @@ namespace UAS.Core.DAL.Persisters
             return statistics;
         }
 
-        public List<Statistic> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance() {
+        public List<Statistic> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
+        {
             var statistics = new List<Statistic>();
 
             var statisticExcuseStatus = base.Entities.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
@@ -110,7 +109,84 @@ namespace UAS.Core.DAL.Persisters
             {
                 var statistic = new Statistic() { Summary = new Dictionary<string, int>() };
 
+                statistic.EventType = statistictExcuseStatus.EventType;
                 statistic.Description = statistictExcuseStatus.EventDateMonthName;
+                statistic.Total = statistictExcuseStatus.EventTotal ?? 0;
+                statistic.Summary.Add(
+                    statistictExcuseStatus.EventType,
+                    statistictExcuseStatus.EventTotal ?? 0);
+
+                statistics.Add(statistic);
+            }
+
+            return statistics;
+        }
+
+        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        {
+            var statistics = new List<Statistic>();
+
+            var statisticExcuseStatus = base.Entities.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+
+            foreach (var statistictExcuseStatus in statisticExcuseStatus)
+            {
+                var statistic = new Statistic() { Summary = new Dictionary<string, int>() };
+
+                statistic.EventType = statistictExcuseStatus.EventType;
+                statistic.EventTypeAlias = statistictExcuseStatus.EventTypeAlias;
+                statistic.ImageRelativePath = statistictExcuseStatus.PersonImageRelativePath;
+                statistic.Description = statistictExcuseStatus.CourseName;
+                statistic.AdditionalDescription = statistictExcuseStatus.PersonFullName;
+                statistic.Total = statistictExcuseStatus.EventTotal ?? 0;
+                statistic.Summary.Add(
+                    statistictExcuseStatus.EventType,
+                    statistictExcuseStatus.EventTotal ?? 0);
+
+                statistics.Add(statistic);
+            }
+
+            return statistics;
+        }
+
+        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
+        {
+            var statistics = new List<Statistic>();
+
+            var statisticExcuseStatus = base.Entities.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+
+            foreach (var statistictExcuseStatus in statisticExcuseStatus)
+            {
+                var statistic = new Statistic() { Summary = new Dictionary<string, int>() };
+
+                statistic.EventType = statistictExcuseStatus.EventType;
+                statistic.EventTypeAlias = statistictExcuseStatus.EventTypeAlias;
+                statistic.ImageRelativePath = statistictExcuseStatus.PersonImageRelativePath;
+                statistic.Description = statistictExcuseStatus.CourseName;
+                statistic.AdditionalDescription = statistictExcuseStatus.PersonFullName;
+                statistic.Total = statistictExcuseStatus.EventTotal ?? 0;
+                statistic.Summary.Add(
+                    statistictExcuseStatus.EventType,
+                    statistictExcuseStatus.EventTotal ?? 0);
+
+                statistics.Add(statistic);
+            }
+
+            return statistics;
+        }
+
+        public List<Statistic> GetTopStatistictsMajorCourseAttendanceAndNonAttendance()
+        {
+            var statistics = new List<Statistic>();
+
+            var statisticExcuseStatus = base.Entities.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+
+            foreach (var statistictExcuseStatus in statisticExcuseStatus)
+            {
+                var statistic = new Statistic() { Summary = new Dictionary<string, int>() };
+
+                statistic.EventType = statistictExcuseStatus.EventType;
+                statistic.Description = statistictExcuseStatus.EventDateMonthName;
+                statistic.AdditionalDescription = statistictExcuseStatus.EventCourseName;
                 statistic.Total = statistictExcuseStatus.EventTotal ?? 0;
                 statistic.Summary.Add(
                     statistictExcuseStatus.EventType,

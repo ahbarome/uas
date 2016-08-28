@@ -1,0 +1,151 @@
+﻿@using System.Linq;
+@using UAS.Core.DAL.Common.Model;
+
+@{
+    var currentAcademicPeriod = ViewBag.CurrentAcademicPeriod as AcademicPeriodView;
+    var topStatisticsTeachersCourse = ViewBag.TopStatistictAttendanceAndNonAttendanceTeacherCourse as List<Statistic>;
+    var topStatisticsStudentsCourse = ViewBag.TopStatistictAttendanceAndNonAttendanceStudentCourse as List<Statistic>;
+    var topStatisticsMajorCourse = ViewBag.TopStatistictsMajorCourseAttendanceAndNonAttendance as List<Statistic>;
+    var NON_ATTENDANCE = "NONATTENDANCE";
+}
+
+@functions{
+    public static string GetPercentageWithFormat(decimal percentage)
+    {
+        var newPercentage = percentage * 100;
+        return string.Concat(newPercentage.ToString("00"), "%");
+    }
+
+    public static string GetPiePercentage(int currentTotal, List<Statistic> statistics)
+    {
+        var total = statistics.Sum(statistic => statistic.Total);
+        return string.Concat(currentTotal.ToString(), ",", total);
+    }
+
+    public static Statistic GetMajorStatisticNonAttendance(List<Statistic> statistics)
+    {
+        var NON_ATTENDANCE = "NONATTENDANCE";
+        if (statistics != null)
+        {
+            var statistic = statistics.Where(filter => filter.EventType.ToUpper().Equals(NON_ATTENDANCE)).FirstOrDefault();
+            return statistic;
+        }
+        return null;
+    }
+}
+<div class="row">
+    <div class="col-lg-2">
+        @if (topStatisticsMajorCourse != null)
+        {
+            var majorCourseStatistic = GetMajorStatisticNonAttendance(topStatisticsMajorCourse);
+
+            if (majorCourseStatistic != null)
+            {
+                <div class="widget red-bg p-lg text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-thumbs-down fa-5x"></i>
+                        <h1 class="m-xs">@majorCourseStatistic.Total</h1>
+                        <h3 class="font-bold no-margins">
+                            @majorCourseStatistic.AdditionalDescription
+                        </h3>
+                        <small>Curso con mayor ausentismo en el mes de @majorCourseStatistic.Description</small>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <h3 class="font-bold no-margins text-uppercase">
+                    Docentes Con Mayor Ausentismo
+                </h3>
+                @{
+                    var statisticTeacherCourse = GetMajorStatisticNonAttendance(topStatisticsTeachersCourse);
+                    if (statisticTeacherCourse != null)
+                    {
+                        <br />
+                        <small>Docente con mayor ausentismo: <span class="label label-danger text-uppercase">@statisticTeacherCourse.AdditionalDescription</span> durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
+                        <br />
+                        <br />
+                    }
+                }
+
+                <div class="feed-activity-list">
+
+                    @if (topStatisticsStudentsCourse != null)
+                    {
+                        foreach (
+                            var statistic in topStatisticsTeachersCourse.Where(
+                                filter => filter.EventType.ToUpper().Equals(NON_ATTENDANCE)))
+                        {
+                            <div class="feed-element">
+                                <a href="#" class="pull-left">
+                                    <img alt="image" class="img-circle" src="@Url.Content(statistic.ImageRelativePath)">
+                                </a>
+                                <div class="media-body ">
+                                    <small class="pull-right">Total faltas: @statistic.Total.</small>
+                                    <strong class="text-uppercase">@statistic.AdditionalDescription</strong><br>
+                                    @statistic.Description<br>
+
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="ibox-content">
+            <h3 class="font-bold no-margins text-uppercase">
+                Estudiantes Con Mayor Ausentismo
+            </h3>
+            @{
+                var statisticStudentCourse = GetMajorStatisticNonAttendance(topStatisticsStudentsCourse);
+                if (statisticStudentCourse != null)
+                {
+                    <br />
+                    <small>Estudiante con mayor ausentismo: <span class="label label-warning text-uppercase">@statisticStudentCourse.AdditionalDescription</span> durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
+                    <br />
+                    <br />
+                }
+            }
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>Estudiante </th>
+                            <th>Faltas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (topStatisticsStudentsCourse != null)
+                        {
+                            var counter = 1;
+                            foreach (
+                                var statistic in topStatisticsStudentsCourse.Where(
+                                    filter => filter.EventType.ToUpper().Equals(NON_ATTENDANCE)))
+                            {
+                                <tr>
+                                    <td><span class="fa fa-thumbs-down text-danger"></span></td>
+                                    <td>@counter</td>
+                                    <td>@statistic.AdditionalDescription</td>
+                                    <td>@statistic.Total</td>
+
+                                </tr>
+                                counter++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<br />
