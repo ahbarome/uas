@@ -1,9 +1,15 @@
 ﻿var UNDEFINED = 'undefined';
 
 $(document).ready(function () {
+    // Attendance graphs
     $.post("/Home/GetStatistictsAttendanceVsNonAttendance", function (attendanceVsNonAttendanceData) {
         PopulateGraphLinearStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
         PopulateGraphDonutStatistictsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
+    });
+
+    // Excuse graphs
+    $.post("/Home/GetStatistictsExcusesStatus", function (excuseStatusData) {
+        PopulateGraphDunutExcuseStatus(excuseStatusData);
     });
 });
 
@@ -66,8 +72,8 @@ function PopulateGraphLinearStatistictsAttendanceVsNonAttendance(attendanceVsNon
         var linearChart = new Chart(contextLinear).Line(lineData, lineOptions);
 
 
-        var contextRadar = document.getElementById("graphRadarAttendanceVsNonAttendance").getContext("2d");
-        var radarChart = new Chart(contextRadar).Radar(lineData, lineOptions);
+        //var contextRadar = document.getElementById("graphRadarAttendanceVsNonAttendance").getContext("2d");
+        //var radarChart = new Chart(contextRadar).Radar(lineData, lineOptions);
         
     }
 };
@@ -79,6 +85,7 @@ function PopulateGraphDonutStatistictsAttendanceVsNonAttendance(attendanceVsNonA
         var nonAttendanceData = GetGraphStatistictsNonAttendanceData(attendanceVsNonAttendanceData);
         var totalAttendance = Sum(attendanceData);
         var totalNonAttendance = Sum(nonAttendanceData);
+
         var attendance = {
             value: totalAttendance,
             color: "#a3e1d4",
@@ -109,8 +116,67 @@ function PopulateGraphDonutStatistictsAttendanceVsNonAttendance(attendanceVsNonA
             animateScale: false
         };
 
-        var ctx = document.getElementById("graphDonutAttendanceVsNonAttendance").getContext("2d");
+        //var ctx = document.getElementById("graphDonutAttendanceVsNonAttendance").getContext("2d");
+        //var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+    }
+};
+
+function PopulateGraphDunutExcuseStatus(excuseStatusData) {
+    if (IsValidData(excuseStatusData)) {
+
+        var STATUS_PENDING = "Pendiente";
+        var STATUS_APPROVED = "Aprobada";
+        var STATUS_REJECTED = "Rechazada";
+
+        var pendingData = Sum(GetGraphStatistictsExcuseStatusData(excuseStatusData, STATUS_PENDING));
+        var approvedData = Sum(GetGraphStatistictsExcuseStatusData(excuseStatusData, STATUS_APPROVED));
+        var rejectedData = Sum(GetGraphStatistictsExcuseStatusData(excuseStatusData, STATUS_REJECTED));
+
+        console.log(pendingData);
+        console.log(approvedData);
+
+        var pending = {
+            value: pendingData,
+            color: "#A4CEE8",
+            highlight: "#1ab394",
+            label: STATUS_PENDING
+        };
+
+        var approved = {
+            value: approvedData,
+            color: "#a3e1d4",
+            highlight: "#1ab394",
+            label: STATUS_APPROVED
+        };
+
+        var rejected = {
+            value: 1000,
+            color: "#b5b8cf",
+            highlight: "#1ab394",
+            label: STATUS_REJECTED
+        }
+
+        var doughnutData = [
+            pending,
+            approved,
+            rejected
+        ];
+
+        var doughnutOptions = {
+            segmentShowStroke: true,
+            segmentStrokeColor: "#fff",
+            segmentStrokeWidth: 2,
+            percentageInnerCutout: 45, // This is 0 for Pie charts
+            animationSteps: 100,
+            animationEasing: "easeOutBounce",
+            animateRotate: true,
+            animateScale: true
+        };
+
+        console.log("1");
+        var ctx = document.getElementById("graphBarExcuseStatus").getContext("2d");
         var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+        console.log("2");
     }
 };
 
@@ -161,6 +227,19 @@ function GetGraphStatistictsNonAttendanceData(attendanceVsNonAttendanceData) {
         var nonAttendance = attendanceVsNonAttendance.Summary.NonAttendance;
         if (typeof (nonAttendance) !== UNDEFINED) {
             data.push(nonAttendance);
+        }
+    });
+    return data;
+};
+
+function GetGraphStatistictsExcuseStatusData(excuseStatusData, status) {
+    var data = [];
+    $.each(excuseStatusData, function (index, excuseStatus) {
+        var total = excuseStatus.Total;
+        if (excuseStatus.Description.toUpperCase() == status.toUpperCase()) {
+            if (typeof (total) !== UNDEFINED) {
+                data.push(parseInt(total));
+            }
         }
     });
     return data;

@@ -173,5 +173,25 @@
         {
             return _dashboardFacade.GetStatistictsAttendanceVsNonAttendance();
         }
+
+        public dynamic GetCurrentAcademicPeriod()
+        {
+            return _dashboardFacade.GetCurrentAcademicPeriod();
+        }
+
+        public dynamic GetTopStatistictExcuseClassifications()
+        {
+            return _dashboardFacade.GetTopStatistictExcuseClassifications();
+        }
+
+        public dynamic GetStatistictExcuseStatus()
+        {
+            return _dashboardFacade.GetStatistictExcuseStatus();
+        }
+
+        public dynamic GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
+        {
+            return _dashboardFacade.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
+        }
     }
 }

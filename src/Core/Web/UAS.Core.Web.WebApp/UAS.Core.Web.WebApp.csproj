@@ -1809,7 +1809,8 @@
     <Content Include="Views\Report\ReportNonAttendance.cshtml" />
     <Content Include="Views\Report\ReportAttendanceGrid.cshtml" />
     <Content Include="Views\Report\ReportNonAttendanceGrid.cshtml" />
-    <Content Include="Views\Home\GraphStatistictsAttendanceVsNonAttendance.cshtml" />
+    <Content Include="Views\Home\GraphStatistictsAttendanceVsNonAttendancePartial.cshtml" />
+    <Content Include="Views\Home\GraphStatistictsExcusesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

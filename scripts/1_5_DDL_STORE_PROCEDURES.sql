@@ -1121,7 +1121,7 @@ BEGIN
 		SET @SemesterStartDate = DATEADD(DD, 1, @SemesterStartDate);
 	END
 
-	SELECT TOP 5 EventType
+	SELECT TOP 10 EventType
 			, EventTypeAlias
 			, CourseId
 			, CourseName
@@ -1260,7 +1260,7 @@ BEGIN
 		SET @SemesterStartDate = DATEADD(DD, 1, @SemesterStartDate);
 	END
 
-	SELECT TOP 5 EventType
+	SELECT TOP 10 EventType
 			, EventTypeAlias
 			, CourseId
 			, CourseName
@@ -1378,7 +1378,6 @@ BEGIN
 END
 
 GO
---*******************************************************************
 
 --*******************************************************************
 --GETTOPSTATISTICTEXCUSECLASSIFICATIONS STORE PROCEDURE

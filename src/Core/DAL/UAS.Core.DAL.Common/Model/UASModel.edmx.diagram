@@ -68,6 +68,7 @@
         <EntityTypeShape EntityType="UASModel.StatusByRoleView" Width="1.5" PointX="14.75" PointY="8.75" />
         <EntityTypeShape EntityType="UASModel.ExcuseView" Width="1.5" PointX="3.375" PointY="15.75" />
         <EntityTypeShape EntityType="UASModel.AttendanceView" Width="1.5" PointX="9.375" PointY="16.75" />
+        <EntityTypeShape EntityType="UASModel.AcademicPeriodView" Width="1.5" PointX="11.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

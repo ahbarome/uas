@@ -26,14 +26,33 @@ namespace UAS.Core.Web.WebApp.Controllers
         public ActionResult Index()
         {
             var session = base.CurrentSession;
+
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
             ViewData.Add("USERNAME", session.SessionUser.Username);
+
+            var currentAcademicPeriod = _facade.GetCurrentAcademicPeriod();
             var attendanceVsNonAttendanceStatistics = _facade.GetStatistictsAttendanceVsNonAttendance();
+            var topExcuseClassifications = _facade.GetTopStatistictExcuseClassifications();
+            var statisticsExcuseStatus = _facade.GetStatistictExcuseStatus();
+            var topStatistictsMajorMonthsAttendanceAndNonAttendance =
+                _facade.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
+
             ViewBag.StatisticsAttendanceVsNonAttendance = attendanceVsNonAttendanceStatistics;
+            ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;
+            ViewBag.TopExcuseClassifications = topExcuseClassifications;
+            ViewBag.StatisticsExcuseStatus = statisticsExcuseStatus;
+            ViewBag.TopStatistictsMajorMonthsAttendanceAndNonAttendance =
+                topStatistictsMajorMonthsAttendanceAndNonAttendance;
+
             return View();
         }
 
-        public ActionResult GraphStatistictsAttendanceVsNonAttendance() {
+        public ActionResult GraphStatistictsAttendanceVsNonAttendancePartial()
+        {
+            var currentAcademicPeriod = _facade.GetCurrentAcademicPeriod();
+            var attendanceVsNonAttendanceStatistics = _facade.GetStatistictsAttendanceVsNonAttendance();
+            ViewBag.StatisticsAttendanceVsNonAttendance = attendanceVsNonAttendanceStatistics;
+            ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;
             return PartialView();
         }
 
@@ -54,10 +73,21 @@ namespace UAS.Core.Web.WebApp.Controllers
             throw new NotImplementedException();
         }
 
-        public ActionResult DashboardExcuses()
+        public ActionResult GraphStatistictsExcusesPartial()
         {
-            var summary = GetExcusesSummary();
-            return View();
+            var topExcuseClassifications = _facade.GetTopStatistictExcuseClassifications();
+            var statisticsExcuseStatus = _facade.GetStatistictExcuseStatus();
+
+            ViewBag.TopExcuseClassifications = topExcuseClassifications;
+            ViewBag.StatisticsExcuseStatus = statisticsExcuseStatus;
+
+            return PartialView();
+        }
+
+        public JsonResult GetStatistictsExcusesStatus()
+        {
+            var statistics = _facade.GetStatistictExcuseStatus();
+            return Json(statistics);
         }
 
         private object GetExcusesSummary()

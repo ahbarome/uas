@@ -56,6 +56,9 @@
     <Compile Include="Model\AcademicPeriod.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\AcademicPeriodView.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Attachment.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
@@ -106,6 +109,9 @@
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GetCourseSummaryById_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetCurrentAcademicPeriod_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GetCurrentCourseByTeacherDocumentNumber_Result.cs">

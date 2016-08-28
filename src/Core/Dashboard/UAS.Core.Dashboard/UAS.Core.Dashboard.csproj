@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DashboardFacade.cs" />
     <Compile Include="Managers\DashboardAttendanceManager.cs" />
+    <Compile Include="Managers\DashboardExcuseManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

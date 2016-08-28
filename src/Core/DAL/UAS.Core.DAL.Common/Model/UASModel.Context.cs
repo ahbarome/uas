@@ -62,6 +62,7 @@ namespace UAS.Core.DAL.Common.Model
         public virtual DbSet<StatusByRoleView> StatusByRoleView { get; set; }
         public virtual DbSet<ExcuseView> ExcuseView { get; set; }
         public virtual DbSet<AttendanceView> AttendanceView { get; set; }
+        public virtual DbSet<AcademicPeriodView> AcademicPeriodView { get; set; }
     
         public virtual ObjectResult<GetAllStudentMovementsByTeacherDocumentNumber_Result> GetAllStudentMovementsByTeacherDocumentNumber(Nullable<int> teacherDocumentNumber)
         {
@@ -164,6 +165,12 @@ namespace UAS.Core.DAL.Common.Model
         public virtual ObjectResult<GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result>("GetTopStatistictsMajorMonthsAttendanceAndNonAttendance");
+        }
+    
+        [DbFunction("UASEntities", "GetCurrentAcademicPeriod")]
+        public virtual IQueryable<GetCurrentAcademicPeriod_Result> GetCurrentAcademicPeriod()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetCurrentAcademicPeriod_Result>("[UASEntities].[GetCurrentAcademicPeriod]()");
         }
     }
 }

@@ -366,6 +366,26 @@ advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceView' no tiene defi
           <Property Name="MovementTime" Type="time" Precision="7" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'UAS.Integration.AcademicPeriodView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AcademicPeriodView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Period" />
+            <PropertyRef Name="Semester" />
+            <PropertyRef Name="SemesterAlias" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Period" Type="int" Nullable="false" />
+          <Property Name="Semester" Type="int" Nullable="false" />
+          <Property Name="SemesterAlias" Type="varchar" MaxLength="21" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="StartDateMonthName" Type="nvarchar" MaxLength="30" />
+          <Property Name="EndDateMonthName" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'UAS.Integration.PersonActivitiesView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PersonActivitiesView">
           <Key>
@@ -1056,6 +1076,22 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="GetCurrentAcademicPeriod" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Id" Type="int" Nullable="false" />
+                <Property Name="Period" Type="int" Nullable="false" />
+                <Property Name="Semester" Type="int" Nullable="false" />
+                <Property Name="SemesterAlias" Type="varchar" MaxLength="21" Nullable="false" />
+                <Property Name="StartDate" Type="datetime" Nullable="false" />
+                <Property Name="EndDate" Type="datetime" Nullable="false" />
+                <Property Name="StartDateMonthName" Type="nvarchar" MaxLength="30" />
+                <Property Name="EndDateMonthName" Type="nvarchar" MaxLength="30" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="GetCurrentCourseByTeacherDocumentNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
           <Parameter Name="TeacherDocumentNumber" Type="int" Mode="In" />
         </Function>
@@ -1145,6 +1181,18 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
     [AttendanceView].[MovementDate] AS [MovementDate], 
     [AttendanceView].[MovementTime] AS [MovementTime]
     FROM [Attendance].[AttendanceView] AS [AttendanceView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AcademicPeriodView" EntityType="Self.AcademicPeriodView" store:Type="Views" store:Schema="Integration">
+            <DefiningQuery>SELECT 
+    [AcademicPeriodView].[Id] AS [Id], 
+    [AcademicPeriodView].[Period] AS [Period], 
+    [AcademicPeriodView].[Semester] AS [Semester], 
+    [AcademicPeriodView].[SemesterAlias] AS [SemesterAlias], 
+    [AcademicPeriodView].[StartDate] AS [StartDate], 
+    [AcademicPeriodView].[EndDate] AS [EndDate], 
+    [AcademicPeriodView].[StartDateMonthName] AS [StartDateMonthName], 
+    [AcademicPeriodView].[EndDateMonthName] AS [EndDateMonthName]
+    FROM [Integration].[AcademicPeriodView] AS [AcademicPeriodView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PersonActivitiesView" EntityType="Self.PersonActivitiesView" store:Type="Views" store:Schema="Integration">
             <DefiningQuery>SELECT 
@@ -1627,6 +1675,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <FunctionImport Name="GetTopStatistictAttendanceAndNonAttendanceTeacherCourse" ReturnType="Collection(UASModel.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result)" />
           <FunctionImport Name="GetTopStatistictExcuseClassifications" ReturnType="Collection(UASModel.GetTopStatistictExcuseClassifications_Result)" />
           <FunctionImport Name="GetTopStatistictsMajorMonthsAttendanceAndNonAttendance" ReturnType="Collection(UASModel.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result)" />
+          <EntitySet Name="AcademicPeriodView" EntityType="UASModel.AcademicPeriodView" />
+          <FunctionImport Name="GetCurrentAcademicPeriod" IsComposable="true" ReturnType="Collection(UASModel.GetCurrentAcademicPeriod_Result)" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -2747,6 +2797,34 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <Property Type="String" Name="EventDateMonthName" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="EventTotal" Nullable="true" />
         </ComplexType>
+        <EntityType Name="AcademicPeriodView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Period" />
+            <PropertyRef Name="Semester" />
+            <PropertyRef Name="SemesterAlias" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Period" Type="Int32" Nullable="false" />
+          <Property Name="Semester" Type="Int32" Nullable="false" />
+          <Property Name="SemesterAlias" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StartDateMonthName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EndDateMonthName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="GetCurrentAcademicPeriod_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="Period" Nullable="false" />
+          <Property Type="Int32" Name="Semester" Nullable="false" />
+          <Property Type="String" Name="SemesterAlias" Nullable="false" MaxLength="21" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="StartDateMonthName" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="EndDateMonthName" Nullable="true" MaxLength="30" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3475,6 +3553,34 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="AcademicPeriodView">
+            <EntityTypeMapping TypeName="UASModel.AcademicPeriodView">
+              <MappingFragment StoreEntitySet="AcademicPeriodView">
+                <ScalarProperty Name="EndDateMonthName" ColumnName="EndDateMonthName" />
+                <ScalarProperty Name="StartDateMonthName" ColumnName="StartDateMonthName" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SemesterAlias" ColumnName="SemesterAlias" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetCurrentAcademicPeriod" FunctionName="UASModel.Store.GetCurrentAcademicPeriod">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetCurrentAcademicPeriod_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="SemesterAlias" ColumnName="SemesterAlias" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDateMonthName" ColumnName="StartDateMonthName" />
+                <ScalarProperty Name="EndDateMonthName" ColumnName="EndDateMonthName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3489,7 +3595,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />

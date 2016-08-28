@@ -121,6 +121,22 @@ GO
 --*******************************************************************
 --INTEGRATION SCHEMA 
 --*******************************************************************
+--ACADEMICPERIOD VIEW 
+--*******************************************************************
+CREATE VIEW [Integration].[AcademicPeriodView] AS(
+	SELECT [ACA].[Id]
+			, [ACA].[Period]
+			, [ACA].[Semester]
+			, CONCAT('Semestre ', [ACA].[Semester] )	AS SemesterAlias
+			, [ACA].[StartDate]
+			, [ACA].[EndDate]
+			, DATENAME(MONTH, [ACA].[StartDate])		AS StartDateMonthName
+			, DATENAME(MONTH, [ACA].[EndDate])			AS EndDateMonthName
+	FROM	[Integration].[AcademicPeriod] [ACA] WITH(NOLOCK)
+);
+
+GO
+--*******************************************************************
 --SCHEDULEDETAIL VIEW 
 --*******************************************************************
 CREATE VIEW [Integration].[ScheduleDetailView] AS

@@ -13,9 +13,19 @@
             _dashboardPersister = new DashboardPersister();
         }
 
+        internal AcademicPeriodView GetCurrentAcademicPeriod()
+        {
+            return _dashboardPersister.GetCurrentAcademicPeriod();
+        }
+
         internal List<Statistic> GetStatistictsAttendanceVsNonAttendance()
         {
             return _dashboardPersister.GetStatistictsAttendanceVsNonAttendance();
+        }
+
+        internal List<Statistic> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
+        {
+            return _dashboardPersister.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
         }
     }
 }

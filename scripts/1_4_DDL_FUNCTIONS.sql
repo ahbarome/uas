@@ -287,6 +287,31 @@ END
 GO
 
 --*******************************************************************
+--GETCURRENTACADEMICPERIOD FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-08-27
+-- Description:	Get the current academic period
+-- =============================================
+CREATE FUNCTION [Integration].[GetCurrentAcademicPeriod]()
+
+RETURNS TABLE
+RETURN(
+	SELECT	*
+	FROM	[Integration].[AcademicPeriodView] WITH(NOLOCK)
+	WHERE	[Period]	= DATEPART(YEAR, GETDATE()) AND
+			[Semester] = [Integration].[GetCurrentSemester]() 
+);
+
+GO
+--*******************************************************************
 --GETCOURSESUMMARYBYID FUNCTION
 --*******************************************************************
 SET ANSI_NULLS ON

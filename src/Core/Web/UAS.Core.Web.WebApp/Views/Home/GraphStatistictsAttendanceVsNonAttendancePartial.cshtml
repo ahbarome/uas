@@ -1,7 +1,11 @@
-﻿@using UAS.Core.DAL.Common.Model;
+﻿@using System.Globalization;
+@using UAS.Core.DAL.Common.Model;
 
 @{
+    var currentAcademicPeriod = ViewBag.CurrentAcademicPeriod as AcademicPeriodView;
     var statisticsAttendanceVsNonAttendance = ViewBag.StatisticsAttendanceVsNonAttendance as IEnumerable<Statistic>;
+    var topStatistictsMajorMonthsAttendanceAndNonAttendance =
+        ViewBag.TopStatistictsMajorMonthsAttendanceAndNonAttendance as IEnumerable<Statistic>;
 }
 
 @functions{
@@ -13,6 +17,23 @@
         TOTAL_PERCENTAGE_ATTENDANCE = 3,
         TOTAL_PERCENTAGE_NON_ATTENDANCE = 4
     };
+
+
+    public static Statistic GetStatisticMajorMonthAttendance(IEnumerable<Statistic> statistics, string key)
+    {
+        var majorStatisticAttendance = new Statistic();
+
+        foreach (var statistic in statistics)
+        {
+            if (statistic.Summary.ContainsKey(key))
+            {
+                majorStatisticAttendance = statistic;
+                break;
+            }
+        }
+
+        return majorStatisticAttendance;
+    }
 
     public static string GetStatisticValue(IEnumerable<Statistic> statistics, StatisticType statisticType)
     {
@@ -62,19 +83,19 @@
     }
 }
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-9">
         <div class="ibox float-e-margins">
             <div class="ibox-content">
                 <div>
                     <span class="pull-right text-right">
-                        <small>Movimientos estimados en el periodo: <strong>AGOSTO - DICIEMBRE del 2016</strong></small>
+                        <small>Movimientos estimados en el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
                         <br />
-                        Total movimientos estimados a la fecha en la facultad: @GetStatisticValue(statisticsAttendanceVsNonAttendance, StatisticType.TOTAL_GENERAL)
+                        Total movimientos estimados a la fecha en la facultad: <span class="label label-primary">@GetStatisticValue(statisticsAttendanceVsNonAttendance, StatisticType.TOTAL_GENERAL)</span>
                     </span>
                     <h3 class="font-bold no-margins text-uppercase">
                         Comportamiento General Asistencia y Ausentismo
                     </h3>
-                    <small>Periodo académico AGOSTO - DICIEMBRE del 2016.</small>
+                    <small>Periodo académico <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
                 </div>
 
                 <div class="m-t-sm">
@@ -110,7 +131,7 @@
                         Última actualización @DateTime.Now.ToString("yyyy-MM-dd")
                     </small>
                     <small>
-                        <span class="fa fa-square text-navy" ></span>&nbsp;&nbsp;&nbsp;Asistencia<br/>
+                        <span class="fa fa-square text-navy"></span>&nbsp;&nbsp;&nbsp;Asistencia<br />
                         <span class="fa fa-square"></span>&nbsp;&nbsp;&nbsp;Ausentismo
                     </small>
                 </div>
@@ -118,35 +139,47 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-lg-6">
-        <div class="ibox float-e-margins">
-            <div class="ibox-content">
-                <div>
-                    <h3 class="font-bold no-margins text-uppercase">
-                        Comportamiento Asistencia y Ausentismo
-                    </h3>
-                    <small>Periodo académico AGOSTO - DICIEMBRE del 2016.</small>
-                </div><div>
-                    <canvas id="graphDonutAttendanceVsNonAttendance" height="140"></canvas>
+    <div class="col-lg-3">
+        @{
+            var majorStatisticMonthAttendance =
+                GetStatisticMajorMonthAttendance(topStatistictsMajorMonthsAttendanceAndNonAttendance, "Attendance");
+
+            if (majorStatisticMonthAttendance != null)
+            {
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">@majorStatisticMonthAttendance.Description</span>
+                            <h5 class="text-uppercase">&gt; Asistencia</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@majorStatisticMonthAttendance.Total</h1>
+                            <div class="stat-percent font-bold text-success">@majorStatisticMonthAttendance.Percentage % <i class="fa fa-bolt"></i></div>
+                            <small>Total mes con mayor asistencia</small>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            }
+            var majorStatisticMonthNonAttendance =
+            GetStatisticMajorMonthAttendance(topStatistictsMajorMonthsAttendanceAndNonAttendance, "NonAttendance");
+
+            if (majorStatisticMonthNonAttendance != null)
+            {
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-danger pull-right">@majorStatisticMonthNonAttendance.Description</span>
+                            <h5 class="text-uppercase">&gt; Ausentismo</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@majorStatisticMonthNonAttendance.Total</h1>
+                            <div class="stat-percent font-bold text-success">@majorStatisticMonthNonAttendance.Percentage % <i class="fa fa-bolt"></i></div>
+                            <small>Total mes con mayor ausentismo</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
     </div>
-    <div class="col-lg-6">
-        <div class="ibox float-e-margins">
-            <div class="ibox-content">
-                <div>
-                    <h3 class="font-bold no-margins text-uppercase">
-                        Comportamiento Asistencia y Ausentismo
-                    </h3>
-                    <small>Periodo académico AGOSTO - DICIEMBRE del 2016.</small>
-                </div>
-                <div>
-                    <canvas id="graphRadarAttendanceVsNonAttendance" height="140"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
