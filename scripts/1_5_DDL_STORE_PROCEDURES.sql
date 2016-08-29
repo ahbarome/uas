@@ -322,7 +322,7 @@ AS
 
 		
 			PRINT CONCAT('===EVALUATING ', @DocumentNumber, ' IN THE SPACE ', @SpaceId, ' FOR THE TIME ', @StartTime, ' AND WITH OPTION ', @RandomOption ) 
-			IF( (@RandomOption % 2) = 0 AND @SpaceId != 0)
+			IF( (@RandomOption % 2) != 0 AND @SpaceId != 0)
 	
 			BEGIN
 				DECLARE @RandomMinutes	INT,
@@ -876,7 +876,7 @@ BEGIN
 				, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
 				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 				, COUNT (1)				AS EventTotal
-		FROM	[Attendance].[AttendanceView] [ATV]
+		FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 		WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate) 
 		UNION
 		SELECT  @NonAttendanceType						AS EventType
@@ -885,7 +885,7 @@ BEGIN
 				, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
 				, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 				, COUNT (1)								AS EventTotal
-		FROM	[NonAttendance].[NonAttendanceView] [NAV]
+		FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 		WHERE	[NAV].[NonAttendanceDate] = CONVERT(DATE, @SemesterStartDate) 
 
 
@@ -898,7 +898,7 @@ BEGIN
 			, [GST].EventDateMonth
 			, [GST].EventDateMonthName
 			, SUM([GST].EventTotal)	AS EventTotal
-	FROM	@GeneralStatistictsAttendance [GST]
+	FROM	@GeneralStatistictsAttendance [GST] 
 	GROUP BY [GST].EventType
 			, [GST].EventTypeAlias
 			, [GST].EventDateMonth

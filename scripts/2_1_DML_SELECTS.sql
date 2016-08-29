@@ -102,7 +102,7 @@ ORDER BY	COUNT( 1 )	DESC
 SELECT DISTINCT NonAttendanceDate
 		, CourseId
 		, CourseName
-		, (SELECT TeacherFullName FROM [Integration].[GetTeacherByCourse] (CourseId) ) TeacherFullName
+		, (SELECT TOP 1 TeacherFullName FROM [Integration].[GetTeacherByCourse] (CourseId) ) TeacherFullName
 		, MAX(EventTotal) AS EventTotal
 FROM (
 		SELECT DATENAME(MONTH, [NAV].[NonAttendanceDate])	AS NonAttendanceDate
@@ -128,3 +128,6 @@ HAVING CONCAT(NonAttendanceDate, MAX(EventTotal)) IN (
 									, [NAV].CourseId		
 									, [NAV].CourseName		) AS Summary
 							GROUP BY NonAttendanceDate ) 
+
+
+INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('plopezsanc','NXo/ao4xL5ix30tACkl6jg==',4,'PAOLA ANDREA','LOPEZ SANCHEZ','plopez@hotmail.com',3732948,1,'admin',52006066,'~/Images/photos/sf1.jpg')
