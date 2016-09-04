@@ -183,6 +183,41 @@ RETURN
 GO
 
 --*******************************************************************
+--GETCOURSESBYTEACHERDOCUMENTNUMBER FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2016-09-03
+-- Description:	Get the current courses
+--				by teacher document number
+-- =============================================
+
+CREATE FUNCTION [Integration].[GetCoursesByTeacherDocumentNumber](@TeacherDocumentNumber INT)
+RETURNS TABLE
+AS
+RETURN 
+(
+	-- Add the SELECT statement with parameter references here
+	SELECT  DISTINCT [EDV].[CourseId] 
+			, [EDV].[CourseName]
+			, [EDV].[DayOfTheWeek]
+			, [EDV].[DayOfTheWeekName]
+			, [EDV].[StartTime]
+			, [EDV].[EndTime]
+	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	WHERE	( [EDV].[EndDate] >= GETDATE() AND [EDV].[StartDate] <=  GETDATE() ) AND-- Course of the semester
+			[EDV].[TeacherDocumentNumber] = @TeacherDocumentNumber 
+)
+
+GO
+
+--*******************************************************************
 --GETTEACHERBYCOURSE FUNCTION
 --*******************************************************************
 SET ANSI_NULLS ON

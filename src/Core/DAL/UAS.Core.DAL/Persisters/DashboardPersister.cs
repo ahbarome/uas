@@ -4,6 +4,9 @@ using UAS.Core.DAL.Common.Model;
 
 namespace UAS.Core.DAL.Persisters
 {
+    /// <summary>
+    /// Manages
+    /// </summary>
     public class DashboardPersister : BaseContext
     {
         /// <summary>
@@ -33,12 +36,13 @@ namespace UAS.Core.DAL.Persisters
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<Statistic> GetStatistictsAttendanceVsNonAttendance()
+        public List<Statistic> GetStatistictsAttendanceVsNonAttendance(
+            int? documentNumber = null, int? roleId = null)
         {
             var statistics = new List<Statistic>();
 
             var statisticsAttendanceVsNonAttendance =
-                base.Entities.GetStatistictsAttendanceVsNonAttendance();
+                base.Entities.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
 
             foreach (var statisticAttendanceVsNonAttendance in statisticsAttendanceVsNonAttendance)
             {
@@ -53,11 +57,19 @@ namespace UAS.Core.DAL.Persisters
             return statistics;
         }
 
-        public List<Statistic> GetTopStatistictExcuseClassifications()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="documentNumber"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public List<Statistic> GetTopStatistictExcuseClassifications(
+            int? documentNumber = null, int? roleId = null)
         {
             var statistics = new List<Statistic>();
 
-            var topStatistictExcuseClassifications = base.Entities.GetTopStatistictExcuseClassifications();
+            var topStatistictExcuseClassifications = 
+                base.Entities.GetTopStatistictExcuseClassifications(documentNumber, roleId);
 
             foreach (var statistictExcuseClassification in topStatistictExcuseClassifications)
             {
@@ -76,11 +88,19 @@ namespace UAS.Core.DAL.Persisters
             return statistics;
         }
 
-        public List<Statistic> GetStatistictExcuseStatus()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="documentNumber"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public List<Statistic> GetStatistictExcuseStatus(
+            int? documentNumber = null, int? roleId = null)
         {
             var statistics = new List<Statistic>();
 
-            var statisticExcuseStatus = base.Entities.GetStatistictExcuseStates();
+            var statisticExcuseStatus = 
+                base.Entities.GetStatistictExcuseStates(documentNumber, roleId);
 
             foreach (var statistictExcuseStatus in statisticExcuseStatus)
             {
@@ -99,11 +119,20 @@ namespace UAS.Core.DAL.Persisters
             return statistics;
         }
 
-        public List<Statistic> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="documentNumber"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public List<Statistic> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance(
+            int? documentNumber = null, int? roleId = null)
         {
             var statistics = new List<Statistic>();
 
-            var statisticExcuseStatus = base.Entities.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
+            var statisticExcuseStatus = 
+                base.Entities.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance(
+                    documentNumber, roleId);
 
             foreach (var statistictExcuseStatus in statisticExcuseStatus)
             {
@@ -122,11 +151,20 @@ namespace UAS.Core.DAL.Persisters
             return statistics;
         }
 
-        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="documentNumber"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceStudentCourse(
+            int? documentNumber = null, int? roleId = null)
         {
             var statistics = new List<Statistic>();
 
-            var statisticExcuseStatus = base.Entities.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+            var statisticExcuseStatus = 
+                base.Entities.GetTopStatistictAttendanceAndNonAttendanceStudentCourse(
+                    documentNumber, roleId);
 
             foreach (var statistictExcuseStatus in statisticExcuseStatus)
             {
@@ -148,7 +186,14 @@ namespace UAS.Core.DAL.Persisters
             return statistics;
         }
 
-        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="documentNumber"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse(
+            int? documentNumber = null, int? roleId = null)
         {
             var statistics = new List<Statistic>();
 
@@ -174,11 +219,20 @@ namespace UAS.Core.DAL.Persisters
             return statistics;
         }
 
-        public List<Statistic> GetTopStatistictsMajorCourseAttendanceAndNonAttendance()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="documentNumber"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public List<Statistic> GetTopStatistictsMajorCourseAttendanceAndNonAttendance(
+            int? documentNumber = null, int? roleId = null)
         {
             var statistics = new List<Statistic>();
 
-            var statisticExcuseStatus = base.Entities.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+            var statisticExcuseStatus = 
+                base.Entities.GetTopStatistictsMajorCourseAttendanceAndNonAttendance(
+                    documentNumber, roleId);
 
             foreach (var statistictExcuseStatus in statisticExcuseStatus)
             {

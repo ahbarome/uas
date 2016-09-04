@@ -26,22 +26,27 @@ namespace UAS.Core.Web.WebApp.Controllers
         public ActionResult Index()
         {
             var session = base.CurrentSession;
+            var roleId = session.SessionUser.IdRole;
+            var documentNumber = session.SessionUser.DocumentNumber;
 
             ViewData.Add(ConfigurationManager.SESSION_KEY, session);
             ViewData.Add("USERNAME", session.SessionUser.Username);
 
             var currentAcademicPeriod = _facade.GetCurrentAcademicPeriod();
-            var attendanceVsNonAttendanceStatistics = _facade.GetStatistictsAttendanceVsNonAttendance();
-            var topExcuseClassifications = _facade.GetTopStatistictExcuseClassifications();
-            var statisticsExcuseStatus = _facade.GetStatistictExcuseStatus();
+            var attendanceVsNonAttendanceStatistics = 
+                _facade.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
+            var topExcuseClassifications = 
+                _facade.GetTopStatistictExcuseClassifications(documentNumber , roleId);
+            var statisticsExcuseStatus = _facade.GetStatistictExcuseStatus(documentNumber, roleId);
             var topStatistictsMajorMonthsAttendanceAndNonAttendance =
-                _facade.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
+                _facade.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance(documentNumber, roleId);
             var topStatistictAttendanceAndNonAttendanceTeacherCourse =
-                _facade.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+                _facade.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse(documentNumber, roleId);
             var topStatistictAttendanceAndNonAttendanceStudentCourse =
-                _facade.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+                _facade.GetTopStatistictAttendanceAndNonAttendanceStudentCourse(
+                    documentNumber , roleId);
             var topStatistictsMajorCourseAttendanceAndNonAttendance = 
-                _facade.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+                _facade.GetTopStatistictsMajorCourseAttendanceAndNonAttendance(documentNumber, roleId);
 
             ViewBag.StatisticsAttendanceVsNonAttendance = attendanceVsNonAttendanceStatistics;
             ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;
@@ -61,8 +66,12 @@ namespace UAS.Core.Web.WebApp.Controllers
 
         public ActionResult StatisticsAttendanceVsNonAttendancePartial()
         {
+            var session = base.CurrentSession;
+            var roleId = session.SessionUser.IdRole;
+            var documentNumber = session.SessionUser.DocumentNumber;
             var currentAcademicPeriod = _facade.GetCurrentAcademicPeriod();
-            var attendanceVsNonAttendanceStatistics = _facade.GetStatistictsAttendanceVsNonAttendance();
+            var attendanceVsNonAttendanceStatistics = 
+                _facade.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
 
             ViewBag.StatisticsAttendanceVsNonAttendance = attendanceVsNonAttendanceStatistics;
             ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;
@@ -72,19 +81,28 @@ namespace UAS.Core.Web.WebApp.Controllers
 
         public JsonResult GetStatisticsAttendanceVsNonAttendance()
         {
-            var statistics = _facade.GetStatistictsAttendanceVsNonAttendance();
+            var session = base.CurrentSession;
+            var roleId = session.SessionUser.IdRole;
+            var documentNumber = session.SessionUser.DocumentNumber;
+            var statistics = _facade.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
             return Json(statistics);
         }
 
         public ActionResult StatisticsNonAttendancePartial()
         {
+            var session = base.CurrentSession;
+            var roleId = session.SessionUser.IdRole;
+            var documentNumber = session.SessionUser.DocumentNumber;
             var currentAcademicPeriod = _facade.GetCurrentAcademicPeriod();
             var topStatistictAttendanceAndNonAttendanceTeacherCourse =
-               _facade.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+               _facade.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse(
+                   documentNumber, roleId);
             var topStatistictAttendanceAndNonAttendanceStudentCourse =
-                _facade.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+                _facade.GetTopStatistictAttendanceAndNonAttendanceStudentCourse(
+                    documentNumber, roleId);
             var topStatistictsMajorCourseAttendanceAndNonAttendance =
-                _facade.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+                _facade.GetTopStatistictsMajorCourseAttendanceAndNonAttendance(
+                    documentNumber, roleId);
 
             ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;
             ViewBag.TopStatistictAttendanceAndNonAttendanceTeacherCourse =
@@ -100,8 +118,13 @@ namespace UAS.Core.Web.WebApp.Controllers
 
         public ActionResult StatisticsExcusesPartial()
         {
-            var topExcuseClassifications = _facade.GetTopStatistictExcuseClassifications();
-            var statisticsExcuseStatus = _facade.GetStatistictExcuseStatus();
+            var session = base.CurrentSession;
+            var roleId = session.SessionUser.IdRole;
+            var documentNumber = session.SessionUser.DocumentNumber;
+
+            var topExcuseClassifications = 
+                _facade.GetTopStatistictExcuseClassifications(documentNumber, roleId);
+            var statisticsExcuseStatus = _facade.GetStatistictExcuseStatus(documentNumber, roleId);
 
             ViewBag.TopExcuseClassifications = topExcuseClassifications;
             ViewBag.StatisticsExcuseStatus = statisticsExcuseStatus;
@@ -111,7 +134,11 @@ namespace UAS.Core.Web.WebApp.Controllers
 
         public JsonResult GetStatisticsExcusesStatus()
         {
-            var statistics = _facade.GetStatistictExcuseStatus();
+            var session = base.CurrentSession;
+            var roleId = session.SessionUser.IdRole;
+            var documentNumber = session.SessionUser.DocumentNumber;
+
+            var statistics = _facade.GetStatistictExcuseStatus(documentNumber, roleId);
             return Json(statistics);
         }
         #endregion Methods

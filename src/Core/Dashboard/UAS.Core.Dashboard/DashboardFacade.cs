@@ -20,38 +20,42 @@ namespace UAS.Core.Dashboard
             return _dashboarAttendanceManager.GetCurrentAcademicPeriod();
         }
 
-        public List<Statistic> GetStatistictsAttendanceVsNonAttendance()
+        public List<Statistic> GetStatistictsAttendanceVsNonAttendance(int documentNumber, int roleId)
         {
-            return _dashboarAttendanceManager.GetStatistictsAttendanceVsNonAttendance();
+            return _dashboarAttendanceManager.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
         }
-        public List<Statistic> GetTopStatistictExcuseClassifications()
+        public List<Statistic> GetTopStatistictExcuseClassifications(int documentNumber, int roleId)
         {
-            return _dashboardExcuseManager.GetTopStatistictExcuseClassifications();
-        }
-
-        public List<Statistic> GetStatistictExcuseStatus()
-        {
-            return _dashboardExcuseManager.GetStatistictExcuseStatus();
+            return _dashboardExcuseManager.GetTopStatistictExcuseClassifications(documentNumber, roleId);
         }
 
-        public List<Statistic> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
+        public List<Statistic> GetStatistictExcuseStatus(int documentNumber, int roleId)
         {
-            return _dashboarAttendanceManager.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
+            return _dashboardExcuseManager.GetStatistictExcuseStatus(documentNumber, roleId);
         }
 
-        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
+        public List<Statistic> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance(int documentNumber, int roleId)
         {
-            return _dashboarAttendanceManager.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+            return _dashboarAttendanceManager.
+                GetTopStatistictsMajorMonthsAttendanceAndNonAttendance(documentNumber, roleId);
         }
 
-        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse(int documentNumber, int roleId)
         {
-            return _dashboarAttendanceManager.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+            return _dashboarAttendanceManager.
+                GetTopStatistictAttendanceAndNonAttendanceTeacherCourse(documentNumber, roleId);
         }
 
-        public List<Statistic> GetTopStatistictsMajorCourseAttendanceAndNonAttendance()
+        public List<Statistic> GetTopStatistictAttendanceAndNonAttendanceStudentCourse(int documentNumber, int roleId)
         {
-            return _dashboarAttendanceManager.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+            return _dashboarAttendanceManager.
+                GetTopStatistictAttendanceAndNonAttendanceStudentCourse(documentNumber, roleId);
+        }
+
+        public List<Statistic> GetTopStatistictsMajorCourseAttendanceAndNonAttendance(int documentNumber, int roleId)
+        {
+            return _dashboarAttendanceManager.
+                GetTopStatistictsMajorCourseAttendanceAndNonAttendance(documentNumber, roleId);
         }
     }
 }

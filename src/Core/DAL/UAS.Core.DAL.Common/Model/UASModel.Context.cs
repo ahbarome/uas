@@ -132,29 +132,69 @@ namespace UAS.Core.DAL.Common.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GenerateApproversRegister", nonAttendanceIdParameter, excuseIdParameter);
         }
     
-        public virtual ObjectResult<GetStatistictsAttendanceVsNonAttendance_Result> GetStatistictsAttendanceVsNonAttendance()
+        public virtual ObjectResult<GetStatistictsAttendanceVsNonAttendance_Result> GetStatistictsAttendanceVsNonAttendance(Nullable<int> documentNumber, Nullable<int> roleId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictsAttendanceVsNonAttendance_Result>("GetStatistictsAttendanceVsNonAttendance");
+            var documentNumberParameter = documentNumber.HasValue ?
+                new ObjectParameter("DocumentNumber", documentNumber) :
+                new ObjectParameter("DocumentNumber", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictsAttendanceVsNonAttendance_Result>("GetStatistictsAttendanceVsNonAttendance", documentNumberParameter, roleIdParameter);
         }
     
-        public virtual ObjectResult<GetStatistictExcuseClassifications_Result> GetStatistictExcuseClassifications()
+        public virtual ObjectResult<GetStatistictExcuseClassifications_Result> GetStatistictExcuseClassifications(Nullable<int> documentNumber, Nullable<int> roleId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictExcuseClassifications_Result>("GetStatistictExcuseClassifications");
+            var documentNumberParameter = documentNumber.HasValue ?
+                new ObjectParameter("DocumentNumber", documentNumber) :
+                new ObjectParameter("DocumentNumber", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictExcuseClassifications_Result>("GetStatistictExcuseClassifications", documentNumberParameter, roleIdParameter);
         }
     
-        public virtual ObjectResult<GetStatistictExcuseStates_Result> GetStatistictExcuseStates()
+        public virtual ObjectResult<GetStatistictExcuseStates_Result> GetStatistictExcuseStates(Nullable<int> documentNumber, Nullable<int> roleId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictExcuseStates_Result>("GetStatistictExcuseStates");
+            var documentNumberParameter = documentNumber.HasValue ?
+                new ObjectParameter("DocumentNumber", documentNumber) :
+                new ObjectParameter("DocumentNumber", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatistictExcuseStates_Result>("GetStatistictExcuseStates", documentNumberParameter, roleIdParameter);
         }
     
-        public virtual ObjectResult<GetTopStatistictExcuseClassifications_Result> GetTopStatistictExcuseClassifications()
+        public virtual ObjectResult<GetTopStatistictExcuseClassifications_Result> GetTopStatistictExcuseClassifications(Nullable<int> documentNumber, Nullable<int> roleId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictExcuseClassifications_Result>("GetTopStatistictExcuseClassifications");
+            var documentNumberParameter = documentNumber.HasValue ?
+                new ObjectParameter("DocumentNumber", documentNumber) :
+                new ObjectParameter("DocumentNumber", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictExcuseClassifications_Result>("GetTopStatistictExcuseClassifications", documentNumberParameter, roleIdParameter);
         }
     
-        public virtual ObjectResult<GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
+        public virtual ObjectResult<GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance(Nullable<int> documentNumber, Nullable<int> roleId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result>("GetTopStatistictsMajorMonthsAttendanceAndNonAttendance");
+            var documentNumberParameter = documentNumber.HasValue ?
+                new ObjectParameter("DocumentNumber", documentNumber) :
+                new ObjectParameter("DocumentNumber", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictsMajorMonthsAttendanceAndNonAttendance_Result>("GetTopStatistictsMajorMonthsAttendanceAndNonAttendance", documentNumberParameter, roleIdParameter);
         }
     
         [DbFunction("UASEntities", "GetCurrentAcademicPeriod")]
@@ -163,9 +203,17 @@ namespace UAS.Core.DAL.Common.Model
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetCurrentAcademicPeriod_Result>("[UASEntities].[GetCurrentAcademicPeriod]()");
         }
     
-        public virtual ObjectResult<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result> GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        public virtual ObjectResult<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result> GetTopStatistictAttendanceAndNonAttendanceStudentCourse(Nullable<int> documentNumber, Nullable<int> roleId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result>("GetTopStatistictAttendanceAndNonAttendanceStudentCourse");
+            var documentNumberParameter = documentNumber.HasValue ?
+                new ObjectParameter("DocumentNumber", documentNumber) :
+                new ObjectParameter("DocumentNumber", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictAttendanceAndNonAttendanceStudentCourse_Result>("GetTopStatistictAttendanceAndNonAttendanceStudentCourse", documentNumberParameter, roleIdParameter);
         }
     
         public virtual ObjectResult<GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result> GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
@@ -173,9 +221,17 @@ namespace UAS.Core.DAL.Common.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictAttendanceAndNonAttendanceTeacherCourse_Result>("GetTopStatistictAttendanceAndNonAttendanceTeacherCourse");
         }
     
-        public virtual ObjectResult<GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result> GetTopStatistictsMajorCourseAttendanceAndNonAttendance()
+        public virtual ObjectResult<GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result> GetTopStatistictsMajorCourseAttendanceAndNonAttendance(Nullable<int> documentNumber, Nullable<int> roleId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result>("GetTopStatistictsMajorCourseAttendanceAndNonAttendance");
+            var documentNumberParameter = documentNumber.HasValue ?
+                new ObjectParameter("DocumentNumber", documentNumber) :
+                new ObjectParameter("DocumentNumber", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result>("GetTopStatistictsMajorCourseAttendanceAndNonAttendance", documentNumberParameter, roleIdParameter);
         }
     }
 }

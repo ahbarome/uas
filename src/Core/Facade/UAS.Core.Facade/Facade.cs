@@ -169,9 +169,9 @@
             return _reportFacade.GetAttendance(documentNumber, roleId);
         }
 
-        public dynamic GetStatistictsAttendanceVsNonAttendance()
+        public dynamic GetStatistictsAttendanceVsNonAttendance(int documentNumber, int roleId)
         {
-            return _dashboardFacade.GetStatistictsAttendanceVsNonAttendance();
+            return _dashboardFacade.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
         }
 
         public dynamic GetCurrentAcademicPeriod()
@@ -179,34 +179,34 @@
             return _dashboardFacade.GetCurrentAcademicPeriod();
         }
 
-        public dynamic GetTopStatistictExcuseClassifications()
+        public dynamic GetTopStatistictExcuseClassifications(int documentNumber, int roleId)
         {
-            return _dashboardFacade.GetTopStatistictExcuseClassifications();
+            return _dashboardFacade.GetTopStatistictExcuseClassifications(documentNumber, roleId);
         }
 
-        public dynamic GetStatistictExcuseStatus()
+        public dynamic GetStatistictExcuseStatus(int documentNumber, int roleId)
         {
-            return _dashboardFacade.GetStatistictExcuseStatus();
+            return _dashboardFacade.GetStatistictExcuseStatus(documentNumber, roleId);
         }
 
-        public dynamic GetTopStatistictsMajorMonthsAttendanceAndNonAttendance()
+        public dynamic GetTopStatistictsMajorMonthsAttendanceAndNonAttendance(int documentNumber, int roleId)
         {
-            return _dashboardFacade.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance();
+            return _dashboardFacade.GetTopStatistictsMajorMonthsAttendanceAndNonAttendance(documentNumber, roleId);
         }
 
-        public dynamic GetTopStatistictAttendanceAndNonAttendanceTeacherCourse()
+        public dynamic GetTopStatistictAttendanceAndNonAttendanceTeacherCourse(int documentNumber, int roleId)
         {
-            return _dashboardFacade.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse();
+            return _dashboardFacade.GetTopStatistictAttendanceAndNonAttendanceTeacherCourse(documentNumber, roleId);
         }
 
-        public dynamic GetTopStatistictAttendanceAndNonAttendanceStudentCourse()
+        public dynamic GetTopStatistictAttendanceAndNonAttendanceStudentCourse(int documentNumber, int roleId)
         {
-            return _dashboardFacade.GetTopStatistictAttendanceAndNonAttendanceStudentCourse();
+            return _dashboardFacade.GetTopStatistictAttendanceAndNonAttendanceStudentCourse(documentNumber, roleId);
         }
 
-        public dynamic GetTopStatistictsMajorCourseAttendanceAndNonAttendance()
+        public dynamic GetTopStatistictsMajorCourseAttendanceAndNonAttendance(int documentNumber, int roleId)
         {
-            return _dashboardFacade.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
+            return _dashboardFacade.GetTopStatistictsMajorCourseAttendanceAndNonAttendance(documentNumber, roleId);
         }
     }
 }

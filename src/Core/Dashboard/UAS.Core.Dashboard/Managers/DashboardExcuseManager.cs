@@ -13,14 +13,14 @@ namespace UAS.Core.Dashboard.Managers
             _dashboardPersister = new DashboardPersister();
         }
 
-        public List<Statistic> GetTopStatistictExcuseClassifications()
+        public List<Statistic> GetTopStatistictExcuseClassifications(int documentNumber, int roleId)
         {
-            return _dashboardPersister.GetTopStatistictExcuseClassifications();
+            return _dashboardPersister.GetTopStatistictExcuseClassifications(documentNumber, roleId);
         }
 
-        public List<Statistic> GetStatistictExcuseStatus()
+        public List<Statistic> GetStatistictExcuseStatus(int documentNumber, int roleId)
         {
-            return _dashboardPersister.GetStatistictExcuseStatus();
+            return _dashboardPersister.GetStatistictExcuseStatus(documentNumber, roleId);
         }
     }
 }

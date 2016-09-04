@@ -30,64 +30,63 @@
     }
 }
 <div class="row">
-    <div class="col-lg-6">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-                    <div>
-                        <h3 class="font-bold no-margins text-uppercase">
-                            Estado excusas
-                        </h3>
-                        @{
-                            var majorExcuseStatus = GetMajorExcuse(statisticsExcuseStatus);
-                            if (majorExcuseStatus != null)
-                            {
+    @{
+        var majorExcuseStatus = GetMajorExcuse(statisticsExcuseStatus);
+        if (majorExcuseStatus != null)
+        {
+            <div class="col-lg-6">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div>
+                                <h3 class="font-bold no-margins text-uppercase">
+                                    Estado excusas
+                                </h3>
                                 <br />
                                 <small>Actualmente se encuentran en estado: <span class="label label-warning text-uppercase">@majorExcuseStatus.Description</span> más del : <strong>@GetPercentageWithFormat(majorExcuseStatus.Percentage)</strong> de las excusas registradas equivalentes a: <strong>@majorExcuseStatus.Total</strong> durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
                                 <br />
                                 <br />
-                            }
-                        }
-                    </div>
-                    <div>
-                        <center>
-                            <canvas id="graphBarExcuseStatus" height="192"></canvas>
-                        </center>
+                            </div>
+                            <div>
+                                <center>
+                                    <canvas id="graphBarExcuseStatus" height="192"></canvas>
+                                </center>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        }
+    }
 
-    <div class="col-lg-6">
-        <div class="ibox float-e-margins">
-            <div class="ibox-content">
-                <h3 class="font-bold no-margins text-uppercase">
-                    Total Excusas por Clasificación
-                </h3>
-                @{
-                    var majorExcuseClassification = GetMajorExcuse(topExcuseClassifications);
-                    if (majorExcuseClassification != null)
-                    {
+    @{
+        var majorExcuseClassification = GetMajorExcuse(topExcuseClassifications);
+        if (majorExcuseClassification != null)
+        {
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <h3 class="font-bold no-margins text-uppercase">
+                            Total Excusas por Clasificación
+                        </h3>
+
                         <br />
                         <small>Mayor fuente de ausentismo: <span class="label label-danger text-uppercase">@majorExcuseClassification.Description</span> con un porcentaje de participación: <strong>@GetPercentageWithFormat(majorExcuseClassification.Percentage)</strong> y un total de: <strong>@majorExcuseClassification.Total</strong> ocurrencias durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
                         <br />
                         <br />
-                    }
-                }
 
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Clasificación </th>
-                                <th>Participación </th>
-                                <th>Porcentaje </th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Clasificación </th>
+                                        <th>Participación </th>
+                                        <th>Porcentaje </th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                             @if (topExcuseClassifications != null)
                             {
                                 var counter = 1;
@@ -104,10 +103,13 @@
                                     counter++;
                                 }
                             }
-                        </tbody>
-                    </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+
+        }
+    }
 </div>
