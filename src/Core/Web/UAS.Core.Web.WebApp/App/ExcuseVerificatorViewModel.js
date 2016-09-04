@@ -120,6 +120,15 @@ function CreateAttachmentsGrid() {
     });
 };
 
+function CreateApprovalExcusesGrid() {
+    $("#grid-approvals-excuse").DataTable({
+        language: {
+            url: '/Scripts/plugins/datatables/plugins/i18n/Spanish.txt'
+        },
+        "processing": true
+    });
+};
+
 function OnGridDetail() {
     $('#grid-verificator-excuse tbody').on('click', ':button[name="ExcuseDetail"]', function (e) {
         var self = $(this);
@@ -129,6 +138,7 @@ function OnGridDetail() {
             TurnOnWizard();
             CreateAttachmentsGrid();
             CreateApprovalsGrid();
+            CreateApprovalExcusesGrid();
             TurnOnToolTips();
             $("#wizard > div.content.clearfix").attr("style", "background-color: #FFFFFF");
             $("#modal-verificator-excuse").modal("show");

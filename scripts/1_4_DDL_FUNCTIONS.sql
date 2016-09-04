@@ -140,7 +140,7 @@ AS
 RETURN 
 (
 	SELECT	* 
-	FROM	[Integration].[ScheduleDetailView] [SDV]
+	FROM	[Integration].[ScheduleDetailView] [SDV]  WITH(NOLOCK)
 	WHERE	( CONVERT(DATE, [SDV].[EndDate]) >= @Date AND CONVERT(DATE,[SDV].[StartDate]) <=  @Date ) AND-- Course of the semester
 			[SDV].[DayOfTheWeek] = DATEPART(WEEKDAY, @Date)	
 )
@@ -172,7 +172,7 @@ RETURN
 	SELECT  TOP 1 [EDV].[StartTime]
 				, [EDV].[EndTime]
 				, [EDV].[CourseId] 
-	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	FROM	[Integration].[EnrollmentDetailView] [EDV]  WITH(NOLOCK)
 	WHERE	( [EDV].[EndDate] >= GETDATE() AND [EDV].[StartDate] <=  GETDATE() ) AND-- Course of the semester
 			[EDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]()	AND -- Course for today
 			( [EDV].[EndTime] >= CONVERT(TIME, GETDATE()) AND  [EDV].[StartTime] <=  CONVERT(TIME, GETDATE())) AND-- Current course
@@ -210,10 +210,10 @@ RETURN
 			, [EDV].[DayOfTheWeekName]
 			, [EDV].[StartTime]
 			, [EDV].[EndTime]
-	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	FROM	[Integration].[EnrollmentDetailView] [EDV]  WITH(NOLOCK)
 	WHERE	( [EDV].[EndDate] >= GETDATE() AND [EDV].[StartDate] <=  GETDATE() ) AND-- Course of the semester
 			[EDV].[TeacherDocumentNumber] = @TeacherDocumentNumber 
-)
+);
 
 GO
 
@@ -241,7 +241,7 @@ RETURN
 	-- Add the SELECT statement with parameter references here
 	SELECT  TeacherDocumentNumber
 			, TeacherFullName
-	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	FROM	[Integration].[EnrollmentDetailView] [EDV]  WITH(NOLOCK)
 	WHERE	CourseId = @CourseId
 )
 
@@ -370,7 +370,7 @@ RETURN
 			,  [EDV].[CourseName]
 			, [EDV].[EnrollmentStatus]
 			, COUNT( [EDV].[EnrollmentStatus] ) AS Total
-	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	FROM	[Integration].[EnrollmentDetailView] [EDV]  WITH(NOLOCK)
 	WHERE	[EDV].[CourseId] = @CourseId
 	GROUP BY [EDV].[CourseId]
 			,  [EDV].[CourseName]
@@ -380,7 +380,7 @@ RETURN
 			,  [EDV].[CourseName]
 			, 'Total'							AS [EnrollmentStatus] 
 			, COUNT( 1 ) AS Total
-	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	FROM	[Integration].[EnrollmentDetailView] [EDV]  WITH(NOLOCK)
 	WHERE	[EDV].[CourseId] = @CourseId
 	GROUP BY [EDV].[CourseId]
 			,  [EDV].[CourseName]
@@ -413,7 +413,7 @@ RETURN
 			,  [EDV].[CourseName]
 			, 'Total'							AS [EnrollmentStatus] 
 			, COUNT( 1 ) AS Total
-	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	FROM	[Integration].[EnrollmentDetailView] [EDV]  WITH(NOLOCK)
 	GROUP BY [EDV].[CourseId]
 			,  [EDV].[CourseName]
 )
@@ -477,7 +477,7 @@ RETURN
 		, [SpaceName]
 		, [StartTime]
 		, [EndTime]
-	FROM	[Integration].[PersonActivitiesView] [PER]
+	FROM	[Integration].[PersonActivitiesView] [PER] WITH(NOLOCK)
 	WHERE	[PER].[DayOfTheWeek]			= DATEPART(WEEKDAY, @Date) AND 
 			[PER].[DocumentNumber]			= @DocumentNumber AND
 			[PER].[SpaceId]					= @SpaceId AND
@@ -506,21 +506,21 @@ RETURN
 	SELECT	'Attendance'				AS [Alias]
 		, 'Asistentes'					AS [Description]
 		, COUNT([ARV].[DocumentNumber]) AS [Total]  
-	FROM	[Attendance].[AttendanceRegisterView] [ARV]
+	FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
 	WHERE	[ARV].[MovementDate]	= @Date AND
 			[ARV].[RoleId]			= @RoleId
 	UNION 
 	SELECT	'NonAttendance'				AS [Alias]
 		, 'Inasistentes'				AS [Description]
 		, COUNT([NRV].[DocumentNumber]) AS [Total]  
-	FROM	[NonAttendance].[NonAttendanceRegisterView] [NRV]
+	FROM	[NonAttendance].[NonAttendanceRegisterView] [NRV] WITH(NOLOCK)
 	WHERE	[NRV].[DayOfTheWeek]	= DATEPART(WEEKDAY, @Date)  AND
 			[NRV].[RoleId]			= @RoleId
 	UNION 
 	SELECT  'Total'							AS [Alias]
 			, 'Total'						AS [Description]
 			, COUNT([PAV].[DocumentNumber]) AS [Total]
-	FROM	[Integration].[PersonActivitiesView] [PAV]
+	FROM	[Integration].[PersonActivitiesView] [PAV] WITH(NOLOCK)
 	WHERE	[PAV].[DayOfTheWeek]	= DATEPART(WEEKDAY, @Date)  AND
 			[PAV].[RoleId]			= @RoleId
 )
@@ -593,7 +593,7 @@ AS
 RETURN 
 (
 	SELECT	*
-	FROM	[Attendance].[AttendanceRegisterView] [ARV]
+	FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
 	WHERE	[ARV].[DayOfTheWeek]	= [Integration].[GetCurrentDay]() AND
 			CONVERT(TIME, GETDATE())	BETWEEN [ARV].[StartTime] AND [ARV].[EndTime] AND
 			[ARV].[RoleId]			= 3
@@ -773,7 +773,7 @@ RETURN
 (
 
 	SELECT	*
-	FROM	[NonAttendance].[Status] [STA]
+	FROM	[NonAttendance].[Status] [STA]  WITH(NOLOCK)
 	WHERE	[STA].[Id] =  [Utilities].[Random]( 
 		[NonAttendance].[GetMinIdStatus](),
 		[NonAttendance].[GetMaxIdStatus](),
@@ -796,12 +796,12 @@ GO
 -- Create date: 2016-08-27
 -- Description:	Get the min id classification
 -- =============================================
-CREATE FUNCTION [NonAttendance].[GetMinIdClassification]()
+ALTER FUNCTION [NonAttendance].[GetMinIdClassification]()
 	
 RETURNS INT 
 AS
 BEGIN 
-	RETURN( SELECT MIN(Id) FROM [NonAttendance].[Classification] )
+	RETURN( SELECT MIN(Id) FROM [NonAttendance].[Classification] WITH(NOLOCK) )
 END
 GO
 
@@ -824,7 +824,7 @@ CREATE FUNCTION [NonAttendance].[GetMaxIdClassification]()
 RETURNS INT 
 AS
 BEGIN 
-	RETURN( SELECT MAX(Id) FROM [NonAttendance].[Classification] )
+	RETURN( SELECT MAX(Id) FROM [NonAttendance].[Classification] WITH(NOLOCK) )
 END
 GO
 
@@ -850,9 +850,8 @@ RETURNS TABLE
 AS
 RETURN 
 (
-
 	SELECT	*
-	FROM	[NonAttendance].[Classification] [CLA]
+	FROM	[NonAttendance].[Classification] [CLA] WITH(NOLOCK)
 	WHERE	[CLA].[Id] =  [Utilities].[Random]( 
 		[NonAttendance].[GetMinIdClassification](),
 		[NonAttendance].[GetMaxIdClassification](),

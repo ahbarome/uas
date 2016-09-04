@@ -233,5 +233,15 @@ namespace UAS.Core.DAL.Common.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result>("GetTopStatistictsMajorCourseAttendanceAndNonAttendance", documentNumberParameter, roleIdParameter);
         }
+    
+        [DbFunction("UASEntities", "GetCoursesByTeacherDocumentNumber")]
+        public virtual IQueryable<GetCoursesByTeacherDocumentNumber_Result> GetCoursesByTeacherDocumentNumber(Nullable<int> teacherDocumentNumber)
+        {
+            var teacherDocumentNumberParameter = teacherDocumentNumber.HasValue ?
+                new ObjectParameter("TeacherDocumentNumber", teacherDocumentNumber) :
+                new ObjectParameter("TeacherDocumentNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetCoursesByTeacherDocumentNumber_Result>("[UASEntities].[GetCoursesByTeacherDocumentNumber](@TeacherDocumentNumber)", teacherDocumentNumberParameter);
+        }
     }
 }

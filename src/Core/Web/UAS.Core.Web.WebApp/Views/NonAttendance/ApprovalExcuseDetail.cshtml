@@ -2,13 +2,14 @@
 @using UAS.Core.DAL.Common.Model;
 
 @{
-    var excuse = ViewBag.Excuse as ExcuseApprovalView;
+    var excuses = ViewBag.Excuses as IEnumerable<ExcuseApprovalView>;
     var attachments = ViewBag.Attachments as IEnumerable<Attachment>;
 }
 
 @functions{
-    public static string GetClassification(ExcuseApprovalView excuse)
+    public static string GetClassification(IEnumerable<ExcuseApprovalView> excuses)
     {
+        var excuse = excuses.FirstOrDefault();
         if (excuse != null)
         {
             return excuse.ClassificationExcuse;
@@ -16,8 +17,9 @@
         return string.Empty;
     }
 
-    public static string GetJustification(ExcuseApprovalView excuse)
+    public static string GetJustification(IEnumerable<ExcuseApprovalView> excuses)
     {
+        var excuse = excuses.FirstOrDefault();
         if (excuse != null)
         {
             return excuse.ExcuseJustification;
@@ -25,8 +27,9 @@
         return string.Empty;
     }
 
-    public static string GetObservation(ExcuseApprovalView excuse)
+    public static string GetObservation(IEnumerable<ExcuseApprovalView> excuses)
     {
+        var excuse = excuses.FirstOrDefault();
         if (excuse != null)
         {
             return excuse.ExcuseObservation;
@@ -34,8 +37,9 @@
         return string.Empty;
     }
 
-    public static string DisplayObservation(ExcuseApprovalView excuse)
+    public static string DisplayObservation(IEnumerable<ExcuseApprovalView> excuses)
     {
+        var excuse = excuses.FirstOrDefault();
         if (excuse != null)
         {
             return string.IsNullOrEmpty(excuse.ExcuseObservation) ? "none" : "block";
@@ -60,15 +64,15 @@
                                     <form id="form-basic-information">
                                         <div class="form-group">
                                             <label>Clasificación</label>
-                                            <input type="text" class="form-control" name="Classification" readonly value="@GetClassification(excuse)" />
+                                            <input type="text" class="form-control" name="Classification" readonly value="@GetClassification(excuses)" />
                                         </div>
-                                        <div class="form-group" style="display: @DisplayObservation(excuse)">
+                                        <div class="form-group" style="display: @DisplayObservation(excuses)">
                                             <label>Observación</label>
-                                            <textarea class="form-control" rows="5" name="Observation" readonly>@GetObservation(excuse)</textarea>
+                                            <textarea class="form-control" rows="5" name="Observation" readonly>@GetObservation(excuses)</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Justificación</label>
-                                            <textarea class="form-control" rows="10" name="Justification" readonly>@GetJustification(excuse)</textarea>
+                                            <textarea class="form-control" rows="10" name="Justification" readonly>@GetJustification(excuses)</textarea>
                                         </div>
                                     </form>
                                 </div>

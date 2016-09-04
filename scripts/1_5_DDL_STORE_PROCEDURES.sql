@@ -268,11 +268,11 @@ AS
 	DECLARE PersonsCursor CURSOR FOR(
 		SELECT DISTINCT StudentDocumentNumber	AS DocumentNumber
 				, 4								AS RoleId
-		FROM [Integration].[EnrollmentDetailView]
+		FROM [Integration].[EnrollmentDetailView] WITH(NOLOCK)
 		UNION 
 		SELECT	DISTINCT TeacherDocumentNumber	AS DocumentNumber
 				, 3								AS RoleId
-		FROM [Integration].[EnrollmentDetailView]);
+		FROM [Integration].[EnrollmentDetailView] WITH(NOLOCK));
 
 	OPEN PersonsCursor;
 	
@@ -305,7 +305,7 @@ AS
 				PRINT '===STUDENTS ROLE (4)=='
 				SELECT	@SpaceId		= SpaceId
 						, @StartTime	= StartTime
-				FROM	[Integration].[EnrollmentDetailView]
+				FROM	[Integration].[EnrollmentDetailView] WITH(NOLOCK)
 				WHERE	StudentDocumentNumber	= @DocumentNumber AND
 						DayOfTheWeek			= DATEPART(WEEKDAY, @StartSemesterDate)
 			END
@@ -315,7 +315,7 @@ AS
 				PRINT '===TEACHERS ROLE (3)=='
 				SELECT	@SpaceId		= SpaceId
 						, @StartTime	= StartTime
-				FROM	[Integration].[EnrollmentDetailView]
+				FROM	[Integration].[EnrollmentDetailView] WITH(NOLOCK)
 				WHERE	TeacherDocumentNumber	= @DocumentNumber AND
 						DayOfTheWeek			= DATEPART(WEEKDAY, @StartSemesterDate)
 			END 
@@ -374,7 +374,6 @@ GO
 -- Description:	Get the current course
 -- 
 -- =============================================
---[Integration].[GetCurrentCourseByTeacherDocumentNumber] 1130677687
 CREATE PROCEDURE [Integration].[GetCurrentCourseByTeacherDocumentNumber]
 	@TeacherDocumentNumber INT 
 AS
@@ -385,14 +384,13 @@ BEGIN
 
     -- Insert statements for procedure here
 	SELECT	* 
-	FROM	[Integration].[ScheduleDetailView] [SDV]
+	FROM	[Integration].[ScheduleDetailView] [SDV] WITH(NOLOCK)
 	WHERE	( [SDV].[EndDate] >= GETDATE() AND [SDV].[StartDate] <=  GETDATE() ) AND-- Course of the semester
 			[SDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]()	AND -- Course for today
 			( [SDV].[EndTime] >= CONVERT(TIME, GETDATE()) AND  [SDV].[StartTime] <=  CONVERT(TIME, GETDATE())) AND-- Current course
 			[SDV].[TeacherDocumentNumber] = @TeacherDocumentNumber 
 	ORDER BY [SDV].[StartTime] DESC
 END
-
 
 GO
 
@@ -561,8 +559,8 @@ BEGIN
 			, [PAV].[EndTime]
 			, @LastDate				AS NonAttendanceDate
 			, 0						AS HasExcuse
-	FROM	[Integration].[PersonActivitiesView]		[PAV]
-	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] ON 
+	FROM	[Integration].[PersonActivitiesView]			[PAV] WITH(NOLOCK)
+	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] WITH(NOLOCK) ON 
 		[CMV].[DocumentNumber]	= [PAV].[DocumentNumber]	AND
 		[CMV].[CourseId]		= [PAV].[CourseId]			AND
 		[CMV].[RoleId]			= [PAV].[RoleId]			AND
@@ -608,8 +606,8 @@ BEGIN
 			, [PAV].[EndTime]
 			, @Date					AS NonAttendanceDate
 			, 0						AS HasExcuse
-	FROM	[Integration].[PersonActivitiesView]		[PAV]
-	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] ON 
+	FROM	[Integration].[PersonActivitiesView]			[PAV] WITH(NOLOCK)
+	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] WITH(NOLOCK) ON 
 		[CMV].[DocumentNumber]	= [PAV].[DocumentNumber]	AND
 		[CMV].[CourseId]		= [PAV].[CourseId]			AND
 		[CMV].[RoleId]			= [PAV].[RoleId]			AND
@@ -1032,7 +1030,7 @@ BEGIN
 						, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
 						, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 						, COUNT (1)				AS EventTotal
-				FROM	[Attendance].[AttendanceView] [ATV]
+				FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 				WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate) AND
 						[ATV].[RoleId]			= 4								 AND
 						[ATV].[CourseId]		IN (
@@ -1047,7 +1045,7 @@ BEGIN
 						, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
 						, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 						, COUNT (1)								AS EventTotal
-				FROM	[NonAttendance].[NonAttendanceView] [NAV]
+				FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 				WHERE	[NAV].[NonAttendanceDate]	= CONVERT(DATE, @SemesterStartDate) AND
 						[NAV].[RoleId]				= 4									AND
 						[NAV].[CourseId]		IN (
@@ -1063,7 +1061,7 @@ BEGIN
 						, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
 						, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 						, COUNT (1)				AS EventTotal
-				FROM	[Attendance].[AttendanceView] [ATV]
+				FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 				WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate)	AND
 						[ATV].[DocumentNumber]	= @DocumentNumber					AND
 						[ATV].[RoleId]			= @RoleId 
@@ -1076,7 +1074,7 @@ BEGIN
 						, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
 						, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 						, COUNT (1)								AS EventTotal
-				FROM	[NonAttendance].[NonAttendanceView] [NAV]
+				FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 				WHERE	[NAV].[NonAttendanceDate] = CONVERT(DATE, @SemesterStartDate)	AND
 						[NAV].[DocumentNumber]	= @DocumentNumber						AND
 						[NAV].[RoleId]			= @RoleId 
@@ -1091,7 +1089,7 @@ BEGIN
 					, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
 					, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 					, COUNT (1)				AS EventTotal
-			FROM	[Attendance].[AttendanceView] [ATV]
+			FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 			WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate) 
 
 			UNION
@@ -1102,7 +1100,7 @@ BEGIN
 					, DATEPART(MONTH, @SemesterStartDate)	AS EventDateMonth
 					, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 					, COUNT (1)								AS EventTotal
-			FROM	[NonAttendance].[NonAttendanceView] [NAV]
+			FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 			WHERE	[NAV].[NonAttendanceDate] = CONVERT(DATE, @SemesterStartDate) 
 		END
 
@@ -1210,7 +1208,7 @@ BEGIN
 						, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 						, [ATV].CourseName						AS EventCourseName
 						, COUNT (1)				AS EventTotal
-				FROM	[Attendance].[AttendanceView] [ATV]
+				FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 				WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate) AND
 						[ATV].[RoleId]			= 4								 AND
 						[ATV].[CourseId]		IN (
@@ -1227,7 +1225,7 @@ BEGIN
 						, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 						, [NAV].CourseName						AS EventCourseName
 						, COUNT (1)								AS EventTotal
-				FROM	[NonAttendance].[NonAttendanceView] [NAV]
+				FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 				WHERE	[NAV].[NonAttendanceDate]	= CONVERT(DATE, @SemesterStartDate) AND
 						[NAV].[RoleId]				= 4									AND
 						[NAV].[CourseId]		IN (
@@ -1245,7 +1243,7 @@ BEGIN
 							, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 							, [ATV].CourseName						AS EventCourseName
 							, COUNT (1)				AS EventTotal
-					FROM	[Attendance].[AttendanceView] [ATV]
+					FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 					WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate)	AND
 							[ATV].[DocumentNumber]	= @DocumentNumber					AND
 							[ATV].[RoleId]			= @RoleId 
@@ -1260,7 +1258,7 @@ BEGIN
 							, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 							, [NAV].CourseName						AS EventCourseName
 							, COUNT (1)								AS EventTotal
-					FROM	[NonAttendance].[NonAttendanceView] [NAV]
+					FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 					WHERE	[NAV].[NonAttendanceDate]	= CONVERT(DATE, @SemesterStartDate)	AND
 							[NAV].[DocumentNumber]		= @DocumentNumber					AND
 							[NAV].[RoleId]				= @RoleId 
@@ -1277,7 +1275,7 @@ BEGIN
 					, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 					, [ATV].CourseName						AS EventCourseName
 					, COUNT (1)				AS EventTotal
-			FROM	[Attendance].[AttendanceView] [ATV]
+			FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 			WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate)
 			GROUP BY  [ATV].CourseName	
 
@@ -1290,7 +1288,7 @@ BEGIN
 					, DATENAME(MONTH, @SemesterStartDate)	AS EventDateMonthName
 					, [NAV].CourseName						AS EventCourseName
 					, COUNT (1)								AS EventTotal
-			FROM	[NonAttendance].[NonAttendanceView] [NAV]
+			FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 			WHERE	[NAV].[NonAttendanceDate] = CONVERT(DATE, @SemesterStartDate) 
 			GROUP BY  [NAV].CourseName	
 			
@@ -1408,7 +1406,7 @@ BEGIN
 				, [ATV].RoleAlias						AS PersonRoleAlias
 				, [ATV].ImageRelativePath				AS PersonImageRelativePath
 				, COUNT( 1 )							AS EventTotal
-		FROM	[Attendance].[AttendanceView] [ATV]
+		FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 		WHERE	[ATV].[MovementDate]		= CONVERT(DATE, @SemesterStartDate) AND
 				[ATV].[RoleId]				= 3 
 		GROUP BY  [ATV].CourseId		
@@ -1431,7 +1429,7 @@ BEGIN
 				, [NAV].RoleAlias						AS PersonRoleAlias
 				, [NAV].ImageRelativePath				AS PersonImageRelativePath
 				, COUNT( 1 )							AS EventTotal
-		FROM	[NonAttendance].[NonAttendanceView] [NAV]
+		FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 		WHERE	[NAV].[NonAttendanceDate]	= CONVERT(DATE, @SemesterStartDate) AND
 				[NAV].[RoleId]				= 3 
 		GROUP BY  [NAV].CourseId		
@@ -1573,7 +1571,7 @@ BEGIN
 						, [ATV].RoleAlias						AS PersonRoleAlias
 						, [ATV].ImageRelativePath				AS PersonImageRelativePath
 						, COUNT( 1 )							AS EventTotal
-				FROM	[Attendance].[AttendanceView] [ATV]
+				FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 				WHERE	[ATV].[MovementDate]	= CONVERT(DATE, @SemesterStartDate)  AND
 						[ATV].RoleId			= 4									 AND
 						[ATV].[CourseId]		IN (
@@ -1599,7 +1597,7 @@ BEGIN
 						, [NAV].RoleAlias						AS PersonRoleAlias
 						, [NAV].ImageRelativePath				AS PersonImageRelativePath
 						, COUNT( 1 )							AS EventTotal
-				FROM	[NonAttendance].[NonAttendanceView] [NAV]
+				FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 				WHERE	[NAV].[NonAttendanceDate]	= CONVERT(DATE, @SemesterStartDate) AND
 						[NAV].RoleId				= 4									AND
 						[NAV].[CourseId]		IN (
@@ -1628,7 +1626,7 @@ BEGIN
 						, [ATV].RoleAlias						AS PersonRoleAlias
 						, [ATV].ImageRelativePath				AS PersonImageRelativePath
 						, COUNT( 1 )							AS EventTotal
-				FROM	[Attendance].[AttendanceView] [ATV]
+				FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 				WHERE	[ATV].[MovementDate]	= CONVERT(DATE, @SemesterStartDate)  AND
 						[ATV].RoleId			= 4 
 				GROUP BY  [ATV].CourseId		
@@ -1651,7 +1649,7 @@ BEGIN
 						, [NAV].RoleAlias						AS PersonRoleAlias
 						, [NAV].ImageRelativePath				AS PersonImageRelativePath
 						, COUNT( 1 )							AS EventTotal
-				FROM	[NonAttendance].[NonAttendanceView] [NAV]
+				FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 				WHERE	[NAV].[NonAttendanceDate]	= CONVERT(DATE, @SemesterStartDate) AND
 						[NAV].RoleId				= 4 
 				GROUP BY  [NAV].CourseId		
@@ -1762,7 +1760,7 @@ BEGIN
 		IF(@RoleId = 1 OR @RoleId = 2) -- Is Administrator or Director
 		BEGIN
 			SELECT	@Total  = COUNT( 1 )
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 
 			INSERT INTO @ExcuseStatisticts
 			SELECT	TOP 5 
@@ -1770,14 +1768,14 @@ BEGIN
 					, [EXV].[Status]
 					, COUNT( 1 )									AS Total
 					, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			GROUP BY [EXV].[Status]
 			ORDER BY COUNT( 1 ) DESC
 		END
 		IF(@RoleId = 3) --Is a Teacher
 		BEGIN
 			SELECT	@Total  = COUNT( 1 )
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantRoleId] = 4	AND
 					[EXV].[CourseId]		IN (
 											SELECT	CourseId 
@@ -1789,7 +1787,7 @@ BEGIN
 					, [EXV].[Status]
 					, COUNT( 1 )									AS Total
 					, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantRoleId] = 4	AND
 					[EXV].[CourseId]		IN (
 											SELECT	CourseId 
@@ -1800,7 +1798,7 @@ BEGIN
 		IF(@RoleId = 4)
 		BEGIN
 			SELECT	@Total  = COUNT( 1 )
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantDocumentNumber]	= @DocumentNumber AND
 					[EXV].[TruantRoleId]			= @RoleId
 
@@ -1810,7 +1808,7 @@ BEGIN
 					, [EXV].[Status]
 					, COUNT( 1 )									AS Total
 					, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantDocumentNumber]	= @DocumentNumber AND
 					[EXV].[TruantRoleId]			= @RoleId
 			GROUP BY [EXV].[Status]
@@ -1820,7 +1818,7 @@ BEGIN
 	ELSE
 	BEGIN
 		SELECT	@Total  = COUNT( 1 )
-		FROM	[NonAttendance].[ExcuseView] [EXV]
+		FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 
 		INSERT INTO @ExcuseStatisticts
 		SELECT	TOP 5 
@@ -1828,7 +1826,7 @@ BEGIN
 				, [EXV].[Status]
 				, COUNT( 1 )									AS Total
 				, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-		FROM	[NonAttendance].[ExcuseView] [EXV]
+		FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 		GROUP BY [EXV].[Status]
 		ORDER BY COUNT( 1 ) DESC
 	END
@@ -1882,21 +1880,21 @@ BEGIN
 		IF(@RoleId = 1 OR @RoleId = 2) -- Is Administrator or Director
 		BEGIN
 			SELECT	@Total  = COUNT( 1 )
-				FROM	[NonAttendance].[ExcuseView] [EXV]
+				FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 
 			INSERT INTO @ExcuseStatisticts
 			SELECT	@ExcuseResultAlias								AS ResultAlias
 					, [EXV].[Classification]
 					, COUNT( 1 )									AS Total
 					, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			GROUP BY [EXV].[Classification]
 			ORDER BY COUNT( 1 ) DESC
 		END
 		IF(@RoleId = 3) --Is a Teacher
 		BEGIN
 			SELECT	@Total  = COUNT( 1 )
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantRoleId] = 4	AND
 					[EXV].[CourseId]		IN (
 											SELECT	CourseId 
@@ -1907,7 +1905,7 @@ BEGIN
 					, [EXV].[Classification]
 					, COUNT( 1 )									AS Total
 					, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantRoleId] = 4	AND
 					[EXV].[CourseId]		IN (
 											SELECT	CourseId 
@@ -1918,7 +1916,7 @@ BEGIN
 		IF(@RoleId = 4) --Is a student
 		BEGIN
 			SELECT	@Total  = COUNT( 1 )
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantDocumentNumber]	= @DocumentNumber AND
 					[EXV].[TruantRoleId]			= @RoleId
 
@@ -1927,7 +1925,7 @@ BEGIN
 					, [EXV].[Classification]
 					, COUNT( 1 )									AS Total
 					, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantDocumentNumber]	= @DocumentNumber AND
 					[EXV].[TruantRoleId]			= @RoleId
 			GROUP BY [EXV].[Classification]
@@ -1937,14 +1935,14 @@ BEGIN
 	ELSE
 	BEGIN
 		SELECT	@Total  = COUNT( 1 )
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 
 		INSERT INTO @ExcuseStatisticts
 		SELECT	@ExcuseResultAlias								AS ResultAlias
 				, [EXV].[Classification]
 				, COUNT( 1 )									AS Total
 				, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-		FROM	[NonAttendance].[ExcuseView] [EXV]
+		FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 		GROUP BY [EXV].[Classification]
 		ORDER BY COUNT( 1 ) DESC
 	END
@@ -1998,7 +1996,7 @@ BEGIN
 		IF(@RoleId = 1 OR @RoleId = 2) -- Is Administrator or Director
 		BEGIN
 			SELECT	@Total  = COUNT( 1 )
-				FROM	[NonAttendance].[ExcuseView] [EXV]
+				FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 
 				INSERT INTO @ExcuseStatisticts
 				SELECT	TOP 5 
@@ -2006,14 +2004,14 @@ BEGIN
 						, [EXV].[Classification]
 						, COUNT( 1 )									AS Total
 						, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-				FROM	[NonAttendance].[ExcuseView] [EXV]
+				FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 				GROUP BY [EXV].[Classification]
 				ORDER BY COUNT( 1 ) DESC
 		END
 		IF(@RoleId = 3) --Is a Teacher
 		BEGIN
 			SELECT	@Total  = COUNT( 1 )
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantRoleId] = 4	AND
 					[EXV].[CourseId]		IN (
 											SELECT	CourseId 
@@ -2025,7 +2023,7 @@ BEGIN
 					, [EXV].[Classification]
 					, COUNT( 1 )									AS Total
 					, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantRoleId] = 4	AND
 					[EXV].[CourseId]		IN (
 											SELECT	CourseId 
@@ -2036,7 +2034,7 @@ BEGIN
 		IF(@RoleId = 4)
 		BEGIN
 			SELECT	@Total  = COUNT( 1 )
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantDocumentNumber]	= @DocumentNumber AND
 					[EXV].[TruantRoleId]			= @RoleId
 
@@ -2046,7 +2044,7 @@ BEGIN
 					, [EXV].[Classification]
 					, COUNT( 1 )									AS Total
 					, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			WHERE	[EXV].[TruantDocumentNumber]	= @DocumentNumber AND
 					[EXV].[TruantRoleId]			= @RoleId
 			GROUP BY [EXV].[Classification]
@@ -2056,7 +2054,7 @@ BEGIN
 	ELSE
 	BEGIN
 		SELECT	@Total  = COUNT( 1 )
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 
 			INSERT INTO @ExcuseStatisticts
 			SELECT	TOP 5 
@@ -2064,7 +2062,7 @@ BEGIN
 					, [EXV].[Classification]
 					, COUNT( 1 )									AS Total
 					, FORMAT(COUNT( 1 ) / @Total, 'N', 'ES-CO')		AS Percentage
-			FROM	[NonAttendance].[ExcuseView] [EXV]
+			FROM	[NonAttendance].[ExcuseView] [EXV] WITH(NOLOCK)
 			GROUP BY [EXV].[Classification]
 			ORDER BY COUNT( 1 ) DESC
 	END

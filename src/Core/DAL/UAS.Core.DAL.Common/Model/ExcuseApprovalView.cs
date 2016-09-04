@@ -43,5 +43,6 @@ namespace UAS.Core.DAL.Common.Model
         public string TruantRoleId { get; set; }
         public string TruantRoleAlias { get; set; }
         public string ApproverFullName { get; set; }
+        public string ApproverObservation { get; set; }
     }
 }

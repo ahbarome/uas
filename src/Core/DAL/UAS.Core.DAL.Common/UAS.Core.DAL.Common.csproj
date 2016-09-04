@@ -108,6 +108,9 @@
     <Compile Include="Model\GetAllStudentMovementsByTeacherDocumentNumber_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GetCoursesByTeacherDocumentNumber_Result.cs">
+      <DependentUpon>UASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GetCourseSummaryById_Result.cs">
       <DependentUpon>UASModel.tt</DependentUpon>
     </Compile>

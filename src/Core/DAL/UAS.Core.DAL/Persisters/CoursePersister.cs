@@ -48,6 +48,38 @@ namespace UAS.Core.DAL.Persisters
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="teacherDocumentNumber"></param>
+        /// <returns></returns>
+        public List<Course> GetCoursesByTeacherDocumentNumber(int teacherDocumentNumber)
+        {
+            var courses = new List<Course>();
+            var currentCourses = base.Entities.GetCurrentCourseByTeacherDocumentNumber(teacherDocumentNumber);
+
+            if (currentCourses != null)
+            {
+                foreach (var currentCourse in currentCourses)
+                {
+                    var course = new Course
+                    {
+                        Id = currentCourse.CourseId,
+                        Name = currentCourse.CourseName,
+                        NumberOfCredits = currentCourse.CourseCredits,
+                        Semester = currentCourse.AcademicSemester,
+                        SpaceDescription = string.Format("{0} {1}", currentCourse.SpaceType, currentCourse.SpaceName),
+                        StartTime = currentCourse.StartTime,
+                        EndTime = currentCourse.EndTime
+                    };
+
+                    courses.Add(course);
+                }
+            }
+
+            return courses;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="courseId"></param>
         /// <returns></returns>
         public Statistic GetCourseStatistics(int courseId)

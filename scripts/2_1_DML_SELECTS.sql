@@ -52,14 +52,25 @@ FROM	Integration.GetCurrentCoursesByTeacherDocumentNumber(1130677682)
 SELECT	* 
 FROM	[Integration].[GetCoursesByDate](CONVERT(DATE, GETDATE()))
 
+SELECT TOP 10 *
+FROM	[NonAttendance].[StatusByRoleView]
+
+SELECT TOP 10 *
+FROM	[NonAttendance].[ClassificationByRoleView]
+
+
+SELECT *
+FROM	[Attendance].[AttendanceView]
 
 SELECT TOP 10 *
 FROM	[NonAttendance].[NonAttendanceView] 
 WHERE	[RoleId] = 4
 
 SELECT TOP 10 *
-FROM	[NonAttendance].[ExcuseApprovalView] 
+FROM	[NonAttendance].[ExcuseApproval] 
 
+SELECT TOP 10 *
+FROM	[NonAttendance].[ExcuseApprovalView] 
 
 SELECT	*
 FROM	[Security].[PagePermissionView]

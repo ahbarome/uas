@@ -84,6 +84,8 @@ namespace UAS.Core.NonAttendance.Managers
 
                     if (approvalStatus == ModelEnums.Status.REJECTED)
                     {
+                        _excusePersister.UpdateExcuseStatus(
+                            excuseApproval.IdExcuse, excuseApproval.IdStatusApproval);
                         _nonAttendanceManager.UpdateHasExcuse(excuseApproval.IdNonAttendance, false);
                     }
                 });

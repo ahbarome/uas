@@ -507,6 +507,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.ExcuseApprovalView' no tie
           <Property Name="Approver" Type="int" Nullable="false" />
           <Property Name="ApproverFullName" Type="nvarchar" MaxLength="301" />
           <Property Name="IdRoleApprover" Type="int" Nullable="false" />
+          <Property Name="ApproverObservation" Type="nvarchar(max)" />
           <Property Name="IdNonAttendance" Type="int" Nullable="false" />
           <Property Name="TruantDocumentNumber" Type="int" Nullable="false" />
           <Property Name="TruantFullName" Type="nvarchar" MaxLength="301" Nullable="false" />
@@ -1085,6 +1086,21 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <Parameter Name="DocumentNumber" Type="int" Mode="In" />
           <Parameter Name="RoleId" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetCoursesByTeacherDocumentNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
+          <Parameter Name="TeacherDocumentNumber" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="CourseId" Type="int" Nullable="false" />
+                <Property Name="CourseName" Type="nvarchar" MaxLength="250" Nullable="false" />
+                <Property Name="DayOfTheWeek" Type="int" Nullable="false" />
+                <Property Name="DayOfTheWeekName" Type="nvarchar" MaxLength="30" />
+                <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+                <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="GetCourseSummaryById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Integration">
           <Parameter Name="CourseId" Type="int" Mode="In" />
           <ReturnType>
@@ -1290,6 +1306,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
     [ExcuseApprovalView].[Approver] AS [Approver], 
     [ExcuseApprovalView].[ApproverFullName] AS [ApproverFullName], 
     [ExcuseApprovalView].[IdRoleApprover] AS [IdRoleApprover], 
+    [ExcuseApprovalView].[ApproverObservation] AS [ApproverObservation], 
     [ExcuseApprovalView].[IdNonAttendance] AS [IdNonAttendance], 
     [ExcuseApprovalView].[TruantDocumentNumber] AS [TruantDocumentNumber], 
     [ExcuseApprovalView].[TruantFullName] AS [TruantFullName], 
@@ -1720,6 +1737,9 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <FunctionImport Name="GetTopStatistictsMajorCourseAttendanceAndNonAttendance" ReturnType="Collection(UASModel.GetTopStatistictsMajorCourseAttendanceAndNonAttendance_Result)" >
             <Parameter Name="DocumentNumber" Mode="In" Type="Int32" />
             <Parameter Name="RoleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetCoursesByTeacherDocumentNumber" IsComposable="true" ReturnType="Collection(UASModel.GetCoursesByTeacherDocumentNumber_Result)">
+            <Parameter Name="TeacherDocumentNumber" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="User">
@@ -2628,6 +2648,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <Property Name="TruantRoleId" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="TruantRoleAlias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="ApproverFullName" Type="String" MaxLength="301" FixedLength="false" Unicode="true" />
+          <Property Name="ApproverObservation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ExcuseApproval">
           <Key>
@@ -2876,6 +2897,14 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <Property Type="String" Name="EventDateMonthName" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="EventCourseName" Nullable="true" MaxLength="250" />
           <Property Type="Int32" Name="EventTotal" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetCoursesByTeacherDocumentNumber_Result">
+          <Property Type="Int32" Name="CourseId" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="DayOfTheWeek" Nullable="false" />
+          <Property Type="String" Name="DayOfTheWeekName" Nullable="true" MaxLength="30" />
+          <Property Type="Time" Name="StartTime" Nullable="false" />
+          <Property Type="Time" Name="EndTime" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3404,6 +3433,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <EntitySetMapping Name="ExcuseApprovalView">
             <EntityTypeMapping TypeName="UASModel.ExcuseApprovalView">
               <MappingFragment StoreEntitySet="ExcuseApprovalView">
+                <ScalarProperty Name="ApproverObservation" ColumnName="ApproverObservation" />
                 <ScalarProperty Name="ApproverFullName" ColumnName="ApproverFullName" />
                 <ScalarProperty Name="TruantRoleAlias" ColumnName="TruantRoleAlias" />
                 <ScalarProperty Name="TruantRoleId" ColumnName="TruantRoleId" />
@@ -3642,6 +3672,18 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
                 <ScalarProperty Name="EventDateMonthName" ColumnName="EventDateMonthName" />
                 <ScalarProperty Name="EventCourseName" ColumnName="EventCourseName" />
                 <ScalarProperty Name="EventTotal" ColumnName="EventTotal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCoursesByTeacherDocumentNumber" FunctionName="UASModel.Store.GetCoursesByTeacherDocumentNumber">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UASModel.GetCoursesByTeacherDocumentNumber_Result">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="DayOfTheWeek" ColumnName="DayOfTheWeek" />
+                <ScalarProperty Name="DayOfTheWeekName" ColumnName="DayOfTheWeekName" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

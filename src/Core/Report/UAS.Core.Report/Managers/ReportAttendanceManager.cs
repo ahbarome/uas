@@ -8,6 +8,7 @@ namespace UAS.Core.Report.Managers
 {
     internal class ReportAttendanceManager
     {
+        private CoursePersister _coursePersister;
         private AttendancePersister _attendancePersister;
 
         public ReportAttendanceManager()
@@ -26,8 +27,27 @@ namespace UAS.Core.Report.Managers
                 return attendanceBase.ToList(); ;
             }
 
+            //if (currentRole == DAL.Common.Model.Enums.Role.TEACHER)
+            //{
+            //    var teacherNonAttendance =
+            //        attendanceBase.Where(
+            //            filter => filter.DocumentNumber == documentNumber).ToList();
+
+            //    var teacherStudentsNonAttendance =
+            //        attendanceBase.Where(filter => IsCouseFromTeacher(documentNumber, filter.CourseId)).ToList();
+
+            //    return teacherStudentsNonAttendance.Union(teacherNonAttendance).ToList();
+            //}
+
             return attendanceBase.Where(
-                filter => filter.DocumentNumber == documentNumber).ToList();
+            filter => filter.DocumentNumber == documentNumber).ToList();
+        }
+
+        private bool IsCouseFromTeacher(int documentNumber, int courseId)
+        {
+            var teacherCourses = _coursePersister.GetCoursesByTeacherDocumentNumber(documentNumber);
+
+            return teacherCourses.Where(filter => filter.Id == courseId).Any();
         }
     }
 }

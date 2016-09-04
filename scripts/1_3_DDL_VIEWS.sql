@@ -44,7 +44,7 @@ CREATE VIEW [Security].[PagePermissionView] AS
 			, [PPR].[CanEdit]
 			, [PPR].[CanDelete]
 			, [PPR].[IsDefault]
-	FROM	[Security].[UserView]					[USV]
+	FROM	[Security].[UserView]					[USV] WITH(NOLOCK)
 	INNER JOIN	[Security].[PagePermissionByRole]	[PPR] WITH(NOLOCK) ON	[PPR].[IdRole]	= [USV].[IdRole]
 	INNER JOIN	[Security].[Page]					[PAG] WITH(NOLOCK) ON	[PAG].[Id]		= [PPR].[IdPage]
 );
@@ -101,10 +101,10 @@ CREATE VIEW [Attendance].[TeacherMovementView] AS
 			, [MOV].[RegisterDate]							AS MovementDateTime
 			, CONVERT(DATE, [MOV].[RegisterDate])			AS MovementDate
 			, CONVERT(TIME, [MOV].[RegisterDate])			AS MovementTime
-	FROM		[Attendance].[Movement]				[MOV]
-	INNER JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [MOV].[DocumentNumber]
-	INNER JOIN	[Integration].[Space]				[SPA] ON [SPA].[Id]				= [MOV].[IdSpace]
-	INNER JOIN	[Integration].[SpaceType]			[SPT] ON [SPT].[Id]				= [SPA].[IdSpaceType] )
+	FROM		[Attendance].[Movement]				[MOV] WITH(NOLOCK)
+	INNER JOIN	[Integration].[Teacher]				[TEA] WITH(NOLOCK) ON [TEA].[DocumentNumber] = [MOV].[DocumentNumber]
+	INNER JOIN	[Integration].[Space]				[SPA] WITH(NOLOCK) ON [SPA].[Id]				= [MOV].[IdSpace]
+	INNER JOIN	[Integration].[SpaceType]			[SPT] WITH(NOLOCK) ON [SPT].[Id]				= [SPA].[IdSpaceType] )
 GO
 
 --*******************************************************************
@@ -112,10 +112,11 @@ GO
 --*******************************************************************
 CREATE VIEW [Attendance].[MovementView] AS
 (	SELECT	*
-	FROM	[Attendance].[StudentMovementView]
+	FROM	[Attendance].[StudentMovementView] WITH(NOLOCK)
 	UNION
 	SELECT	*
-	FROM	[Attendance].[TeacherMovementView])
+	FROM	[Attendance].[TeacherMovementView]  WITH(NOLOCK)
+);
 GO
 
 --*******************************************************************
@@ -158,13 +159,13 @@ CREATE VIEW [Integration].[ScheduleDetailView] AS
 			, [ACA].[Semester]								AS AcademicSemester
 			, [ACA].[StartDate]
 			, [ACA].[EndDate]
-	FROM		[Integration].[Schedule]			[SCH] 
-	INNER JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
-	INNER JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
-	INNER JOIN	[Integration].[Course]				[COU] ON [COU].[Id]				= [SCH].[IdCourse]	
-	INNER JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]
-	INNER JOIN	[Integration].[Space]				[SPA] ON [SPA].[Id]				= [SCD].[IdSpace]
-	INNER JOIN	[Integration].[SpaceType]			[SPT] ON [SPT].[Id]				= [SPA].[IdSpaceType])
+	FROM		[Integration].[Schedule]			[SCH] WITH(NOLOCK) 
+	INNER JOIN	[Integration].[ScheduleDetail]		[SCD] WITH(NOLOCK) ON [SCD].[IdSchedule]		= [SCH].[Id]
+	INNER JOIN	[Integration].[Teacher]				[TEA] WITH(NOLOCK) ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
+	INNER JOIN	[Integration].[Course]				[COU] WITH(NOLOCK) ON [COU].[Id]				= [SCH].[IdCourse]	
+	INNER JOIN	[Integration].[AcademicPeriod]		[ACA] WITH(NOLOCK) ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]
+	INNER JOIN	[Integration].[Space]				[SPA] WITH(NOLOCK) ON [SPA].[Id]				= [SCD].[IdSpace]
+	INNER JOIN	[Integration].[SpaceType]			[SPT] WITH(NOLOCK) ON [SPT].[Id]				= [SPA].[IdSpaceType])
 GO
 
 --*******************************************************************
@@ -196,19 +197,19 @@ CREATE VIEW [Integration].[EnrollmentDetailView] AS
 			, [ACA].[StartDate]
 			, [ACA].[EndDate]
 			, [ENS].[Name]									AS EnrollmentStatus
-	FROM		[Integration].[Enrollment]			[ENR]
-	INNER JOIN	[Integration].[EnrollmentDetail]	[END] ON [END].[IdEnrollment]	= [ENR].Id
-	INNER JOIN	[Integration].[Student]				[STU] ON [STU].[DocumentNumber] = [ENR].[StudentDocumentNumber]
-	INNER JOIN	[Integration].[Schedule]			[SCH] ON [SCH].[Id]				= [END].[IdSchedule]
-	INNER JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
-	INNER JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
-	INNER JOIN	[Integration].[Course]				[COU] ON [COU].[Id]				= [SCH].[IdCourse]	
-	INNER JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
-	INNER JOIN	[Integration].[Career]				[CAR] ON [CAR].[Id]				= [STU].[IdCareer]
-	INNER JOIN	[Integration].[Fringe]				[FRI] ON [FRI].[Id]				= [STU].[IdFringe]
-	INNER JOIN	[Integration].[EnrollmentStatus]	[ENS] ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus]
-	INNER JOIN	[Integration].[Space]				[SPA] ON [SPA].[Id]				= [SCD].[IdSpace]
-	INNER JOIN	[Integration].[SpaceType]			[SPT] ON [SPT].[Id]				= [SPA].[IdSpaceType])
+	FROM		[Integration].[Enrollment]			[ENR] WITH(NOLOCK)
+	INNER JOIN	[Integration].[EnrollmentDetail]	[END] WITH(NOLOCK) ON [END].[IdEnrollment]	= [ENR].Id
+	INNER JOIN	[Integration].[Student]				[STU] WITH(NOLOCK) ON [STU].[DocumentNumber] = [ENR].[StudentDocumentNumber]
+	INNER JOIN	[Integration].[Schedule]			[SCH] WITH(NOLOCK) ON [SCH].[Id]				= [END].[IdSchedule]
+	INNER JOIN	[Integration].[ScheduleDetail]		[SCD] WITH(NOLOCK) ON [SCD].[IdSchedule]		= [SCH].[Id]
+	INNER JOIN	[Integration].[Teacher]				[TEA] WITH(NOLOCK) ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
+	INNER JOIN	[Integration].[Course]				[COU] WITH(NOLOCK) ON [COU].[Id]				= [SCH].[IdCourse]	
+	INNER JOIN	[Integration].[AcademicPeriod]		[ACA] WITH(NOLOCK) ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
+	INNER JOIN	[Integration].[Career]				[CAR] WITH(NOLOCK) ON [CAR].[Id]				= [STU].[IdCareer]
+	INNER JOIN	[Integration].[Fringe]				[FRI] WITH(NOLOCK) ON [FRI].[Id]				= [STU].[IdFringe]
+	INNER JOIN	[Integration].[EnrollmentStatus]	[ENS] WITH(NOLOCK) ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus]
+	INNER JOIN	[Integration].[Space]				[SPA] WITH(NOLOCK) ON [SPA].[Id]				= [SCD].[IdSpace]
+	INNER JOIN	[Integration].[SpaceType]			[SPT] WITH(NOLOCK) ON [SPT].[Id]				= [SPA].[IdSpaceType])
 GO
 
 --*******************************************************************
@@ -249,17 +250,17 @@ CREATE VIEW [Integration].[StudentEnrollmentView] AS
 			, [ACA].[StartDate]
 			, [ACA].[EndDate]
 			, [ENS].[Name]									AS EnrollmentStatus
-	FROM		[Integration].[Enrollment]			[ENR]
-	LEFT JOIN	[Integration].[EnrollmentDetail]	[END] ON [END].[IdEnrollment]	= [ENR].Id
-	LEFT JOIN	[Integration].[Student]				[STU] ON [STU].[DocumentNumber] = [ENR].[StudentDocumentNumber]
-	LEFT JOIN	[Integration].[Schedule]			[SCH] ON [SCH].[Id]				= [END].[IdSchedule]
-	LEFT JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
-	LEFT JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
-	LEFT JOIN	[Integration].[Course]				[COU] ON [COU].[Id]				= [SCH].[IdCourse]	
-	LEFT JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
-	LEFT JOIN	[Integration].[Career]				[CAR] ON [CAR].[Id]				= [STU].[IdCareer]
-	LEFT JOIN	[Integration].[Fringe]				[FRI] ON [FRI].[Id]				= [STU].[IdFringe]
-	LEFT JOIN	[Integration].[EnrollmentStatus]	[ENS] ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus])
+	FROM		[Integration].[Enrollment]			[ENR] WITH(NOLOCK)
+	LEFT JOIN	[Integration].[EnrollmentDetail]	[END] WITH(NOLOCK) ON [END].[IdEnrollment]	= [ENR].Id
+	LEFT JOIN	[Integration].[Student]				[STU] WITH(NOLOCK) ON [STU].[DocumentNumber] = [ENR].[StudentDocumentNumber]
+	LEFT JOIN	[Integration].[Schedule]			[SCH] WITH(NOLOCK) ON [SCH].[Id]				= [END].[IdSchedule]
+	LEFT JOIN	[Integration].[ScheduleDetail]		[SCD] WITH(NOLOCK) ON [SCD].[IdSchedule]		= [SCH].[Id]
+	LEFT JOIN	[Integration].[Teacher]				[TEA] WITH(NOLOCK) ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
+	LEFT JOIN	[Integration].[Course]				[COU] WITH(NOLOCK) ON [COU].[Id]				= [SCH].[IdCourse]	
+	LEFT JOIN	[Integration].[AcademicPeriod]		[ACA] WITH(NOLOCK) ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
+	LEFT JOIN	[Integration].[Career]				[CAR] WITH(NOLOCK) ON [CAR].[Id]				= [STU].[IdCareer]
+	LEFT JOIN	[Integration].[Fringe]				[FRI] WITH(NOLOCK) ON [FRI].[Id]				= [STU].[IdFringe]
+	LEFT JOIN	[Integration].[EnrollmentStatus]	[ENS] WITH(NOLOCK) ON [ENS].[Id]				= [ENR].[IdEnrollmentStatus])
 GO
 --*******************************************************************
 --COURSE VIEW 
@@ -281,13 +282,13 @@ CREATE VIEW [Integration].[CourseView] AS
 			, [ACA].[Semester]								AS AcademicSemester
 			, [ACA].[StartDate]
 			, [ACA].[EndDate]
-	FROM		[Integration].[Course]				[COU]
-	INNER JOIN	[Integration].[Schedule]			[SCH] ON [COU].[Id]				= [SCH].[IdCourse]	
-	INNER JOIN	[Integration].[ScheduleDetail]		[SCD] ON [SCD].[IdSchedule]		= [SCH].[Id]
-	INNER JOIN	[Integration].[Teacher]				[TEA] ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
-	INNER JOIN	[Integration].[AcademicPeriod]		[ACA] ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
-	INNER JOIN	[Integration].[Space]				[SPA] ON [SPA].[Id]				= [SCD].[IdSpace]
-	INNER JOIN	[Integration].[SpaceType]			[SPT] ON [SPT].[Id]				= [SPA].[IdSpaceType])
+	FROM		[Integration].[Course]				[COU] WITH(NOLOCK)
+	INNER JOIN	[Integration].[Schedule]			[SCH] WITH(NOLOCK) ON [COU].[Id]				= [SCH].[IdCourse]	
+	INNER JOIN	[Integration].[ScheduleDetail]		[SCD] WITH(NOLOCK) ON [SCD].[IdSchedule]		= [SCH].[Id]
+	INNER JOIN	[Integration].[Teacher]				[TEA] WITH(NOLOCK) ON [TEA].[DocumentNumber] = [SCH].[TeacherDocumentNumber]
+	INNER JOIN	[Integration].[AcademicPeriod]		[ACA] WITH(NOLOCK) ON [ACA].[Id]				= [SCH].[IdAcademicPeriod]	
+	INNER JOIN	[Integration].[Space]				[SPA] WITH(NOLOCK) ON [SPA].[Id]				= [SCD].[IdSpace]
+	INNER JOIN	[Integration].[SpaceType]			[SPT] WITH(NOLOCK) ON [SPT].[Id]				= [SPA].[IdSpaceType])
 GO
 
 --*******************************************************************
@@ -308,7 +309,7 @@ CREATE VIEW [Integration].[PersonActivitiesView] AS
 			, [DayOfTheWeek]
 			, [StartTime]
 			, [EndTime]
-	FROM	[Integration].[ScheduleDetailView] [SCH]
+	FROM	[Integration].[ScheduleDetailView] [SCH] WITH(NOLOCK)
 	UNION
 	SELECT	[CourseId] 
 			, [CourseName]
@@ -323,7 +324,7 @@ CREATE VIEW [Integration].[PersonActivitiesView] AS
 			, [DayOfTheWeek]
 			, [StartTime]
 			, [EndTime]
-	FROM	[Integration].[EnrollmentDetailView] [EDV]
+	FROM	[Integration].[EnrollmentDetailView] [EDV] WITH(NOLOCK)
 )
 GO
 
@@ -351,8 +352,8 @@ CREATE VIEW [Attendance].[AttendanceRegisterView] AS
 			, [MOV].[MovementDateTime]
 			, [MOV].[MovementDate]
 			, [MOV].[MovementTime]
-	FROM	[Attendance].[MovementView] [MOV]
-	INNER JOIN [Integration].[PersonActivitiesView] [PAV] ON
+	FROM	[Attendance].[MovementView]				[MOV] WITH(NOLOCK)
+	INNER JOIN [Integration].[PersonActivitiesView] [PAV] WITH(NOLOCK) ON
 		[MOV].[DocumentNumber]						= [PAV].[DocumentNumber]	AND
 		[MOV].[SpaceId]								= [PAV].[SpaceId]			AND
 		[MOV].[RoleId]								= [PAV].[RoleId]			AND
@@ -386,8 +387,8 @@ CREATE VIEW [Attendance].[AttendanceView] AS
 			, [MOV].[MovementDateTime]
 			, [MOV].[MovementDate]
 			, [MOV].[MovementTime]
-	FROM	[Attendance].[MovementView] [MOV]
-	INNER JOIN [Integration].[PersonActivitiesView] [PAV] ON
+	FROM	[Attendance].[MovementView]				[MOV] WITH(NOLOCK)
+	INNER JOIN [Integration].[PersonActivitiesView] [PAV] WITH(NOLOCK) ON
 		[MOV].[DocumentNumber]						= [PAV].[DocumentNumber]	AND
 		[MOV].[SpaceId]								= [PAV].[SpaceId]			AND
 		[MOV].[RoleId]								= [PAV].[RoleId]			AND
@@ -402,12 +403,12 @@ GO
 CREATE VIEW [NonAttendance].[NonAttendanceRegisterView] AS
 (	
 	SELECT	[PAV].*
-	FROM	[Integration].[PersonActivitiesView]			[PAV]
-	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] ON 
-		[CMV].[DocumentNumber]	= [PAV].[DocumentNumber] AND
-		[CMV].[CourseId]		= [PAV].[CourseId] AND
-		[CMV].[RoleId]			= [PAV].[RoleId] AND
-		[CMV].[SpaceId]			= [PAV].[SpaceId] AND
+	FROM	[Integration].[PersonActivitiesView]			[PAV] WITH(NOLOCK)
+	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] WITH(NOLOCK) ON 
+		[CMV].[DocumentNumber]	= [PAV].[DocumentNumber]	AND
+		[CMV].[CourseId]		= [PAV].[CourseId]			AND
+		[CMV].[RoleId]			= [PAV].[RoleId]			AND
+		[CMV].[SpaceId]			= [PAV].[SpaceId]			AND
 		[CMV].[DayOfTheWeek]	= [PAV].[DayOfTheWeek] 
 	WHERE	[CMV].[DocumentNumber] IS NULL 
 			
@@ -424,19 +425,19 @@ CREATE VIEW [NonAttendance].[NonAttendanceView] AS
 			, DATENAME(WEEKDAY, [NON].[NonAttendanceDate]) AS NameDayOfTheWeek
 			, [NON].[NonAttendanceDate]
 			, [NON].[HasExcuse]
-	FROM	[NonAttendance].[NonAttendance]				[NON]
-	INNER JOIN [Integration].[PersonActivitiesView]		[PAV]	ON	[PAV].[DocumentNumber]		= [NON].[DocumentNumber]	AND
-																	[PAV].[SpaceId]				= [NON].[IdSpace]			AND
-																	[PAV].[CourseId]			= [NON].[IdCourse]			AND
-																	[PAV].[RoleId]				= [NON].[IdRole]			AND
-																	[PAV].[DayOfTheWeek]		= [NON].[DayOfTheWeek] 	
+	FROM	[NonAttendance].[NonAttendance]				[NON] WITH(NOLOCK)
+	INNER JOIN [Integration].[PersonActivitiesView]		[PAV] WITH(NOLOCK)	ON	[PAV].[DocumentNumber]		= [NON].[DocumentNumber]	AND
+																				[PAV].[SpaceId]				= [NON].[IdSpace]			AND
+																				[PAV].[CourseId]			= [NON].[IdCourse]			AND
+																				[PAV].[RoleId]				= [NON].[IdRole]			AND
+																				[PAV].[DayOfTheWeek]		= [NON].[DayOfTheWeek] 	
 )
 GO
 
 --*******************************************************************
 --EXCUSE VIEW 
 --*******************************************************************
-CREATE VIEW [NonAttendance].[ExcuseView] AS
+ALTER VIEW [NonAttendance].[ExcuseView] AS
 (	
 	SELECT	[EXC].[Id]
 			, [EXC].[IdNonAttendance]
@@ -464,7 +465,7 @@ CREATE VIEW [NonAttendance].[ExcuseView] AS
 			, [EXC].[Justification]		AS ExcuseJustification
 			, [EXC].[Observation]		AS ExcuseObservation
 	FROM	[NonAttendance].[Excuse]				[EXC] WITH(NOLOCK)
-	INNER JOIN [NonAttendance].[NonAttendanceView]	[NAV]				ON [NAV].[Id] = [EXC].[IdNonAttendance]
+	INNER JOIN [NonAttendance].[NonAttendanceView]	[NAV] WITH(NOLOCK)	ON [NAV].[Id] = [EXC].[IdNonAttendance]
 	INNER JOIN [NonAttendance].[Classification]		[CLA] WITH(NOLOCK)	ON [CLA].[Id] = [EXC].[IdClassification]
 	INNER JOIN [NonAttendance].[Status]				[STA] WITH(NOLOCK)	ON [STA].[Id] = [EXC].[IdStatus]
  );
@@ -473,7 +474,7 @@ GO
 --*******************************************************************
 --EXCUSEAPPROVAL VIEW 
 --*******************************************************************
-CREATE VIEW [NonAttendance].[ExcuseApprovalView] AS
+ALTER VIEW [NonAttendance].[ExcuseApprovalView] AS
 (	
 	SELECT	[EXA].[Id]
 			, [EXA].[IdExcuse]
@@ -490,6 +491,7 @@ CREATE VIEW [NonAttendance].[ExcuseApprovalView] AS
 							WHERE	[USR].[DocumentNumber] = [EXA].[Approver] )
 				END							AS ApproverFullName
 			, [EXA].[IdRole]				AS IdRoleApprover
+			, [EXA].[Observation]			AS ApproverObservation
 			, [EXV].[IdNonAttendance]
 			, [EXV].[TruantDocumentNumber]
 			, [NAV].[FullName]				AS TruantFullName
@@ -514,8 +516,8 @@ CREATE VIEW [NonAttendance].[ExcuseApprovalView] AS
 			, [EXV].[ExcuseObservation]	
 	FROM	[NonAttendance].[ExcuseApproval]		[EXA] WITH(NOLOCK)
 	INNER JOIN [NonAttendance].[Status]				[STA] WITH(NOLOCK) ON [STA].[Id] = [EXA].[IdStatus]
-	INNER JOIN [NonAttendance].[ExcuseView]			[EXV] ON [EXV].[Id] = [EXA].[IdExcuse]
-	INNER JOIN [NonAttendance].[NonAttendanceView]	[NAV] ON [NAV].[Id] = [EXV].[IdNonAttendance]
+	INNER JOIN [NonAttendance].[ExcuseView]			[EXV] WITH(NOLOCK) ON [EXV].[Id] = [EXA].[IdExcuse]
+	INNER JOIN [NonAttendance].[NonAttendanceView]	[NAV] WITH(NOLOCK) ON [NAV].[Id] = [EXV].[IdNonAttendance]
  );
 GO
 

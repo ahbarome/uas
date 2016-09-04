@@ -134,6 +134,8 @@ function OnChangeStatus() {
         var self = $(this);
         var id = GetValue(self.val(), 0);
         var isLast = GetValue(self.val(), 1);
+        console.log(isLast);
+        console.log(id);
         if (isLast.toUpperCase() == "TRUE" && id != 4) {
             $('textarea[name="ObservationApproval"').parent().attr("style", "display: none;");
         }

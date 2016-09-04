@@ -21,7 +21,7 @@
                 <td>@attendance.DocumentNumber</td>
                 <td>@attendance.FullName</td>
                 <td>@attendance.RoleAlias</td>
-                <td>@attendance.MovementDate.ToString("yyyy-MM-dd")</td>
+                <td>@attendance.MovementDateTime.ToString("yyyy-MM-dd")</td>
                 <td>@attendance.DayOfTheWeekName</td>
                 <td>@{var scheduleDetail = string.Concat(@attendance.StartTime, " - ", @attendance.EndTime); @scheduleDetail}</td>
                 <td>@{var spaceDetail = string.Concat(@attendance.SpaceType, " ", @attendance.SpaceName); @spaceDetail}</td>
