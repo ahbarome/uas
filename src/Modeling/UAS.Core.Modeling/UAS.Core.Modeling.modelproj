@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9e1d6bb7-8642-400a-bf30-ca85b1aca14b}</ProjectGuid>
+    <ArchitectureToolsVersion>2.0.0.0</ArchitectureToolsVersion>
+    <Name>UAS.Core.Modeling</Name>
+    <RootNamespace>UAS.Core.Modeling</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
+  <ItemGroup>
+    <Content Include="Components.componentdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Components.componentdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Components.componentdiagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_ApproveExcuses.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_ApproveExcuses.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_ApproveExcuses.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetAttachments.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetAttachments.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_GetAttachments.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcuseClassifications.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcuseClassifications.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_GetExcuseClassifications.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcuseForApproval.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcuseForApproval.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_GetExcuseForApproval.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcuses.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcuses.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_GetExcuses.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcusesForApproval.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcusesForApproval.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_GetExcusesForApproval.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcusesForApproval_Internal.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcusesForApproval_Internal.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_GetExcusesForApproval_Internal.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcuseStatus.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetExcuseStatus.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_GetExcuseStatus.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetNonAttendancePendingForExcuse.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_GetNonAttendancePendingForExcuse.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_GetNonAttendancePendingForExcuse.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_NonAttendanceFacade.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_NonAttendanceFacade.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_NonAttendanceFacade.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_SaveExcuse.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="NonAttendance\NonAttendanceFacade_SaveExcuse.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>NonAttendance\NonAttendanceFacade_SaveExcuse.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Report\ReportFacade_GetAttendance.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Report\ReportFacade_GetAttendance.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Report\ReportFacade_GetAttendance.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Report\ReportFacade_GetNonAttendance.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Report\ReportFacade_GetNonAttendance.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Report\ReportFacade_GetNonAttendance.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Report\ReportFacade_ReportFacade.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Report\ReportFacade_ReportFacade.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Report\ReportFacade_ReportFacade.sequencediagram</DependentUpon>
+    </Content>
+    <Folder Include="ModelDefinition\" />
+    <Content Include="Attendance\AttendanceFacade_AttendanceFacade.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_AttendanceFacade.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_AttendanceFacade.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetAllMovementsWithNotifications.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetAllMovementsWithNotifications.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetAllMovementsWithNotifications.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetAllMovementsWithoutNotifications.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetAllMovementsWithoutNotifications.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetAllMovementsWithoutNotifications.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetAllStudentMovementsWithoutNotificationsByTeacherId.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetAllStudentMovementsWithoutNotificationsByTeacherId.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetAllStudentMovementsWithoutNotificationsByTeacherId.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetAllTeacherMovementsWithoutNotificationsByDirectorId.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetAllTeacherMovementsWithoutNotificationsByDirectorId.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetAllTeacherMovementsWithoutNotificationsByDirectorId.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetCourseAttendanceStatistics.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetCourseAttendanceStatistics.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetCourseAttendanceStatistics.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetCourseByTeacherId.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetCourseByTeacherId.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetCourseByTeacherId.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetCourseStatistics.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetCourseStatistics.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetCourseStatistics.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetCurrentCourseByTeacherDocumentNumber.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetCurrentCourseByTeacherDocumentNumber.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetCurrentCourseByTeacherDocumentNumber.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetStatisticsByCourseAndTeacherId.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetStatisticsByCourseAndTeacherId.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetStatisticsByCourseAndTeacherId.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetTeacherAttendanceStatistics.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetTeacherAttendanceStatistics.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetTeacherAttendanceStatistics.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetTeacherById.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Attendance\AttendanceFacade_GetTeacherById.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Attendance\AttendanceFacade_GetTeacherById.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_DashboardFacade.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_DashboardFacade.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Dashboard\DashboardFacade_DashboardFacade.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetCurrentAcademicPeriod.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetCurrentAcademicPeriod.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Dashboard\DashboardFacade_GetCurrentAcademicPeriod.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetStatistictExcuseStatus.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetStatistictExcuseStatus.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Dashboard\DashboardFacade_GetStatistictExcuseStatus.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetStatistictsAttendanceVsNonAttendance.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetStatistictsAttendanceVsNonAttendance.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Dashboard\DashboardFacade_GetStatistictsAttendanceVsNonAttendance.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictAttendanceAndNonAttendanceStudentCourse.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictAttendanceAndNonAttendanceStudentCourse.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Dashboard\DashboardFacade_GetTopStatistictAttendanceAndNonAttendanceStudentCourse.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictAttendanceAndNonAttendanceTeacherCourse.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictAttendanceAndNonAttendanceTeacherCourse.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Dashboard\DashboardFacade_GetTopStatistictAttendanceAndNonAttendanceTeacherCourse.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictExcuseClassifications.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictExcuseClassifications.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Dashboard\DashboardFacade_GetTopStatistictExcuseClassifications.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictsMajorCourseAttendanceAndNonAttendance.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictsMajorCourseAttendanceAndNonAttendance.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Dashboard\DashboardFacade_GetTopStatistictsMajorCourseAttendanceAndNonAttendance.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictsMajorMonthsAttendanceAndNonAttendance.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Dashboard\DashboardFacade_GetTopStatistictsMajorMonthsAttendanceAndNonAttendance.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Dashboard\DashboardFacade_GetTopStatistictsMajorMonthsAttendanceAndNonAttendance.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="ModelDefinition\UAS.Core.Modeling.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Folder Include="Attendance" />
+    <Folder Include="Dashboard" />
+    <Folder Include="Security" />
+    <Folder Include="NonAttendance" />
+    <Folder Include="Report" />
+  </ItemGroup>
+</Project>

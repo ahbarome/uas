@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<componentModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="72a49711-1e95-4ac3-ae8a-2aacaa7a16ff" name="Components" linkedPackageId="9d9ea657-ae12-4b5c-9cc2-ae972568abf1" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner">
+  <ownedCommentsInternal>
+    <comment Id="f7fc8f47-9874-477b-bf05-a8d57f3e37f7">
+      <elementDefinition Id="a8328ff2-ec7c-4ab4-b931-9a463d0cfe1a" />
+      <body>Web component.
+Manages the views, controllers and Web actions</body>
+      <annotatedElements>
+        <componentMoniker Id="531abf29-e73f-4959-92ed-4f048ab17139" LastKnownName="UAS.Core.Web.WebApp" />
+      </annotatedElements>
+    </comment>
+    <comment Id="f8d853e2-5476-47c7-8415-fcdbee3704b3">
+      <elementDefinition Id="9f413da2-90f7-4210-8a2d-cd9e6117730a" />
+      <body>Data Access Layer to manage all the persistace with the database</body>
+      <annotatedElements>
+        <componentMoniker Id="8cf8e64a-05f4-4d7d-a5d2-5ca1b49de1e0" LastKnownName="UAS.Core.DAL" />
+      </annotatedElements>
+    </comment>
+    <comment Id="99358f55-c89b-421f-9367-d82ff6a9d1ba">
+      <elementDefinition Id="7a3ddb3e-aff6-41bb-88d7-96fd84a91d97" />
+      <body>Manage all the invocations of the differentes components</body>
+      <annotatedElements>
+        <componentMoniker Id="91f67283-1d8e-4085-9216-d73de925b626" LastKnownName="UAS.Core.Facade" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="454986fa-8127-4fe3-9df1-967ec848eded">
+      <profileInstance Id="1aef0cff-6328-449f-8248-4b4efd2dd16b" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="b6bf41e3-013f-4d20-baed-bd4f4e6a0436">
+      <profileInstance Id="d83bcf07-1db6-47bf-8be6-b8f1e8769e2a" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <componentModelHasComponents>
+      <component Id="728126ca-7c57-4b14-b4e6-e49be7e17056" name="UAS.Core.Attendance" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="923ae99f-8855-47f3-b49f-73498c681b01" />
+        <suppliersInternal>
+          <dependency Id="19ce7c95-d8bc-430e-b012-0d38c40ac934">
+            <componentMoniker Id="8cf8e64a-05f4-4d7d-a5d2-5ca1b49de1e0" LastKnownName="UAS.Core.DAL" />
+            <elementDefinition Id="2c21666a-44ee-4a18-a347-e4683c0976e2" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="b5d5c644-418f-4462-ac01-0be0d43413ad" name="UAS.Core.Configuration" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a10d2b41-43e4-4bed-958e-ad431394da2a" />
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="8451a11d-1dd1-496e-8218-11484f0f15fa" name="UAS.Core.Cryptography" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="ee6f921a-398a-4aa0-8fc5-e59320beb555" />
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="fdf65060-eb3d-487d-8a28-3d9f74bf19cc" name="UAS.Core.NonAttendance" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="95d5509b-b1c0-42de-b369-90c0c0f86f1d" />
+        <suppliersInternal>
+          <dependency Id="626a5d75-c32b-4f78-9012-7d69d9b6180b">
+            <componentMoniker Id="8cf8e64a-05f4-4d7d-a5d2-5ca1b49de1e0" LastKnownName="UAS.Core.DAL" />
+            <elementDefinition Id="74c60dcc-23c9-4be4-a447-f3ce16537150" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="8cf8e64a-05f4-4d7d-a5d2-5ca1b49de1e0" name="UAS.Core.DAL" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="41a35acb-5995-479c-89b8-cf0285b832e2" />
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="29bc3cf2-1122-4f1b-9039-b2d595a36747" name="UAS.Core.Dashboard" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="05fe74a3-f4ac-4286-8ddd-c75e04cfdd76" />
+        <suppliersInternal>
+          <dependency Id="4f5c4cb4-b2f2-4bf6-9142-e6ee34413671">
+            <componentMoniker Id="8cf8e64a-05f4-4d7d-a5d2-5ca1b49de1e0" LastKnownName="UAS.Core.DAL" />
+            <elementDefinition Id="69b3b63a-2d91-4ec6-ac27-b187fb95e7ed" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="91f67283-1d8e-4085-9216-d73de925b626" name="UAS.Core.Facade" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="403a46a4-4d50-4201-a0de-940c72b6460a" />
+        <suppliersInternal>
+          <dependency Id="ab04c9bd-f14e-4b56-807b-370704ec8d70">
+            <componentMoniker Id="29bc3cf2-1122-4f1b-9039-b2d595a36747" LastKnownName="UAS.Core.Dashboard" />
+            <elementDefinition Id="8c208f64-f297-43b5-8e93-da15319f9064" />
+          </dependency>
+          <dependency Id="16199f77-82ab-42f2-b6c4-d3c82d9b809c">
+            <componentMoniker Id="04eae50c-f499-4601-bd0d-3d0daf129d4d" LastKnownName="UAS.Core.Report" />
+            <elementDefinition Id="88eafba6-80e0-4a2f-b407-650db78f5425" />
+          </dependency>
+          <dependency Id="a5b596b3-cbc2-4221-915e-dcca3c8f1f2c">
+            <componentMoniker Id="728126ca-7c57-4b14-b4e6-e49be7e17056" LastKnownName="UAS.Core.Attendance" />
+            <elementDefinition Id="e6199d67-d613-4937-85bb-374e64813a19" />
+          </dependency>
+          <dependency Id="0f283991-ecda-4a47-9f61-24880e68c575">
+            <componentMoniker Id="fdf65060-eb3d-487d-8a28-3d9f74bf19cc" LastKnownName="UAS.Core.NonAttendance" />
+            <elementDefinition Id="0b486329-39d0-4b87-b830-41506ac8ef25" />
+          </dependency>
+          <dependency Id="60e81317-fa13-43cf-82cc-78021016cc93">
+            <componentMoniker Id="150d031b-eb4c-4a06-98e4-5199756bb907" LastKnownName="UAS.Core.Security" />
+            <elementDefinition Id="8a500179-432e-462e-98b2-f878670d7500" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="04eae50c-f499-4601-bd0d-3d0daf129d4d" name="UAS.Core.Report" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="4dc7a0c5-40e8-4b16-a255-ac050f70f15d" />
+        <suppliersInternal>
+          <dependency Id="54f953da-d427-4656-be52-e3ae5f5be800">
+            <componentMoniker Id="8cf8e64a-05f4-4d7d-a5d2-5ca1b49de1e0" LastKnownName="UAS.Core.DAL" />
+            <elementDefinition Id="c1dfc0eb-fecb-43eb-97a5-3f2a17df07ce" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="150d031b-eb4c-4a06-98e4-5199756bb907" name="UAS.Core.Security" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="384c5400-58b6-4d81-b102-cdc7d1307618" />
+        <suppliersInternal>
+          <dependency Id="eef7ee0d-b94e-4069-be5b-10b6d6d70a5a">
+            <componentMoniker Id="8451a11d-1dd1-496e-8218-11484f0f15fa" LastKnownName="UAS.Core.Cryptography" />
+            <elementDefinition Id="5da540ff-7d80-4768-9dbd-f8d92a01829e" />
+          </dependency>
+          <dependency Id="db1ba802-27ab-41ae-b148-30ba0598a4aa">
+            <componentMoniker Id="6743428f-66b7-4fac-be85-8e21a4640ee8" LastKnownName="UAS.Core.Session" />
+            <elementDefinition Id="3216d6c3-3dc6-4576-a51c-467582c388fa" />
+          </dependency>
+          <dependency Id="6b6605ce-96d1-48c7-81dc-5b95b9e206ad">
+            <componentMoniker Id="b5d5c644-418f-4462-ac01-0be0d43413ad" LastKnownName="UAS.Core.Configuration" />
+            <elementDefinition Id="5eb38aad-2e79-4207-a9ff-28aad19cea38" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="6743428f-66b7-4fac-be85-8e21a4640ee8" name="UAS.Core.Session" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="26326c37-e23c-4406-a365-88b1eb78c65d" />
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="531abf29-e73f-4959-92ed-4f048ab17139" name="UAS.Core.Web.WebApp" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f4d72536-5576-4014-b333-d57ee810461e" />
+        <suppliersInternal>
+          <dependency Id="61406034-fccf-4c36-b73e-8af0478fa21c">
+            <componentMoniker Id="91f67283-1d8e-4085-9216-d73de925b626" LastKnownName="UAS.Core.Facade" />
+            <elementDefinition Id="4cec4b07-3fd3-4d9a-b413-c22f9168c7be" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </componentModelHasComponents>
+  </packagedElements>
+  <package Id="9d9ea657-ae12-4b5c-9cc2-ae972568abf1" name="UAS.Core.Modeling">
+    <elementDefinition Id="e55df7ee-451f-43ce-b2bc-ed9204e74382" />
+  </package>
+</componentModel>

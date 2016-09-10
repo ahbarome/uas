@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{DC578383-0FB4-40D3-9BA5-4ADCDCC90CDE}"
 EndProject
@@ -72,6 +72,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dashboard", "Dashboard", "{28118CAB-B542-4442-8571-F5D4070147BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAS.Core.Dashboard", "src\Core\Dashboard\UAS.Core.Dashboard\UAS.Core.Dashboard.csproj", "{18721C90-CE47-4217-A282-BA628BA3966A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modeling", "Modeling", "{5E6738B7-2BB8-4EBE-93D6-4856F793C1C4}"
+EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "UAS.Core.Modeling", "src\Modeling\UAS.Core.Modeling\UAS.Core.Modeling.modelproj", "{9E1D6BB7-8642-400A-BF30-CA85B1ACA14B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -151,6 +155,10 @@ Global
 		{18721C90-CE47-4217-A282-BA628BA3966A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18721C90-CE47-4217-A282-BA628BA3966A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18721C90-CE47-4217-A282-BA628BA3966A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E1D6BB7-8642-400A-BF30-CA85B1ACA14B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E1D6BB7-8642-400A-BF30-CA85B1ACA14B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E1D6BB7-8642-400A-BF30-CA85B1ACA14B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E1D6BB7-8642-400A-BF30-CA85B1ACA14B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -189,5 +197,6 @@ Global
 		{9DC26374-6FC3-44DB-8667-2FA8EFF3BC6D} = {FCB1B6AA-0BF1-499F-BC78-CE77901A8045}
 		{28118CAB-B542-4442-8571-F5D4070147BB} = {DC578383-0FB4-40D3-9BA5-4ADCDCC90CDE}
 		{18721C90-CE47-4217-A282-BA628BA3966A} = {28118CAB-B542-4442-8571-F5D4070147BB}
+		{9E1D6BB7-8642-400A-BF30-CA85B1ACA14B} = {5E6738B7-2BB8-4EBE-93D6-4856F793C1C4}
 	EndGlobalSection
 EndGlobal
