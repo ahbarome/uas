@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UAS.Core.Attendance.Interfaces;
 using UAS.Core.Attendance.Managers;
 using UAS.Core.DAL.Common.Model;
 
 namespace UAS.Core.Attendance
 {
-    public class AttendanceFacade
+    public class AttendanceFacade : IAttendanceFacade
     {
         private CourseManager _courseManager;
         private TeacherManager _teacherManager;
@@ -73,6 +74,16 @@ namespace UAS.Core.Attendance
         public Statistic GetTeacherAttendanceStatistics()
         {
             return _teacherManager.GetTeacherAttendanceStatistics();
+        }
+
+        public string GetAvailableSpacesForMovements()
+        {
+            return _movementManager.GetAvailableSpacesForMovements();
+        }
+
+        public void GenerateMovement(string JSONMovementDTO)
+        {
+            _movementManager.GenerateMovement(JSONMovementDTO);
         }
     }
 }

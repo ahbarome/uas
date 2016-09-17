@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="b902c591-1483-4f01-84ab-b5ef0052d569" name="DashboardFacade_GetCurrentAcademicPeriod" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="b902c591-1483-4f01-84ab-b5ef0052d569" name="DashboardFacade_GetCurrentAcademicPeriod" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
       <interaction Id="d6b631eb-7ae7-4156-b740-fc4085779e47" name="DashboardFacade_GetCurrentAcademicPeriod" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
@@ -147,14 +147,14 @@
               <lifelineMoniker Id="dda76892-4856-4ce5-ad4c-ac006c18fb7b" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
             </covered>
           </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="2cf7680d-d477-4fe9-ae50-f7045f275a18" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="dda76892-4856-4ce5-ad4c-ac006c18fb7b" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="442ad330-8559-464c-a88c-29b326d3df9b" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="a6145040-5846-46bd-9fa6-dec51f6be1d0" LastKnownName="this._dashboarAttendanceManager._dashboardPersister.Entities : UASEntities" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2cf7680d-d477-4fe9-ae50-f7045f275a18" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="dda76892-4856-4ce5-ad4c-ac006c18fb7b" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
             </covered>
           </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="b831c49c-21f0-4663-8399-8b4d1f1b282d" name="ExecutionOccurrenceSpecification">

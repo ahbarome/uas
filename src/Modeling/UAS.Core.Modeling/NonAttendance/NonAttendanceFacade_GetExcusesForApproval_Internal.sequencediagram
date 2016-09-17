@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="240b4c54-c3c4-4df8-bd49-722410bf604c" name="NonAttendanceFacade_GetExcusesForApproval" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="240b4c54-c3c4-4df8-bd49-722410bf604c" name="NonAttendanceFacade_GetExcusesForApproval" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
       <interaction Id="10cfc191-6975-4ed2-8555-fd395d29c2ae" name="NonAttendanceFacade_GetExcusesForApproval" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
@@ -111,12 +111,12 @@
               <lifelineMoniker Id="3433093e-e999-417c-bd70-8a8cb58b2d5b" LastKnownName="this._excuseManager._excusePersister : ExcusePersister" />
             </covered>
           </messageOccurrenceSpecification>
+          <lostFoundTarget Id="bd90f9c3-c4c9-46ea-8d13-71b22d1df5cd" name="LostFoundTarget" />
           <messageOccurrenceSpecification Id="b8eee8ce-41cf-4b5b-9dd3-13f1dae8da21" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="3433093e-e999-417c-bd70-8a8cb58b2d5b" LastKnownName="this._excuseManager._excusePersister : ExcusePersister" />
             </covered>
           </messageOccurrenceSpecification>
-          <lostFoundTarget Id="bd90f9c3-c4c9-46ea-8d13-71b22d1df5cd" name="LostFoundTarget" />
           <messageOccurrenceSpecification Id="2cf0bbf7-9706-472a-92ee-35db1c512b0e" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="3433093e-e999-417c-bd70-8a8cb58b2d5b" LastKnownName="this._excuseManager._excusePersister : ExcusePersister" />

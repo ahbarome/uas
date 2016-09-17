@@ -3,7 +3,6 @@ using System.ServiceModel.Web;
 
 namespace UAS.Core.Services.Gateway
 {
-    // NOTA: puede usar el comando "Rename" del menú "Refactorizar" para cambiar el nombre de interfaz "IGatewayService" en el código y en el archivo de configuración a la vez.
     [ServiceContract]
     public interface IGatewayService
     {
@@ -11,7 +10,22 @@ namespace UAS.Core.Services.Gateway
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "json/{id}")]
+            UriTemplate = "json/JSONData/{id}")]
         string JSONData(string id);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
+            UriTemplate = "json/GetAvailablesSpaces")]
+        string GetAvailablesSpaces();
+
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
+            UriTemplate = "json/GenerateMovement/{JSONMovement}")]
+        void GenerateMovement(string JSONMovement);
     }
 }

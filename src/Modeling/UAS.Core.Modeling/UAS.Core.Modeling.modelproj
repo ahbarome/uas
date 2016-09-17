@@ -22,6 +22,13 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
+    <Content Include="Activities.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Activities.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Activities.activitydiagram</DependentUpon>
+    </Content>
     <Content Include="Components.componentdiagram">
       <SubType>Content</SubType>
     </Content>
@@ -126,6 +133,34 @@
     <Content Include="Report\ReportFacade_ReportFacade.sequencediagram.layout">
       <SubType>Content</SubType>
       <DependentUpon>Report\ReportFacade_ReportFacade.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Security\WebSecurity_AllowAccessToPage.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Security\WebSecurity_AllowAccessToPage.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Security\WebSecurity_AllowAccessToPage.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Security\WebSecurity_GetUser.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Security\WebSecurity_GetUser.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Security\WebSecurity_GetUser.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Security\WebSecurity_ValidateLogin.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Security\WebSecurity_ValidateLogin.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Security\WebSecurity_ValidateLogin.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Security\WebSecurity_WebSecurity.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Security\WebSecurity_WebSecurity.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Security\WebSecurity_WebSecurity.sequencediagram</DependentUpon>
     </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="Attendance\AttendanceFacade_AttendanceFacade.sequencediagram">

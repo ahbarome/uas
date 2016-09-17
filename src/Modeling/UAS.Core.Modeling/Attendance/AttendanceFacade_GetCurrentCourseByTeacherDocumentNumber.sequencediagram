@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="a94ce2f6-5070-4581-ac81-1c1373cc2764" name="AttendanceFacade_GetCurrentCourseByTeacherDocumentNumber" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="a94ce2f6-5070-4581-ac81-1c1373cc2764" name="AttendanceFacade_GetCurrentCourseByTeacherDocumentNumber" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
       <interaction Id="9e6ee987-de4e-43f7-9bd8-5d88ce476b89" name="AttendanceFacade_GetCurrentCourseByTeacherDocumentNumber" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
@@ -309,14 +309,14 @@
             </covered>
           </messageOccurrenceSpecification>
           <lostFoundTarget Id="e3afaf00-c24a-4e97-8a4a-03df4cfd334d" name="LostFoundTarget" />
-          <messageOccurrenceSpecification Id="33607458-ea58-47a5-985a-7218926c3499" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="b7058291-c782-45f0-9f88-be8acc47982f" LastKnownName="this._courseManager._coursePersister : CoursePersister" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="7b8475ae-6b3f-4c10-a494-ebd1d3e01d46" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="1e585ba2-cd25-45cf-96b7-26a252b4ebc7" LastKnownName="course : Course" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="33607458-ea58-47a5-985a-7218926c3499" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b7058291-c782-45f0-9f88-be8acc47982f" LastKnownName="this._courseManager._coursePersister : CoursePersister" />
             </covered>
           </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="4af1d60c-2ce8-4a0f-8c98-39b20ff9772e" name="ExecutionOccurrenceSpecification">

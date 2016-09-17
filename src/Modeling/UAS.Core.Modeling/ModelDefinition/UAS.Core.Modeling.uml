@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
   dslVersion="1.0.0.0"
   Id="e55df7ee-451f-43ce-b2bc-ed9204e74382"
   name="UAS.Core.Modeling" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -32,6 +32,16 @@ Manages the views, controllers and Web actions</body>
         <componentMoniker
           Id="403a46a4-4d50-4201-a0de-940c72b6460a"
           LastKnownName="UAS.Core.Facade"
+          LastKnownLocation="UAS.Core.Modeling.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="16be2b34-dc48-438a-bfeb-838d6dcd30d9">
+      <body>Mobile solution which manages the QR code</body>
+      <annotatedElements>
+        <componentMoniker
+          Id="8d444b20-4abe-4bdb-a3d5-a1a827780fc0"
+          LastKnownName="UAS.Core.Mobile"
           LastKnownLocation="UAS.Core.Modeling.uml" />
       </annotatedElements>
     </comment>
@@ -250,6 +260,79 @@ Manages the views, controllers and Web actions</body>
           </dependency>
         </suppliersInternal>
       </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="02091ac6-a4ae-4e5d-98a3-e3cd6e08119b"
+        name="UAS.Core.Services.Gateway"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="4c1091fa-9b3b-423f-9c6e-bfb4f920d144">
+            <componentMoniker
+              Id="384c5400-58b6-4d81-b102-cdc7d1307618"
+              LastKnownName="UAS.Core.Security"
+              LastKnownLocation="UAS.Core.Modeling.uml" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="8d444b20-4abe-4bdb-a3d5-a1a827780fc0"
+        name="UAS.Core.Mobile"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="8771a72e-abd1-4b09-8516-19f6be3a8431">
+            <componentMoniker
+              Id="02091ac6-a4ae-4e5d-98a3-e3cd6e08119b"
+              LastKnownName="UAS.Core.Services.Gateway"
+              LastKnownLocation="UAS.Core.Modeling.uml" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="0485c7be-d11d-4af2-b8c4-596161a7f804"
+        name="Activities"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="46494906-cbc0-4234-ad17-eea92b795c31"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="3f4db154-999e-477e-9676-57ccd4131dad"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="1ac5eab1-dec0-4713-8213-bd0cf4c27f33"
+                  LastKnownName="Validate Login"
+                  LastKnownLocation="UAS.Core.Modeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction
+            Id="1ac5eab1-dec0-4713-8213-bd0cf4c27f33"
+            name="Validate Login"
+            isLeaf="false" />
+          <activityFinalNode
+            Id="cf94d874-13f1-4e2a-9ef1-469435764c92"
+            name="ActivityFinal1"
+            isLeaf="false" />
+        </nodes>
+      </activity>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

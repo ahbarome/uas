@@ -48,7 +48,7 @@
         <dotNetExecutionSpecificationShape Id="686c9cb1-54d6-42ff-a50a-3a6a5ebed041" absoluteBounds="6.2812500000000009, 1.9000000000000001, 0.125, 0.59999999999999987" customColor="184, 204, 215">
           <behaviorExecutionSpecificationMoniker Id="353bdf67-f0bf-495b-9907-7a6aac600747" LastKnownName="BehaviorExecutionSpecification" />
         </dotNetExecutionSpecificationShape>
-        <lostFoundTargetShape Id="b0b9a265-3298-4827-9080-2f40dede3c62" absoluteBounds="6.5937500000000018, 2.1, 0.2, 0.2" customColor="89, 89, 89">
+        <lostFoundTargetShape Id="b0b9a265-3298-4827-9080-2f40dede3c62" absoluteBounds="8.2055468284057724, 2.1, 0.2, 0.2" customColor="89, 89, 89">
           <lostFoundTargetMoniker Id="bd90f9c3-c4c9-46ea-8d13-71b22d1df5cd" LastKnownName="LostFoundTarget" />
         </lostFoundTargetShape>
       </relativeChildShapes>
@@ -77,6 +77,9 @@
     </lostFoundMessageConnector>
     <syncMessageConnector edgePoints="[(1.8375 : 1.6); (4.06458333333333 : 1.6)]" fixedFrom="Caller" fixedTo="Caller" TargetRelationshipDomainClassId="e24617ce-6c7e-4c7d-802a-63014f02e313" customColor="Black" visible="true" messageId="00000000-0000-0000-0000-000000000000">
       <relativeChildShapes />
+      <moveableDecoratorHostShapes>
+        <moveableDecoratorHostShape manuallySized="true" absoluteBounds="1.383670781453447, 1.6600000000000001, 2.6209125518798828, 0.14800345897674561" shapeFieldName="MethodSignature" />
+      </moveableDecoratorHostShapes>
       <nodes>
         <dotNetExecutionSpecificationShapeMoniker Id="adbccef2-1962-46ad-a090-d06f8c730009" />
         <dotNetExecutionSpecificationShapeMoniker Id="849911b1-fe84-4623-a4d4-c86fff8e6c79" />
@@ -91,6 +94,9 @@
     </returnMessageConnector>
     <syncMessageConnector edgePoints="[(4.18958333333333 : 1.9); (6.28125 : 1.9)]" fixedFrom="Caller" fixedTo="Caller" TargetRelationshipDomainClassId="e24617ce-6c7e-4c7d-802a-63014f02e313" customColor="Black" visible="true" messageId="00000000-0000-0000-0000-000000000000">
       <relativeChildShapes />
+      <moveableDecoratorHostShapes>
+        <moveableDecoratorHostShape manuallySized="true" absoluteBounds="3.6045691394805912, 1.96, 2.6166808605194092, 0.14800345897674561" shapeFieldName="MethodSignature" />
+      </moveableDecoratorHostShapes>
       <nodes>
         <dotNetExecutionSpecificationShapeMoniker Id="849911b1-fe84-4623-a4d4-c86fff8e6c79" />
         <dotNetExecutionSpecificationShapeMoniker Id="686c9cb1-54d6-42ff-a50a-3a6a5ebed041" />
@@ -103,7 +109,7 @@
         <dotNetExecutionSpecificationShapeMoniker Id="849911b1-fe84-4623-a4d4-c86fff8e6c79" />
       </nodes>
     </returnMessageConnector>
-    <lostFoundMessageConnector edgePoints="[(6.40625 : 2.2); (6.59375 : 2.2)]" fixedFrom="Caller" fixedTo="Caller" TargetRelationshipDomainClassId="e24617ce-6c7e-4c7d-802a-63014f02e313" customColor="Black" visible="true" messageId="00000000-0000-0000-0000-000000000000">
+    <lostFoundMessageConnector edgePoints="[(6.40625 : 2.2); (8.20554682840577 : 2.2)]" fixedFrom="Caller" fixedTo="Caller" TargetRelationshipDomainClassId="e24617ce-6c7e-4c7d-802a-63014f02e313" customColor="Black" visible="true" messageId="00000000-0000-0000-0000-000000000000">
       <relativeChildShapes />
       <nodes>
         <dotNetExecutionSpecificationShapeMoniker Id="686c9cb1-54d6-42ff-a50a-3a6a5ebed041" />

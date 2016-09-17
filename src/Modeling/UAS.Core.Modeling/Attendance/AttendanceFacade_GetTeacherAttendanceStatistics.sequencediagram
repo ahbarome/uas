@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="6e1f2721-ba9a-4549-895d-d1a094a1ea5b" name="AttendanceFacade_GetTeacherAttendanceStatistics" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="6e1f2721-ba9a-4549-895d-d1a094a1ea5b" name="AttendanceFacade_GetTeacherAttendanceStatistics" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
       <interaction Id="eeb782f2-1734-4f27-9727-2e29791742f5" name="AttendanceFacade_GetTeacherAttendanceStatistics" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
@@ -147,14 +147,14 @@
               <lifelineMoniker Id="dbcf2c99-eb21-4e04-888d-54b5329328ec" LastKnownName="this._teacherManager._teacherPersister : TeacherPersister" />
             </covered>
           </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="01888f3f-759a-467b-be1d-33cc9f66c36b" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="dbcf2c99-eb21-4e04-888d-54b5329328ec" LastKnownName="this._teacherManager._teacherPersister : TeacherPersister" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="1845b31f-05b5-4e06-9058-0c1ce117acc9" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="e0b8de67-6778-46c2-bcf5-8d018555cf48" LastKnownName="this._teacherManager._teacherPersister.Entities : UASEntities" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="01888f3f-759a-467b-be1d-33cc9f66c36b" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="dbcf2c99-eb21-4e04-888d-54b5329328ec" LastKnownName="this._teacherManager._teacherPersister : TeacherPersister" />
             </covered>
           </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="ab413c06-6e14-4ca8-bfe5-cb179244a365" name="ExecutionOccurrenceSpecification">

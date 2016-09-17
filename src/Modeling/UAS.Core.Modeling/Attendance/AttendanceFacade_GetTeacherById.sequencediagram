@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="4a1173d1-a47b-4074-b281-2e366023572d" name="AttendanceFacade_GetTeacherById" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="4a1173d1-a47b-4074-b281-2e366023572d" name="AttendanceFacade_GetTeacherById" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
       <interaction Id="d96fe6d7-302e-4f7a-9cde-0a86ef261d29" name="AttendanceFacade_GetTeacherById" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
@@ -294,14 +294,14 @@
               <lifelineMoniker Id="4a720931-185f-42a5-b975-5c00195e4501" LastKnownName="source : DbSet&lt;User&gt;" />
             </covered>
           </operandOccurrenceSpecification>
-          <operandOccurrenceSpecification Id="d55df08b-2c0a-4c2e-8a27-81fce4ec74e5" name="OperandOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="a7ce57c3-8116-4366-934d-a5e5e08a64f1" LastKnownName="this._teacherManager._userPersister : UserPersister" />
-            </covered>
-          </operandOccurrenceSpecification>
           <operandOccurrenceSpecification Id="73530cd0-4808-4ea0-88f2-17870970d652" name="OperandOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="4a720931-185f-42a5-b975-5c00195e4501" LastKnownName="source : DbSet&lt;User&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="d55df08b-2c0a-4c2e-8a27-81fce4ec74e5" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="a7ce57c3-8116-4366-934d-a5e5e08a64f1" LastKnownName="this._teacherManager._userPersister : UserPersister" />
             </covered>
           </operandOccurrenceSpecification>
           <lostFoundTarget Id="904b6154-2013-4f58-85a1-3868ef371308" name="LostFoundTarget" />
@@ -406,14 +406,14 @@
               <lifelineMoniker Id="b6501b8f-e378-4f0f-96fb-3755af94f1c4" LastKnownName="source : DbSet&lt;Teacher&gt;" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="d446498b-4cfb-486e-8a1f-7dcbf929af1e" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="b6501b8f-e378-4f0f-96fb-3755af94f1c4" LastKnownName="source : DbSet&lt;Teacher&gt;" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="c53b5385-940a-4a43-9279-9efdb20f54c9" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="ac673ad5-cb6e-4e85-8f4a-c04436f24779" LastKnownName="this._teacherManager._teacherPersister : TeacherPersister" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="d446498b-4cfb-486e-8a1f-7dcbf929af1e" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b6501b8f-e378-4f0f-96fb-3755af94f1c4" LastKnownName="source : DbSet&lt;Teacher&gt;" />
             </covered>
           </messageOccurrenceSpecification>
           <combinedFragment Id="9ae0f3f6-c4c2-4f39-9ac5-5e1dcfa87133" name="CombinedFragment2" interactionOperator="Alt" customInteractionOperator="Deferred Call">

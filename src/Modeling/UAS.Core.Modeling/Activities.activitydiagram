@@ -1,1 +1,44 @@
-﻿ 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="12e69ad1-5b7f-4a6f-88cc-6b7fdb2d1e2b" name="Activities" linkedPackageId="1c81e2ad-3e62-49c7-a493-64f99052a768" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="8348e489-961b-4c00-8619-0306900ba494">
+      <profileInstance Id="9962c865-4841-4dfd-a32d-8975d3b27fa6" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="20985206-313f-45e6-b8c5-1ef77530f2e4">
+      <profileInstance Id="cb2c4d77-460b-44bf-8c0c-b9fd4b398021" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="7de7a335-0c2c-4918-bea0-d6f89346b764" name="Activities" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="0485c7be-d11d-4af2-b8c4-596161a7f804" />
+        <nodes>
+          <initialNode Id="9541d833-b2cd-47ce-bf30-10bb69f50a92" name="Initial1" isLeaf="false">
+            <elementDefinition Id="46494906-cbc0-4234-ad17-eea92b795c31" />
+            <flowNodeTargets>
+              <controlFlow Id="9483f65f-cac7-44e8-ba08-7e57a15bc0f5" isLeaf="false">
+                <opaqueActionMoniker Id="4a51f0e5-0105-486e-a73d-57620a7f2e22" LastKnownName="Validate Login" />
+                <elementDefinition Id="3f4db154-999e-477e-9676-57ccd4131dad" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction Id="4a51f0e5-0105-486e-a73d-57620a7f2e22" name="Validate Login" isLeaf="false">
+            <elementDefinition Id="1ac5eab1-dec0-4713-8213-bd0cf4c27f33" />
+          </opaqueAction>
+          <activityFinalNode Id="2b5a58b6-2e19-4c3c-bd0a-2be3e116d97d" name="ActivityFinal1" isLeaf="false">
+            <elementDefinition Id="cf94d874-13f1-4e2a-9ef1-469435764c92" />
+          </activityFinalNode>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="1c81e2ad-3e62-49c7-a493-64f99052a768" name="UAS.Core.Modeling">
+    <elementDefinition Id="e55df7ee-451f-43ce-b2bc-ed9204e74382" />
+  </package>
+</activityRootModel>

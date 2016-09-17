@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<componentModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="72a49711-1e95-4ac3-ae8a-2aacaa7a16ff" name="Components" linkedPackageId="9d9ea657-ae12-4b5c-9cc2-ae972568abf1" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner">
+<componentModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="72a49711-1e95-4ac3-ae8a-2aacaa7a16ff" name="Components" linkedPackageId="9d9ea657-ae12-4b5c-9cc2-ae972568abf1" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner">
   <ownedCommentsInternal>
     <comment Id="f7fc8f47-9874-477b-bf05-a8d57f3e37f7">
       <elementDefinition Id="a8328ff2-ec7c-4ab4-b931-9a463d0cfe1a" />
@@ -23,21 +23,14 @@ Manages the views, controllers and Web actions</body>
         <componentMoniker Id="91f67283-1d8e-4085-9216-d73de925b626" LastKnownName="UAS.Core.Facade" />
       </annotatedElements>
     </comment>
+    <comment Id="768c5fd2-2105-4489-898e-c31812fd2af9">
+      <elementDefinition Id="16be2b34-dc48-438a-bfeb-838d6dcd30d9" />
+      <body>Mobile solution which manages the QR code</body>
+      <annotatedElements>
+        <componentMoniker Id="9b559117-6439-4ae5-8c75-3b08dd1c6abe" LastKnownName="UAS.Core.Mobile" />
+      </annotatedElements>
+    </comment>
   </ownedCommentsInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="454986fa-8127-4fe3-9df1-967ec848eded">
-      <profileInstance Id="1aef0cff-6328-449f-8248-4b4efd2dd16b" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="b6bf41e3-013f-4d20-baed-bd4f4e6a0436">
-      <profileInstance Id="d83bcf07-1db6-47bf-8be6-b8f1e8769e2a" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <componentModelHasComponents>
       <component Id="728126ca-7c57-4b14-b4e6-e49be7e17056" name="UAS.Core.Attendance" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -160,8 +153,44 @@ Manages the views, controllers and Web actions</body>
         </suppliersInternal>
       </component>
     </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="713ff9ff-2a08-4232-8c53-6a585f72a054" name="UAS.Core.Services.Gateway" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="02091ac6-a4ae-4e5d-98a3-e3cd6e08119b" />
+        <suppliersInternal>
+          <dependency Id="683c2312-8728-4792-9f00-3353d451b44c">
+            <componentMoniker Id="150d031b-eb4c-4a06-98e4-5199756bb907" LastKnownName="UAS.Core.Security" />
+            <elementDefinition Id="4c1091fa-9b3b-423f-9c6e-bfb4f920d144" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="9b559117-6439-4ae5-8c75-3b08dd1c6abe" name="UAS.Core.Mobile" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="8d444b20-4abe-4bdb-a3d5-a1a827780fc0" />
+        <suppliersInternal>
+          <dependency Id="4f74d73c-4f66-4f9f-ac82-d40df4fee9bf">
+            <componentMoniker Id="713ff9ff-2a08-4232-8c53-6a585f72a054" LastKnownName="UAS.Core.Services.Gateway" />
+            <elementDefinition Id="8771a72e-abd1-4b09-8516-19f6be3a8431" />
+          </dependency>
+        </suppliersInternal>
+      </component>
+    </componentModelHasComponents>
   </packagedElements>
   <package Id="9d9ea657-ae12-4b5c-9cc2-ae972568abf1" name="UAS.Core.Modeling">
     <elementDefinition Id="e55df7ee-451f-43ce-b2bc-ed9204e74382" />
+    <profileInstances>
+      <packageHasProfileInstances Id="454986fa-8127-4fe3-9df1-967ec848eded">
+        <profileInstance Id="1aef0cff-6328-449f-8248-4b4efd2dd16b" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="b6bf41e3-013f-4d20-baed-bd4f4e6a0436">
+        <profileInstance Id="d83bcf07-1db6-47bf-8be6-b8f1e8769e2a" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </componentModel>

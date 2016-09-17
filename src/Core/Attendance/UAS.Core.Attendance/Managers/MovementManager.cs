@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UAS.Core.DAL.Common.Model;
 using UAS.Core.DAL.Persisters;
+using UAS.Core.DTO.Entities;
+using UAS.Core.DTO.Parsers;
 
 namespace UAS.Core.Attendance.Managers
 {
@@ -84,6 +86,29 @@ namespace UAS.Core.Attendance.Managers
         public List<TeacherMovement> GetAllTeacherMovementsWithoutNotificationsByDirectorId(int directorId)
         {
             return _movementPersister.GetAllTeacherMovementsWithoutNotifications();
+        }
+
+        public string GetAvailableSpacesForMovements()
+        {
+            var spaces = _movementPersister.GetAvailableSpacesForMovements().ToList();
+            var spacesDTO = new List<SpaceDTO>();
+
+            spaces.ForEach(
+                space => spacesDTO.Add(new SpaceDTO { IdSpace = space.Id, SpaceName = space.Name }));
+
+            return DTOParser.SpacesDTOToJSON(spacesDTO);
+        }
+
+        public void GenerateMovement(string JSONMovementDTO)
+        {
+            var movementDTO = DTOParser.JSONToMovementDTO(JSONMovementDTO);
+
+            _movementPersister.Save(
+                new Movement
+                {
+                    DocumentNumber = movementDTO.UserDocumentNumber,
+                    IdSpace = movementDTO.Space.IdSpace
+                });
         }
     }
 }

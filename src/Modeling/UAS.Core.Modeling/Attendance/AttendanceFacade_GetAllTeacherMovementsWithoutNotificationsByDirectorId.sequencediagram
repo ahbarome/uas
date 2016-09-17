@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="4257aa1f-5e9c-414c-a577-337d0766d4ed" name="AttendanceFacade_GetAllTeacherMovementsWithoutNotificationsByDirectorId" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="4257aa1f-5e9c-414c-a577-337d0766d4ed" name="AttendanceFacade_GetAllTeacherMovementsWithoutNotificationsByDirectorId" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
       <interaction Id="b43f1e83-0814-4712-b80f-abacd8368681" name="AttendanceFacade_GetAllTeacherMovementsWithoutNotificationsByDirectorId" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
@@ -547,14 +547,19 @@
               <lifelineMoniker Id="6e7d3337-5fa2-4b05-ba5b-c56624ec10cc" LastKnownName="movements : List&lt;TeacherMovement&gt;" />
             </covered>
           </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="0a7be90b-a5cb-4e8d-a20e-42212a173d0a" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="031813f7-bb57-491f-a709-e7602bd263b8" LastKnownName="movement : TeacherMovement" />
+            </covered>
+          </operandOccurrenceSpecification>
           <operandOccurrenceSpecification Id="baee1e40-d87e-469c-bf17-12025e070672" name="OperandOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="ee17e51f-bead-4752-af6d-70b375f4dec4" LastKnownName="SpaceType : SpaceType" />
             </covered>
           </operandOccurrenceSpecification>
-          <operandOccurrenceSpecification Id="677e6a64-606a-4ad5-bef1-1593d46d72a5" name="OperandOccurrenceSpecification">
+          <operandOccurrenceSpecification Id="56bea8df-e934-442f-8c38-b720a9b36445" name="OperandOccurrenceSpecification">
             <covered>
-              <lifelineMoniker Id="4fd5f237-078d-4e7d-97d3-63a8004dbaf9" LastKnownName="this._movementManager._movementPersister : MovementPersister" />
+              <lifelineMoniker Id="6e7d3337-5fa2-4b05-ba5b-c56624ec10cc" LastKnownName="movements : List&lt;TeacherMovement&gt;" />
             </covered>
           </operandOccurrenceSpecification>
           <operandOccurrenceSpecification Id="1246f069-cdc4-45e6-b172-0205734b1eb7" name="OperandOccurrenceSpecification">
@@ -562,14 +567,9 @@
               <lifelineMoniker Id="019edfde-816d-473f-a00a-8d099593d52a" LastKnownName="Space : Space" />
             </covered>
           </operandOccurrenceSpecification>
-          <operandOccurrenceSpecification Id="0a7be90b-a5cb-4e8d-a20e-42212a173d0a" name="OperandOccurrenceSpecification">
+          <operandOccurrenceSpecification Id="677e6a64-606a-4ad5-bef1-1593d46d72a5" name="OperandOccurrenceSpecification">
             <covered>
-              <lifelineMoniker Id="031813f7-bb57-491f-a709-e7602bd263b8" LastKnownName="movement : TeacherMovement" />
-            </covered>
-          </operandOccurrenceSpecification>
-          <operandOccurrenceSpecification Id="56bea8df-e934-442f-8c38-b720a9b36445" name="OperandOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="6e7d3337-5fa2-4b05-ba5b-c56624ec10cc" LastKnownName="movements : List&lt;TeacherMovement&gt;" />
+              <lifelineMoniker Id="4fd5f237-078d-4e7d-97d3-63a8004dbaf9" LastKnownName="this._movementManager._movementPersister : MovementPersister" />
             </covered>
           </operandOccurrenceSpecification>
           <messageOccurrenceSpecification Id="9e4c397a-63aa-4c23-9b78-7a77fe468fe9" name="MessageOccurrenceSpecification">

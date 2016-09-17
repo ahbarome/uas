@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="36b60622-b593-462d-af76-613e43405726" name="NonAttendanceFacade_GetExcuses" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="36b60622-b593-462d-af76-613e43405726" name="NonAttendanceFacade_GetExcuses" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
       <interaction Id="6c9d5046-6875-467f-ac4e-afabd5b0a510" name="NonAttendanceFacade_GetExcuses" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
@@ -119,14 +119,14 @@
               <lifelineMoniker Id="82ed2505-62b4-471d-9f71-1936744d6436" LastKnownName="ModelEnumParser" />
             </covered>
           </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="b23fe9a7-0cc6-44e2-a4a4-259b845f18b8" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="44f31310-63b8-4bf3-b898-f361ad2960f9" LastKnownName="this._excuseManager : ExcuseManager" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="3d3deaca-f400-4167-96d9-79842ac50796" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="82ed2505-62b4-471d-9f71-1936744d6436" LastKnownName="ModelEnumParser" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="b23fe9a7-0cc6-44e2-a4a4-259b845f18b8" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="44f31310-63b8-4bf3-b898-f361ad2960f9" LastKnownName="this._excuseManager : ExcuseManager" />
             </covered>
           </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="d91b77a5-5869-46e5-baac-5dcd9280d94f" name="ExecutionOccurrenceSpecification">
@@ -333,14 +333,14 @@
               <lifelineMoniker Id="a4d0b842-6c3b-4465-91e8-41a81ffe4efe" LastKnownName="excuses : DbSet&lt;ExcuseView&gt;" />
             </covered>
           </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="77eacc2e-f9dd-41da-941e-6dc5e4ca641e" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="a4d0b842-6c3b-4465-91e8-41a81ffe4efe" LastKnownName="excuses : DbSet&lt;ExcuseView&gt;" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="01396800-ba35-4d0e-8169-84a73d18063e" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="44f31310-63b8-4bf3-b898-f361ad2960f9" LastKnownName="this._excuseManager : ExcuseManager" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="77eacc2e-f9dd-41da-941e-6dc5e4ca641e" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="a4d0b842-6c3b-4465-91e8-41a81ffe4efe" LastKnownName="excuses : DbSet&lt;ExcuseView&gt;" />
             </covered>
           </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="3c8d1f47-6882-4539-86fe-d72d54e65a3a" name="ExecutionOccurrenceSpecification">

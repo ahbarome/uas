@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="a135887f-d8f6-404d-a0f3-fd54b7bb40b2" name="DashboardFacade_GetTopStatistictAttendanceAndNonAttendanceStudentCourse" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="a135887f-d8f6-404d-a0f3-fd54b7bb40b2" name="DashboardFacade_GetTopStatistictAttendanceAndNonAttendanceStudentCourse" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
       <interaction Id="c1059dcb-d022-4b21-aebc-5534fb14648a" name="DashboardFacade_GetTopStatistictAttendanceAndNonAttendanceStudentCourse" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
@@ -120,14 +120,14 @@
               <lifelineMoniker Id="67b78748-cc85-4ceb-9913-d720d3e70ae9" LastKnownName="ModelEnumParser" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="6a5eadb5-ff08-410d-b532-18921520d3ef" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="b55633cd-f715-41ff-bec3-896f6700e5ba" LastKnownName="this._dashboarAttendanceManager : DashboardAttendanceManager" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="8d826d09-cb4d-4756-ba13-97bdf361a985" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="67b78748-cc85-4ceb-9913-d720d3e70ae9" LastKnownName="ModelEnumParser" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="6a5eadb5-ff08-410d-b532-18921520d3ef" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b55633cd-f715-41ff-bec3-896f6700e5ba" LastKnownName="this._dashboarAttendanceManager : DashboardAttendanceManager" />
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="bcd82c69-26f3-4671-b6e9-f0eb1046327a" name="MessageOccurrenceSpecification">
@@ -297,22 +297,22 @@
               <lifelineMoniker Id="627b44f8-50ac-4c71-a654-fe39e27f774c" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="cbcaaae5-c6ab-4ff9-ae6e-6946a9e8d507" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="b55633cd-f715-41ff-bec3-896f6700e5ba" LastKnownName="this._dashboarAttendanceManager : DashboardAttendanceManager" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="c7f5e727-0e0e-4e87-af51-2280f6197500" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="627b44f8-50ac-4c71-a654-fe39e27f774c" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
             </covered>
           </messageOccurrenceSpecification>
-          <lostFoundTarget Id="cbc54db1-1163-45fd-b6d8-69cfe16bf3f2" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="cbcaaae5-c6ab-4ff9-ae6e-6946a9e8d507" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b55633cd-f715-41ff-bec3-896f6700e5ba" LastKnownName="this._dashboarAttendanceManager : DashboardAttendanceManager" />
+            </covered>
+          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="0421795b-c80f-459f-9322-0b869cb02581" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="627b44f8-50ac-4c71-a654-fe39e27f774c" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
             </covered>
           </messageOccurrenceSpecification>
+          <lostFoundTarget Id="cbc54db1-1163-45fd-b6d8-69cfe16bf3f2" name="LostFoundTarget" />
           <lostFoundTarget Id="1b00458a-0a48-4190-894c-3b64a00b0e37" name="LostFoundTarget" />
           <messageOccurrenceSpecification Id="46d11579-ed5a-45a4-a062-53d4e9483596" name="MessageOccurrenceSpecification">
             <covered>
@@ -447,12 +447,12 @@
               <lifelineMoniker Id="b55633cd-f715-41ff-bec3-896f6700e5ba" LastKnownName="this._dashboarAttendanceManager : DashboardAttendanceManager" />
             </covered>
           </messageOccurrenceSpecification>
+          <lostFoundTarget Id="bf476602-64f7-4522-8db2-7f1d7071ccea" name="LostFoundTarget" />
           <messageOccurrenceSpecification Id="5bfdcb95-0368-49ec-a41a-ab552ace148f" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="b55633cd-f715-41ff-bec3-896f6700e5ba" LastKnownName="this._dashboarAttendanceManager : DashboardAttendanceManager" />
             </covered>
           </messageOccurrenceSpecification>
-          <lostFoundTarget Id="bf476602-64f7-4522-8db2-7f1d7071ccea" name="LostFoundTarget" />
           <executionOccurrenceSpecification Id="35b79890-db13-4ef3-99fb-d48b078d016b" name="ExecutionOccurrenceSpecification">
             <event>
               <executionOccurrenceSpecificationReferencesEvent>
@@ -530,14 +530,14 @@
               <lifelineMoniker Id="051024a5-93a8-4704-b722-5f16ab4c08ba" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="4b01f9c4-961f-4fc3-931e-de40d710836c" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="b55633cd-f715-41ff-bec3-896f6700e5ba" LastKnownName="this._dashboarAttendanceManager : DashboardAttendanceManager" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="189040fb-49d2-4812-aa0e-c96ce7f72cc7" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="051024a5-93a8-4704-b722-5f16ab4c08ba" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="4b01f9c4-961f-4fc3-931e-de40d710836c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b55633cd-f715-41ff-bec3-896f6700e5ba" LastKnownName="this._dashboarAttendanceManager : DashboardAttendanceManager" />
             </covered>
           </messageOccurrenceSpecification>
           <lostFoundTarget Id="fd4ea3c1-9cb6-4840-8b55-32981d6596f3" name="LostFoundTarget" />
@@ -574,14 +574,14 @@
               <lifelineMoniker Id="051024a5-93a8-4704-b722-5f16ab4c08ba" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
             </covered>
           </operandOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="2558286c-e565-4027-b17b-bb9b1683e749" name="MessageOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="051024a5-93a8-4704-b722-5f16ab4c08ba" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="e6f654bd-5f6d-416d-a494-700ecdd6fe85" name="MessageOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="b55633cd-f715-41ff-bec3-896f6700e5ba" LastKnownName="this._dashboarAttendanceManager : DashboardAttendanceManager" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2558286c-e565-4027-b17b-bb9b1683e749" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="051024a5-93a8-4704-b722-5f16ab4c08ba" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
             </covered>
           </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="3505a604-81c5-42a8-a1d5-0f5d69d0d665" name="ExecutionOccurrenceSpecification">

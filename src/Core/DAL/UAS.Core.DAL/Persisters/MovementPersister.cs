@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
@@ -110,6 +111,18 @@ namespace UAS.Core.DAL.Persisters
             }
 
             return movements;
+        }
+
+        public void Save(Movement movement)
+        {
+            base.Entities.Movements.Add(movement);
+            base.Entities.SaveChanges();
+        }
+
+        public IQueryable<Space> GetAvailableSpacesForMovements()
+        {
+            var spaces = base.Entities.Spaces;
+            return spaces;
         }
 
 

@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttendanceFacade.cs" />
+    <Compile Include="AttendanceFacadeStub.cs" />
     <Compile Include="Managers\CourseManager.cs" />
     <Compile Include="Managers\MovementManager.cs" />
     <Compile Include="Managers\TeacherManager.cs" />
@@ -55,6 +56,18 @@
     <ProjectReference Include="..\..\DAL\UAS.Core.DAL\UAS.Core.DAL.csproj">
       <Project>{69b618c7-90f2-4bd6-8618-6cfd1b34bc6f}</Project>
       <Name>UAS.Core.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DTO\UAS.Core.DTO.Common\UAS.Core.DTO.Common.csproj">
+      <Project>{3c280988-a42d-4dbb-bd1a-9934fd171923}</Project>
+      <Name>UAS.Core.DTO.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DTO\UAS.Core.DTO\UAS.Core.DTO.csproj">
+      <Project>{a75cf2f7-0b3e-4ba6-aaf8-8e63eaa36df6}</Project>
+      <Name>UAS.Core.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UAS.Core.Attendance.Common\UAS.Core.Attendance.Common.csproj">
+      <Project>{54AC8994-00E0-4D85-964F-D10A5DF6C8A5}</Project>
+      <Name>UAS.Core.Attendance.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

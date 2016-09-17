@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="f5fecf43-614e-4207-a956-d3b6f64e860d" name="DashboardFacade_GetStatistictsAttendanceVsNonAttendance" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="f5fecf43-614e-4207-a956-d3b6f64e860d" name="DashboardFacade_GetStatistictsAttendanceVsNonAttendance" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
       <interaction Id="8a42f17a-1d4e-4619-bc55-2202eb1769a9" name="DashboardFacade_GetStatistictsAttendanceVsNonAttendance" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
@@ -386,11 +386,6 @@
               <lifelineMoniker Id="5b307033-7ba5-42ce-adaa-3befc4663e79" LastKnownName="this._dashboarAttendanceManager._dashboardPersister.Entities : UASEntities" />
             </covered>
           </executionOccurrenceSpecification>
-          <operandOccurrenceSpecification Id="049ecf4b-52b6-4fd2-839b-5b2f52e435b3" name="OperandOccurrenceSpecification">
-            <covered>
-              <lifelineMoniker Id="0384b075-17ce-47f1-bf72-bceb17f2b0cd" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
-            </covered>
-          </operandOccurrenceSpecification>
           <operandOccurrenceSpecification Id="cbb5285a-287a-4588-934b-c43a1473d0a0" name="OperandOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="88b6de36-7e43-4032-ac3f-71062696b4fb" LastKnownName="statistic : Statistic" />
@@ -399,6 +394,11 @@
           <operandOccurrenceSpecification Id="95053c64-6f97-4f39-9d5f-b3c930031549" name="OperandOccurrenceSpecification">
             <covered>
               <lifelineMoniker Id="41b2fc70-39df-45c6-837c-53b43fb31293" LastKnownName="statistics : List&lt;Statistic&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="049ecf4b-52b6-4fd2-839b-5b2f52e435b3" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="0384b075-17ce-47f1-bf72-bceb17f2b0cd" LastKnownName="this._dashboarAttendanceManager._dashboardPersister : DashboardPersister" />
             </covered>
           </operandOccurrenceSpecification>
           <behaviorExecutionSpecification Id="5561ab35-dca0-4087-9076-585cbee28e24" name="BehaviorExecutionSpecification">
