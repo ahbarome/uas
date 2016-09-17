@@ -1,4 +1,6 @@
-﻿namespace UAS.Core.Dashboard.Managers
+﻿using System.Threading.Tasks;
+
+namespace UAS.Core.Dashboard.Managers
 {
     using System.Collections.Generic;
     using DAL.Common.Model;
@@ -29,6 +31,18 @@
             }
 
             return _dashboardPersister.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId); ;
+        }
+
+        internal async Task<List<Statistic>> GetStatistictsAttendanceVsNonAttendanceAsync(int documentNumber, int roleId)
+        {
+            var role = ModelEnumParser.RoleParser(roleId);
+
+            if (role == DAL.Common.Model.Enums.Role.ADMIN || role == DAL.Common.Model.Enums.Role.DIRECTOR)
+            {
+                return await _dashboardPersister.GetStatistictsAttendanceVsNonAttendanceAsync();
+            }
+
+            return await _dashboardPersister.GetStatistictsAttendanceVsNonAttendanceAsync(documentNumber, roleId); ;
         }
 
         internal List<Statistic> GetTopStatistictsMajorMonthsAttendanceAndNonAttendance(int documentNumber, int roleId)

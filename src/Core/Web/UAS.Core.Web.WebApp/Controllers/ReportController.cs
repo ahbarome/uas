@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 namespace UAS.Core.Web.WebApp.Controllers
 {
@@ -19,7 +20,8 @@ namespace UAS.Core.Web.WebApp.Controllers
         /// <summary>
         /// Builder method
         /// </summary>
-        public ReportController() {
+        public ReportController()
+        {
             _facade = new Facade.Facade();
         }
 
@@ -40,7 +42,8 @@ namespace UAS.Core.Web.WebApp.Controllers
         /// of all the attendance
         /// </summary>
         /// <returns></returns>
-        public ActionResult ReportAttendanceGrid() {
+        public ActionResult ReportAttendanceGrid()
+        {
             return PartialView();
         }
 
@@ -49,11 +52,19 @@ namespace UAS.Core.Web.WebApp.Controllers
         /// and role of the current user
         /// </summary>
         /// <returns>Attendance</returns>
-        private dynamic GetAttendance() {
+        private dynamic GetAttendance()
+        {
             var documentNumber = base.CurrentSession.SessionUser.DocumentNumber;
             var roleId = base.CurrentSession.SessionUser.IdRole;
-            var attendance = _facade.GetAttendance(documentNumber, roleId);
-            return attendance;
+            try
+            {
+                var attendance = _facade.GetAttendance(documentNumber, roleId);
+                return attendance;
+            }
+            catch (Exception exception)
+            {
+            }
+            return null;
         }
         #endregion Report attendance module
 
@@ -79,11 +90,19 @@ namespace UAS.Core.Web.WebApp.Controllers
             return PartialView();
         }
 
-        private dynamic GetNonAttendance() {
+        private dynamic GetNonAttendance()
+        {
             var documentNumber = base.CurrentSession.SessionUser.DocumentNumber;
             var roleId = base.CurrentSession.SessionUser.IdRole;
-            var nonattendance = _facade.GetNonAttendance(documentNumber, roleId);
-            return nonattendance;
+            try
+            {
+                var nonattendance = _facade.GetNonAttendance(documentNumber, roleId);
+                return nonattendance;
+            }
+            catch (Exception exception)
+            {
+            }
+            return null;
         }
         #endregion Report nonattendance module
 

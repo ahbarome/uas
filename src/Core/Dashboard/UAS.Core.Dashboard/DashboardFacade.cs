@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UAS.Core.DAL.Common.Model;
 using UAS.Core.Dashboard.Managers;
 
@@ -24,6 +25,12 @@ namespace UAS.Core.Dashboard
         {
             return _dashboarAttendanceManager.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
         }
+
+        public async Task<List<Statistic>> GetStatistictsAttendanceVsNonAttendanceAsync(int documentNumber, int roleId)
+        {
+            return await _dashboarAttendanceManager.GetStatistictsAttendanceVsNonAttendanceAsync(documentNumber, roleId);
+        }
+
         public List<Statistic> GetTopStatistictExcuseClassifications(int documentNumber, int roleId)
         {
             return _dashboardExcuseManager.GetTopStatistictExcuseClassifications(documentNumber, roleId);

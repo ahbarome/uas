@@ -9,6 +9,7 @@
     using System.Collections.Generic;
     using Report;
     using Dashboard;
+    using System.Threading.Tasks;
 
     public class Facade
     {
@@ -19,7 +20,7 @@
         private ReportFacade _reportFacade;
         private DashboardFacade _dashboardFacade;
 
-        public static Facade Instance(Action<string> attendanceDispatcher)
+        public static Facade Instance(Action<string> attendanceDispatcher = null)
         {
             if (instance == null)
                 instance = new Facade(attendanceDispatcher);
@@ -172,6 +173,11 @@
         public dynamic GetStatistictsAttendanceVsNonAttendance(int documentNumber, int roleId)
         {
             return _dashboardFacade.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
+        }
+
+        public async Task<dynamic> GetStatistictsAttendanceVsNonAttendanceAsync(int documentNumber, int roleId)
+        {
+            return await _dashboardFacade.GetStatistictsAttendanceVsNonAttendanceAsync(documentNumber, roleId);
         }
 
         public dynamic GetCurrentAcademicPeriod()

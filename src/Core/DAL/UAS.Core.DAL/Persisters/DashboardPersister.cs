@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Collections.Generic;
 using UAS.Core.DAL.Common.Model;
+using System.Threading.Tasks;
 
 namespace UAS.Core.DAL.Persisters
 {
@@ -56,6 +58,35 @@ namespace UAS.Core.DAL.Persisters
 
             return statistics;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Statistic>> GetStatistictsAttendanceVsNonAttendanceAsync(
+            int? documentNumber = null, int? roleId = null)
+        {
+            var statistics = new List<Statistic>();
+
+            var statisticsAttendanceVsNonAttendance =
+                await (
+                    base.Entities.GetStatistictsAttendanceVsNonAttendance(
+                        documentNumber, roleId).AsQueryable()).ToListAsync();
+
+            foreach (var statisticAttendanceVsNonAttendance in statisticsAttendanceVsNonAttendance)
+            {
+                var statistic = new Statistic() { Summary = new Dictionary<string, int>() };
+                statistic.Description = statisticAttendanceVsNonAttendance.EventDateMonthName;
+                statistic.Summary.Add(
+                    statisticAttendanceVsNonAttendance.EventType,
+                    statisticAttendanceVsNonAttendance.EventTotal ?? 0);
+                statistics.Add(statistic);
+            }
+
+            return statistics;
+        }
+
+
 
         /// <summary>
         /// 
