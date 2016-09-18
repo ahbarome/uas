@@ -1,4 +1,5 @@
-﻿@using System.Linq;
+﻿@using System;
+@using System.Linq;
 @using UAS.Core.DAL.Common.Model;
 
 @{
@@ -33,7 +34,7 @@
         return null;
     }
 }
-<div class="row">
+<div id="nonattendance-section" class="row">
     @if (topStatisticsMajorCourse != null && topStatisticsMajorCourse.Count > 0)
     {
         var majorCourseStatistic = GetMajorStatisticNonAttendance(topStatisticsMajorCourse);
@@ -94,6 +95,12 @@
                             </div>
                         }
 
+                    </div>
+                    <div class="m-t-md">
+                        <small class="pull-right">
+                            <i class="fa fa-clock-o"> </i>
+                            Última actualización @DateTime.Now.ToString("HH:mm")
+                        </small>
                     </div>
                 </div>
             </div>

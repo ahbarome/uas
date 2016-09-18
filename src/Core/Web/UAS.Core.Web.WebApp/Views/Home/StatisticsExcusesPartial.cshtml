@@ -1,4 +1,5 @@
-﻿@using UAS.Core.DAL.Common.Model;
+﻿@using System;
+@using UAS.Core.DAL.Common.Model;
 
 @{
     var currentAcademicPeriod = ViewBag.CurrentAcademicPeriod as AcademicPeriodView;
@@ -29,7 +30,7 @@
         return null;
     }
 }
-<div class="row">
+<div id="excuse-section" class="row">
     @{
         var majorExcuseStatus = GetMajorExcuse(statisticsExcuseStatus);
         if (majorExcuseStatus != null)
@@ -51,6 +52,12 @@
                                 <center>
                                     <canvas id="graphBarExcuseStatus" height="192"></canvas>
                                 </center>
+                                <div class="m-t-md">
+                                    <small class="pull-right">
+                                        <i class="fa fa-clock-o"> </i>
+                                        Última actualización @DateTime.Now.ToString("HH:mm")
+                                    </small>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -105,15 +105,14 @@ namespace UAS.Core.Web.WebApp.Controllers
             return PartialView();
         }
 
-        public async Task<JsonResult> GetStatisticsAttendanceVsNonAttendance()
+        public JsonResult GetStatisticsAttendanceVsNonAttendance()
         {
             var session = base.CurrentSession;
             var roleId = session.SessionUser.IdRole;
             var documentNumber = session.SessionUser.DocumentNumber;
             try
             {
-                var statistics = await Task.Run(
-                    () => _facade.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId));
+                var statistics = _facade.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
                 return Json(statistics);
             }
             catch (Exception exception)
@@ -182,7 +181,7 @@ namespace UAS.Core.Web.WebApp.Controllers
             return PartialView();
         }
 
-        public async Task<JsonResult> GetStatisticsExcusesStatus()
+        public JsonResult GetStatisticsExcusesStatus()
         {
             var session = base.CurrentSession;
             var roleId = session.SessionUser.IdRole;
@@ -190,8 +189,7 @@ namespace UAS.Core.Web.WebApp.Controllers
 
             try
             {
-                var statistics = await Task.Run(
-                        () => _facade.GetStatistictExcuseStatus(documentNumber, roleId));
+                var statistics = _facade.GetStatistictExcuseStatus(documentNumber, roleId);
                 return Json(statistics);
             }
             catch (Exception exception)

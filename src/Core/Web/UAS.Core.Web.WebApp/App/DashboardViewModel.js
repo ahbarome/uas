@@ -2,16 +2,50 @@
 
 $(document).ready(function () {
     // Attendance graphs
+    DoPostGetStatisticsAttendanceVsNonAttendance();
+
+    // Excuse graphs
+    DoPostGetStatisticsExcusesStatus();
+    
+    setInterval(ReloadStatisticsAttendanceVsNonAttendancePartial, 600000);
+    
+    setInterval(ReloadStatisticsNonAttendancePartial, 300000);
+    
+    setInterval(ReloadStatisticsExcusesPartial, 120000);
+});
+
+function ReloadStatisticsAttendanceVsNonAttendancePartial(){
+    $.post("/Home/StatisticsAttendanceVsNonAttendancePartial").done(function (response) {
+        $("#attendance-section").html(response);
+        DoPostGetStatisticsAttendanceVsNonAttendance();
+    });
+};
+
+function ReloadStatisticsNonAttendancePartial(){
+    $.post("/Home/StatisticsNonAttendancePartial").done(function (response) {
+        $("#nonattendance-section").html(response);
+    });
+};
+
+function ReloadStatisticsExcusesPartial(){
+    $.post("/Home/StatisticsExcusesPartial").done(function (response) {
+        $("#excuse-section").html(response);
+        DoPostGetStatisticsExcusesStatus();
+    });
+};
+
+function DoPostGetStatisticsAttendanceVsNonAttendance(){
     $.post("/Home/GetStatisticsAttendanceVsNonAttendance", function (attendanceVsNonAttendanceData) {
         PopulateGraphLinearStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
         PopulateGraphDonutStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
     });
+};
 
-    // Excuse graphs
+function DoPostGetStatisticsExcusesStatus(){
     $.post("/Home/GetStatisticsExcusesStatus", function (excuseStatusData) {
         PopulateGraphDunutExcuseStatus(excuseStatusData);
     });
-});
+};
 
 function IsValidData(data) {
     var isValid = false;
@@ -124,7 +158,7 @@ function PopulateGraphDonutStatisticsAttendanceVsNonAttendance(attendanceVsNonAt
 
 function PopulateGraphDunutExcuseStatus(excuseStatusData) {
     if (IsValidData(excuseStatusData)) {
-        console.log(excuseStatusData);
+        
         var STATUS_PENDING = "Pendiente";
         var STATUS_APPROVED = "Aprobada";
         var STATUS_REJECTED = "Rechazada";
@@ -135,10 +169,6 @@ function PopulateGraphDunutExcuseStatus(excuseStatusData) {
             Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_APPROVED));
         var rejectedData =
             Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_REJECTED));
-
-        console.log(pendingData);
-        console.log(approvedData);
-        console.log(rejectedData);
 
         var pending = {
             value: pendingData,
@@ -178,10 +208,8 @@ function PopulateGraphDunutExcuseStatus(excuseStatusData) {
             animateScale: true
         };
 
-        console.log("1");
         var ctx = document.getElementById("graphBarExcuseStatus").getContext("2d");
         var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-        console.log("2");
     }
 };
 
