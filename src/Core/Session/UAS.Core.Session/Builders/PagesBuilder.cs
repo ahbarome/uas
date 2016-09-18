@@ -38,7 +38,9 @@ namespace UAS.Core.Session.Builders
                     IsDefault = currentPage.IsDefault,
                     IsVisible = currentPage.IsVisible,
                     IdPage = currentPage.IdPage,
-                    IconClass = currentPage.Page.Icon
+                    IconClass = currentPage.Page.Icon,
+                    Controller = currentPage.Page.Controller,
+                    Action = currentPage.Page.Action
                 };
                 pages.Add(page);
             }

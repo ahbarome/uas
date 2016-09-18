@@ -27,6 +27,8 @@ namespace UAS.Core.DAL.Common.Model
         public string Icon { get; set; }
         public Nullable<int> Order { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagePermissionByRole> PagePermissionByRoles { get; set; }

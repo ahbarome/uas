@@ -166,10 +166,12 @@ namespace UAS.Core.Web.WebApp.Controllers
 
             try
             {
+                var currentAcademicPeriod = _facade.GetCurrentAcademicPeriod();
                 var topExcuseClassifications =
                     _facade.GetTopStatistictExcuseClassifications(documentNumber, roleId);
                 var statisticsExcuseStatus = _facade.GetStatistictExcuseStatus(documentNumber, roleId);
 
+                ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;
                 ViewBag.TopExcuseClassifications = topExcuseClassifications;
                 ViewBag.StatisticsExcuseStatus = statisticsExcuseStatus;
             }

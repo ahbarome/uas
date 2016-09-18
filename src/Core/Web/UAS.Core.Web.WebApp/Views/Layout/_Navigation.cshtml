@@ -11,19 +11,43 @@
         return pages.Where(searchedPage => searchedPage.ParentId == page.IdPage).Any();
     }
 
+    public bool IsFirstLevel(UAS.Core.Session.Entities.Page page)
+    {
+        return page.ParentId == null;
+    }
+
+    public string GetSelected(bool hasChilds, string controllerName, string actionName)
+    {
+        if (hasChilds)
+        {
+            return Html.IsSelected(controllerName);
+        }
+        return Html.IsSelected(null, actionName);
+    }
+
 }
 
 @helper MenuBuilder(List<UAS.Core.Session.Entities.Page> pages, int? parentId = null)
 {
-    foreach (var page in pages.Where(item => item.ParentId == parentId))
+foreach (var page in pages.Where(item => item.ParentId == parentId))
+{
+    var hasChildrens = HasChilds(page, pages);
+    if (page.IsVisible)
     {
-        var hasChildrens = HasChilds(page, pages);
-        if (page.IsVisible)
-        {
-            <li class="@Html.IsSelected(controller: @page.IdPage.ToString())">
-                <a href="@Url.Content(@page.MenuItem)">
+        var isFirstLevel = IsFirstLevel(page);
+            <li class="@GetSelected(hasChildrens, page.Controller, page.Action)">
+                <a href="@Url.Action(@page.Action ?? "#", @page.Controller)">
                     <i class="@page.IconClass"></i>
-                    <span class="nav-label">@page.Title</span>
+                    @{
+                        if (isFirstLevel)
+                        {
+                            <span class="nav-label" data-i18n="nav.@page.Controller.ToLower()">@page.Title</span>
+                        }
+                        else
+                        {
+                            @page.Title
+                        }
+                    }
                     @{
                         if (hasChildrens)
                         {
@@ -34,7 +58,7 @@
                 @{
                     if (hasChildrens)
                     {
-                        <ul class="nav collapse">
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: @page.Controller, cssClass: "in")">
                             @MenuBuilder(pages, page.IdPage)
                         </ul>
                     }
@@ -44,8 +68,8 @@
                     }
                 }
             </li>
-        }
-    }
+                }
+            }
 }
 
 <nav class="navbar-default navbar-static-side" role="navigation">

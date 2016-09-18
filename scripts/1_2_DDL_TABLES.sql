@@ -54,6 +54,8 @@ CREATE TABLE [Security].[Page](
 	[Id] 				[int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	[Title] 			[nvarchar](50) 		NOT NULL,
 	[MenuItem] 			[nvarchar](200)		NOT NULL,
+    [Controller]		[nvarchar](200)		NOT NULL,
+    [Action] 			[nvarchar](200)		NOT NULL,
 	[ParentId] 			[int]	 			NULL,
 	[Icon] 				[nvarchar](80) 		NULL,
 	[Order] 			[int]	 			NULL,

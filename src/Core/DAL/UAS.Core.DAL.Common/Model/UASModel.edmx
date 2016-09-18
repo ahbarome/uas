@@ -244,6 +244,8 @@ advertencia 6002: La tabla o vista 'UAS.Integration.EnrollmentDetail' no tiene d
           <Property Name="Icon" Type="nvarchar" MaxLength="80" />
           <Property Name="Order" Type="int" />
           <Property Name="RegisterDate" Type="datetime" />
+          <Property Name="Controller" Type="nvarchar" MaxLength="100" />
+          <Property Name="Action" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="PagePermissionByRole">
           <Key>
@@ -1790,6 +1792,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <Property Name="Order" Type="Int32" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PagePermissionByRoles" Relationship="UASModel.Fk_PagePermission" FromRole="Page" ToRole="PagePermissionByRole" />
+          <Property Name="Controller" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PagePermissionByRole">
           <Key>
@@ -2951,6 +2955,8 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <EntitySetMapping Name="Pages">
             <EntityTypeMapping TypeName="UASModel.Page">
               <MappingFragment StoreEntitySet="Page">
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
                 <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Icon" ColumnName="Icon" />
