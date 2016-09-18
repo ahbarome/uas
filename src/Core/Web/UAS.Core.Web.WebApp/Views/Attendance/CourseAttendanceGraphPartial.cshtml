@@ -1,7 +1,24 @@
-﻿@{
-    var courseAttendanceStatistic = ViewBag.CourseAttendanceStatistic as UAS.Core.DAL.Common.Model.Statistic;
+﻿@using UAS.Core.DAL.Common.Model;
+
+@{
+    var courseAttendanceStatistic = ViewBag.CourseAttendanceStatistic as Statistic;
 }
-@if (@courseAttendanceStatistic != null)
+
+@functions{
+    public bool HasStatistics(Statistic statistic)
+    {
+        foreach (var key in statistic.Summary)
+        {
+            if (key.Value > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+@if (@courseAttendanceStatistic != null && HasStatistics(courseAttendanceStatistic))
 {
     <center>
         <h5 class="text-uppercase">Gráfica Asistencia</h5>

@@ -502,21 +502,38 @@ BEGIN
 	CLOSE MovementsCursor;  
 	DEALLOCATE MovementsCursor;  
 
-	PRINT @CourseAttendance
+	DECLARE @TotalMovements INT = 0;
 
-	SELECT	@CourseId			AS CourseId
-			, [CourseName]
-			, 'Asistentes'		AS EnrollmentStatus
-			, COUNT(1)			AS Total
-	FROM	@CourseMovements 
-	GROUP BY [CourseName]	
-	UNION 
-	SELECT @CourseId															AS CourseId
-			, ( SELECT	TOP 1 CourseName FROM @CourseMovements )				AS CourseName
-			, 'Inasistentes'													AS EnrollmentStatus
-			, ABS(ISNULL(( SELECT	COUNT(1)			
-				FROM	@CourseMovements 
-				GROUP BY [CourseName]	 ), 0)	- ISNULL(@CourseAttendance, 0))	AS Total
+	SELECT @TotalMovements = COUNT(1) FROM @CourseMovements;
+
+	IF( @TotalMovements > 1 )
+	BEGIN
+		SELECT	@CourseId			AS CourseId
+				, [CourseName]
+				, 'Asistentes'		AS EnrollmentStatus
+				, COUNT(1)			AS Total
+		FROM	@CourseMovements 
+		GROUP BY [CourseName]	
+		UNION 
+		SELECT @CourseId															AS CourseId
+				, ( SELECT	TOP 1 CourseName FROM @CourseMovements )				AS CourseName
+				, 'Inasistentes'													AS EnrollmentStatus
+				, ABS(ISNULL(( SELECT	COUNT(1)			
+					FROM	@CourseMovements 
+					GROUP BY [CourseName]	 ), 0)	- ISNULL(@CourseAttendance, 0))	AS Total
+	END
+	ELSE
+	BEGIN
+		SELECT	-1							AS CourseId
+				, 'Sin curso programado'	AS CourseName
+				, 'Asistentes'				AS EnrollmentStatus
+				, 0							AS Total
+		UNION 
+		SELECT -1							AS CourseId
+				, 'Sin curso programado'	AS CourseName
+				, 'Inasistentes'			AS EnrollmentStatus
+				, 0							AS Total
+	END
 	--==================================================
 
 END

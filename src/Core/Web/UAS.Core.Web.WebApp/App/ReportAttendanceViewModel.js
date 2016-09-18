@@ -4,7 +4,7 @@
 
 function CreateGrid() {
 
-    $('#grid-attendance').DataTable({
+    var grid = $('#grid-attendance').DataTable({
         dom: '<"html5buttons"B>lTfgitp',
         language: {
             url: '/Scripts/plugins/datatables/plugins/i18n/Spanish.txt'
@@ -30,4 +30,12 @@ function CreateGrid() {
             }
         ]
     });
+
+    // Add the row number
+    grid.on('order.dt search.dt', function () {
+        grid.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+            grid.cell(cell).invalidate('dom');
+        });
+    }).draw();
 };

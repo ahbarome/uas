@@ -330,6 +330,7 @@ advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceRegisterView' no ti
 advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AttendanceView">
           <Key>
+            <PropertyRef Name="MovementId" />
             <PropertyRef Name="DocumentNumber" />
             <PropertyRef Name="FullName" />
             <PropertyRef Name="RoleId" />
@@ -344,6 +345,7 @@ advertencia 6002: La tabla o vista 'UAS.Attendance.AttendanceView' no tiene defi
             <PropertyRef Name="SpaceName" />
             <PropertyRef Name="SpaceType" />
           </Key>
+          <Property Name="MovementId" Type="int" Nullable="false" />
           <Property Name="DocumentNumber" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="LastName" Type="nvarchar" MaxLength="150" />
@@ -1198,6 +1200,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           </EntitySet>
           <EntitySet Name="AttendanceView" EntityType="Self.AttendanceView" store:Type="Views" store:Schema="Attendance">
             <DefiningQuery>SELECT 
+    [AttendanceView].[MovementId] AS [MovementId], 
     [AttendanceView].[DocumentNumber] AS [DocumentNumber], 
     [AttendanceView].[Name] AS [Name], 
     [AttendanceView].[LastName] AS [LastName], 
@@ -1739,7 +1742,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
             <Parameter Name="RoleId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetCoursesByTeacherDocumentNumber" IsComposable="true" ReturnType="Collection(UASModel.GetCoursesByTeacherDocumentNumber_Result)">
-            <Parameter Name="TeacherDocumentNumber" Mode="In" Type="Int32" />
+          <Parameter Name="TeacherDocumentNumber" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="User">
@@ -2794,6 +2797,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
             <PropertyRef Name="SpaceName" />
             <PropertyRef Name="SpaceType" />
             <PropertyRef Name="RoleAlias" />
+            <PropertyRef Name="MovementId" />
           </Key>
           <Property Name="DocumentNumber" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
@@ -2815,6 +2819,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <Property Name="MovementDate" Type="DateTime" Precision="0" />
           <Property Name="MovementTime" Type="Time" Precision="7" />
           <Property Name="RoleAlias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MovementId" Type="Int32" Nullable="false" />
         </EntityType>
         <ComplexType Name="GetStatistictsAttendanceVsNonAttendance_Result">
           <Property Type="String" Name="EventType" Nullable="true" MaxLength="15" />
@@ -3538,6 +3543,7 @@ advertencia 6002: La tabla o vista 'UAS.NonAttendance.StatusByRoleView' no tiene
           <EntitySetMapping Name="AttendanceView">
             <EntityTypeMapping TypeName="UASModel.AttendanceView">
               <MappingFragment StoreEntitySet="AttendanceView">
+                <ScalarProperty Name="MovementId" ColumnName="MovementId" />
                 <ScalarProperty Name="RoleAlias" ColumnName="RoleAlias" />
                 <ScalarProperty Name="MovementTime" ColumnName="MovementTime" />
                 <ScalarProperty Name="MovementDate" ColumnName="MovementDate" />

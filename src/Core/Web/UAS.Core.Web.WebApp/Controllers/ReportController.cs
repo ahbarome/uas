@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Web.Mvc;
 
 namespace UAS.Core.Web.WebApp.Controllers
@@ -10,9 +11,16 @@ namespace UAS.Core.Web.WebApp.Controllers
     {
         #region Attributes
         /// <summary>
-        /// 
+        /// Facade for all the routines of the application
         /// </summary>
         private Facade.Facade _facade;
+
+        /// <summary>
+        /// Logger for the controller
+        /// </summary>
+        private static readonly ILog _logger =
+            LogManager.GetLogger(
+                System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         #endregion Attributes
 
         #region Methods
@@ -63,6 +71,7 @@ namespace UAS.Core.Web.WebApp.Controllers
             }
             catch (Exception exception)
             {
+                _logger.Error(exception.Message, exception);
             }
             return null;
         }
@@ -101,6 +110,7 @@ namespace UAS.Core.Web.WebApp.Controllers
             }
             catch (Exception exception)
             {
+                _logger.Error(exception.Message, exception);
             }
             return null;
         }

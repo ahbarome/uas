@@ -64,16 +64,16 @@ INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[
 --POPULATE PAGE TABLE 
 --*******************************************************************
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Dashboard', '~/Home', 'fa fa-th-large' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Asistencia', '#', 'fa fa-th-large' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Aula Virtual', '~/Attendance/VirtualStudentsClassRoom', 2 )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Salón de Docentes', '~/Attendance/VirtualTeachersClassRoom', 2 )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Ausentismo', '#', 'fa fa-th-large' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Administrar Excusas', '~/NonAttendance/ExcuseManager', 5 )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Crear Excusa', '~/NonAttendance/ExcuseCreator', 5 )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Verificar Excusa', '~/NonAttendance/ExcuseVerificator', 5 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Asistencia', '#', 'fa fa-thumbs-up' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon])  VALUES('Aula Virtual', '~/Attendance/VirtualStudentsClassRoom', 2, 'fa fa-user' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon])  VALUES('Salón de Docentes', '~/Attendance/VirtualTeachersClassRoom', 2, 'fa fa-users' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Ausentismo', '#', 'fa fa-thumbs-down' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon])  VALUES('Administrar Excusas', '~/NonAttendance/ExcuseManager', 5, 'fa fa-cogs' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon])  VALUES('Crear Excusa', '~/NonAttendance/ExcuseCreator', 5, 'fa fa-pencil-square' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon])  VALUES('Verificar Excusa', '~/NonAttendance/ExcuseVerificator', 5, 'fa fa-check-circle' )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Reportes', '#', 'fa fa-th-large' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Asistencia', '~/Report/ReportAttendance', 9 )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId])  VALUES('Ausentismo', '~/Report/ReportNonAttendance', 9 )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon])  VALUES('Asistencia', '~/Report/ReportAttendance', 9, 'fa fa-thumbs-up' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon])  VALUES('Ausentismo', '~/Report/ReportNonAttendance', 9, 'fa fa-thumbs-down' )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon])  VALUES('Administrador Archivos', '~/FileManager/AsyncDownload', 'fa fa-download')
 
 --*******************************************************************

@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -1238,6 +1242,22 @@
     <Content Include="Images\p6.jpg" />
     <Content Include="Images\p7.jpg" />
     <Content Include="Images\p8.jpg" />
+    <Content Include="Images\photos\ft1.jpg" />
+    <Content Include="Images\photos\ft2.jpg" />
+    <Content Include="Images\photos\mt1.jpg" />
+    <Content Include="Images\photos\mt2.jpg" />
+    <Content Include="Images\photos\mt3.jpg" />
+    <Content Include="Images\photos\mt4.jpg" />
+    <Content Include="Images\photos\sf1.jpg" />
+    <Content Include="Images\photos\sf2.jpg" />
+    <Content Include="Images\photos\sf3.jpg" />
+    <Content Include="Images\photos\sm1.jpg" />
+    <Content Include="Images\photos\sm2.jpg" />
+    <Content Include="Images\photos\sm3.jpg" />
+    <Content Include="Images\photos\sm4.jpg" />
+    <Content Include="Images\photos\sm5.jpg" />
+    <Content Include="Images\photos\sm6.jpg" />
+    <Content Include="Images\photos\sm7.jpg" />
     <Content Include="Images\profile.jpg" />
     <Content Include="Images\profile_big.jpg" />
     <Content Include="Images\profile_small.jpg" />
@@ -1323,6 +1343,7 @@
     <Content Include="fonts\font-awesome\scss\_rotated-flipped.scss" />
     <Content Include="fonts\font-awesome\scss\_stacked.scss" />
     <Content Include="fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\UAS_LOCAL_PROFILE.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -1815,6 +1836,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="files\attachments\" />
     <Folder Include="Models\" />
     <Folder Include="Views\FileManager\" />
     <Folder Include="Views\Firewall\" />

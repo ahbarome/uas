@@ -34,5 +34,6 @@ namespace UAS.Core.DAL.Common.Model
         public Nullable<System.DateTime> MovementDate { get; set; }
         public Nullable<System.TimeSpan> MovementTime { get; set; }
         public string RoleAlias { get; set; }
+        public int MovementId { get; set; }
     }
 }

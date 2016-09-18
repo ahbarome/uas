@@ -54,8 +54,8 @@ GO
 --*******************************************************************
 --STUDENTMOVEMENT VIEW 
 --*******************************************************************
-CREATE VIEW [Attendance].[StudentMovementView] AS
-(	SELECT	[MOV].[DocumentNumber]							AS DocumentNumber
+ALTER VIEW [Attendance].[StudentMovementView] AS
+(	SELECT	[MOV].[DocumentNumber]						AS DocumentNumber
 		, [STU].[Code]									AS Code
 		, [STU].[Name]									AS Name
 		, [STU].[LastName]								AS LastName
@@ -70,6 +70,7 @@ CREATE VIEW [Attendance].[StudentMovementView] AS
 		, [SPA].[Id]									AS SpaceId
 		, [SPA].[Name]									AS SpaceName
 		, [SPT].[Type]									AS SpaceType
+		, [MOV].[Id]									AS MovementId
 		, [MOV].[RegisterDate]							AS MovementDateTime
 		, CONVERT(DATE, [MOV].[RegisterDate])			AS MovementDate
 		, CONVERT(TIME, [MOV].[RegisterDate])			AS MovementTime
@@ -98,6 +99,7 @@ CREATE VIEW [Attendance].[TeacherMovementView] AS
 			, [SPA].[Id]									AS SpaceId
 			, [SPA].[Name]									AS SpaceName
 			, [SPT].[Type]									AS SpaceType
+			, [MOV].[Id]									AS MovementId
 			, [MOV].[RegisterDate]							AS MovementDateTime
 			, CONVERT(DATE, [MOV].[RegisterDate])			AS MovementDate
 			, CONVERT(TIME, [MOV].[RegisterDate])			AS MovementTime
@@ -333,7 +335,8 @@ GO
 --*******************************************************************
 CREATE VIEW [Attendance].[AttendanceRegisterView] AS
 (	
-	SELECT [MOV].[DocumentNumber]
+	SELECT [MOV].[MovementId]
+			, [MOV].[DocumentNumber]
 			, [MOV].[Code]
 			, [MOV].[Name]
 			, [MOV].[LastName]
@@ -363,11 +366,12 @@ CREATE VIEW [Attendance].[AttendanceRegisterView] AS
 GO
 
 --*******************************************************************
---REGISTER VIEW 
+--ATTENDANCE VIEW 
 --*******************************************************************
 CREATE VIEW [Attendance].[AttendanceView] AS
 (	
-	SELECT [MOV].[DocumentNumber]
+	SELECT [MOV].[MovementId]
+			, [MOV].[DocumentNumber]
 			, [MOV].[Name]
 			, [MOV].[LastName]
 			, [MOV].[FullName]

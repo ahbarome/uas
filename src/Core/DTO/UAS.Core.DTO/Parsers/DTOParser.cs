@@ -14,7 +14,7 @@ namespace UAS.Core.DTO.Parsers
         /// </summary>
         /// <param name="spaceDTO">DTO to parse into a JSON</param>
         /// <returns>JSON representation of the current DTO object</returns>
-        public static string SpacesDTOToJSON(SpaceDTO spaceDTO)
+        public static string SpaceDTOToJSON(SpaceDTO spaceDTO)
         {
             return JsonConvert.SerializeObject(spaceDTO);
         }

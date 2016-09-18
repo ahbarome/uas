@@ -1,7 +1,11 @@
 ﻿var SEPARATOR = "|";
 var EMTPY_STRING = "";
+var APP_ALIAS = 'UAS+';
+var SUCCESS_MESSAGE = 'Se creó la excusa de manera satisfactoria';
 
 $(document).ready(function () {
+    var uploadedFiles = 0;
+    var counterUploadedFiles = 0;
 
     var uploader = Dropzone.options.myAwesomeDropzone = {
         url: "SaveExcuse",
@@ -14,6 +18,7 @@ $(document).ready(function () {
         addRemoveLinks: true,
         dictRemoveFile: 'X (Remover)',
         sending: function (file, xhr, formData) {
+
             var classificationChain = $("select[name='IdClassification']").val();
             var classificationId = GetValue(classificationChain, 0);
             formData.append("Justification", $("textarea[name='Justification']").val());
@@ -21,13 +26,21 @@ $(document).ready(function () {
             formData.append("IdClassification", classificationId);
             formData.append("NonAttendanceIds", GetSelectedRowsId());
             formData.append("Files", file);
+            uploadedFiles = uploadedFiles + 1;
+
         },
-        success: function () {
-            var self = $(this);
-            RefreshGrid();
-            CleanForms();
-            $("#modal-excuse-creator").modal("hide");
-            toastr.success('Se creó la excusa de manera satisfactoria', 'UAS+');
+        success: function (response) {
+
+            counterUploadedFiles = counterUploadedFiles + 1;
+            if (parseInt(uploadedFiles) == parseInt(counterUploadedFiles)) {
+                var self = $(this);
+                RefreshGrid();
+                CleanForms();
+                $("#modal-excuse-creator").modal("hide");
+                toastr.success(SUCCESS_MESSAGE, APP_ALIAS);
+                uploadedFiles = 0;
+                counterUploadedFiles = 0;
+            }
         },
         complete: function (file) {
             this.removeFile(file);
@@ -79,7 +92,7 @@ $(document).ready(function () {
         }
         else {
             toastr.error(
-                'Por favor seleccione al menos un registro para realizar la creación de la excusa', 'UAS+');
+                'Por favor seleccione al menos un registro para realizar la creación de la excusa', APP_ALIAS);
         }
     });
 

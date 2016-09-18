@@ -1,4 +1,6 @@
-﻿using System.Data.Entity.Core.EntityClient;
+﻿using log4net;
+using System;
+using System.Data.Entity.Core.EntityClient;
 using System.Data.SqlClient;
 using UAS.Core.Attendance;
 using UAS.Core.Attendance.Interfaces;
@@ -8,6 +10,13 @@ namespace UAS.Core.Services.Gateway
 {
     public class GatewayService : IGatewayService
     {
+        /// <summary>
+        /// Logger for the service
+        /// </summary>
+        private static readonly ILog _logger =
+            LogManager.GetLogger(
+                System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Facade for all the related with the movements
         /// </summary>
@@ -68,7 +77,15 @@ namespace UAS.Core.Services.Gateway
         /// <param name="JSONMovementDTO">JSON with the data of the movement</param>
         public void GenerateMovement(string JSONMovementDTO)
         {
-            _facade.GenerateMovement(JSONMovementDTO);
+            try
+            {
+                _facade.GenerateMovement(JSONMovementDTO);
+            }
+            catch (Exception exception) {
+                _logger.Error(exception.Message, exception);
+                throw exception;
+            }
+            
         }
 
         /// <summary>
@@ -77,7 +94,15 @@ namespace UAS.Core.Services.Gateway
         /// <returns></returns>
         public string GetAvailablesSpaces()
         {
-            return _facade.GetAvailableSpacesForMovements();
+            try
+            {
+                return _facade.GetAvailableSpacesForMovements();
+            }
+            catch (Exception exception) {
+                _logger.Error(exception.Message, exception);
+                throw exception;
+            }
+
         }
     }
 }

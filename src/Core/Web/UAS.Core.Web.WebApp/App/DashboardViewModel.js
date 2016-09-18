@@ -23,11 +23,12 @@ function IsValidData(data) {
 
 function PopulateGraphLinearStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData) {
     if (IsValidData(attendanceVsNonAttendanceData)) {
-        
+
         var attendanceData = GetGraphStatisticsAttendanceData(attendanceVsNonAttendanceData);
         var nonAttendanceData = GetGraphStatisticsNonAttendanceData(attendanceVsNonAttendanceData);
-        var labelsAttendanceVsNonAttendance = GetLabelsGraphStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
-        
+        var labelsAttendanceVsNonAttendance =
+            GetLabelsGraphStatisticsAttendanceVsNonAttendance(attendanceVsNonAttendanceData);
+
         var lineData = {
             labels: labelsAttendanceVsNonAttendance,
             datasets: [
@@ -74,7 +75,7 @@ function PopulateGraphLinearStatisticsAttendanceVsNonAttendance(attendanceVsNonA
 
         //var contextRadar = document.getElementById("graphRadarAttendanceVsNonAttendance").getContext("2d");
         //var radarChart = new Chart(contextRadar).Radar(lineData, lineOptions);
-        
+
     }
 };
 
@@ -123,17 +124,21 @@ function PopulateGraphDonutStatisticsAttendanceVsNonAttendance(attendanceVsNonAt
 
 function PopulateGraphDunutExcuseStatus(excuseStatusData) {
     if (IsValidData(excuseStatusData)) {
-
+        console.log(excuseStatusData);
         var STATUS_PENDING = "Pendiente";
         var STATUS_APPROVED = "Aprobada";
         var STATUS_REJECTED = "Rechazada";
 
-        var pendingData = Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_PENDING));
-        var approvedData = Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_APPROVED));
-        var rejectedData = Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_REJECTED));
+        var pendingData =
+            Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_PENDING));
+        var approvedData =
+            Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_APPROVED));
+        var rejectedData =
+            Sum(GetGraphStatisticsExcuseStatusData(excuseStatusData, STATUS_REJECTED));
 
         console.log(pendingData);
         console.log(approvedData);
+        console.log(rejectedData);
 
         var pending = {
             value: pendingData,
@@ -150,7 +155,7 @@ function PopulateGraphDunutExcuseStatus(excuseStatusData) {
         };
 
         var rejected = {
-            value: 1000,
+            value: rejectedData,
             color: "#b5b8cf",
             highlight: "#1ab394",
             label: STATUS_REJECTED
