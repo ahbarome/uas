@@ -36,7 +36,7 @@ foreach (var page in pages.Where(item => item.ParentId == parentId))
     {
         var isFirstLevel = IsFirstLevel(page);
             <li class="@GetSelected(hasChildrens, page.Controller, page.Action)">
-                <a href="@Url.Action(@page.Action ?? "#", @page.Controller)">
+                <a href="@Url.Content(@page.MenuItem)">
                     <i class="@page.IconClass"></i>
                     @{
                         if (isFirstLevel)
