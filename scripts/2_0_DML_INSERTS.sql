@@ -71,10 +71,10 @@ INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon], [Controller], [Action
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Administrar Excusas', '~/NonAttendance/ExcuseManager', 5, 'fa fa-cogs', 'NonAttendance' ,'ExcuseManager' )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Crear Excusa', '~/NonAttendance/ExcuseCreator', 5, 'fa fa-pencil-square', 'NonAttendance' ,'ExcuseCreator' )
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Verificar Excusa', '~/NonAttendance/ExcuseVerificator', 5, 'fa fa-check-circle', 'NonAttendance' ,'ExcuseVerificator' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon], [Controller], [Action])  VALUES('Reportes', '#', 'fa fa-th-large' , 'Report', '#' )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Asistencia', '~/Report/ReportAttendance', 9, 'fa fa-thumbs-up', 'Report', 'ReportAttendance' ) )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Ausentismo', '~/Report/ReportNonAttendance', 9, 'fa fa-thumbs-down', 'Report', 'ReportNonAttendance' ) )
-INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon], [Controller], [Action])  VALUES('Administrador Archivos', '~/FileManager/AsyncDownload', 'fa fa-download', 'FileManager', 'AsyncDownload' ))
+INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon], [Controller], [Action])  VALUES('Reportes', '#', 'fa fa-line-chart' , 'Report', '#' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Asistencia', '~/Report/ReportAttendance', 9, 'fa fa-thumbs-up', 'Report', 'ReportAttendance' )
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Ausentismo', '~/Report/ReportNonAttendance', 9, 'fa fa-thumbs-down', 'Report', 'ReportNonAttendance' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [Icon], [Controller], [Action])  VALUES('Administrador Archivos', '~/FileManager/AsyncDownload', 'fa fa-download', 'FileManager', 'AsyncDownload' )
 
 --*******************************************************************
 --POPULATE PAGEPERMISSIONBYROLE TABLE 

@@ -796,7 +796,7 @@ GO
 -- Create date: 2016-08-27
 -- Description:	Get the min id classification
 -- =============================================
-ALTER FUNCTION [NonAttendance].[GetMinIdClassification]()
+CREATE FUNCTION [NonAttendance].[GetMinIdClassification]()
 	
 RETURNS INT 
 AS

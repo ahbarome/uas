@@ -54,7 +54,7 @@ GO
 --*******************************************************************
 --STUDENTMOVEMENT VIEW 
 --*******************************************************************
-ALTER VIEW [Attendance].[StudentMovementView] AS
+CREATE VIEW [Attendance].[StudentMovementView] AS
 (	SELECT	[MOV].[DocumentNumber]						AS DocumentNumber
 		, [STU].[Code]									AS Code
 		, [STU].[Name]									AS Name
@@ -441,7 +441,7 @@ GO
 --*******************************************************************
 --EXCUSE VIEW 
 --*******************************************************************
-ALTER VIEW [NonAttendance].[ExcuseView] AS
+CREATE VIEW [NonAttendance].[ExcuseView] AS
 (	
 	SELECT	[EXC].[Id]
 			, [EXC].[IdNonAttendance]
@@ -478,7 +478,7 @@ GO
 --*******************************************************************
 --EXCUSEAPPROVAL VIEW 
 --*******************************************************************
-ALTER VIEW [NonAttendance].[ExcuseApprovalView] AS
+CREATE VIEW [NonAttendance].[ExcuseApprovalView] AS
 (	
 	SELECT	[EXA].[Id]
 			, [EXA].[IdExcuse]
