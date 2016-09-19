@@ -15,4 +15,5 @@ This is the graduation project broken down into steps.
 + Step 9: Added Virtual teacher class room functionality
 + Step 10: Added Non attendance functionality
 + Step 11: Added Report module
++ Step 12: Added stub facade for Gateway service and fixes throubles
 + Master: Current version of the project
