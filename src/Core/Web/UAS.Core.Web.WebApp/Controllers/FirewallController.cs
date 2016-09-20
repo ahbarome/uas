@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.Routing;
 using UAS.Core.Security;
 using UAS.Core.Session;
 
@@ -31,7 +32,7 @@ namespace UAS.Core.Web.WebApp.Controllers
             if (session == null)
             {
                 filterContext.Result = new RedirectToRouteResult(
-                    new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Index" }));
+                    new RouteValueDictionary(new { controller = "Account", action = "Index" }));
             }
             else {
                 // Validate if the user has access to specific controller
@@ -42,7 +43,7 @@ namespace UAS.Core.Web.WebApp.Controllers
 
                 if (!allowAccessToUrlRequested && httpMethod.Equals(DENIED_METHOD)) {
                     filterContext.Result = new RedirectToRouteResult(
-                        new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Error" }));
+                        new RouteValueDictionary(new { controller = "Account", action = "Error" }));
                 }
             }
         }

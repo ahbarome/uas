@@ -1,5 +1,7 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace UAS.Core.Web.WebApp.Controllers
 {
@@ -7,6 +9,16 @@ namespace UAS.Core.Web.WebApp.Controllers
 
     public class AccountController : Controller
     {
+        /// <summary>
+        /// Logger for the controller
+        /// </summary>
+        private static readonly ILog _logger =
+            LogManager.GetLogger(
+                System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly Facade _facade;
 
         public AccountController()
@@ -16,6 +28,12 @@ namespace UAS.Core.Web.WebApp.Controllers
 
         public ActionResult Index()
         {
+            var session = _facade.GetSession();
+            if (session != null)
+            {
+                return new RedirectToRouteResult(
+                        new RouteValueDictionary(new { controller = "Home", action = "Index" }));
+            }
             return View();
         }
 
@@ -33,6 +51,7 @@ namespace UAS.Core.Web.WebApp.Controllers
             }
             catch (Exception exception)
             {
+                _logger.Error(exception.Message, exception);
                 return Json(new { success = false, url = string.Empty, message = exception.Message });
             }
         }
@@ -42,11 +61,12 @@ namespace UAS.Core.Web.WebApp.Controllers
             try
             {
                 _facade.CloseSession();
-                return new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Index" }));
+                return new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "Index" }));
             }
             catch (Exception exception)
             {
-                return new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Error" })); ;
+                _logger.Error(exception.Message, exception);
+                return new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "Error" })); ;
             }
         }
 

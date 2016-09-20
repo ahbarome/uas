@@ -54,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Core\Security\UAS.Core.Security.Common\UAS.Core.Security.Common.csproj">
+      <Project>{ac710c7c-8e12-4e95-b599-e826e83b1ede}</Project>
+      <Name>UAS.Core.Security.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\src\Core\Security\UAS.Core.Security\UAS.Core.Security.csproj">
       <Project>{b5dc15ab-6d97-4af1-9921-982dee74db56}</Project>
       <Name>UAS.Core.Security</Name>

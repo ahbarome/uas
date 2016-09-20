@@ -55,6 +55,11 @@
             _sessionManager.CloseSession();
         }
 
+        public dynamic GetSession()
+        {
+            return _sessionManager.GetSession();
+        }
+
         public dynamic GetAllMovementsWithNotifications()
         {
             return _attendanceFacade.GetAllMovementsWithNotifications();
