@@ -95,7 +95,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAS.Core.ReportTest", "test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{8293C578-516A-4D9A-A0E1-8C46658C081B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAS.Core.Mobile", "Core\Mobile\UAS.Core.Mobile\UAS.Core.Mobile.csproj", "{8AEE2E3B-7B45-47EC-878F-A7C220536FFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAS.Core.Mobile", "src\Core\Mobile\UAS.Core.Mobile\UAS.Core.Mobile.csproj", "{8AEE2E3B-7B45-47EC-878F-A7C220536FFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
