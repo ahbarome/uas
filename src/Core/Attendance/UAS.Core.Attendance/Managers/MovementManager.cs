@@ -94,7 +94,13 @@ namespace UAS.Core.Attendance.Managers
             var spacesDTO = new List<SpaceDTO>();
 
             spaces.ForEach(
-                space => spacesDTO.Add(new SpaceDTO { IdSpace = space.Id, SpaceName = space.Name }));
+                space => spacesDTO.Add(
+                    new SpaceDTO
+                    {
+                        IdSpace = space.Id,
+                        SpaceName = space.Name,
+                        SpaceType = space.SpaceType.Description
+                    }));
 
             return DTOParser.SpacesDTOToJSON(spacesDTO);
         }

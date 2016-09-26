@@ -26,9 +26,6 @@ namespace UAS.Core.Mobile
 		
 		public static void UpdateIdValues()
 		{
-			global::ZXing.Mobile.Resource.Id.contentFrame = global::UAS.Core.Mobile.Resource.Id.contentFrame;
-			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::UAS.Core.Mobile.Resource.Layout.zxingscanneractivitylayout;
-			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::UAS.Core.Mobile.Resource.Layout.zxingscannerfragmentlayout;
 		}
 		
 		public partial class Attribute
@@ -69,9 +66,6 @@ namespace UAS.Core.Mobile
 			// aapt resource value: 0x7f050000
 			public const int btnOneStepScan = 2131034112;
 			
-			// aapt resource value: 0x7f050002
-			public const int contentFrame = 2131034114;
-			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -87,12 +81,6 @@ namespace UAS.Core.Mobile
 			
 			// aapt resource value: 0x7f030000
 			public const int Main = 2130903040;
-			
-			// aapt resource value: 0x7f030001
-			public const int zxingscanneractivitylayout = 2130903041;
-			
-			// aapt resource value: 0x7f030002
-			public const int zxingscannerfragmentlayout = 2130903042;
 			
 			static Layout()
 			{

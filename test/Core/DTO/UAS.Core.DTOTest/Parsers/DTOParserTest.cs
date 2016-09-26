@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UAS.Core.DTO.Parsers;
 using UAS.Core.DTO.Entities;
+using System.Collections.Generic;
 
 namespace UAS.Core.DTOTest
 {
@@ -30,7 +31,7 @@ namespace UAS.Core.DTOTest
         [TestMethod]
         public void MovementDTOToJSONTest()
         {
-            var expectedJSONMovementDTO = 
+            var expectedJSONMovementDTO =
                 "{\"UserId\":1130673647,\"Space\":{ \"IdSpace\":1,\"SpaceName\":\"404\"}}";
             var movementDTO = new MovementDTO
             {
@@ -44,7 +45,7 @@ namespace UAS.Core.DTOTest
         [TestMethod]
         public void JSONToMovementDTOTest()
         {
-            var JSONMovementDTO = 
+            var JSONMovementDTO =
                 "{\"UserId\":1130673647,\"Space\":{ \"IdSpace\":1,\"SpaceName\":\"404\"}}";
             var expectedmovementDTO = new MovementDTO
             {
@@ -56,6 +57,34 @@ namespace UAS.Core.DTOTest
                 expectedmovementDTO.UserDocumentNumber == movementDTO.UserDocumentNumber &&
                 expectedmovementDTO.Space.IdSpace == movementDTO.Space.IdSpace &&
                 expectedmovementDTO.Space.SpaceName == movementDTO.Space.SpaceName);
+        }
+
+        [TestMethod]
+        public void SpacesDTOToJSONTest()
+        {
+            var spacesDTO = 
+                new List<SpaceDTO> {
+                    new SpaceDTO { IdSpace = 1, SpaceName = "401", SpaceType= "Salón" },
+                    new SpaceDTO { IdSpace = 2, SpaceName = "404", SpaceType= "Salón"  }
+            };
+
+            var expectedJSONSpacesDTO = "[{\"IdSpace\":1,\"SpaceName\":\"401\",\"SpaceType\":\"Salón\"},{\"IdSpace\":2,\"SpaceName\":\"404\",\"SpaceType\":\"Salón\"}]";
+            var JSONSpacesDTO = DTOParser.SpacesDTOToJSON(spacesDTO);
+            Assert.IsTrue(expectedJSONSpacesDTO.Equals(JSONSpacesDTO));
+        }
+
+        [TestMethod]
+        public void JSONToSpacesDTOTest()
+        {
+            var expectedSpacesDTO =
+                new List<SpaceDTO> {
+                    new SpaceDTO { IdSpace = 1, SpaceName = "401" },
+                    new SpaceDTO { IdSpace = 2, SpaceName = "404" }
+            };
+
+            var JSONSpacesDTO = "[{\"IdSpace\":1,\"SpaceName\":\"401\",\"SpaceType\":\"Salón\"},{\"IdSpace\":2,\"SpaceName\":\"404\",\"SpaceType\":\"Salón\"}]";
+            var spacesDTO = DTOParser.JSONToSpacesDTO(JSONSpacesDTO);
+            Assert.IsTrue(expectedSpacesDTO.Count == spacesDTO.Count);
         }
     }
 }
