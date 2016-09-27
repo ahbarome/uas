@@ -30,11 +30,13 @@ function InitializeSignalRHubStore() {
         };
 
         $.connection.hub.start().done(function () {
+            console.log("initialize");
             movementsHub.server.initialize();
             signalRHubInitialized = true;
         });
     }
     catch (err) {
+        console.log(err);
         signalRHubInitialized = false;
     }
 };

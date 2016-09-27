@@ -503,19 +503,27 @@ RETURNS TABLE
 AS
 RETURN 
 (
+	SELECT *
+	FROM (
 	SELECT	'Attendance'				AS [Alias]
 		, 'Asistentes'					AS [Description]
-		, COUNT([ARV].[DocumentNumber]) AS [Total]  
+		, COUNT(DISTINCT [ARV].[DocumentNumber]) AS [Total]  
 	FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
 	WHERE	[ARV].[MovementDate]	= @Date AND
-			[ARV].[RoleId]			= @RoleId
+			[ARV].[RoleId]			= @RoleId 
+	GROUP BY [ARV].[MovementDate] ) AS Attendance
 	UNION 
 	SELECT	'NonAttendance'				AS [Alias]
 		, 'Inasistentes'				AS [Description]
-		, COUNT([NRV].[DocumentNumber]) AS [Total]  
-	FROM	[NonAttendance].[NonAttendanceRegisterView] [NRV] WITH(NOLOCK)
-	WHERE	[NRV].[DayOfTheWeek]	= DATEPART(WEEKDAY, @Date)  AND
-			[NRV].[RoleId]			= @RoleId
+		, ( SELECT COUNT([ARV].[DocumentNumber]) AS [Total]  
+			FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
+			WHERE	[ARV].[MovementDate]	= @Date AND
+					[ARV].[RoleId]			= @RoleId 
+			GROUP BY [ARV].[MovementDate] ) -
+			(	SELECT COUNT([PAV].[DocumentNumber]) 
+			FROM	[Integration].[PersonActivitiesView] [PAV] WITH(NOLOCK)
+			WHERE	[PAV].[DayOfTheWeek]	= DATEPART(WEEKDAY, @Date)  AND
+			[PAV].[RoleId]			= @RoleId )				AS [Total]
 	UNION 
 	SELECT  'Total'							AS [Alias]
 			, 'Total'						AS [Description]
@@ -592,11 +600,46 @@ RETURNS TABLE
 AS
 RETURN 
 (
-	SELECT	*
+	SELECT DISTINCT [DocumentNumber]
+			, [Code]
+			, [Name]
+			, [LastName]
+			, [FullName]
+			, [ImageRelativePath]
+			, [RoleId]
+			, [RoleName]
+			, [CourseId]
+			, [CourseName]
+			, [DayOfTheWeek]
+			, [StartTime]
+			, [EndTime]
+			, [SpaceId]
+			, [SpaceName]
+			, [SpaceType]
+			, [MovementDate]
+			, MIN([MovementDateTime])	AS MovementDateTime
+			, MIN([MovementTime])		AS MovementTime
 	FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
-	WHERE	[ARV].[DayOfTheWeek]	= [Integration].[GetCurrentDay]() AND
+	WHERE	[ARV].[MovementDate]	= CONVERT(DATE, GETDATE()) AND 
 			CONVERT(TIME, GETDATE())	BETWEEN [ARV].[StartTime] AND [ARV].[EndTime] AND
 			[ARV].[RoleId]			= 3
+	GROUP BY [DocumentNumber]
+			, [Code]
+			, [Name]
+			, [LastName]
+			, [FullName]
+			, [ImageRelativePath]
+			, [RoleId]
+			, [RoleName]
+			, [CourseId]
+			, [CourseName]
+			, [DayOfTheWeek]
+			, [StartTime]
+			, [EndTime]
+			, [SpaceId]
+			, [SpaceName]
+			, [SpaceType]
+			, [MovementDate]
 )
 GO
 

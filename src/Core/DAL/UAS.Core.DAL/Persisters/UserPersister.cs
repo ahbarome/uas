@@ -7,6 +7,15 @@ namespace UAS.Core.DAL.Persisters
 {
     public class UserPersister : BaseContext
     {
+        /// <summary>
+        /// Save a user in the database
+        /// </summary>
+        /// <param name="user">User to persist in the database</param>
+        public void Save(User user)
+        {
+            base.Entities.Users.Add(user);
+            base.Entities.SaveChanges();
+        }
 
         /// <summary>
         /// 
@@ -23,7 +32,7 @@ namespace UAS.Core.DAL.Persisters
             catch (Exception exception)
             {
                 throw new Exception(
-                    string.Format( "EXC: El usuario con ID: {0} es inválido o no existe", id), exception);
+                    string.Format("EXC: El usuario con ID: {0} es inválido o no existe", id), exception);
             }
         }
         /// <summary>

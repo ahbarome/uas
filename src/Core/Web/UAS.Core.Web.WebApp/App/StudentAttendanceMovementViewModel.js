@@ -41,11 +41,13 @@ function InitializeSignalRHubStore() {
         };
 
         $.connection.hub.start().done(function () {
+            console.log("initialize");
             movementsHub.server.initialize();
             signalRHubInitialized = true;
         });
     }
     catch (err) {
+        console.log(err);
         signalRHubInitialized = false;
     }
 };
@@ -113,7 +115,12 @@ function DonutChart() {
             animateScale: false
         };
 
-        var ctx = document.getElementById("doughnutChart").getContext("2d");
-        var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+        var doughnutChartElement = document.getElementById("doughnutChart");
+        
+        if (doughnutChartElement)
+        {
+            var ctx = doughnutChartElement.getContext("2d");
+            var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+        }
     });
 }

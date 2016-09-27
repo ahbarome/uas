@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using UAS.Core.DAL.Persisters;
 
 namespace UAS.Core.DALTest
@@ -18,7 +17,7 @@ namespace UAS.Core.DALTest
         [TestMethod]
         public void GetUserByUsernameAndPasswordTest()
         {
-            var user = _persister.GetUserByUsernameAndPassword("ahbarome", "1");
+            var user = _persister.GetUserByUsernameAndPassword("fcastillo", "NXo/ao4xL5ix30tACkl6jg==");
             Assert.IsNotNull(user);
         }
 
