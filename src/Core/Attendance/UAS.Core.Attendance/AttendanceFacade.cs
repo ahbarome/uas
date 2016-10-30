@@ -4,6 +4,7 @@ using System.Linq;
 using UAS.Core.Attendance.Interfaces;
 using UAS.Core.Attendance.Managers;
 using UAS.Core.DAL.Common.Model;
+using UAS.Core.DTO.Entities;
 
 namespace UAS.Core.Attendance
 {
@@ -76,14 +77,14 @@ namespace UAS.Core.Attendance
             return _teacherManager.GetTeacherAttendanceStatistics();
         }
 
-        public string GetAvailableSpacesForMovements()
+        public SpaceDTOCollection GetAvailableSpacesForMovements()
         {
             return _movementManager.GetAvailableSpacesForMovements();
         }
 
-        public void GenerateMovement(string JSONMovementDTO)
+        public void GenerateMovement(MovementDTO movementDTO)
         {
-            _movementManager.GenerateMovement(JSONMovementDTO);
+            _movementManager.GenerateMovement(movementDTO);
         }
     }
 }

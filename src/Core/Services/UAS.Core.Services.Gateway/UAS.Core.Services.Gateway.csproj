@@ -140,6 +140,10 @@
       <Project>{626BC2D8-40AC-4FB6-9BD4-459A75EABEB0}</Project>
       <Name>UAS.Core.Configuration</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DTO\UAS.Core.DTO.Common\UAS.Core.DTO.Common.csproj">
+      <Project>{3C280988-A42D-4DBB-BD1A-9934FD171923}</Project>
+      <Name>UAS.Core.DTO.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

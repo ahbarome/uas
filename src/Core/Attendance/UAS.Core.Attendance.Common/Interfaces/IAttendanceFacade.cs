@@ -1,9 +1,11 @@
-﻿namespace UAS.Core.Attendance.Interfaces
+﻿using UAS.Core.DTO.Entities;
+
+namespace UAS.Core.Attendance.Interfaces
 {
     public interface IAttendanceFacade
     {
-        string GetAvailableSpacesForMovements();
+        SpaceDTOCollection GetAvailableSpacesForMovements();
 
-        void GenerateMovement(string JSONMovementDTO);
+        void GenerateMovement(MovementDTO movementDTO);
     }
 }

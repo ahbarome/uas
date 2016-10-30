@@ -88,7 +88,7 @@ namespace UAS.Core.Attendance.Managers
             return _movementPersister.GetAllTeacherMovementsWithoutNotifications();
         }
 
-        public string GetAvailableSpacesForMovements()
+        public SpaceDTOCollection GetAvailableSpacesForMovements()
         {
             var spaces = _movementPersister.GetAvailableSpacesForMovements().ToList();
             var spacesDTO = new List<SpaceDTO>();
@@ -102,18 +102,16 @@ namespace UAS.Core.Attendance.Managers
                         SpaceType = space.SpaceType.Description
                     }));
 
-            return DTOParser.SpacesDTOToJSON(spacesDTO);
+            return (SpaceDTOCollection)spacesDTO;
         }
 
-        public void GenerateMovement(string JSONMovementDTO)
+        public void GenerateMovement(MovementDTO movementDTO)
         {
-            var movementDTO = DTOParser.JSONToMovementDTO(JSONMovementDTO);
-
             _movementPersister.Save(
                 new Movement
                 {
                     DocumentNumber = movementDTO.UserDocumentNumber,
-                    IdSpace = movementDTO.Space.IdSpace
+                    IdSpace = movementDTO.Space
                 });
         }
     }

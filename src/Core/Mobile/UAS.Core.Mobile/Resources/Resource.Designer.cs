@@ -26,6 +26,9 @@ namespace UAS.Core.Mobile
 		
 		public static void UpdateIdValues()
 		{
+			global::ZXing.Mobile.Resource.Id.contentFrame = global::UAS.Core.Mobile.Resource.Id.contentFrame;
+			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::UAS.Core.Mobile.Resource.Layout.zxingscanneractivitylayout;
+			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::UAS.Core.Mobile.Resource.Layout.zxingscannerfragmentlayout;
 		}
 		
 		public partial class Attribute
@@ -60,11 +63,20 @@ namespace UAS.Core.Mobile
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050001
-			public const int btnContinuosScan = 2131034113;
+			// aapt resource value: 0x7f070002
+			public const int btnContinuosScan = 2131165186;
 			
-			// aapt resource value: 0x7f050000
-			public const int btnOneStepScan = 2131034112;
+			// aapt resource value: 0x7f070001
+			public const int btnOneStepScan = 2131165185;
+			
+			// aapt resource value: 0x7f070004
+			public const int contentFrame = 2131165188;
+			
+			// aapt resource value: 0x7f070000
+			public const int spnSpaceType = 2131165184;
+			
+			// aapt resource value: 0x7f070003
+			public const int txtItemValue = 2131165187;
 			
 			static Id()
 			{
@@ -82,6 +94,15 @@ namespace UAS.Core.Mobile
 			// aapt resource value: 0x7f030000
 			public const int Main = 2130903040;
 			
+			// aapt resource value: 0x7f030001
+			public const int Spinner = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int zxingscanneractivitylayout = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int zxingscannerfragmentlayout = 2130903043;
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -92,11 +113,27 @@ namespace UAS.Core.Mobile
 			}
 		}
 		
-		public partial class String
+		public partial class Raw
 		{
 			
 			// aapt resource value: 0x7f040000
-			public const int ApplicationName = 2130968576;
+			public const int beep = 2130968576;
+			
+			static Raw()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Raw()
+			{
+			}
+		}
+		
+		public partial class String
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int ApplicationName = 2131034112;
 			
 			static String()
 			{
@@ -104,6 +141,31 @@ namespace UAS.Core.Mobile
 			}
 			
 			private String()
+			{
+			}
+		}
+		
+		public partial class Style
+		{
+			
+			// aapt resource value: 0x7f060000
+			public const int CustomTheme = 2131099648;
+			
+			// aapt resource value: 0x7f060001
+			public const int label_standar = 2131099649;
+			
+			// aapt resource value: 0x7f060002
+			public const int spinner_standar = 2131099650;
+			
+			// aapt resource value: 0x7f060003
+			public const int spinner_standar_text = 2131099651;
+			
+			static Style()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Style()
 			{
 			}
 		}

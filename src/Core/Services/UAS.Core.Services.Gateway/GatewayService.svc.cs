@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using UAS.Core.Attendance;
 using UAS.Core.Attendance.Interfaces;
 using UAS.Core.Configuration;
+using UAS.Core.DTO.Entities;
 
 namespace UAS.Core.Services.Gateway
 {
@@ -74,12 +75,12 @@ namespace UAS.Core.Services.Gateway
         /// <summary>
         /// Call the routine to persist the movement
         /// </summary>
-        /// <param name="JSONMovementDTO">JSON with the data of the movement</param>
-        public void GenerateMovement(string JSONMovementDTO)
+        /// <param name="movement">Data of the movement</param>
+        public void GenerateMovement(MovementDTO movement)
         {
             try
             {
-                _facade.GenerateMovement(JSONMovementDTO);
+                _facade.GenerateMovement(movement);
             }
             catch (Exception exception) {
                 _logger.Error(exception.Message, exception);
@@ -92,7 +93,7 @@ namespace UAS.Core.Services.Gateway
         /// Get all the availables spaces
         /// </summary>
         /// <returns></returns>
-        public string GetAvailablesSpaces()
+        public SpaceDTOCollection GetAvailablesSpaces()
         {
             try
             {

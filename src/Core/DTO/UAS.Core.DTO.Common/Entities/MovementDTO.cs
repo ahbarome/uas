@@ -3,6 +3,6 @@
     public class MovementDTO
     {
         public int UserDocumentNumber { get; set; }
-        public SpaceDTO Space { get; set; }
+        public int Space { get; set; }
     }
 }

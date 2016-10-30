@@ -36,7 +36,7 @@ namespace UAS.Core.DTOTest
             var movementDTO = new MovementDTO
             {
                 UserDocumentNumber = 1130673647,
-                Space = new SpaceDTO { IdSpace = 1, SpaceName = "404" }
+                Space = 1
             };
             var JSONMovementeDTO = DTOParser.MovementDTOToJSON(movementDTO);
             Assert.IsTrue(expectedJSONMovementDTO.Equals(expectedJSONMovementDTO));
@@ -50,13 +50,12 @@ namespace UAS.Core.DTOTest
             var expectedmovementDTO = new MovementDTO
             {
                 UserDocumentNumber = 1130673647,
-                Space = new SpaceDTO { IdSpace = 1, SpaceName = "404" }
+                Space = 1
             };
             var movementDTO = DTOParser.JSONToMovementDTO(JSONMovementDTO);
             Assert.IsTrue(
                 expectedmovementDTO.UserDocumentNumber == movementDTO.UserDocumentNumber &&
-                expectedmovementDTO.Space.IdSpace == movementDTO.Space.IdSpace &&
-                expectedmovementDTO.Space.SpaceName == movementDTO.Space.SpaceName);
+                expectedmovementDTO.Space == movementDTO.Space);
         }
 
         [TestMethod]

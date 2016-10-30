@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using UAS.Core.DTO.Entities;
 
 namespace UAS.Core.DTO.Parsers
@@ -40,18 +41,6 @@ namespace UAS.Core.DTO.Parsers
             return spaceDTO;
         }
 
-
-        /// <summary>
-        /// Convert a JSON into a SpacesDTO list entity
-        /// </summary>
-        /// <param name="JSONSpaceDTO">JSON string to parse into the DTO entity</param>
-        /// <returns>SpacesDTO list object</returns>
-        public static List<SpaceDTO> JSONToSpacesDTO(string JSONSpacesDTO)
-        {
-            var spacesDTO = JsonConvert.DeserializeObject<List<SpaceDTO>>(JSONSpacesDTO);
-            return spacesDTO;
-        }
-
         /// <summary>
         /// Parse a MovementDTO entity into a JSON structure
         /// </summary>
@@ -71,6 +60,35 @@ namespace UAS.Core.DTO.Parsers
         {
             var movementDTO = JsonConvert.DeserializeObject<MovementDTO>(JSONMovementDTO);
             return movementDTO;
+        }
+
+        public static QRCodeDTO JSONToQRCodeDTO(string JSONQRCodeDTO)
+        {
+            var qrCodeDTO = JsonConvert.DeserializeObject<QRCodeDTO>(JSONQRCodeDTO);
+            return qrCodeDTO;
+        }
+
+        /// <summary>
+        /// Convert a JSON into a SpacesDTO list entity
+        /// </summary>
+        /// <param name="JSONSpaceDTO">JSON string to parse into the DTO entity</param>
+        /// <returns>SpacesDTO list object</returns>
+        public static List<SpaceDTO> JSONToSpacesDTO(string JSONSpacesDTO)
+        {          
+            var spacesDTO = JsonConvert.DeserializeObject<SpaceDTOCollection>(JSONSpacesDTO);
+            return spacesDTO;
+        }
+
+        public static SpaceDTOCollection JSONToSpacesDTOResult(string JSONSpacesDTO)
+        {
+            if (!string.IsNullOrEmpty(JSONSpacesDTO))
+            {
+                var spacesDTO = JsonConvert.DeserializeObject<SpaceDTOResult>(JSONSpacesDTO);
+
+                return spacesDTO.GetAvailablesSpacesResult;
+            }
+
+            return new SpaceDTOCollection();
         }
     }
 }

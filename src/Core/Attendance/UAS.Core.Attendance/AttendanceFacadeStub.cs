@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using UAS.Core.Attendance.Interfaces;
 using UAS.Core.DTO.Entities;
-using UAS.Core.DTO.Parsers;
 
 namespace UAS.Core.Attendance
 {
     public class AttendanceFacadeStub : IAttendanceFacade
     {
-        public void GenerateMovement(string JSONMovementDTO)
+        public void GenerateMovement(MovementDTO movementDTO)
         {
             return;
         }
 
-        public string GetAvailableSpacesForMovements()
+        public SpaceDTOCollection GetAvailableSpacesForMovements()
         {
             var spaces = new List<SpaceDTO>
             {
@@ -29,7 +28,7 @@ namespace UAS.Core.Attendance
                 new SpaceDTO {  IdSpace = 10010, SpaceName ="504", SpaceType ="Sala" }
             };
 
-            return DTOParser.SpacesDTOToJSON(spaces);
+            return (SpaceDTOCollection)spaces;
         }
     }
 }

@@ -41,7 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\MovementDTO.cs" />
+    <Compile Include="Entities\QRCodeDTO.cs" />
     <Compile Include="Entities\SpaceDTO.cs" />
+    <Compile Include="Entities\SpaceDTOCollection.cs" />
+    <Compile Include="Entities\SpaceDTOResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

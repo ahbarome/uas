@@ -1,5 +1,6 @@
 ﻿using System.ServiceModel;
 using System.ServiceModel.Web;
+using UAS.Core.DTO.Entities;
 
 namespace UAS.Core.Services.Gateway
 {
@@ -18,14 +19,14 @@ namespace UAS.Core.Services.Gateway
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Wrapped,
             UriTemplate = "json/GetAvailablesSpaces")]
-        string GetAvailablesSpaces();
+        SpaceDTOCollection GetAvailablesSpaces();
 
 
         [OperationContract]
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "json/GenerateMovement/{JSONMovement}")]
-        void GenerateMovement(string JSONMovement);
+            UriTemplate = "json/GenerateMovement/{movement}")]
+        void GenerateMovement(MovementDTO movement);
     }
 }
