@@ -7,6 +7,13 @@
 <head>
 
     <meta charset="utf-8">
+    <!-- Tell the browser the color of the navigation bar -->
+    <!-- Chrome, Firefox -->
+    <meta name="theme-color" content="#663399">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#663399">
+    <!-- IOS -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#663399">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>UAS | Login</title>
@@ -19,10 +26,10 @@
 
 </head>
 
-<body class="gray-bg">
+<body class="white-bg" style="background-image: url(/Images/backgrounds/students.jpg);background-size: cover;">
 
-    <div id="login-container" class="middle-box text-center loginscreen animated fadeInDown">
-        <div>
+    <div id="login-container" class="login-box text-center loginscreen animated fadeInDown">
+        <div class="login-box-body">
             <div>
                 <h1 class="logo-name">UAS</h1>
             </div>
@@ -32,17 +39,18 @@
             </p>
             <p>Por favor diligencia tus credenciales para iniciar.</p>
             <form id="form-login" class="m-t" role="form" method="post">
-                <div class="form-group">
+                <div class="form-group" style="color:black">
                     <input type="text" name="Username" class="form-control" placeholder="Username" required="">
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="color:black">
                     <input type="password" name="Password" class="form-control" placeholder="Password" required="">
                 </div>
                 <button id="btn-submit" type="button" class="btn btn-primary block full-width m-b">Login</button>
             </form>
-            <p class="m-t"> <small>Sistema de Asistencia Universitaria &copy; 2016</small> </p>
+            <p class="m-t"> <small>Sistema de Asistencia Universitaria &copy; 2017</small> </p>
         </div>
     </div>
+
     <script src="~/Scripts/jquery-2.1.1.min.js"></script>
     <script src="~/Scripts/plugins/validate/jquery.validate.min.js"></script>
     <script src="~/Scripts/plugins/toastr/toastr.min.js"></script>
