@@ -28,7 +28,7 @@ namespace UAS.Core.Attendance
                 new SpaceDTO {  IdSpace = 10010, SpaceName ="504", SpaceType ="Sala" }
             };
 
-            return (SpaceDTOCollection)spaces;
+            return new SpaceDTOCollection(spaces);
         }
     }
 }
