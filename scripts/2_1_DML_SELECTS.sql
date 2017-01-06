@@ -14,18 +14,26 @@ SELECT * FROM [Attendance].[Movement]
 SELECT * FROM [Integration].[Course]
 SELECT * FROM [Integration].[Schedule]
 SELECT * FROM [Integration].[Enrollment]
+SELECT * FROM [Integration].[EnrollmentDetail]
 SELECT * FROM [NonAttendance].[Status]
 SELECT * FROM [NonAttendance].[StatusApproverByRole]
 SELECT * FROM [Integration].[ScheduleDetailView]
 SELECT * FROM [Integration].[EnrollmentDetailView]
 
+-- Get the current Academic Period
+SELECT * 
+FROM Integration.GetCurrentAcademicPeriod()
+
 SELECT	* 
 FROM	Integration.ScheduleDetailView
 WHERE	DayOfTheWeek = [Integration].[GetCurrentDay]()
-
+AND AcademicPeriod = ( SELECT Period
+						FROM Integration.GetCurrentAcademicPeriod())
 SELECT	*
 FROM	[Integration].[EnrollmentDetailView] [EDV]
 WHERE	[EDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]() 
+		AND AcademicPeriod = ( SELECT Period
+								FROM Integration.GetCurrentAcademicPeriod())		
 		AND [EDV].[CourseId] = 13
 
 
@@ -140,5 +148,3 @@ HAVING CONCAT(NonAttendanceDate, MAX(EventTotal)) IN (
 									, [NAV].CourseName		) AS Summary
 							GROUP BY NonAttendanceDate ) 
 
-
-INSERT INTO [Security].[User]([Username],[Password],[IdRole],[Name],[LastName],[Email],[TelephoneNumber], [IsActive], [CreatedBy],[DocumentNumber], [ImageRelativePath]) VALUES ('plopezsanc','NXo/ao4xL5ix30tACkl6jg==',4,'PAOLA ANDREA','LOPEZ SANCHEZ','plopez@hotmail.com',3732948,1,'admin',52006066,'~/Images/photos/sf1.jpg')

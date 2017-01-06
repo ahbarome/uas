@@ -72,14 +72,14 @@
             case StatisticType.TOTAL_NON_ATTENDANCE: return nonAttendance.ToString();
             case StatisticType.TOTAL_PERCENTAGE_ATTENDANCE:
                 {
-                    var percentage = (attendance / total) * 100;
+                    var percentage = total > 0 ? ((attendance / total) * 100) : 0;
                     var pergentageFormat = string.Concat(percentage.ToString("00"), "%");
                     return pergentageFormat;
                 }
 
             case StatisticType.TOTAL_PERCENTAGE_NON_ATTENDANCE:
                 {
-                    var percentage = (nonAttendance / total) * 100;
+                    var percentage = total > 0 ? ((nonAttendance / total) * 100) : 0;
                     var pergentageFormat = string.Concat(percentage.ToString("00"), "%");
                     return pergentageFormat;
                 }

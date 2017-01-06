@@ -102,7 +102,8 @@ namespace UAS.Core.Dashboard.Managers
         {
             var role = ModelEnumParser.RoleParser(roleId);
 
-            if (role == DAL.Common.Model.Enums.Role.ADMIN || role == DAL.Common.Model.Enums.Role.DIRECTOR)
+            if (role == DAL.Common.Model.Enums.Role.ADMIN 
+                || role == DAL.Common.Model.Enums.Role.DIRECTOR)
             {
                 var topStatistics =
                 _dashboardPersister.GetTopStatistictsMajorCourseAttendanceAndNonAttendance();
@@ -123,7 +124,9 @@ namespace UAS.Core.Dashboard.Managers
         private void UpdateStatisticsPercentage(List<Statistic> statistics, int totalStatistics)
         {
             statistics.ForEach(
-                statistic => statistic.Percentage = (decimal)statistic.Total / totalStatistics);
+                statistic => 
+                    statistic.Percentage =
+                        totalStatistics > 0 ? ((decimal)statistic.Total / totalStatistics) : 0);
         }
 
         private int SumStatisticsTotal(List<Statistic> statistics)
