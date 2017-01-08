@@ -6,6 +6,7 @@ function CreateGrid() {
 
     var grid = $('#grid-nonattendance').DataTable({
         dom: '<"html5buttons"B>lTfgitp',
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todo"]],
         language: {
             url: '/Scripts/plugins/datatables/plugins/i18n/Spanish.txt'
         },

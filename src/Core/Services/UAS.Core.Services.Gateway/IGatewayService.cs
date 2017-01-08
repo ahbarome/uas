@@ -27,6 +27,6 @@ namespace UAS.Core.Services.Gateway
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Wrapped,
             UriTemplate = "json/GenerateMovement/{movement}")]
-        void GenerateMovement(MovementDTO movement);
+        void GenerateMovement(string movement);
     }
 }

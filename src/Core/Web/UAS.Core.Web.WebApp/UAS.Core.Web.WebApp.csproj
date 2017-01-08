@@ -410,6 +410,8 @@
     <Content Include="Images\a7.jpg" />
     <Content Include="Images\a8.jpg" />
     <Content Include="Images\angular_logo.png" />
+    <Content Include="Images\backgrounds\students.jpg" />
+    <Content Include="Images\backgrounds\students_without_logo.jpg" />
     <Content Include="Images\dashbard4_1.jpg" />
     <Content Include="Images\dashbard4_2.jpg" />
     <Content Include="Images\email_1.jpg" />

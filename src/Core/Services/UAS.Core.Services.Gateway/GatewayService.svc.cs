@@ -76,11 +76,11 @@ namespace UAS.Core.Services.Gateway
         /// Call the routine to persist the movement
         /// </summary>
         /// <param name="movement">Data of the movement</param>
-        public void GenerateMovement(MovementDTO movement)
+        public void GenerateMovement(string movement)
         {
             try
             {
-                _facade.GenerateMovement(movement);
+                //_facade.GenerateMovement(movement);
             }
             catch (Exception exception) {
                 _logger.Error(exception.Message, exception);

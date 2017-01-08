@@ -11,6 +11,7 @@ SELECT * FROM [Security].[Role]
 SELECT * FROM [Security].[Page]
 SELECT * FROM [Security].[PagePermissionByRole]
 SELECT * FROM [Attendance].[Movement]
+SELECT * FROM [Integration].[AcademicPeriod]
 SELECT * FROM [Integration].[Course]
 SELECT * FROM [Integration].[Schedule]
 SELECT * FROM [Integration].[Enrollment]
@@ -26,15 +27,15 @@ FROM Integration.GetCurrentAcademicPeriod()
 
 SELECT	* 
 FROM	Integration.ScheduleDetailView
-WHERE	DayOfTheWeek = [Integration].[GetCurrentDay]()
-AND AcademicPeriod = ( SELECT Period
-						FROM Integration.GetCurrentAcademicPeriod())
+WHERE	AcademicPeriod = ( SELECT Period
+						FROM Integration.GetCurrentAcademicPeriod()) 
+		AND DayOfTheWeek = [Integration].[GetCurrentDay]()
+
 SELECT	*
 FROM	[Integration].[EnrollmentDetailView] [EDV]
-WHERE	[EDV].[DayOfTheWeek] = [Integration].[GetCurrentDay]() 
-		AND AcademicPeriod = ( SELECT Period
-								FROM Integration.GetCurrentAcademicPeriod())		
-		AND [EDV].[CourseId] = 13
+WHERE	AcademicPeriod = ( SELECT Period
+						FROM Integration.GetCurrentAcademicPeriod()) 
+		AND DayOfTheWeek = [Integration].[GetCurrentDay]()
 
 
 SELECT  [Integration].[GetCurrentDay]()

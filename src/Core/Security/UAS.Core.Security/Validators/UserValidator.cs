@@ -9,6 +9,10 @@
     public class UserValidator : IUserSecurity
     {
         /// <summary>
+        /// Current user
+        /// </summary>
+        private User _user;
+        /// <summary>
         /// 
         /// </summary>
         private CryptoManager _cryptoManager;
@@ -19,7 +23,7 @@
         /// <summary>
         /// 
         /// </summary>
-        private const string ABSOLUTE_PATH_CHAR_INDICATOR = "~";
+        private static string ABSOLUTE_PATH_CHAR_INDICATOR = "~";
 
         /// <summary>
         /// Builder method
@@ -37,13 +41,13 @@
         /// <param name="password"></param>
         public void Validate(string username, string password)
         {
-            var user = GetUser(username, password);
+            _user = _user == null ? GetUser(username, password): _user;
 
-            if (user == null)
+            if (_user == null)
             {
                 throw new Exception("Usuario o password inválidos");
             }
-            if (!user.IsActive)
+            if (!_user.IsActive)
             {
                 throw new Exception("El usuario se encuentra inactivo");
             }
@@ -58,11 +62,11 @@
         /// <returns></returns>
         internal bool AllowAccessToPage(string page, string username, string password)
         {
-            var user = GetUser(username, password);
+            _user = _user == null ? GetUser(username, password) : _user;
 
-            if(user.Role != null && user.Role.PagePermissionByRoles != null)
+            if (_user.Role != null && _user.Role.PagePermissionByRoles != null)
             {
-                foreach (var pagePermission in user.Role.PagePermissionByRoles)
+                foreach (var pagePermission in _user.Role.PagePermissionByRoles)
                 {
                     var allowedPage = pagePermission.Page.MenuItem.Replace(ABSOLUTE_PATH_CHAR_INDICATOR, string.Empty);
                     if (allowedPage.Equals(page))

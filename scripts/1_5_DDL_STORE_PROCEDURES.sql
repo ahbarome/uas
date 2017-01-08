@@ -263,42 +263,58 @@ AS
 	DECLARE @RandomOption			INT,
 			@DocumentNumber			INT,
 			@RoleId					INT,
-			@StartSemesterDate		DATETIME;
+			@StartSemesterDate		DATETIME,
+			@EndSemesterDate		DATETIME,
+			@CurrentPeriod			INT,
+			@RowCounter				INT = 0;
+
+	SELECT @CurrentPeriod = Period
+	FROM	Integration.GetCurrentAcademicPeriod()
 
 	DECLARE PersonsCursor CURSOR FOR(
 		SELECT DISTINCT StudentDocumentNumber	AS DocumentNumber
 				, 4								AS RoleId
 		FROM [Integration].[EnrollmentDetailView] WITH(NOLOCK)
+		WHERE AcademicPeriod = @CurrentPeriod 
 		UNION 
 		SELECT	DISTINCT TeacherDocumentNumber	AS DocumentNumber
 				, 3								AS RoleId
-		FROM [Integration].[EnrollmentDetailView] WITH(NOLOCK));
+		FROM [Integration].[EnrollmentDetailView] WITH(NOLOCK)
+		WHERE AcademicPeriod = @CurrentPeriod);
 
 	OPEN PersonsCursor;
 	
 	FETCH NEXT FROM PersonsCursor   
 	INTO @DocumentNumber, @RoleId
 
+	SELECT	@StartSemesterDate = StartDate
+			, @EndSemesterDate = EndDate
+	FROM	[Integration].[AcademicPeriod] WITH(NOLOCK)
+	WHERE	[Period] = @CurrentPeriod 
+	AND Semester = [Integration].[GetCurrentSemester]()
 
 	WHILE @@FETCH_STATUS = 0  
 	BEGIN
+		DECLARE @BaseInitialSemesterDate DATETIME;
 
-		SELECT	@StartSemesterDate = StartDate
-		FROM	[Integration].[AcademicPeriod] WITH(NOLOCK)
-		WHERE	Semester = [Integration].[GetCurrentSemester]()
-
-		SET @RandomOption		= CONVERT(INT, RAND() * 10);
+		SET @BaseInitialSemesterDate = @StartSemesterDate;
 
 		PRINT ''
-		PRINT CONCAT('********* BEGIN: DOCUMENT NUMBER',@DocumentNumber, ' ROLE ID', @RoleId, ' *********' )
+		PRINT CONCAT(
+			'********* BEGIN: DOCUMENT NUMBER ',
+			@DocumentNumber,
+			' ROLE ID',
+			@RoleId,
+			' *********' )
+
 		PRINT CONCAT('=== EVALUATING DATE ', @StartSemesterDate,'===')
 
-		WHILE (@StartSemesterDate < GETDATE() - 1)
+		WHILE (@StartSemesterDate <= @EndSemesterDate)
 		BEGIN
 		
 			DECLARE @SpaceId				INT,
 					@StartTime				TIME;
-
+			
 			IF( @RoleId = 4 )
 	
 			BEGIN
@@ -306,7 +322,8 @@ AS
 				SELECT	@SpaceId		= SpaceId
 						, @StartTime	= StartTime
 				FROM	[Integration].[EnrollmentDetailView] WITH(NOLOCK)
-				WHERE	StudentDocumentNumber	= @DocumentNumber AND
+				WHERE	AcademicPeriod			= @CurrentPeriod AND
+						StudentDocumentNumber	= @DocumentNumber AND
 						DayOfTheWeek			= DATEPART(WEEKDAY, @StartSemesterDate)
 			END
 
@@ -316,13 +333,14 @@ AS
 				SELECT	@SpaceId		= SpaceId
 						, @StartTime	= StartTime
 				FROM	[Integration].[EnrollmentDetailView] WITH(NOLOCK)
-				WHERE	TeacherDocumentNumber	= @DocumentNumber AND
+				WHERE	AcademicPeriod			= @CurrentPeriod AND
+						TeacherDocumentNumber	= @DocumentNumber AND
 						DayOfTheWeek			= DATEPART(WEEKDAY, @StartSemesterDate)
 			END 
 
 		
-			PRINT CONCAT('===EVALUATING ', @DocumentNumber, ' IN THE SPACE ', @SpaceId, ' FOR THE TIME ', @StartTime, ' AND WITH OPTION ', @RandomOption ) 
-			IF( (@RandomOption % 2) != 0 AND @SpaceId != 0)
+			PRINT CONCAT('===EVALUATING ', @DocumentNumber, ' IN THE SPACE ', @SpaceId, ' FOR THE TIME ', @StartTime ) 
+			IF( @SpaceId != 0 )
 	
 			BEGIN
 				DECLARE @RandomMinutes	INT,
@@ -347,6 +365,8 @@ AS
 		PRINT CONCAT('********* END: DOCUMENT NUMBER',@DocumentNumber, ' ROLE ID', @RoleId, ' *********' )
 		PRINT ''
 		
+		SET @StartSemesterDate = @BaseInitialSemesterDate ;
+
 		FETCH NEXT FROM PersonsCursor INTO  @DocumentNumber, @RoleId
 	END
 
@@ -623,15 +643,10 @@ BEGIN
 			, [PAV].[EndTime]
 			, @Date					AS NonAttendanceDate
 			, 0						AS HasExcuse
-	FROM	[Integration].[PersonActivitiesView]			[PAV] WITH(NOLOCK)
-	LEFT OUTER JOIN [Attendance].[AttendanceRegisterView]	[CMV] WITH(NOLOCK) ON 
-		[CMV].[DocumentNumber]	= [PAV].[DocumentNumber]	AND
-		[CMV].[CourseId]		= [PAV].[CourseId]			AND
-		[CMV].[RoleId]			= [PAV].[RoleId]			AND
-		[CMV].[SpaceId]			= [PAV].[SpaceId]			AND
-		[CMV].[DayOfTheWeek]	= [PAV].[DayOfTheWeek] 
-	WHERE	[PAV].[DayOfTheWeek] = DATEPART(WEEKDAY, @Date) AND
-			[CMV].[DocumentNumber] IS NULL
+	FROM	[Integration].[PersonActivitiesView]			[PAV] WITH(NOLOCK)	
+	WHERE	[PAV].[DayOfTheWeek] = DATEPART(WEEKDAY, @Date) 
+			AND @Date NOT IN (SELECT	MovementDate
+								FROM	[Attendance].[AttendanceRegisterView] WITH(NOLOCK))
 
 
 END
@@ -750,17 +765,24 @@ GO
 CREATE PROCEDURE [NonAttendance].[GenerateNonAttendanceData]
 AS
 	BEGIN
-	DECLARE @StartSemesterDate		DATETIME;
+	DECLARE @StartSemesterDate		DATETIME,
+			@EndSemesterDate		DATETIME,
+			@CurrentPeriod			INT;
+
+	SELECT @CurrentPeriod = Period
+	FROM	Integration.GetCurrentAcademicPeriod()
 
 	SELECT	@StartSemesterDate = StartDate
+			, @EndSemesterDate = EndDate
 		FROM	[Integration].[AcademicPeriod] WITH(NOLOCK)
-		WHERE	Semester = [Integration].[GetCurrentSemester]()
+		WHERE	Period = @CurrentPeriod
+				AND Semester = [Integration].[GetCurrentSemester]()
 
-	WHILE (@StartSemesterDate < GETDATE() - 1)
+	WHILE (@StartSemesterDate < @EndSemesterDate)
 	BEGIN
 		EXECUTE [NonAttendance].[PopulateNonAttendance] @StartSemesterDate
 
-	SET @StartSemesterDate = DATEADD(DD, 1, @StartSemesterDate);
+		SET @StartSemesterDate = DATEADD(DD, 1, @StartSemesterDate);
 	END
 
 END
@@ -881,7 +903,9 @@ BEGIN
 	SELECT	@SemesterStartDate = [StartDate]
 			, @SemesterEndDate = [EndDate]
 	FROM	[Integration].[AcademicPeriod]
-	WHERE	[Semester] = [Integration].[GetCurrentSemester]()
+	WHERE	[Period] = ( SELECT Period
+						FROM Integration.GetCurrentAcademicPeriod()) 
+			AND [Semester] = [Integration].[GetCurrentSemester]()
 
 	WHILE (@SemesterStartDate < @SemesterEndDate)
 	BEGIN
@@ -982,7 +1006,6 @@ BEGIN
 	ORDER BY  [GST].EventType
 			, [GST].EventDateMonth
 
-
 END
 
 GO
@@ -1032,7 +1055,9 @@ BEGIN
 	SELECT	@SemesterStartDate = [StartDate]
 			, @SemesterEndDate = [EndDate]
 	FROM	[Integration].[AcademicPeriod]
-	WHERE	[Semester] = [Integration].[GetCurrentSemester]()
+	WHERE	[Period] = ( SELECT Period
+						FROM Integration.GetCurrentAcademicPeriod()) 
+			AND [Semester] = [Integration].[GetCurrentSemester]()
 
 	WHILE (@SemesterStartDate < @SemesterEndDate)
 	BEGIN
@@ -1208,7 +1233,9 @@ BEGIN
 	SELECT	@SemesterStartDate = [StartDate]
 			, @SemesterEndDate = [EndDate]
 	FROM	[Integration].[AcademicPeriod]
-	WHERE	[Semester] = [Integration].[GetCurrentSemester]()
+	WHERE	[Period] = ( SELECT Period
+						FROM Integration.GetCurrentAcademicPeriod()) 
+			AND [Semester] = [Integration].[GetCurrentSemester]()
 
 	WHILE (@SemesterStartDate < @SemesterEndDate)
 	BEGIN
@@ -1406,7 +1433,9 @@ BEGIN
 	SELECT	@SemesterStartDate = [StartDate]
 			, @SemesterEndDate = [EndDate]
 	FROM	[Integration].[AcademicPeriod]
-	WHERE	[Semester] = [Integration].[GetCurrentSemester]()
+	WHERE	[Period] = ( SELECT Period
+						FROM Integration.GetCurrentAcademicPeriod()) 
+			AND [Semester] = [Integration].[GetCurrentSemester]()
 
 	WHILE (@SemesterStartDate < @SemesterEndDate)
 	BEGIN
@@ -1568,7 +1597,9 @@ BEGIN
 	SELECT	@SemesterStartDate = [StartDate]
 			, @SemesterEndDate = [EndDate]
 	FROM	[Integration].[AcademicPeriod]
-	WHERE	[Semester] = [Integration].[GetCurrentSemester]()
+	WHERE	[Period] = ( SELECT Period
+						FROM Integration.GetCurrentAcademicPeriod()) 
+			AND [Semester] = [Integration].[GetCurrentSemester]()
 
 	WHILE (@SemesterStartDate < @SemesterEndDate)
 	BEGIN

@@ -163,7 +163,6 @@ INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[
 INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(2, 4, 1);
 INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(3, 4, 1);
 INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(4, 4, 1);
-INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(4, 4, 1);
 INSERT INTO [NonAttendance].[ClassificationByRole]([IdClassification],[IdRole],[IsVisible]) VALUES(5, 4, 1);
 --*******************************************************************
 --INTEGRATION SCHEMA
@@ -424,6 +423,7 @@ INSERT INTO [Integration].[Space]([Id],[IdSpaceType],[Name]) VALUES(10010, 3,'50
 --*******************************************************************
 INSERT INTO [Integration].[AcademicPeriod]([Period], [Semester], [StartDate], [EndDate]) VALUES(2016, 1, '2016-01-02', '2016-01-06');
 INSERT INTO [Integration].[AcademicPeriod]([Period], [Semester], [StartDate], [EndDate]) VALUES(2016, 2, '2016-01-08', '2016-01-12');
+INSERT INTO [Integration].[AcademicPeriod]([Period], [Semester], [StartDate], [EndDate]) VALUES(2017, 1, '2017-01-01', '2017-01-06');
 
 --*******************************************************************
 --POPULATE SCHEDULE TABLE 
@@ -448,6 +448,26 @@ INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], 
 INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(18,1130677685,18,2)
 INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(19,1130677680,19,2)
 INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(20,1130677682,20,2)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(21,1130677693,1,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(22,1130677685,2,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(23,1130677687,3,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(24,1130677691,4,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(25,1130677685,5,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(26,1130677682,6,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(27,1130677692,7,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(28,1130677692,8,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(29,1130677681,9,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(30,1130677677,10,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(31,1130677687,11,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(32,1130677691,12,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(33,1130677685,13,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(34,1130677682,14,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(35,1130677681,15,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(36,1130677677,16,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(37,1130677680,17,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(38,1130677685,18,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(39,1130677680,19,3)
+INSERT INTO [Integration].[Schedule]([Id], [TeacherDocumentNumber], [IdCourse], [IdAcademicPeriod]) VALUES(40,1130677682,20,3)
 
 --*******************************************************************
 --POPULATE SCHEDULEDETAIL TABLE 
@@ -472,6 +492,18 @@ INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWee
 INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(18,10004,1,'18:30:00','20:45:00')
 INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(19,10008,6,'07:30:00','09:45:00')
 INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(20,10005,6,'14:00:00','15:30:00')
+
+-- SCHEDULE DETAIL FOR THE 2017
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(21,10005,5,'18:30:00','20:45:00')
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(22,10006,3,'18:30:00','20:00:00')
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(23,10004,4,'18:30:00','20:00:00')
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(24,10010,1,'18:30:00','20:45:00')
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(25,10005,2,'18:30:00','20:00:00')
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(26,10005,6,'07:30:00','09:00:00')
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(27,10002,1,'20:45:00','21:30:00')
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(28,10002,2,'20:00:00','20:45:00')
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(29,10001,4,'18:30:00','20:45:00')
+INSERT INTO [Integration].[ScheduleDetail]([IdSchedule], [IdSpace], [DayOfTheWeek], [StartTime], [EndTime]) VALUES(30,10000,3,'18:30:00','20:45:00')
 
 --*******************************************************************
 --POPULATE ENROLLMENTSTATUS TABLE 
@@ -583,6 +615,11 @@ INSERT INTO [Integration].[Enrollment]([StudentDocumentNumber], [IdEnrollmentSta
 INSERT INTO [Integration].[Enrollment]([StudentDocumentNumber], [IdEnrollmentStatus], [IdAcademicPeriod]) VALUES(16249469,1,2)
 INSERT INTO [Integration].[Enrollment]([StudentDocumentNumber], [IdEnrollmentStatus], [IdAcademicPeriod]) VALUES(18109738,1,2)
 INSERT INTO [Integration].[Enrollment]([StudentDocumentNumber], [IdEnrollmentStatus], [IdAcademicPeriod]) VALUES(10190789,1,2)
+
+-- DATA FOR THE YEAR 2017
+INSERT INTO [Integration].[Enrollment] ([StudentDocumentNumber], [IdEnrollmentStatus], [IdAcademicPeriod])
+SELECT	TOP 30 [StudentDocumentNumber], [IdEnrollmentStatus], 3
+FROM	[Integration].[Enrollment]
 
 --*******************************************************************
 --POPULATE ENROLLMENTDETAIL TABLE 
@@ -1007,6 +1044,13 @@ INSERT INTO [Integration].[EnrollmentDetail]([IdSchedule], [IdEnrollment]) VALUE
 INSERT INTO [Integration].[EnrollmentDetail]([IdSchedule], [IdEnrollment]) VALUES(12,60)
 INSERT INTO [Integration].[EnrollmentDetail]([IdSchedule], [IdEnrollment]) VALUES(13,60)
 INSERT INTO [Integration].[EnrollmentDetail]([IdSchedule], [IdEnrollment]) VALUES(14,60)
+
+--DATA FOR THE YEAR 2017
+INSERT INTO [Integration].[EnrollmentDetail]([IdSchedule], [IdEnrollment])
+SELECT	CurrentSchedule.IdSchedule, [ENR].Id AS IdEnrollment
+FROM	[Integration].[Enrollment] [ENR]
+CROSS JOIN (SELECT Id AS IdSchedule FROM [Integration].[Schedule] WHERE Id BETWEEN 21 AND 30 ) AS CurrentSchedule
+WHERE [ENR].IdAcademicPeriod = 3
 
 --*******************************************************************
 --POPULATE HOLIDAYEXCEPTION TABLE 

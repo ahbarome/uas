@@ -83,7 +83,7 @@ namespace UAS.Core.Web.WebApp.Controllers
             return View();
         }
 
-        public async Task<ActionResult> StatisticsAttendanceVsNonAttendancePartial()
+        public ActionResult StatisticsAttendanceVsNonAttendancePartial()
         {
             var session = base.CurrentSession;
             var roleId = session.SessionUser.IdRole;
@@ -93,7 +93,7 @@ namespace UAS.Core.Web.WebApp.Controllers
             {
                 var currentAcademicPeriod = _facade.GetCurrentAcademicPeriod();
                 var attendanceVsNonAttendanceStatistics =
-                    await _facade.GetStatistictsAttendanceVsNonAttendanceAsync(documentNumber, roleId);
+                    _facade.GetStatistictsAttendanceVsNonAttendance(documentNumber, roleId);
 
                 ViewBag.StatisticsAttendanceVsNonAttendance = attendanceVsNonAttendanceStatistics;
                 ViewBag.CurrentAcademicPeriod = currentAcademicPeriod;

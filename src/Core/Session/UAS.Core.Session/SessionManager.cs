@@ -12,6 +12,18 @@ namespace UAS.Core.Session
     public class SessionManager : ISessionManager
     {
         /// <summary>
+        /// 
+        /// </summary>
+        private string _username;
+        /// <summary>
+        /// 
+        /// </summary>
+        private string _password;
+        /// <summary>
+        /// 
+        /// </summary>
+        private DAL.Common.Model.User _user;
+        /// <summary>
         /// Manage the security 
         /// </summary>
         private WebSecurity _webSecurity;
@@ -31,8 +43,10 @@ namespace UAS.Core.Session
         /// <param name="password">Plain password of the current user</param>
         public void CreateSession(string username, string password)
         {
+            _username = username;
+            _password = password;
             _webSecurity.ValidateLogin(username, password);
-            Create(username, password);
+            CreateNewSession(username, password);
         }
 
         /// <summary>
@@ -40,12 +54,12 @@ namespace UAS.Core.Session
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        private void Create(string username, string password)
+        private void CreateNewSession(string username, string password)
         {
-            var currentUser = _webSecurity.GetUser(username, password);
+            _user = _user == null ? _webSecurity.GetUser(username, password) : _user;
 
             HttpContext.Current.Session[ConfigurationManager.SESSION_KEY] =
-                    new SessionBuilder(currentUser, username, password).Build();
+                    new SessionBuilder(_user, username, password).Build();
         }
 
         /// <summary>
@@ -74,7 +88,7 @@ namespace UAS.Core.Session
         /// </summary>
         private void RefreshSession()
         {
-
+            CreateSession(_username, _password);
         }
     }
 }

@@ -102,7 +102,7 @@ namespace UAS.Core.Attendance.Managers
                         SpaceType = space.SpaceType.Description
                     }));
 
-            return (SpaceDTOCollection)spacesDTO;
+            return new SpaceDTOCollection(spacesDTO);
         }
 
         public void GenerateMovement(MovementDTO movementDTO)
