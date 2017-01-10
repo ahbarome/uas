@@ -52,18 +52,24 @@ namespace UAS.Core.Mobile.BLL.Proxy
 
         #region Methods
 
-        private RestRequest BuildRequest(string operation, string parameters = "")
+        private RestRequest BuildRequest(string operation, Method method, string parameters = "", object bodyObject = null)
         {
-            var request = new RestRequest(operation, Method.GET);
+            var request = new RestRequest(operation, method);
+
+            if (bodyObject != null)
+            {
+                request.RequestFormat = DataFormat.Json;
+                request.AddBody(bodyObject);
+            }
 
             return request;
         }
 
-        protected internal string Execute(string operation, string parameters = "")
+        protected internal string Execute(string operation, Method method, string parameters = "")
         {
             var result = string.Empty;
 
-            var request = BuildRequest(operation, parameters);
+            var request = BuildRequest(operation, method, parameters);
             var response = ServiceRestClient.Execute(request);
 
             if (response.ResponseStatus.Equals(ResponseStatus.Completed))
@@ -74,11 +80,11 @@ namespace UAS.Core.Mobile.BLL.Proxy
             return result;
         }
 
-        protected internal async Task<string> ExecuteAsync(string operation, string parameters = "")
+        protected internal async Task<string> ExecuteAsync(string operation, Method method, string parameters = "", object bodyObject = null)
         {
             var result = string.Empty;
 
-            var request = BuildRequest(operation, parameters);
+            var request = BuildRequest(operation, method, parameters, bodyObject);
             var token = new CancellationTokenSource();
             var response = await ServiceRestClient.ExecuteTaskAsync(request, token.Token);
 

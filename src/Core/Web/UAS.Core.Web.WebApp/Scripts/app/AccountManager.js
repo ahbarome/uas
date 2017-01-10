@@ -6,13 +6,6 @@ $(document).ready(function () {
         $('#login-container').addClass('wobble');
     };
 
-    $(window).keydown(function (event) {
-        if (event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-        }
-    });
-
     $("#form-login").validate({
         rules: {
             Username:{
@@ -35,14 +28,14 @@ $(document).ready(function () {
     $("#btn-submit").click(function () {
         var $current_form = $("#form-login");
         if ($current_form.valid()) {
-            
+            $(this).addClass('active');
             $.ajax({
                 url: "/Account/Login",
                 type: "POST",
                 data: $current_form.serialize(),
                 success: function (response) {
                     if (response.success) {
-                        window.location = response.url;
+                        window.location.href = response.url;
                     }
                     else {
                         toastr.error(response.message, 'UAS+');
@@ -51,6 +44,8 @@ $(document).ready(function () {
                 error: function (response) {
                     toastr.error(response.message, 'UAS+');
                 }
+            }).done(function () {
+                $(this).removeClass('active');
             });
         }
         else {

@@ -1,6 +1,7 @@
-﻿@model IEnumerable<UAS.Core.DAL.Common.Model.StudentMovement>
+﻿@model IList<UAS.Core.DAL.Common.Model.StudentMovement>
 @functions {
-    public string GetLabelForEnrollmentStatus(string status) {
+    public string GetLabelForEnrollmentStatus(string status)
+    {
         var label = string.Empty;
         if (status.ToUpper().Equals("ACTIVA"))
         {
@@ -19,44 +20,56 @@
 }
 <div id="attendance" class="row">
 
-    @foreach (var movement in Model)
-    {
-        <div class="col-lg-4">
-            <div class="contact-box">
+    @{
+        var movements = Model;
+        if (movements != null && movements.Count > 0)
+        {
+            foreach (var movement in movements)
+            {
+                <div class="col-lg-4">
+                    <div class="contact-box">
 
-                <div class="col-sm-4">
-                    <div class="text-center">
-                        <img alt="image" class="img-circle m-t-xs img-responsive" src="@Url.Content(movement.ImageRelativePath)">
-                        <div class="m-t-xs font-bold">@movement.CareerName</div>
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="@Url.Content(movement.ImageRelativePath)">
+                                <div class="m-t-xs font-bold">@movement.CareerName</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>@movement.FullName</strong></h3>
+                            <h4><strong>Estudiante</strong></h4>
+                            <small>
+                                <strong># Documento: </strong>
+                                <br />
+                                @movement.DocumentNumber<br />
+                            </small>
+                            <small>
+                                <strong>Matrícula: </strong>
+                                <br />
+                                <span class="@GetLabelForEnrollmentStatus(@movement.EnrollmentStatus)">@movement.EnrollmentStatus</span>
+                            </small>
+                            <address>
+                                <small>
+                                    <strong>Dirección: </strong><br />
+                                    @movement.Address<br />
+                                    <strong>Correo: </strong><br />
+                                    @movement.Email<br />
+                                    <strong>Celular: </strong><br />
+                                    <abbr title="Phone">(+057)</abbr> @movement.TelephoneNumber
+                                </small>
+                            </address>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
-                <div class="col-sm-8">
-                    <h3><strong>@movement.FullName</strong></h3>
-                    <h4><strong>Estudiante</strong></h4>
-                    <small>
-                        <strong># Documento: </strong>
-                        <br />
-                        @movement.DocumentNumber<br />
-                    </small>
-                    <small>
-                        <strong>Matrícula: </strong>
-                        <br />
-                        <span class="@GetLabelForEnrollmentStatus(@movement.EnrollmentStatus)">@movement.EnrollmentStatus</span>
-                    </small>
-                    <address>
-                        <small>
-                            <strong>Dirección: </strong><br />
-                            @movement.Address<br />
-                            <strong>Correo: </strong><br />
-                            @movement.Email<br />
-                            <strong>Celular: </strong><br />
-                            <abbr title="Phone">(+057)</abbr> @movement.TelephoneNumber
-                        </small>
-                    </address>
-                </div>
-                <div class="clearfix"></div>
+            }
+        }
+        else
+        {
+            <div class="jumbotron text-center">
+                <h2>No hay estudiantes disponibles.</h2>
             </div>
-        </div>
+        }
     }
 
 </div>

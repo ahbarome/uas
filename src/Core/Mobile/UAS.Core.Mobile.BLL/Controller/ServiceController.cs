@@ -24,7 +24,7 @@ namespace UAS.Core.Mobile.BLL.Controller
 
         internal async Task<SpaceDTOCollection> GetAvailableSpaces()
         {
-            var response = await Proxy.ExecuteAsync(Constants.OperationGetSpaces);
+            var response = await Proxy.ExecuteAsync(Constants.OperationGetSpaces, RestSharp.Method.GET);
 
             var result = DTOParser.JSONToSpacesDTOResult(response);
 
@@ -35,7 +35,7 @@ namespace UAS.Core.Mobile.BLL.Controller
         {
             var request = DTOParser.MovementDTOToJSON(movement);
 
-            await Proxy.ExecuteAsync(string.Format(Constants.OperationGenerateMovement, request));
+            await Proxy.ExecuteAsync(Constants.OperationGenerateMovement, RestSharp.Method.POST, bodyObject: movement);
         }
     }
 }

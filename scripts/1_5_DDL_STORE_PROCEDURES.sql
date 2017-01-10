@@ -907,7 +907,7 @@ BEGIN
 						FROM Integration.GetCurrentAcademicPeriod()) 
 			AND [Semester] = [Integration].[GetCurrentSemester]()
 
-	WHILE (@SemesterStartDate < @SemesterEndDate)
+	WHILE (@SemesterStartDate <= @SemesterEndDate)
 	BEGIN
 		
 		IF(ISNULL(@DocumentNumber, 0) > 0 AND  ISNULL(@RoleId, 0) > 0)
@@ -923,7 +923,7 @@ BEGIN
 						, COUNT (1)				AS EventTotal
 				FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 				WHERE	[ATV].[MovementDate]	= CONVERT(DATE, @SemesterStartDate) AND
-						[ATV].[RoleId]			= 4									AND
+						[ATV].[RoleId]			IN (3, 4)							AND
 						[ATV].[CourseId]		IN (
 													SELECT	CourseId 
 													FROM	[Integration].[GetCoursesByTeacherDocumentNumber](@DocumentNumber) ) -- Courses of the current teacher
@@ -936,7 +936,7 @@ BEGIN
 						, COUNT (1)								AS EventTotal
 				FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 				WHERE	[NAV].[NonAttendanceDate]	= CONVERT(DATE, @SemesterStartDate)	AND
-						[NAV].[RoleId]				= 4									AND-- Students	
+						[NAV].[RoleId]			IN (3, 4)							AND
 						[NAV].[CourseId]		IN (
 													SELECT	CourseId 
 													FROM	[Integration].[GetCoursesByTeacherDocumentNumber](@DocumentNumber) ) -- Courses of the current teacher
@@ -1237,7 +1237,7 @@ BEGIN
 						FROM Integration.GetCurrentAcademicPeriod()) 
 			AND [Semester] = [Integration].[GetCurrentSemester]()
 
-	WHILE (@SemesterStartDate < @SemesterEndDate)
+	WHILE (@SemesterStartDate <= @SemesterEndDate)
 	BEGIN
 
 		IF(ISNULL(@DocumentNumber, 0) > 0 AND  ISNULL(@RoleId, 0) > 0)
@@ -1254,7 +1254,7 @@ BEGIN
 						, COUNT (1)				AS EventTotal
 				FROM	[Attendance].[AttendanceView] [ATV] WITH(NOLOCK)
 				WHERE	[ATV].[MovementDate] = CONVERT(DATE, @SemesterStartDate) AND
-						[ATV].[RoleId]			= 4								 AND
+						[ATV].[RoleId]			IN (3, 4 )								 AND
 						[ATV].[CourseId]		IN (
 													SELECT	CourseId 
 													FROM	[Integration].[GetCoursesByTeacherDocumentNumber](@DocumentNumber) ) -- Courses of the current teacher
@@ -1271,7 +1271,7 @@ BEGIN
 						, COUNT (1)								AS EventTotal
 				FROM	[NonAttendance].[NonAttendanceView] [NAV] WITH(NOLOCK)
 				WHERE	[NAV].[NonAttendanceDate]	= CONVERT(DATE, @SemesterStartDate) AND
-						[NAV].[RoleId]				= 4									AND
+						[NAV].[RoleId]				IN (3, 4 )									AND
 						[NAV].[CourseId]		IN (
 												SELECT	CourseId 
 												FROM	[Integration].[GetCoursesByTeacherDocumentNumber](@DocumentNumber) ) -- Courses of the current teacher

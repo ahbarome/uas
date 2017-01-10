@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Newtonsoft.Json;
 using System;
 using System.Web.Mvc;
 
@@ -34,6 +35,7 @@ namespace UAS.Core.Web.WebApp.Controllers
         }
 
         #region Report attendance module
+
         /// <summary>
         /// Retreive the view for the report with
         /// all the attendance
@@ -43,6 +45,17 @@ namespace UAS.Core.Web.WebApp.Controllers
         {
             var attendance = GetAttendance();
             return View(attendance);
+        }
+
+        /// <summary>
+        /// Get the data with the attendance
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public string GetDataReportAttendance()
+        {
+            var attendance = GetAttendance();
+            return JsonConvert.SerializeObject(attendance);
         }
 
         /// <summary>
@@ -87,6 +100,17 @@ namespace UAS.Core.Web.WebApp.Controllers
         {
             var nonAttendance = GetNonAttendance();
             return View(nonAttendance);
+        }
+
+        /// <summary>
+        /// Get the data with the non attendance{-
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public string GetDataReportNonAttendance()
+        {
+            var nonAttendance = GetNonAttendance();
+            return JsonConvert.SerializeObject(nonAttendance);
         }
 
         /// <summary>

@@ -100,16 +100,22 @@ namespace UAS.Core.Mobile.UI
                 try
                 {
                     var spnrSpace = FindViewById<Spinner>(Resource.Id.spnSpaceType);
-                    var qrCodeDTO = DTOParser.JSONToQRCodeDTO(result.Text);
+                    
+                    var qrData = result.Text.Replace("&#34;","\"");
+                    var qrCodeDTO = DTOParser.JSONToQRCodeDTO(qrData);
 
                     await CoreFacade.GenerateMovement(new MovementDTO() { UserDocumentNumber = qrCodeDTO.DocumentNumber, Space = (int)spnrSpace.SelectedItemId });
 
                     message = "Enviando movimiento al servidor...";
                 }
-                catch
+                catch (Java.Lang.Exception jex)
                 {
                     message = "Código QR inválido...";
                 }
+                catch (System.Exception ex)
+                {
+                    message = "Código QR inválido...";
+                }                
             }
             else
             {

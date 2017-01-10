@@ -3,9 +3,9 @@
 
 @{
     var currentAcademicPeriod = ViewBag.CurrentAcademicPeriod as AcademicPeriodView;
-    var statisticsAttendanceVsNonAttendance = ViewBag.StatisticsAttendanceVsNonAttendance as IEnumerable<Statistic>;
+    var statisticsAttendanceVsNonAttendance = ViewBag.StatisticsAttendanceVsNonAttendance as IList<Statistic>;
     var topStatistictsMajorMonthsAttendanceAndNonAttendance =
-        ViewBag.TopStatistictsMajorMonthsAttendanceAndNonAttendance as IEnumerable<Statistic>;
+        ViewBag.TopStatistictsMajorMonthsAttendanceAndNonAttendance as IList<Statistic>;
 }
 
 @functions{
@@ -21,19 +21,22 @@
     public static string GetPercentageWithFormat(decimal percentage)
     {
         var newPercentage = percentage * 100;
-        return string.Concat(newPercentage.ToString("00"), "%");
+        return newPercentage >  0 ? string.Concat(newPercentage.ToString("00"), "%") : string.Concat(newPercentage.ToString("0"), "%");
     }
 
     public static Statistic GetStatisticMajorMonthAttendance(IEnumerable<Statistic> statistics, string key)
     {
         var majorStatisticAttendance = new Statistic();
 
-        foreach (var statistic in statistics)
+        if (statistics != null)
         {
-            if (statistic.Summary.ContainsKey(key))
+            foreach (var statistic in statistics)
             {
-                majorStatisticAttendance = statistic;
-                break;
+                if (statistic.Summary.ContainsKey(key))
+                {
+                    majorStatisticAttendance = statistic;
+                    break;
+                }
             }
         }
 

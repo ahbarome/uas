@@ -7,27 +7,11 @@
             <th>Nombre</th>
             <th>Rol</th>
             <th>Fecha</th>
-            <th>Día</th>
             <th>Horario</th>
             <th>Espacio</th>
+            <th>¿Excusa?</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var nonattendance in Model)
-        {
-            <tr>
-                <td></td>
-                <td>@nonattendance.CourseName</td>
-                <td>@nonattendance.DocumentNumber</td>
-                <td>@nonattendance.FullName</td>
-                <td>@nonattendance.RoleAlias</td>
-                <td>@nonattendance.NonAttendanceDate.ToString("yyyy-MM-dd")</td>
-                <td>@nonattendance.NameDayOfTheWeek</td>
-                <td>@{var scheduleDetail = string.Concat(@nonattendance.StartTime, " - ", @nonattendance.EndTime); @scheduleDetail}</td>
-                <td>@{var spaceDetail = string.Concat(@nonattendance.SpaceType, " ", @nonattendance.SpaceName); @spaceDetail}</td>
-            </tr>
-         }
-    </tbody>
     <tfoot>
         <tr>
             <th></th>
@@ -36,9 +20,9 @@
             <th>Nombre</th>
             <th>Rol</th>
             <th>Fecha</th>
-            <th>Día</th>
             <th>Horario</th>
             <th>Espacio</th>
+            <th>¿Excusa?</th>
         </tr>
     </tfoot>
 </table>

@@ -111,7 +111,8 @@ namespace UAS.Core.Attendance.Managers
                 new Movement
                 {
                     DocumentNumber = movementDTO.UserDocumentNumber,
-                    IdSpace = movementDTO.Space
+                    IdSpace = movementDTO.Space,
+                    RegisterDate = DateTime.Now
                 });
         }
     }

@@ -1,41 +1,53 @@
-﻿@model IEnumerable<UAS.Core.DAL.Common.Model.TeacherMovement>
+﻿@model IList<UAS.Core.DAL.Common.Model.TeacherMovement>
 <div id="attendance" class="row">
 
-    @foreach (var movement in Model)
-    {
-        <div class="col-lg-4">
-            <div class="contact-box">
+    @{
+        var movements = Model;
+        if (movements != null && movements.Count > 0)
+        {
+            foreach (var movement in Model)
+            {
+                <div class="col-lg-4">
+                    <div class="contact-box">
 
-                <div class="col-sm-4">
-                    <div class="text-center">
-                        <img alt="image" class="img-circle m-t-xs img-responsive" src="@Url.Content(movement.ImageRelativePath)">
-                        <div class="m-t-xs font-bold">Profesor</div>
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="@Url.Content(movement.ImageRelativePath)">
+                                <div class="m-t-xs font-bold">Profesor</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong class="text-uppercase">@movement.FullName</strong></h3>
+                            <small>
+                                <strong># Documento: </strong>
+                                <br />
+                                @movement.DocumentNumber<br />
+                                <strong>Curso: </strong>
+                                <br />
+                                @movement.CourseName
+                                <br />
+                                <strong>Horario: </strong>
+                                <br />
+                                @{var scheduleTime = new HtmlString(string.Concat(@movement.CourseStartTime, " - ", @movement.CourseEndTime)); @scheduleTime;}
+                                <br />
+                                <strong>Espacio: </strong>
+                                <br />
+                                @{var spaceDetail = new HtmlString(string.Concat(@movement.Space.SpaceType.Type, " - ", @movement.Space.Name)); @spaceDetail;}
+                                <br />
+                            </small>
+
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
-                <div class="col-sm-8">
-                    <h3><strong class="text-uppercase">@movement.FullName</strong></h3>
-                    <small>
-                        <strong># Documento: </strong>
-                        <br />
-                        @movement.DocumentNumber<br />
-                        <strong>Curso: </strong>
-                        <br />
-                        @movement.CourseName
-                        <br />
-                        <strong>Horario: </strong>
-                        <br />
-                        @{var scheduleTime = new HtmlString(string.Concat(@movement.CourseStartTime, " - ", @movement.CourseEndTime)); @scheduleTime;}
-                        <br />
-                        <strong>Espacio: </strong>
-                        <br />
-                        @{var spaceDetail = new HtmlString(string.Concat(@movement.Space.SpaceType.Type, " - ", @movement.Space.Name)); @spaceDetail;}
-                        <br />
-                    </small>
-
+                }
+            }
+            else
+            {
+                <div class="jumbotron text-center">
+                    <h2>No hay docentes disponibles.</h2>
                 </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+            }
     }
 
 </div>

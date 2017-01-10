@@ -23,10 +23,9 @@ namespace UAS.Core.Services.Gateway
 
 
         [OperationContract]
-        [WebInvoke(Method = "GET",
+        [WebInvoke(Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "json/GenerateMovement/{movement}")]
-        void GenerateMovement(string movement);
+            UriTemplate = "json/GenerateMovement")]
+        void GenerateMovement(MovementDTO movement);
     }
 }

@@ -11,8 +11,47 @@ function CreateGrid() {
             url: '/Scripts/plugins/datatables/plugins/i18n/Spanish.txt'
         },
         "processing": true,
+        ajax: {
+            url: 'GetDataReportNonAttendance',
+            dataSrc: '',
+            type: "POST",
+            data: function (data) {
+            }
+        },
+        columns: [
+            { data: "DocumentNumber", className: "hidden-xs" },
+            { data: "CourseName" },
+            { data: "DocumentNumber", className: "hidden-xs" },
+            { data: "FullName" },
+            { data: "RoleAlias" },
+            {
+                data: "NonAttendanceDate", render: function (data, type, full, meta) {
+                    return String(data).substring(0, 10);
+                }
+            },
+            { data: "StartTime" },
+            {
+                data: "SpaceType", render: function (data, type, full, meta) {
+                    return String().concat(full.SpaceType, " ", full.SpaceName);
+                }
+            },
+            {
+                data: "HasExcuse", render: function (data, type, full, meta) {
+                    if(String(data) === "1")
+                    {
+                        return "Si";
+                    }
+                    return "No";
+                }
+            }
+        ],
         buttons: [
-            { extend: 'copy', text: '<span>Copiar</span>', titleAttr: 'Copiar', },
+            { text: '<span>Refrescar</span>', titleAttr: 'Refrescar',
+                action: function (e, dt, node, config) {
+                    dt.ajax.reload();
+                }
+            },
+            { extend: 'copy', text: '<span>Copiar</span>', titleAttr: 'Copiar' },
             { extend: 'csv', title: 'Ausentismo' },
             { extend: 'excel', title: 'Ausentismo' },
             { extend: 'pdf', title: 'Ausentismo' },
@@ -24,9 +63,10 @@ function CreateGrid() {
                     $(win.document.body).addClass('white-bg');
                     $(win.document.body).css('font-size', '10px');
 
-                    $(win.document.body).find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit');
+                    $(win.document.body)
+                        .find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
                 }
             }
         ]

@@ -12,22 +12,6 @@
             <th>Espacio</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var attendance in Model)
-        {
-            <tr>
-                <td></td>
-                <td>@attendance.CourseName</td>
-                <td>@attendance.DocumentNumber</td>
-                <td>@attendance.FullName</td>
-                <td>@attendance.RoleAlias</td>
-                <td>@attendance.MovementDateTime.ToString("yyyy-MM-dd")</td>
-                <td>@attendance.DayOfTheWeekName</td>
-                <td>@{var scheduleDetail = string.Concat(@attendance.StartTime, " - ", @attendance.EndTime); @scheduleDetail}</td>
-                <td>@{var spaceDetail = string.Concat(@attendance.SpaceType, " ", @attendance.SpaceName); @spaceDetail}</td>
-            </tr>
-        }
-    </tbody>
     <tfoot>
         <tr>
             <th></th>

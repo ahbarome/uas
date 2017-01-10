@@ -146,7 +146,8 @@ namespace UAS.Core.Web.WebApp.Controllers
             var session = base.CurrentSession;
             var teacher = _facade.GetTeacherById(session.SessionUser.IdUser);
             var attendance = _facade.GetCourseAttendanceStatistics(teacher.DocumentNumber);
-            return Json(attendance);
+            var attendanceJson = Json(attendance);
+            return attendanceJson;
         }
 
         [HttpPost]
