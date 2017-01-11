@@ -1,8 +1,10 @@
-﻿@model UAS.Core.DAL.Common.Model.Enrollment
+﻿@model UAS.Core.DAL.Common.Model.Schedule
 
 @{
-    ViewBag.Title = "Matrícula";
+       ViewBag.Title = "Programación de Cursos";
 }
+
+
 <div id="wrapper">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
@@ -23,7 +25,7 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Editar Matrícula</h5>
+                        <h5>Editar Programación de Curso</h5>
                     </div>
                     <div class="ibox-content">
     
@@ -37,37 +39,38 @@
             @Html.HiddenFor(model => model.Id)
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Estudiante</label>
+
+                <label class = "control-label col-md-2">Profesor</label>
                 <div class="col-md-10">
-                    @Html.DropDownList("StudentDocumentNumber", String.Empty)
-                    @Html.ValidationMessageFor(model => model.StudentDocumentNumber)
+                    @Html.DropDownList("TeacherDocumentNumber",null,String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TeacherDocumentNumber)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Estado Matrícula</label>
+                <label class = "control-label col-md-2">Curso</label>
                 <div class="col-md-10">
-                    @Html.DropDownList("IdEnrollmentStatus", String.Empty)
-                    @Html.ValidationMessageFor(model => model.IdEnrollmentStatus)
+                    @Html.DropDownList("IdCourse",null,String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdCourse)
                 </div>
             </div>
     
             <div class="form-group">
                 <label class = "control-label col-md-2">Periodo</label>
                 <div class="col-md-10">
-                    @Html.DropDownList("IdAcademicPeriod", String.Empty)
+                    @Html.DropDownList("IdAcademicPeriod",null,String.Empty, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdAcademicPeriod)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Fecha de Registro</label>
+                <label class = "control-label col-md-2">Descripción</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.RegisterDate)
-                    @Html.ValidationMessageFor(model => model.RegisterDate)
+                    @Html.EditorFor(model => model.Description)
+                    @Html.ValidationMessageFor(model => model.Description)
                 </div>
             </div>
-    
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Guardar" class="btn btn-primary" />
@@ -83,4 +86,4 @@
             </div>
         </div>
      </div>
-          </div>
+</div>

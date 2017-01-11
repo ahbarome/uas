@@ -1,11 +1,8 @@
-﻿@model UAS.Core.DAL.Common.Model.Page
+﻿@model UAS.Core.DAL.Common.Model.ScheduleDetail
 
 @{
-    ViewBag.Title = "Páginas";
+    ViewBag.Title = "Detalle Programación de Cursos";
 }
-
-  
-    
 <div id="wrapper">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
@@ -21,12 +18,13 @@
         </div>
     </div>
     
+    
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Editar Página</h5>
+                        <h5>Editar Detalle Programación de Curso</h5>
                     </div>
                     <div class="ibox-content">
     
@@ -40,47 +38,39 @@
             @Html.HiddenFor(model => model.Id)
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Título</label>
+                <label class = "control-label col-md-2"># Programación</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Title)
-                    @Html.ValidationMessageFor(model => model.Title)
+                @Html.DropDownList("IdSchedule",null,String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdSchedule)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Item de Menú</label>
+                <label class = "control-label col-md-2">Día Semana</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.MenuItem)
-                    @Html.ValidationMessageFor(model => model.MenuItem)
+                    @Html.EditorFor(model => model.DayOfTheWeek)
+                    @Html.ValidationMessageFor(model => model.DayOfTheWeek)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2"># Padre</label>
+                <label class = "control-label col-md-2">Hora Inicio</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.ParentId)
-                    @Html.ValidationMessageFor(model => model.ParentId)
+                    @Html.EditorFor(model => model.StartTime)
+                    @Html.ValidationMessageFor(model => model.StartTime)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Icono</label>
+                <label class = "control-label col-md-2">Hora Fin</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Icon)
-                    @Html.ValidationMessageFor(model => model.Icon)
+                    @Html.EditorFor(model => model.EndTime)
+                    @Html.ValidationMessageFor(model => model.EndTime)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Orden</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Order)
-                    @Html.ValidationMessageFor(model => model.Order)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label class = "control-label col-md-2">Fecha de Registro</label>
+                <label class = "control-label col-md-2">Fecha Registro</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.RegisterDate)
                     @Html.ValidationMessageFor(model => model.RegisterDate)
@@ -88,18 +78,10 @@
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Controlador</label>
+                <label class = "control-label col-md-2">Espacio</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Controller)
-                    @Html.ValidationMessageFor(model => model.Controller)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label class = "control-label col-md-2">Acción</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Action)
-                    @Html.ValidationMessageFor(model => model.Action)
+                    @Html.DropDownList("IdSpace",null,String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdSpace)
                 </div>
             </div>
     
@@ -111,6 +93,11 @@
             </div>
         </div>
     }
-</div>
-</div>
-</div>
+    
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+     </div>

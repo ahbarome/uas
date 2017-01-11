@@ -1,22 +1,23 @@
 ﻿@model UAS.Core.DAL.Common.Model.User
 
 @{
-    ViewBag.Title = "Details";
+     ViewBag.Title = "Usuarios";
 }
 
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-4">
-        <h2>Details</h2>
-        <ol class="breadcrumb">
-            <li>
-                @Html.ActionLink("List", "Index")
-            </li>
-            <li class="active">
-                <strong>Details</strong>
-            </li>
-        </ol>
+<div id="wrapper">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-sm-4">
+            <h2 class="text-uppercase">@ViewBag.Title</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">Administración</a>
+                </li>
+                <li class="active">
+                    <strong>@ViewBag.Title</strong>
+                </li>
+            </ol>
+        </div>
     </div>
-</div>
 
 
 
@@ -26,14 +27,14 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Details User</h5>
+                    <h5>Detalle de Usuario</h5>
                 </div>
                 <div class="ibox-content">
 
 
 				    <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Username)
+            Usuario
         </dt>
 
         <dd>
@@ -49,7 +50,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Nombre
         </dt>
 
         <dd>
@@ -57,7 +58,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            Apellido
         </dt>
 
         <dd>
@@ -73,7 +74,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TelephoneNumber)
+            Teléfono
         </dt>
 
         <dd>
@@ -81,7 +82,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
+            ¿Activo?
         </dt>
 
         <dd>
@@ -89,7 +90,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RegisterDate)
+            Fecha de Registro
         </dt>
 
         <dd>
@@ -97,7 +98,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
+            Creado Por
         </dt>
 
         <dd>
@@ -105,7 +106,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastModiticationDate)
+            Fecha Última Modificación
         </dt>
 
         <dd>
@@ -113,7 +114,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
+            Modificado Por
         </dt>
 
         <dd>
@@ -121,7 +122,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DocumentNumber)
+            # Documento
         </dt>
 
         <dd>
@@ -129,7 +130,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ImageRelativePath)
+            Ruta Foto
         </dt>
 
         <dd>
@@ -137,18 +138,18 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Role.Name)
+            Rol
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Role.Name)
+            @Html.DisplayFor(model => model.Role.Alias)
         </dd>
 
     </dl>
 
 
-	    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+	    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
+    @Html.ActionLink("Volver a Listado", "Index", null, new { @class = "btn btn-white"})
 
                 </div>
             </div>
@@ -156,7 +157,7 @@
     </div>
  </div>
 
-
+</div>
 
 
 

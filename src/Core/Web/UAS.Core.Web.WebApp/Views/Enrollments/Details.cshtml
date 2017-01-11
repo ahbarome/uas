@@ -1,32 +1,37 @@
 ﻿@model UAS.Core.DAL.Common.Model.Enrollment
 
 @{
-    Layout = null;
+    ViewBag.Title = "Matrícula";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    
+<div id="wrapper">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-sm-4">
+            <h2 class="text-uppercase">@ViewBag.Title</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">Administración</a>
+                </li>
+                <li class="active">
+                    <strong>@ViewBag.Title</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
     
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Details Enrollment</h5>
+                        <h5>Detalle de Matrícula</h5>
                     </div>
                     <div class="ibox-content">
     
     
     				    <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.RegisterDate)
+                Fecha de Registro
             </dt>
     
             <dd>
@@ -34,7 +39,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.AcademicPeriod.Id)
+                Periodo
             </dt>
     
             <dd>
@@ -42,7 +47,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.EnrollmentStatu.Name)
+                Estado Matrícula
             </dt>
     
             <dd>
@@ -50,36 +55,22 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Student.Name)
+                Estudiante
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.Student.Name)
+                @model.Student.Name @model.Student.LastName
             </dd>
     
         </dl>
     
     
-    	    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+    	    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
+        @Html.ActionLink("Volver a Lista", "Index", null, new { @class = "btn btn-white"})
     
                     </div>
                 </div>
             </div>
         </div>
      </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</body>
-</html>
+     </div>

@@ -1,24 +1,25 @@
 ﻿@model UAS.Core.DAL.Common.Model.User
 
 @{
-    ViewBag.Title = "Editar";
+     ViewBag.Title = "Usuarios";
 }
 
+<div id="wrapper">
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Edit</h2>
-        <ol class="breadcrumb">
-            <li>
-                @Html.ActionLink("List", "Index")
-            </li>
-            <li class="active">
-                <strong>Edit</strong>
-            </li>
-        </ol>
-    </div>
+            <h2 class="text-uppercase">@ViewBag.Title</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">Administración</a>
+                </li>
+                <li class="active">
+                    <strong>@ViewBag.Title</strong>
+                </li>
+            </ol>
+        </div>
     <div class="col-sm-8">
         <div class="title-action">
-			@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary"})
+			@Html.ActionLink("Volver a Listado", "Index", null, new { @class = "btn btn-primary"})
         </div>
     </div>
 </div>
@@ -31,7 +32,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Edit User</h5>
+                    <h5>Editar Usuario</h5>
                 </div>
                 <div class="ibox-content">
 
@@ -45,7 +46,7 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Username, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Usuario</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Username)
                 @Html.ValidationMessageFor(model => model.Username)
@@ -61,7 +62,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IdRole, "IdRole", new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Rol</label>
             <div class="col-md-10">
                 @Html.DropDownList("IdRole", String.Empty)
                 @Html.ValidationMessageFor(model => model.IdRole)
@@ -69,7 +70,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Nombre(s)</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name)
                 @Html.ValidationMessageFor(model => model.Name)
@@ -77,7 +78,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Apellido(s)</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LastName)
                 @Html.ValidationMessageFor(model => model.LastName)
@@ -93,7 +94,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TelephoneNumber, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Teléfono</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TelephoneNumber)
                 @Html.ValidationMessageFor(model => model.TelephoneNumber)
@@ -101,7 +102,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">¿Activo?</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.IsActive)
                 @Html.ValidationMessageFor(model => model.IsActive)
@@ -109,7 +110,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RegisterDate, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Fecha de Registro</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.RegisterDate)
                 @Html.ValidationMessageFor(model => model.RegisterDate)
@@ -117,7 +118,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CreatedBy, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Creado Por</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CreatedBy)
                 @Html.ValidationMessageFor(model => model.CreatedBy)
@@ -125,7 +126,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LastModiticationDate, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Fecha Última Modificación</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LastModiticationDate)
                 @Html.ValidationMessageFor(model => model.LastModiticationDate)
@@ -133,7 +134,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ModifiedBy, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Modificado Por</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ModifiedBy)
                 @Html.ValidationMessageFor(model => model.ModifiedBy)
@@ -141,7 +142,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DocumentNumber, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2"># Documento</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DocumentNumber)
                 @Html.ValidationMessageFor(model => model.DocumentNumber)
@@ -149,7 +150,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ImageRelativePath, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Ruta Foto</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ImageRelativePath)
                 @Html.ValidationMessageFor(model => model.ImageRelativePath)
@@ -158,8 +159,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
-				@Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white"})
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+				@Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white"})
             </div>
         </div>
     </div>
@@ -170,6 +171,7 @@
             </div>
         </div>
     </div>
+ </div>
  </div>
 
 

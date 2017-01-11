@@ -10,7 +10,7 @@ using UAS.Core.DAL.Common.Model;
 
 namespace UAS.Core.Web.WebApp.Controllers
 {
-    public class EnrollmentsController : Controller
+    public class EnrollmentsController : FirewallController
     {
         private UASEntities db = new UASEntities();
 

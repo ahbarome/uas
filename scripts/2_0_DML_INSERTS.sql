@@ -96,10 +96,22 @@ INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controll
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Permisos Páginas', '~/PagePermissionByRoles/Edit', 13, '', 'Pages', 'Edit' ) 
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Permisos Páginas', '~/PagePermissionByRoles/Details', 13, '', 'Pages', 'Details' ) 
 INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Permisos Páginas', '~/PagePermissionByRoles/Delete', 13, '', 'Pages', 'Delete' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Matrícula', '~/Enrollments', 13, '', 'Enrollments', 'Index' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Matrícula', '~/Enrollments/Create', 13, '', 'Enrollments', 'Create' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Matrícula', '~/Enrollments/Edit', 13, '', 'Enrollments', 'Edit' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Matrícula', '~/Enrollments/Details', 13, '', 'Enrollments', 'Details' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Matrícula', '~/Enrollments/Delete', 13, '', 'Enrollments', 'Delete' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Programación Cursos', '~/Schedules', 13, '', 'Schedules', 'Index' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Programación Cursos', '~/Schedules/Create', 13, '', 'Schedules', 'Create' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Programación Cursos', '~/Schedules/Edit', 13, '', 'Schedules', 'Edit' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Programación Cursos', '~/Schedules/Details', 13, '', 'Schedules', 'Details' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Programación Cursos', '~/Schedules/Delete', 13, '', 'Schedules', 'Delete' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Detalle Prog. Curso', '~/ScheduleDetails', 13, '', 'ScheduleDetails', 'Index' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Detalle Prog. Curso', '~/ScheduleDetails/Create', 13, '', 'ScheduleDetails', 'Create' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Detalle Prog. Curso', '~/ScheduleDetails/Edit', 13, '', 'ScheduleDetails', 'Edit' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Detalle Prog. Curso', '~/ScheduleDetails/Details', 13, '', 'ScheduleDetails', 'Details' ) 
+INSERT INTO [Security].[Page]([Title], [MenuItem], [ParentId], [Icon], [Controller], [Action])  VALUES('Detalle Prog. Curso', '~/ScheduleDetails/Delete', 13, '', 'ScheduleDetails', 'Delete' ) 
 
-UPDATE [Security].[Page]
-SET [MenuItem] = '~/Users/Edit'
-WHERE Id = 16
 --*******************************************************************
 --POPULATE PAGEPERMISSIONBYROLE TABLE 
 --*******************************************************************
@@ -125,7 +137,31 @@ INSERT INTO [Security].[PagePermissionByRole] VALUES(20,1,1,0,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(21,1,1,0,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(22,1,1,0,1,1,1,1)
 INSERT INTO [Security].[PagePermissionByRole] VALUES(23,1,1,0,1,1,1,1)
-
+INSERT INTO [Security].[PagePermissionByRole] VALUES(24,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(25,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(26,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(27,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(28,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(29,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(30,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(31,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(32,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(33,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(34,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(35,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(36,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(37,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(38,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(39,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(40,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(41,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(42,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(43,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(44,1,1,1,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(45,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(46,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(47,1,1,0,1,1,1,1)
+INSERT INTO [Security].[PagePermissionByRole] VALUES(48,1,1,0,1,1,1,1)
 --===================================================================
 --ROLE: DIRECTOR
 --===================================================================

@@ -1,7 +1,7 @@
-﻿@model UAS.Core.DAL.Common.Model.Enrollment
+﻿@model UAS.Core.DAL.Common.Model.ScheduleDetail
 
 @{
-    ViewBag.Title = "Matrícula";
+    ViewBag.Title = "Detalle Programación de Cursos";
 }
 <div id="wrapper">
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -18,53 +18,62 @@
         </div>
     </div>
     
+    
+    
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Editar Matrícula</h5>
+                        <h5>Crear Detalle Programación de Curso</h5>
                     </div>
                     <div class="ibox-content">
     
-    				@using (Html.BeginForm())
+    				@using (Html.BeginForm()) 
     {
         @Html.AntiForgeryToken()
         
         <div class="form-horizontal">
-    
             @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.Id)
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Estudiante</label>
+                <label class = "control-label col-md-2"># Programación</label>
                 <div class="col-md-10">
-                    @Html.DropDownList("StudentDocumentNumber", String.Empty)
-                    @Html.ValidationMessageFor(model => model.StudentDocumentNumber)
+                    @Html.DropDownList("IdSchedule",null,String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdSchedule)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Estado Matrícula</label>
+                <label class = "control-label col-md-2">Día Semana</label>
                 <div class="col-md-10">
-                    @Html.DropDownList("IdEnrollmentStatus", String.Empty)
-                    @Html.ValidationMessageFor(model => model.IdEnrollmentStatus)
+                    @Html.EditorFor(model => model.DayOfTheWeek)
+                    @Html.ValidationMessageFor(model => model.DayOfTheWeek)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Periodo</label>
+                <label class = "control-label col-md-2">Hora Inicio</label>
                 <div class="col-md-10">
-                    @Html.DropDownList("IdAcademicPeriod", String.Empty)
-                    @Html.ValidationMessageFor(model => model.IdAcademicPeriod)
+                    @Html.EditorFor(model => model.StartTime)
+                    @Html.ValidationMessageFor(model => model.StartTime)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Fecha de Registro</label>
+                <label class = "control-label col-md-2">Hora Fin</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.RegisterDate)
-                    @Html.ValidationMessageFor(model => model.RegisterDate)
+                    @Html.EditorFor(model => model.EndTime)
+                    @Html.ValidationMessageFor(model => model.EndTime)
+                </div>
+            </div>
+    
+    
+            <div class="form-group">
+                <label class = "control-label col-md-2">Espacio</label>
+                <div class="col-md-10">
+                    @Html.DropDownList("IdSpace",null,String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdSpace)
                 </div>
             </div>
     
@@ -77,10 +86,9 @@
         </div>
     }
     
-    
                     </div>
                 </div>
             </div>
         </div>
      </div>
-          </div>
+     </div>

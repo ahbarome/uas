@@ -1,11 +1,9 @@
-﻿@model UAS.Core.DAL.Common.Model.Page
+﻿@model UAS.Core.DAL.Common.Model.Schedule
 
 @{
-    ViewBag.Title = "Páginas";
+    ViewBag.Title = "Programación de Cursos";
 }
 
-  
-    
 <div id="wrapper">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
@@ -20,62 +18,51 @@
             </ol>
         </div>
     </div>
-    
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Editar Página</h5>
+                        <h5>Crear Programación de Curso</h5>
                     </div>
                     <div class="ibox-content">
     
-    				@using (Html.BeginForm())
+    				@using (Html.BeginForm()) 
     {
         @Html.AntiForgeryToken()
         
         <div class="form-horizontal">
-    
             @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.Id)
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Título</label>
+                <label class = "control-label col-md-2">Profesor</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Title)
-                    @Html.ValidationMessageFor(model => model.Title)
+                    @Html.DropDownList("TeacherDocumentNumber",null,String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TeacherDocumentNumber)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Item de Menú</label>
+                <label class = "control-label col-md-2">Curso</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.MenuItem)
-                    @Html.ValidationMessageFor(model => model.MenuItem)
+                    @Html.DropDownList("IdCourse",null,String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdCourse)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2"># Padre</label>
+                <label class = "control-label col-md-2">Periodo</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.ParentId)
-                    @Html.ValidationMessageFor(model => model.ParentId)
+                    @Html.DropDownList("IdAcademicPeriod",null,String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdAcademicPeriod)
                 </div>
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Icono</label>
+                <label class = "control-label col-md-2">Descripción Curso</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Icon)
-                    @Html.ValidationMessageFor(model => model.Icon)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label class = "control-label col-md-2">Orden</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Order)
-                    @Html.ValidationMessageFor(model => model.Order)
+                    @Html.EditorFor(model => model.Description)
+                    @Html.ValidationMessageFor(model => model.Description)
                 </div>
             </div>
     
@@ -88,22 +75,6 @@
             </div>
     
             <div class="form-group">
-                <label class = "control-label col-md-2">Controlador</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Controller)
-                    @Html.ValidationMessageFor(model => model.Controller)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label class = "control-label col-md-2">Acción</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Action)
-                    @Html.ValidationMessageFor(model => model.Action)
-                </div>
-            </div>
-    
-            <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Guardar" class="btn btn-primary" />
     				@Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white"})
@@ -111,6 +82,10 @@
             </div>
         </div>
     }
-</div>
-</div>
-</div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+         </div>

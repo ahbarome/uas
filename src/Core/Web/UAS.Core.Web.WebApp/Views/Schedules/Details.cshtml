@@ -1,9 +1,8 @@
-﻿@model UAS.Core.DAL.Common.Model.Enrollment
+﻿@model UAS.Core.DAL.Common.Model.Schedule
 
 @{
-    ViewBag.Title = "Matrícula";
+       ViewBag.Title = "Programación de Cursos";
 }
-
 <div id="wrapper">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
@@ -23,11 +22,20 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Eliminar Matrícula</h5>
+                        <h5>Detalle Programación de Curso</h5>
                     </div>
                     <div class="ibox-content">
-    				<h4 class="text-danger">¿Desea eliminar el registro?</h4>
-    				 <dl class="dl-horizontal">
+    
+    
+    				    <dl class="dl-horizontal">
+            <dt>
+                Descripción
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+    
             <dt>
                 Fecha de Registro
             </dt>
@@ -45,37 +53,32 @@
             </dd>
     
             <dt>
-                Estado Matrícula
+                Curso
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.EnrollmentStatu.Name)
+                @Html.DisplayFor(model => model.Course.Name)
             </dd>
     
             <dt>
-                Estudiante
+                Profesor
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => @model.Student.Name) @Html.DisplayFor(model => @model.Student.LastName)
+                @Html.DisplayFor(model => model.Teacher.Name) @Html.DisplayFor(model => model.Teacher.LastName)
             </dd>
     
         </dl>
     
-        @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
     
-            <div class="form-actions no-color">
-                <input type="submit" value="Eliminar" class="btn btn-primary" />
-                @Html.ActionLink("Volver a Listado", "Index", null, new { @class = "btn btn-white"})
-            </div>
-        }
-    
-    
+    	    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
+        @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-white"})
     
                     </div>
                 </div>
             </div>
         </div>
      </div>
-     </div>
+    
+</div>
+</div>

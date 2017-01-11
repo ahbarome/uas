@@ -10,7 +10,7 @@ using UAS.Core.DAL.Common.Model;
 
 namespace UAS.Core.Web.WebApp.Controllers
 {
-    public class PagePermissionByRolesController : Controller
+    public class PagePermissionByRolesController : FirewallController
     {
         private UASEntities db = new UASEntities();
 

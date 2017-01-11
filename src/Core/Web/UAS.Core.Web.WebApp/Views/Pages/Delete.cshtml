@@ -1,30 +1,35 @@
 ﻿@model UAS.Core.DAL.Common.Model.Page
 
 @{
-    Layout = null;
+    ViewBag.Title = "Páginas";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
-</head>
-<body>
-    
+   <div id="wrapper">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-sm-4">
+            <h2 class="text-uppercase">@ViewBag.Title</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">Administración</a>
+                </li>
+                <li class="active">
+                    <strong>@ViewBag.Title</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Page</h5>
+                        <h5>Eliminar Página</h5>
                     </div>
                     <div class="ibox-content">
-    				<h4 class="text-danger">Are you sure you want to delete this?</h4>
+    				<h4 class="text-danger">¿Desea eliminar el registro?</h4>
     				 <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Title)
+                Título
             </dt>
     
             <dd>
@@ -32,7 +37,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.MenuItem)
+                Item de Menu
             </dt>
     
             <dd>
@@ -40,7 +45,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.ParentId)
+                # Padre
             </dt>
     
             <dd>
@@ -48,7 +53,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Icon)
+                Icono
             </dt>
     
             <dd>
@@ -56,7 +61,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Order)
+                Orden
             </dt>
     
             <dd>
@@ -64,7 +69,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.RegisterDate)
+                Fecha de Registro
             </dt>
     
             <dd>
@@ -72,7 +77,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Controller)
+                Controlador
             </dt>
     
             <dd>
@@ -80,7 +85,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Action)
+                Acción
             </dt>
     
             <dd>
@@ -93,8 +98,8 @@
             @Html.AntiForgeryToken()
     
             <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-primary" />
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+                <input type="submit" value="Eliminar" class="btn btn-primary" />
+                @Html.ActionLink("Volver a Listado", "Index", null, new { @class = "btn btn-white"})
             </div>
         }
     
@@ -105,7 +110,5 @@
             </div>
         </div>
      </div>
+     </div>
     
-    
-</body>
-</html>
