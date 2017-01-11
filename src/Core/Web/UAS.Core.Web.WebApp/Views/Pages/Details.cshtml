@@ -1,0 +1,117 @@
+﻿@model UAS.Core.DAL.Common.Model.Page
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    
+    
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Details Page</h5>
+                    </div>
+                    <div class="ibox-content">
+    
+    
+    				    <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MenuItem)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MenuItem)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ParentId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ParentId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Icon)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Icon)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Order)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Order)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.RegisterDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.RegisterDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Controller)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Controller)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Action)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Action)
+            </dd>
+    
+        </dl>
+    
+    
+    	    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</body>
+</html>

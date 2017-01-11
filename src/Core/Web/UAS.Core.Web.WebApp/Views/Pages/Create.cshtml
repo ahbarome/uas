@@ -1,0 +1,117 @@
+﻿@model UAS.Core.DAL.Common.Model.Page
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/plugins/validate")
+    
+    
+    
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Create Page</h5>
+                    </div>
+                    <div class="ibox-content">
+    
+    				@using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title)
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.MenuItem, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MenuItem)
+                    @Html.ValidationMessageFor(model => model.MenuItem)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.ParentId, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ParentId)
+                    @Html.ValidationMessageFor(model => model.ParentId)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Icon, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Icon)
+                    @Html.ValidationMessageFor(model => model.Icon)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Order, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Order)
+                    @Html.ValidationMessageFor(model => model.Order)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegisterDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RegisterDate)
+                    @Html.ValidationMessageFor(model => model.RegisterDate)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Controller, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Controller)
+                    @Html.ValidationMessageFor(model => model.Controller)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Action, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Action)
+                    @Html.ValidationMessageFor(model => model.Action)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+    				@Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white"})
+                </div>
+            </div>
+        </div>
+    }
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+    
+     
+</body>
+</html>

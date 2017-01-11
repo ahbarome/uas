@@ -36,7 +36,7 @@ if (!String.IsNullOrEmpty(LayoutPageFile)) {
     </div>
     <div class="col-sm-8">
         <div class="title-action">
-			@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary"})
+			@Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-primary"})
         </div>
     </div>
 </div>

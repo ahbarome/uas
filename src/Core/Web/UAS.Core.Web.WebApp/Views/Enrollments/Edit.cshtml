@@ -1,0 +1,89 @@
+﻿@model UAS.Core.DAL.Common.Model.Enrollment
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    
+    
+    
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Edit Enrollment</h5>
+                    </div>
+                    <div class="ibox-content">
+    
+    				@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+    
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.StudentDocumentNumber, "StudentDocumentNumber", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("StudentDocumentNumber", String.Empty)
+                    @Html.ValidationMessageFor(model => model.StudentDocumentNumber)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdEnrollmentStatus, "IdEnrollmentStatus", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IdEnrollmentStatus", String.Empty)
+                    @Html.ValidationMessageFor(model => model.IdEnrollmentStatus)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdAcademicPeriod, "IdAcademicPeriod", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IdAcademicPeriod", String.Empty)
+                    @Html.ValidationMessageFor(model => model.IdAcademicPeriod)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegisterDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RegisterDate)
+                    @Html.ValidationMessageFor(model => model.RegisterDate)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+    				@Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white"})
+                </div>
+            </div>
+        </div>
+    }
+    
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+    
+    
+</body>
+</html>

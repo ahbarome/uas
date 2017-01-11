@@ -1,0 +1,85 @@
+﻿@model UAS.Core.DAL.Common.Model.Enrollment
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    
+    
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Details Enrollment</h5>
+                    </div>
+                    <div class="ibox-content">
+    
+    
+    				    <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.RegisterDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.RegisterDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AcademicPeriod.Id)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AcademicPeriod.Id)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EnrollmentStatu.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EnrollmentStatu.Name)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Student.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Student.Name)
+            </dd>
+    
+        </dl>
+    
+    
+    	    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</body>
+</html>

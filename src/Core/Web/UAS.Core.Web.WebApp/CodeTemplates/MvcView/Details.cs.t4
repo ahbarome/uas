@@ -100,12 +100,12 @@ string pkName = GetPrimaryKeyName();
 if (pkName != null) {
 #>
     @Html.ActionLink("Edit", "Edit", new { id = Model.<#= pkName #> }, new { @class = "btn btn-primary"})
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-white"})
 <#
 } else {
 #>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }, new { @class = "btn btn-primary"})
-    @Html.ActionLink("Back to List", "Index",null , new { @class = "btn btn-white"})
+    @Html.ActionLink("Regresar", "Index",null , new { @class = "btn btn-white"})
 <#
 }
 #>

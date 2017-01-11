@@ -5,6 +5,8 @@
     using DAL.Persisters;
     using DAL.Common.Model;
     using Interfaces;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class UserValidator : IUserSecurity
     {
@@ -24,6 +26,10 @@
         /// 
         /// </summary>
         private static string ABSOLUTE_PATH_CHAR_INDICATOR = "~";
+        /// <summary>
+        /// 
+        /// </summary>
+        private static string PATH_SEPARATOR = "/";
 
         /// <summary>
         /// Builder method
@@ -66,9 +72,31 @@
 
             if (_user.Role != null && _user.Role.PagePermissionByRoles != null)
             {
+                var path = new List<string>();
+                if (page.Contains(PATH_SEPARATOR))
+                {
+                    path =
+                        page.Split(
+                            new string[] { PATH_SEPARATOR },
+                            StringSplitOptions.None)
+                            .ToList();
+                }
+
                 foreach (var pagePermission in _user.Role.PagePermissionByRoles)
                 {
-                    var allowedPage = pagePermission.Page.MenuItem.Replace(ABSOLUTE_PATH_CHAR_INDICATOR, string.Empty);
+                    var allowedPage =
+                        pagePermission.Page.MenuItem.Replace(
+                            ABSOLUTE_PATH_CHAR_INDICATOR,
+                            string.Empty);
+
+                    var allowedController = pagePermission.Page.Controller;
+                    var allowedAction = pagePermission.Page.Action;
+
+                    if (path.Contains(allowedController) && path.Contains(allowedAction))
+                    {
+                        return true;
+                    }
+
                     if (allowedPage.Equals(page))
                     {
                         return true;

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<UAS.Core.DAL.Common.Model.Role>
+
+@{
+    ViewBag.Title = "Roles";
+}
+
+<div id="wrapper">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-sm-4">
+            <h2 class="text-uppercase">@ViewBag.Title</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">Administración</a>
+                </li>
+                <li class="active">
+                    <strong>@ViewBag.Title</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Listado de Roles</h5>
+                        <div class="ibox-tools">
+                            @Html.ActionLink("Crear", "Create", null, new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Alias
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Alias)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Alias
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataTables")
+    <script src="~/App/ReportAttendanceViewModel.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                language: {
+                    url: '/Scripts/plugins/datatables/plugins/i18n/Spanish.txt'
+                },
+                "processing": true
+            });
+        });
+    </script>
+}
