@@ -21,6 +21,8 @@ SELECT * FROM [NonAttendance].[StatusApproverByRole]
 SELECT * FROM [Integration].[ScheduleDetailView]
 SELECT * FROM [Integration].[EnrollmentDetailView]
 
+SELECT [Integration].[GetCurrentDay]()
+
 -- Get the current Academic Period
 SELECT * 
 FROM Integration.GetCurrentAcademicPeriod()
@@ -84,6 +86,24 @@ FROM	[NonAttendance].[ExcuseApprovalView]
 SELECT	*
 FROM	[Security].[PagePermissionView]
 ORDER BY [IdRole], [DocumentNumber], [IdPage]
+
+
+
+SELECT	CourseName,
+		FullName,
+		COUNT(1)
+FROM	[NonAttendance].[NonAttendanceView] WITH(NOLOCK)
+WHERE	RoleId = 4
+GROUP BY CourseName,
+		FullName
+
+ SELECT	CourseName,
+		FullName,
+		COUNT(1)
+FROM	[NonAttendance].[NonAttendanceView] WITH(NOLOCK)
+WHERE	RoleId = 3
+GROUP BY CourseName,
+	FullName
 
 
 SELECT TOP 5 [ATV].CourseId						AS CourseId

@@ -1,7 +1,7 @@
 ﻿@model UAS.Core.DAL.Common.Model.Schedule
 
 @{
-       ViewBag.Title = "Programación de Cursos";
+    ViewBag.Title = "Programación de Cursos";
 }
 
 
@@ -19,7 +19,7 @@
             </ol>
         </div>
     </div>
-    
+
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
@@ -28,62 +28,62 @@
                         <h5>Editar Programación de Curso</h5>
                     </div>
                     <div class="ibox-content">
-    
-    				@using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-    
-            @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.Id)
-    
-            <div class="form-group">
 
-                <label class = "control-label col-md-2">Profesor</label>
-                <div class="col-md-10">
-                    @Html.DropDownList("TeacherDocumentNumber",null,String.Empty, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.TeacherDocumentNumber)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label class = "control-label col-md-2">Curso</label>
-                <div class="col-md-10">
-                    @Html.DropDownList("IdCourse",null,String.Empty, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdCourse)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label class = "control-label col-md-2">Periodo</label>
-                <div class="col-md-10">
-                    @Html.DropDownList("IdAcademicPeriod",null,String.Empty, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdAcademicPeriod)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label class = "control-label col-md-2">Descripción</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Description)
-                    @Html.ValidationMessageFor(model => model.Description)
-                </div>
-            </div>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Guardar" class="btn btn-primary" />
-    				@Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white"})
-                </div>
-            </div>
-        </div>
-    }
-    
-    
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.Id)
+
+                                <div class="form-group">
+
+                                    <label class="control-label col-md-2">Profesor</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("TeacherDocumentNumber", null, String.Empty, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.TeacherDocumentNumber)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Curso</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("IdCourse", null, String.Empty, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.IdCourse)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Periodo</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("IdAcademicPeriod", null, String.Empty, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.IdAcademicPeriod)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Descripción</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Description)
+                                        @Html.ValidationMessageFor(model => model.Description)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                                        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
                     </div>
                 </div>
             </div>
         </div>
-     </div>
+    </div>
 </div>

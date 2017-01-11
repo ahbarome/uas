@@ -16,4 +16,6 @@ This is the graduation project broken down into steps.
 + Step 10: Added Non attendance functionality
 + Step 11: Added Report module
 + Step 12: Added stub facade for Gateway service and fixes throubles
++ Step 13: Added mobile application withe Xamarin
++ Step 14: Added administration module for some screens
 + Master: Current version of the project

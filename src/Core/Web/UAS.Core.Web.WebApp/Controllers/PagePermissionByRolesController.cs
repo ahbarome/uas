@@ -22,13 +22,17 @@ namespace UAS.Core.Web.WebApp.Controllers
         }
 
         // GET: /PagePermissionByRoles/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? idPage, int? idRole)
         {
-            if (id == null)
+            if (idPage == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PagePermissionByRole pagePermissionByRole = db.PagePermissionByRoles.Find(id);
+            if (idRole == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PagePermissionByRole pagePermissionByRole = db.PagePermissionByRoles.Find(idPage, idRole);
             if (pagePermissionByRole == null)
             {
                 return HttpNotFound();
@@ -59,18 +63,22 @@ namespace UAS.Core.Web.WebApp.Controllers
             }
 
             ViewBag.IdPage = new SelectList(db.Pages, "Id", "Title", pagePermissionByRole.IdPage);
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Name", pagePermissionByRole.IdRole);
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Role.Alias", pagePermissionByRole.IdRole);
             return View(pagePermissionByRole);
         }
 
         // GET: /PagePermissionByRoles/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? idPage, int? idRole)
         {
-            if (id == null)
+            if (idPage == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PagePermissionByRole pagePermissionByRole = db.PagePermissionByRoles.Find(id);
+            if (idRole == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PagePermissionByRole pagePermissionByRole = db.PagePermissionByRoles.Find(idPage, idRole);
             if (pagePermissionByRole == null)
             {
                 return HttpNotFound();
@@ -99,13 +107,17 @@ namespace UAS.Core.Web.WebApp.Controllers
         }
 
         // GET: /PagePermissionByRoles/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? idPage, int? idRole)
         {
-            if (id == null)
+            if (idPage == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PagePermissionByRole pagePermissionByRole = db.PagePermissionByRoles.Find(id);
+            if (idRole == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PagePermissionByRole pagePermissionByRole = db.PagePermissionByRoles.Find(idPage, idRole);
             if (pagePermissionByRole == null)
             {
                 return HttpNotFound();
@@ -116,9 +128,9 @@ namespace UAS.Core.Web.WebApp.Controllers
         // POST: /PagePermissionByRoles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? idPage, int? idRole)
         {
-            PagePermissionByRole pagePermissionByRole = db.PagePermissionByRoles.Find(id);
+            PagePermissionByRole pagePermissionByRole = db.PagePermissionByRoles.Find(idPage, idRole);
             db.PagePermissionByRoles.Remove(pagePermissionByRole);
             db.SaveChanges();
             return RedirectToAction("Index");

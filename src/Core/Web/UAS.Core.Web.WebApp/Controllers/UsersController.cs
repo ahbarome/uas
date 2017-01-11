@@ -53,7 +53,7 @@ namespace UAS.Core.Web.WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Name", user.IdRole);
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Role.Alias", user.IdRole);
             return View(user);
         }
 

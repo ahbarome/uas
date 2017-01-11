@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<UAS.Core.DAL.Common.Model.Enrollment>
 
 @{
-     ViewBag.Title = "Matrícula";
+    ViewBag.Title = "Matrícula";
 }
 
 <div id="wrapper">
@@ -18,63 +18,63 @@
             </ol>
         </div>
     </div>
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Listado de Matrículas</h5>
-                    <div class="ibox-tools">
-                        @Html.ActionLink("Crear", "Create", null, new { @class = "btn btn-primary" })
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Listado de Matrículas</h5>
+                        <div class="ibox-tools">
+                            @Html.ActionLink("Crear", "Create", null, new { @class = "btn btn-primary" })
+                        </div>
                     </div>
-                </div>
-                <div class="ibox-content">
+                    <div class="ibox-content">
 
-                    <table class="table table-striped">
-                       <thead>
-                        <tr>
-                            
-                            <th>
-                                Estudiante
-                            </th>
-                            <th>
-                                Estado Matrícula
-                            </th>
-                            <th>
-                                Periodo
-                            </th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
 
-                                <td>
-                                    @item.Student.Name @item.Student.LastName 
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.EnrollmentStatu.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AcademicPeriod.Period)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
-                                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
-                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                    </table>
+                                    <th>
+                                        Estudiante
+                                    </th>
+                                    <th>
+                                        Estado Matrícula
+                                    </th>
+                                    <th>
+                                        Periodo
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
 
+                                        <td>
+                                            @item.Student.Name @item.Student.LastName
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EnrollmentStatu.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AcademicPeriod.Period)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 @section Styles {
@@ -83,7 +83,6 @@
 
 @section Scripts {
     @Scripts.Render("~/plugins/dataTables")
-    <script src="~/App/ReportAttendanceViewModel.js"></script>
     <script>
         $(document).ready(function () {
             $('.table').DataTable({

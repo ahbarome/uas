@@ -1,93 +1,80 @@
 ﻿@model UAS.Core.DAL.Common.Model.Course
 
 @{
-    Layout = null;
+    ViewBag.Title = "Cursos";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    
-    
+<div id="wrapper">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-sm-4">
+            <h2 class="text-uppercase">@ViewBag.Title</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">Administración</a>
+                </li>
+                <li class="active">
+                    <strong>@ViewBag.Title</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Details Course</h5>
+                        <h5>Detalle de Curso</h5>
                     </div>
                     <div class="ibox-content">
-    
-    
-    				    <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.NumberOfCredits)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.NumberOfCredits)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.RegisterDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.RegisterDate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Code)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Code)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Semester)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Semester)
-            </dd>
-    
-        </dl>
-    
-    
-    	    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
-        @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-white"})
-    
+
+
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Code)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Code)
+                            </dd>
+
+                            <dt>
+                                Nombre
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+                            <dt>
+                                # Créditos
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.NumberOfCredits)
+                            </dd>
+                            <dt>
+                                Fecha de Registro
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.RegisterDate)
+                            </dd>
+
+                            <dt>
+                                Semestre
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Semester)
+                            </dd>
+
+                        </dl>
+
+
+                        @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-white" })
+
                     </div>
                 </div>
             </div>
         </div>
-     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</body>
-</html>
+    </div>
+</div>

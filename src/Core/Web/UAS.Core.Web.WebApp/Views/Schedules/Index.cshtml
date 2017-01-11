@@ -24,73 +24,74 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Listado de Cursos Programados</h5>
-    					<div class="ibox-tools">
-    						@Html.ActionLink("Crear", "Create", null, new { @class = "btn btn-primary"})
-    					</div>
+                        <div class="ibox-tools">
+                            @Html.ActionLink("Crear", "Create", null, new { @class = "btn btn-primary" })
+                        </div>
                     </div>
                     <div class="ibox-content">
-    
-    <table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                Curso
-            </th>
-            <th>
-                Profesor
-            </th>
-            <th>
-                Periodo
-            </th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model) {
-        <tr>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Course.Name)
-            </td>
-            <td>
-                @item.Teacher.Name @item.Teacher.LastName  
-            </td>
-                        <td>
-                @Html.DisplayFor(modelItem => item.AcademicPeriod.Period)
-            </td>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Curso
+                                    </th>
+                                    <th>
+                                        Profesor
+                                    </th>
+                                    <th>
+                                        Periodo
+                                    </th>
 
-            <td>
-    			@Html.ActionLink("Detalle", "Details", new { id=item.Id }, new { @class = "btn btn-primary btn-sm"})
-                @Html.ActionLink("Editar", "Edit", new { id=item.Id }, new { @class = "btn btn-white btn-sm"})
-                @Html.ActionLink("Eliminar", "Delete", new { id=item.Id }, new { @class = "btn btn-white btn-sm"})
-            </td>
-        </tr>
-    }
-    </tbody>
-     <tfoot>
-        <tr>
-            <th>
-                Curso
-            </th>
-            <th>
-                Profesor
-            </th>
-            <th>
-                Periodo
-            </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
 
-            <th></th>
-        </tr>
-    </tfoot>
-    </table>
-    
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Course.Name)
+                                        </td>
+                                        <td>
+                                            @item.Teacher.Name @item.Teacher.LastName
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AcademicPeriod.Period)
+                                        </td>
+
+                                        <td>
+                                            @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>
+                                        Curso
+                                    </th>
+                                    <th>
+                                        Profesor
+                                    </th>
+                                    <th>
+                                        Periodo
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
                     </div>
                 </div>
             </div>
         </div>
-     </div>
-     </div>
+    </div>
+</div>
 
 @section Styles {
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
@@ -98,7 +99,6 @@
 
 @section Scripts {
     @Scripts.Render("~/plugins/dataTables")
-    <script src="~/App/ReportAttendanceViewModel.js"></script>
     <script>
         $(document).ready(function () {
             $('.table').DataTable({

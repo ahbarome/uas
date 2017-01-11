@@ -33,7 +33,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                <th>
+                                    <th>
                                         Página
                                     </th>
                                     <th>
@@ -45,8 +45,8 @@
                                     <th>
                                         ¿Visible?
                                     </th>
-                                    
-                                    
+
+
                                     <th></th>
                                 </tr>
                             </thead>
@@ -54,7 +54,7 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                    <td>
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.Page.Title)
                                         </td>
                                         <td>
@@ -66,19 +66,19 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.IsVisible)
                                         </td>
-                                        
-                                        
+
+
                                         <td>
-                                            @Html.ActionLink("Detalle", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-primary btn-sm" })
-                                            @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-white btn-sm" })
-                                            @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-white btn-sm" })
+                                            @Html.ActionLink("Detalle", "Details", new { idPage = item.IdPage, idRole = item.IdRole }, new { @class = "btn btn-primary btn-sm" })
+                                            @Html.ActionLink("Editar", "Edit", new { idPage = item.IdPage, idRole = item.IdRole }, new { @class = "btn btn-white btn-sm" })
+                                            @Html.ActionLink("Eliminar", "Delete", new { idPage = item.IdPage, idRole = item.IdRole }, new { @class = "btn btn-white btn-sm" })
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                             <tfooter>
                                 <tr>
-                                <th>
+                                    <th>
                                         Página
                                     </th>
                                     <th>
@@ -90,7 +90,7 @@
                                     <th>
                                         ¿Visible?
                                     </th>
-                                    
+
                                     <th></th>
                                 </tr>
                             </tfooter>
@@ -109,7 +109,6 @@
 
 @section Scripts {
     @Scripts.Render("~/plugins/dataTables")
-    <script src="~/App/ReportAttendanceViewModel.js"></script>
     <script>
         $(document).ready(function () {
             $('.table').DataTable({

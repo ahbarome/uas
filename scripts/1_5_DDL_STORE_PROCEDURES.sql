@@ -778,12 +778,40 @@ AS
 		WHERE	Period = @CurrentPeriod
 				AND Semester = [Integration].[GetCurrentSemester]()
 
-	WHILE (@StartSemesterDate < @EndSemesterDate)
-	BEGIN
-		EXECUTE [NonAttendance].[PopulateNonAttendance] @StartSemesterDate
+	INSERT INTO  [NonAttendance].[NonAttendance] (DocumentNumber, IdRole, IdCourse, IdSpace, DayOfTheWeek, StartTime, EndTime, NonAttendanceDate, HasExcuse, RegisterDate)
+	SELECT DocumentNumber,
+			RoleId,
+			CourseId,
+			SpaceId,
+			DayOfTheWeek,
+			StartTime,
+			EndTime,
+			MIN(MovementDate),
+			0,
+			GETDATE()
+	FROM [Attendance].[AttendanceRegisterView] 
+	WHERE CONVERT(DATETIME, MovementDate) BETWEEN @StartSemesterDate AND @EndSemesterDate
+	GROUP BY DocumentNumber, RoleId, CourseId, SpaceId, DayOfTheWeek,StartTime, EndTime
 
-		SET @StartSemesterDate = DATEADD(DD, 1, @StartSemesterDate);
-	END
+	INSERT INTO  [NonAttendance].[NonAttendance] (DocumentNumber, IdRole, IdCourse, IdSpace, DayOfTheWeek, StartTime, EndTime, NonAttendanceDate, HasExcuse, RegisterDate)
+	SELECT DocumentNumber,
+			RoleId,
+			CourseId,
+			SpaceId,
+			DayOfTheWeek,
+			StartTime,
+			EndTime,
+			MAX(MovementDate),
+			0,
+			GETDATE()
+	FROM [Attendance].[AttendanceRegisterView] 
+	WHERE CONVERT(DATETIME, MovementDate) BETWEEN @StartSemesterDate AND @EndSemesterDate
+	GROUP BY DocumentNumber, RoleId, CourseId, SpaceId, DayOfTheWeek,StartTime, EndTime
+
+	DELETE
+	FROM [Attendance].[Movement]
+	WHERE CONCAT(DocumentNumber,IdSpace, CONVERT(DATE, RegisterDate)) IN (SELECT  CONCAT(DocumentNumber,IdSpace, NonAttendanceDate)
+				FROM [NonAttendance].[NonAttendance] )
 
 END
 
