@@ -21,7 +21,7 @@
     public static string GetPercentageWithFormat(decimal percentage)
     {
         var newPercentage = percentage * 100;
-        return newPercentage >  0 ? string.Concat(newPercentage.ToString("00"), "%") : string.Concat(newPercentage.ToString("0"), "%");
+        return newPercentage > 0 ? string.Concat(newPercentage.ToString("00"), "%") : string.Concat(newPercentage.ToString("0"), "%");
     }
 
     public static Statistic GetStatisticMajorMonthAttendance(IEnumerable<Statistic> statistics, string key)
@@ -96,14 +96,20 @@
             <div class="ibox-content">
                 <div>
                     <span class="pull-right text-right">
-                        <small>Movimientos estimados en el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
-                        <br />
+                        @if (currentAcademicPeriod != null)
+                        {
+                            <small>Movimientos estimados en el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
+                            <br />
+                        }
                         Total movimientos estimados a la fecha en la facultad: <span class="label label-primary">@GetStatisticValue(statisticsAttendanceVsNonAttendance, StatisticType.TOTAL_GENERAL)</span>
                     </span>
                     <h3 class="font-bold no-margins text-uppercase">
                         Comportamiento General Asistencia y Ausentismo
                     </h3>
-                    <small>Periodo académico <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
+                    @if (currentAcademicPeriod != null)
+                    {
+                        <small>Periodo académico <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
+                    }
                 </div>
 
                 <div class="m-t-sm">

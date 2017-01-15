@@ -12,6 +12,7 @@ namespace UAS.Core.Web.WebApp.Controllers
 {
     public class PagePermissionByRolesController : FirewallController
     {
+        static string SEPARATOR = " | ";
         private UASEntities db = new UASEntities();
 
         // GET: /PagePermissionByRoles/
@@ -43,8 +44,8 @@ namespace UAS.Core.Web.WebApp.Controllers
         // GET: /PagePermissionByRoles/Create
         public ActionResult Create()
         {
-            ViewBag.IdPage = new SelectList(db.Pages, "Id", "Title");
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.IdPage = GetSelectListPages();
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Alias");
             return View();
         }
 
@@ -53,7 +54,7 @@ namespace UAS.Core.Web.WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="IdPage,IdRole,IsDefault,IsVisible,CanEdit,CanUpdate,CanSelect,CanDelete")] PagePermissionByRole pagePermissionByRole)
+        public ActionResult Create([Bind(Include = "IdPage,IdRole,IsDefault,IsVisible,CanEdit,CanUpdate,CanSelect,CanDelete")] PagePermissionByRole pagePermissionByRole)
         {
             if (ModelState.IsValid)
             {
@@ -62,8 +63,8 @@ namespace UAS.Core.Web.WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdPage = new SelectList(db.Pages, "Id", "Title", pagePermissionByRole.IdPage);
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Role.Alias", pagePermissionByRole.IdRole);
+            ViewBag.IdPage = GetSelectListPages();
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Alias", pagePermissionByRole.IdRole);
             return View(pagePermissionByRole);
         }
 
@@ -83,8 +84,8 @@ namespace UAS.Core.Web.WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdPage = new SelectList(db.Pages, "Id", "Title", pagePermissionByRole.IdPage);
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Name", pagePermissionByRole.IdRole);
+            ViewBag.IdPage = GetSelectListPages();
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Alias", pagePermissionByRole.IdRole);
             return View(pagePermissionByRole);
         }
 
@@ -93,7 +94,7 @@ namespace UAS.Core.Web.WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="IdPage,IdRole,IsDefault,IsVisible,CanEdit,CanUpdate,CanSelect,CanDelete")] PagePermissionByRole pagePermissionByRole)
+        public ActionResult Edit([Bind(Include = "IdPage,IdRole,IsDefault,IsVisible,CanEdit,CanUpdate,CanSelect,CanDelete")] PagePermissionByRole pagePermissionByRole)
         {
             if (ModelState.IsValid)
             {
@@ -101,8 +102,8 @@ namespace UAS.Core.Web.WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdPage = new SelectList(db.Pages, "Id", "Title", pagePermissionByRole.IdPage);
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Name", pagePermissionByRole.IdRole);
+            ViewBag.IdPage = GetSelectListPages();
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Alias", pagePermissionByRole.IdRole);
             return View(pagePermissionByRole);
         }
 
@@ -143,6 +144,17 @@ namespace UAS.Core.Web.WebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private IQueryable<SelectListItem> GetSelectListPages()
+        {
+            var selectListPages = from pages in db.Pages
+                                  select new SelectListItem
+                                  {
+                                      Value = pages.Id.ToString(),
+                                      Text = pages.Title + SEPARATOR + pages.Controller + SEPARATOR + pages.Action
+                                  };
+            return selectListPages;
         }
     }
 }

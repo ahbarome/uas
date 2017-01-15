@@ -264,7 +264,7 @@ GO
 --				and student document				
 -- =============================================
 
-CREATE FUNCTION [Integration].[GetEnrollmentStudents](@CourseId INT, @CourseStartTime TIME, @CourseEndTime TIME, @CurrentDocumentNumberOfTheMovement INT)
+CREATE FUNCTION [Integration].[GetEnrollmentStudents](@Period INT, @CourseId INT, @CourseStartTime TIME, @CourseEndTime TIME, @CurrentDocumentNumberOfTheMovement INT)
 RETURNS TABLE
 AS
 RETURN 
@@ -280,7 +280,8 @@ RETURN
 				, [SEV].[CourseName]
 				, [SEV].[EnrollmentStatus]
 		FROM	[Integration].[StudentEnrollmentView] [SEV] WITH(NOLOCK)
-		WHERE	[SEV].[CourseId]				= @CourseId AND 
+		WHERE	[SEV].[AcademicPeriod]			= @Period AND 
+				[SEV].[CourseId]				= @CourseId AND 
 				[SEV].[StartTime]				= @CourseStartTime AND
 				[SEV].[EndTime]					= @CourseEndTime  AND
 				[SEV].[StudentDocumentNumber]	= @CurrentDocumentNumberOfTheMovement
@@ -371,7 +372,9 @@ RETURN
 			, [EDV].[EnrollmentStatus]
 			, COUNT( [EDV].[EnrollmentStatus] ) AS Total
 	FROM	[Integration].[EnrollmentDetailView] [EDV]  WITH(NOLOCK)
-	WHERE	[EDV].[CourseId] = @CourseId
+	WHERE	[EDV].AcademicPeriod = (SELECT  Period
+									FROM	Integration.GetCurrentAcademicPeriod()) AND
+			[EDV].[CourseId] = @CourseId 
 	GROUP BY [EDV].[CourseId]
 			,  [EDV].[CourseName]
 			, [EDV].[EnrollmentStatus]
@@ -381,7 +384,9 @@ RETURN
 			, 'Total'							AS [EnrollmentStatus] 
 			, COUNT( 1 ) AS Total
 	FROM	[Integration].[EnrollmentDetailView] [EDV]  WITH(NOLOCK)
-	WHERE	[EDV].[CourseId] = @CourseId
+	WHERE	[EDV].AcademicPeriod = (SELECT  Period
+									FROM	Integration.GetCurrentAcademicPeriod()) AND
+			[EDV].[CourseId] = @CourseId
 	GROUP BY [EDV].[CourseId]
 			,  [EDV].[CourseName]
 )
@@ -421,6 +426,40 @@ RETURN
 GO
 
 --*******************************************************************
+--GETCURRENTCOURSESWITHTOTALSTUDENTS FUNCTION
+--*******************************************************************
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Agustín Barona
+-- Create date: 2017-01-14
+-- Description:	Get the courses with the total
+--				of students in each course
+-- =============================================
+
+CREATE FUNCTION [Integration].[GetCurrentCoursesWithTotalStudents]()
+RETURNS TABLE
+AS
+RETURN 
+(
+	SELECT	[EDV].[CourseId]
+			,  [EDV].[CourseName]
+			, 'Total'							AS [EnrollmentStatus] 
+			, COUNT( 1 ) AS Total
+	FROM	[Integration].[EnrollmentDetailView] [EDV]  WITH(NOLOCK)
+	WHERE	[EDV].AcademicPeriod = (SELECT  Period
+									FROM	Integration.GetCurrentAcademicPeriod())
+	GROUP BY [EDV].[CourseId]
+			,  [EDV].[CourseName]
+)
+
+GO
+
+--*******************************************************************
 --GETCOURSEWITHTOTALSTUDENTSBYID FUNCTION
 --*******************************************************************
 SET ANSI_NULLS ON
@@ -442,7 +481,7 @@ AS
 RETURN 
 (
 	SELECT	*
-	FROM	[Integration].[GetCoursesWithTotalStudents]()
+	FROM	[Integration].[GetCurrentCoursesWithTotalStudents]()
 	WHERE	[CourseId] = @CourseId
 )
 GO
@@ -497,33 +536,32 @@ GO
 -- Create date: 2016-07-31
 -- Description:	Get the attendance summary
 -- =============================================
-CREATE FUNCTION [Attendance].GetAttendanceSummary(@Date DATE, @RoleId INT)
+ALTER FUNCTION [Attendance].GetAttendanceSummary(@Date DATE, @RoleId INT)
 
 RETURNS TABLE 
 AS
 RETURN 
 (
 	SELECT *
-	FROM (
-	SELECT	'Attendance'				AS [Alias]
-		, 'Asistentes'					AS [Description]
-		, COUNT(DISTINCT [ARV].[DocumentNumber]) AS [Total]  
-	FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
-	WHERE	[ARV].[MovementDate]	= @Date AND
-			[ARV].[RoleId]			= @RoleId 
-	GROUP BY [ARV].[MovementDate] ) AS Attendance
-	UNION 
-	SELECT	'NonAttendance'				AS [Alias]
-		, 'Inasistentes'				AS [Description]
-		, ( SELECT COUNT([ARV].[DocumentNumber]) AS [Total]  
-			FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
-			WHERE	[ARV].[MovementDate]	= @Date AND
-					[ARV].[RoleId]			= @RoleId 
-			GROUP BY [ARV].[MovementDate] ) -
-			(	SELECT COUNT([PAV].[DocumentNumber]) 
-			FROM	[Integration].[PersonActivitiesView] [PAV] WITH(NOLOCK)
-			WHERE	[PAV].[DayOfTheWeek]	= DATEPART(WEEKDAY, @Date)  AND
-			[PAV].[RoleId]			= @RoleId )				AS [Total]
+	FROM ( SELECT	'Attendance'					AS [Alias]
+					, 'Asistentes'					AS [Description]
+					, ISNULL(( SELECT COUNT(DISTINCT [ARV].[DocumentNumber]) 
+						FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
+						WHERE	[ARV].[MovementDate]	= @Date AND
+								[ARV].[RoleId]			= @RoleId 
+						GROUP BY [ARV].[MovementDate] ), 0) AS Attendance ) AS [Total]  
+			UNION 
+			SELECT	'NonAttendance'				AS [Alias]
+					, 'Inasistentes'				AS [Description]
+					, ABS( ISNULL(( SELECT COUNT([ARV].[DocumentNumber]) AS [Total]  
+							FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
+							WHERE	[ARV].[MovementDate]	= @Date AND
+									[ARV].[RoleId]			= @RoleId 
+							GROUP BY [ARV].[MovementDate] ), 0) -
+					 ( SELECT	COUNT([PAV].[DocumentNumber]) 
+						FROM	[Integration].[PersonActivitiesView] [PAV] WITH(NOLOCK)
+						WHERE	[PAV].[DayOfTheWeek]	= DATEPART(WEEKDAY, @Date)  AND
+								[PAV].[RoleId]			= @RoleId ))				AS [Total]
 	UNION 
 	SELECT  'Total'							AS [Alias]
 			, 'Total'						AS [Description]
@@ -620,9 +658,9 @@ RETURN
 			, MIN([MovementDateTime])	AS MovementDateTime
 			, MIN([MovementTime])		AS MovementTime
 	FROM	[Attendance].[AttendanceRegisterView] [ARV] WITH(NOLOCK)
-	WHERE	[ARV].[MovementDate]	= CONVERT(DATE, GETDATE()) AND 
+	WHERE	[ARV].[MovementDate]		= CONVERT(DATE, GETDATE()) AND 
 			CONVERT(TIME, GETDATE())	BETWEEN [ARV].[StartTime] AND [ARV].[EndTime] AND
-			[ARV].[RoleId]			= 3
+			[ARV].[RoleId]				= 3
 	GROUP BY [DocumentNumber]
 			, [Code]
 			, [Name]

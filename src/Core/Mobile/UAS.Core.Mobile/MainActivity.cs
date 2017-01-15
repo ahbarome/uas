@@ -22,7 +22,11 @@ namespace UAS.Core.Mobile.UI
         Button btnContinuosScan;
         MobileBarcodeScanner scanner;
         MediaPlayer player;
-
+        static string TOP_TEXT = "Por favor acerque su código a la cámara";
+        static string BOTTOM_TEXT = "La lectura durará unos segundos, por favor espere...";
+        static string STRING_TO_REPLACE_IN_QR_CODE_FROM = "&#34;";
+        static string STRING_TO_REPLACE_IN_QR_CODE_TO = "\"";
+        static string DEFAULT_ERROR_MESSAGE = "Código QR inválido...";
         #endregion
 
         #region Override
@@ -49,7 +53,7 @@ namespace UAS.Core.Mobile.UI
                     var options = new MobileBarcodeScanningOptions();
 
                     var formats = new List<ZXing.BarcodeFormat>()
-                    { 
+                    {
                         ZXing.BarcodeFormat.QR_CODE,
                         ZXing.BarcodeFormat.EAN_8,
                         ZXing.BarcodeFormat.EAN_13
@@ -58,8 +62,8 @@ namespace UAS.Core.Mobile.UI
                     options.PossibleFormats = new List<ZXing.BarcodeFormat>(formats);
 
                     scanner.UseCustomOverlay = false;
-                    scanner.TopText = "Acerque su cámara mientras reconocemos el código de barra";
-                    scanner.BottomText = "Por favor espere mientras se realiza el escaneo automático...";
+                    scanner.TopText = TOP_TEXT;
+                    scanner.BottomText = BOTTOM_TEXT;
 
                     var result = await scanner.Scan(options);
 
@@ -72,8 +76,8 @@ namespace UAS.Core.Mobile.UI
                 if (ValidateSpace())
                 {
                     scanner.UseCustomOverlay = false;
-                    scanner.TopText = "Acerque su cámara mientras reconocemos el código de barra";
-                    scanner.BottomText = "Por favor espere mientras se realiza el escaneo automático...";
+                    scanner.TopText = TOP_TEXT;
+                    scanner.BottomText = BOTTOM_TEXT;
 
                     var options = new MobileBarcodeScanningOptions();
                     options.DelayBetweenContinuousScans = 3000;
@@ -100,29 +104,43 @@ namespace UAS.Core.Mobile.UI
                 try
                 {
                     var spnrSpace = FindViewById<Spinner>(Resource.Id.spnSpaceType);
-                    
-                    var qrData = result.Text.Replace("&#34;","\"");
+
+                    var qrData =
+                        result.Text.Replace(
+                            STRING_TO_REPLACE_IN_QR_CODE_FROM, STRING_TO_REPLACE_IN_QR_CODE_TO);
                     var qrCodeDTO = DTOParser.JSONToQRCodeDTO(qrData);
 
-                    await CoreFacade.GenerateMovement(new MovementDTO() { UserDocumentNumber = qrCodeDTO.DocumentNumber, Space = (int)spnrSpace.SelectedItemId });
+                    await CoreFacade.GenerateMovement(
+                        new MovementDTO()
+                        {
+                            UserDocumentNumber = qrCodeDTO.DocumentNumber,
+                            Space = (int)spnrSpace.SelectedItemId
+                        });
 
-                    message = "Enviando movimiento al servidor...";
+                    message =
+                        string.Format(
+                            "Enviando registro de movimiento de [{0}] con número de documento"
+                            + " [{1}], al servidor...",
+                            qrCodeDTO.Name + " " + qrCodeDTO.LastName,
+                            qrCodeDTO.DocumentNumber);
                 }
-                catch (Java.Lang.Exception jex)
+                catch (Java.Lang.Exception javaException)
                 {
-                    message = "Código QR inválido...";
+                    message = DEFAULT_ERROR_MESSAGE;
                 }
-                catch (System.Exception ex)
+#pragma warning disable CS0168 // La variable está declarada pero nunca se usa
+                catch (System.Exception exception)
+#pragma warning restore CS0168 // La variable está declarada pero nunca se usa
                 {
-                    message = "Código QR inválido...";
-                }                
+                    message = DEFAULT_ERROR_MESSAGE;
+                }
             }
             else
             {
                 message = "Escaneo Cancelado...";
             }
 
-  
+
             this.RunOnUiThread(() => Toast.MakeText(this, message, ToastLength.Short).Show());
         }
 

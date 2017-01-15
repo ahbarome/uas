@@ -31,7 +31,7 @@ namespace UAS.Core.Web.WebApp.Controllers
         {
             if (_facade == null)
             {
-                _facade = Facade.Facade.Instance();
+                _facade = new Facade.Facade();
             }
         }
 

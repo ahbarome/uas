@@ -57,8 +57,8 @@ GO
 CREATE VIEW [Attendance].[StudentMovementView] AS
 (	SELECT	[MOV].[DocumentNumber]						AS DocumentNumber
 		, [STU].[Code]									AS Code
-		, [STU].[Name]									AS Name
-		, [STU].[LastName]								AS LastName
+		, ISNULL([STU].[Name], 'Sin nombre')			AS Name
+		, ISNULL([STU].[LastName], 'Sin apellido')		AS LastName
 		, CONCAT([STU].[Name], ' ', [STU].[LastName])	AS FullName
 		, [STU].[Email]									AS Email
 		, [STU].[TelephoneNumber]						AS TelephoneNumber
@@ -86,8 +86,8 @@ GO
 CREATE VIEW [Attendance].[TeacherMovementView] AS
 (	SELECT	 [MOV].[DocumentNumber]							AS DocumentNumber
 			, [TEA].[Code]									AS Code
-			, [TEA].[Name]									AS Name
-			, [TEA].[LastName]								AS LastName
+			, ISNULL([TEA].[Name], 'Sin nombre')			AS Name
+			, ISNULL([TEA].[LastName], 'Sin apellido')		AS LastName
 			, CONCAT([TEA].[Name], ' ', [TEA].[LastName])	AS FullName
 			, [TEA].[Email]									AS Email
 			, [TEA].[TelephoneNumber]						AS TelephoneNumber

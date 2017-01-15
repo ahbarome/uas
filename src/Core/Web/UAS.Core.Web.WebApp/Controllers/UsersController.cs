@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using log4net;
+using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -6,9 +8,16 @@ using UAS.Core.DAL.Common.Model;
 
 namespace UAS.Core.Web.WebApp.Controllers
 {
-    public class UsersController : FirewallController
+    public class UsersController : SessionController
     {
         private UASEntities db = new UASEntities();
+
+        /// <summary>
+        /// Logger for the controller
+        /// </summary>
+        private static readonly ILog _logger =
+            LogManager.GetLogger(
+                System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: /Users/
         public ActionResult Index()
@@ -35,7 +44,7 @@ namespace UAS.Core.Web.WebApp.Controllers
         // GET: /Users/Create
         public ActionResult Create()
         {
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Alias");
             return View();
         }
 
@@ -48,12 +57,22 @@ namespace UAS.Core.Web.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
+                try
+                {
+                    user.CreatedBy = base.CurrentSession.SessionUser.Username;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+                catch (System.Exception exception)
+                {
+                    _logger.Error(exception.Message, exception);
+                    throw;
+                }
+                
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Role.Alias", user.IdRole);
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Alias", user.IdRole);
             return View(user);
         }
 
@@ -69,7 +88,7 @@ namespace UAS.Core.Web.WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Name", user.IdRole);
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Alias", user.IdRole);
             return View(user);
         }
 
@@ -82,11 +101,13 @@ namespace UAS.Core.Web.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.ModifiedBy = base.CurrentSession.SessionUser.Username;
+                user.LastModiticationDate = DateTime.Now;
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Name", user.IdRole);
+            ViewBag.IdRole = new SelectList(db.Roles, "Id", "Alias", user.IdRole);
             return View(user);
         }
 

@@ -35,11 +35,14 @@ namespace UAS.Core.Attendance.Managers
             _dispatcher = attendanceDispatcher;
 
             _movementPersister = new MovementPersister();
-            _movementPersister.SqlNotification += SqlDependencyNotifier;
+
+            if (attendanceDispatcher != null)
+            {
+                _movementPersister.SqlNotification += SqlDependencyNotifier;
+                ActivateNotifications();
+            }
 
             _userPersister = new UserPersister();
-
-            ActivateNotifications();
         }
 
         /// <summary>

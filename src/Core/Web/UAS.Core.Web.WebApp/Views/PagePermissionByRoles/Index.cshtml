@@ -34,7 +34,15 @@
                             <thead>
                                 <tr>
                                     <th>
+                                    </th>
+                                    <th>
                                         Página
+                                    </th>
+                                    <th>
+                                        Controlador
+                                    </th>
+                                    <th>
+                                        Acción
                                     </th>
                                     <th>
                                         Rol
@@ -55,7 +63,15 @@
                                 {
                                     <tr>
                                         <td>
+                                        </td>
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.Page.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Page.Controller)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Page.Action)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Role.Alias)
@@ -79,7 +95,15 @@
                             <tfooter>
                                 <tr>
                                     <th>
+                                    </th>
+                                    <th>
                                         Página
+                                    </th>
+                                    <th>
+                                        Controlador
+                                    </th>
+                                    <th>
+                                        Acción
                                     </th>
                                     <th>
                                         Rol
@@ -111,12 +135,19 @@
     @Scripts.Render("~/plugins/dataTables")
     <script>
         $(document).ready(function () {
-            $('.table').DataTable({
+            var grid = $('.table').DataTable({
                 language: {
                     url: '/Scripts/plugins/datatables/plugins/i18n/Spanish.txt'
                 },
                 "processing": true
             });
+            
+            grid.on('order.dt search.dt', function () {
+                grid.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                    grid.cell(cell).invalidate('dom');
+                });
+            }).draw();
         });
     </script>
 }

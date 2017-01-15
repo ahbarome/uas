@@ -66,6 +66,14 @@
                 @Html.ValidationMessageFor(model => model.IdRole)
             </div>
         </div>
+        
+        <div class="form-group">
+            <label class="control-label col-md-2"># Documento</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DocumentNumber)
+                @Html.ValidationMessageFor(model => model.DocumentNumber)
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="control-label col-md-2">Nombre(s)</label>
@@ -107,45 +115,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Fecha de Registro</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RegisterDate)
-                @Html.ValidationMessageFor(model => model.RegisterDate)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Creado Por</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedBy)
-                @Html.ValidationMessageFor(model => model.CreatedBy)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Fecha Última Modificación</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastModiticationDate)
-                @Html.ValidationMessageFor(model => model.LastModiticationDate)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Modificado Por</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ModifiedBy)
-                @Html.ValidationMessageFor(model => model.ModifiedBy)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2"># Documento</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DocumentNumber)
-                @Html.ValidationMessageFor(model => model.DocumentNumber)
-            </div>
-        </div>
 
         <div class="form-group">
             <label class="control-label col-md-2">Ruta Foto</label>

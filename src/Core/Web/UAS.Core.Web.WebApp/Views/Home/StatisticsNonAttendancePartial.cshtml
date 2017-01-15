@@ -65,44 +65,47 @@
         if (statisticTeacherCourse != null)
         {
 
-        <div class="col-lg-6">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-                    <h3 class="font-bold no-margins text-uppercase">
-                        Docentes Con Mayor Ausentismo
-                    </h3>
-                    <br />
-                    <small>Docente con mayor ausentismo: <span class="label label-danger text-uppercase">@statisticTeacherCourse.AdditionalDescription</span> durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
-                    <br />
-                    <br />
-                    <div class="feed-activity-list">
-
-                        @foreach (var statistic in topStatisticsTeachersCourse.Where(
-                            filter => filter.EventType.ToUpper().Equals(NON_ATTENDANCE)))
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <h3 class="font-bold no-margins text-uppercase">
+                            Docentes Con Mayor Ausentismo
+                        </h3>
+                        <br />
+                        @if (currentAcademicPeriod != null)
                         {
-                            <div class="feed-element">
-                                <a href="#" class="pull-left">
-                                    <img alt="image" class="img-circle" src="@Url.Content(statistic.ImageRelativePath)">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">Total faltas: @statistic.Total.</small>
-                                    <strong class="text-uppercase">@statistic.AdditionalDescription</strong><br>
-                                    @statistic.Description<br>
-
-                                </div>
-                            </div>
+                            <small>Docente con mayor ausentismo: <span class="label label-danger text-uppercase">@statisticTeacherCourse.AdditionalDescription</span> durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
+                            <br />
+                            <br />
                         }
+                        <div class="feed-activity-list">
 
-                    </div>
-                    <div class="m-t-md">
-                        <small class="pull-right">
-                            <i class="fa fa-clock-o"> </i>
-                            Última actualización @DateTime.Now.ToString("HH:mm")
-                        </small>
+                            @foreach (var statistic in topStatisticsTeachersCourse.Where(
+                                filter => filter.EventType.ToUpper().Equals(NON_ATTENDANCE)))
+                            {
+                                <div class="feed-element">
+                                    <a href="#" class="pull-left">
+                                        <img alt="image" class="img-circle" src="@Url.Content(statistic.ImageRelativePath)">
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right">Total faltas: @statistic.Total.</small>
+                                        <strong class="text-uppercase">@statistic.AdditionalDescription</strong><br>
+                                        @statistic.Description<br>
+
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <div class="m-t-md">
+                            <small class="pull-right">
+                                <i class="fa fa-clock-o"> </i>
+                                Última actualización @DateTime.Now.ToString("HH:mm")
+                            </small>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     }
 
@@ -134,7 +137,7 @@
                             </thead>
                             <tbody>
                                 @foreach (var statistic in topStatisticsStudentsCourse.Where(
-                    filter => filter.EventType.ToUpper().Equals(NON_ATTENDANCE)))
+                                    filter => filter.EventType.ToUpper().Equals(NON_ATTENDANCE)))
                                 {
                                     <tr>
                                         <td><span class="fa fa-thumbs-down text-danger"></span></td>

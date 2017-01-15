@@ -9,6 +9,7 @@ namespace UAS.Core.Web.WebApp.Controllers
 {
     public class ScheduleDetailsController : FirewallController
     {
+        static string SEPARATOR = " | ";
         private UASEntities db = new UASEntities();
 
         // GET: /ScheduleDetails/
@@ -36,8 +37,8 @@ namespace UAS.Core.Web.WebApp.Controllers
         // GET: /ScheduleDetails/Create
         public ActionResult Create()
         {
-            ViewBag.IdSchedule = new SelectList(db.Schedules, "Id", "Id");
-            ViewBag.IdSpace = new SelectList(db.Spaces, "Id", "Name");
+            ViewBag.IdSchedule = GetSelectListSchedules();
+            ViewBag.IdSpace = GetSelectListSpaces();
             return View();
         }
 
@@ -55,8 +56,8 @@ namespace UAS.Core.Web.WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdSchedule = new SelectList(db.Schedules, "Id", "Description", scheduleDetail.IdSchedule);
-            ViewBag.IdSpace = new SelectList(db.Spaces, "Id", "Name", scheduleDetail.IdSpace);
+            ViewBag.IdSchedule = GetSelectListSchedules();
+            ViewBag.IdSpace = GetSelectListSpaces();
             return View(scheduleDetail);
         }
 
@@ -72,8 +73,8 @@ namespace UAS.Core.Web.WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdSchedule = new SelectList(db.Schedules, "Id", "Description", scheduleDetail.IdSchedule);
-            ViewBag.IdSpace = new SelectList(db.Spaces, "Id", "Name", scheduleDetail.IdSpace);
+            ViewBag.IdSchedule = GetSelectListSchedules(id);
+            ViewBag.IdSpace = GetSelectListSpaces(scheduleDetail.IdSpace);
             return View(scheduleDetail);
         }
 
@@ -90,8 +91,8 @@ namespace UAS.Core.Web.WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdSchedule = new SelectList(db.Schedules, "Id", "Description", scheduleDetail.IdSchedule);
-            ViewBag.IdSpace = new SelectList(db.Spaces, "Id", "Name", scheduleDetail.IdSpace);
+            ViewBag.IdSchedule = GetSelectListSchedules();
+            ViewBag.IdSpace = GetSelectListSpaces();
             return View(scheduleDetail);
         }
 
@@ -128,6 +129,33 @@ namespace UAS.Core.Web.WebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private IQueryable<SelectListItem> GetSelectListSchedules(int? id = null)
+        {
+            var selectList = from schedules in db.Schedules
+                                  select new SelectListItem
+                                  {
+                                      Value = schedules.Id.ToString(),
+                                      Text = schedules.Course.Name + SEPARATOR + schedules.AcademicPeriod.Period,
+                                      Selected = schedules.Id == id ? true : false
+                                  };
+
+
+            return selectList;
+      
+        }
+
+        private IQueryable<SelectListItem> GetSelectListSpaces(int? id = null)
+        {
+            var selectList = from spaces in db.Spaces
+                                  select new SelectListItem
+                                  {
+                                      Value = spaces.Id.ToString(),
+                                      Text = spaces.SpaceType.Type + SEPARATOR + spaces.Name,
+                                      Selected = spaces.Id == id ? true : false
+                                  };
+            return selectList;
         }
     }
 }

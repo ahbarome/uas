@@ -41,7 +41,8 @@ BEGIN
 			@CurrentDayOfTheWeek				INT = 0,
 			@CourseId							INT = 0,
 			@CourseStartTime					TIME,
-			@CourseEndTime						TIME
+			@CourseEndTime						TIME,
+			@CurrentPeriod						INT;
 	--==================================================
 	DECLARE @StudentMovements TABLE (
 		StudentDocumentNumber		INT,
@@ -54,6 +55,11 @@ BEGIN
 		CareerName					NVARCHAR(MAX),
 		CourseName					NVARCHAR(MAX),
 		EnrollmentStatus			NVARCHAR(MAX));
+	--==================================================
+
+	SELECT @CurrentPeriod = Period
+	FROM	Integration.GetCurrentAcademicPeriod()
+
 	--==================================================
 
 	SET @CurrentSemester		= [Integration].GetCurrentSemester()
@@ -100,7 +106,7 @@ BEGIN
 				[CareerName],
 				[CourseName],
 				[EnrollmentStatus]
-		FROM	[Integration].GetEnrollmentStudents(@CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement );   
+		FROM	[Integration].GetEnrollmentStudents(@CurrentPeriod, @CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement );   
 		
 		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement
 	END
@@ -158,7 +164,8 @@ BEGIN
 			@CurrentSemester					INT = 0,
 			@CurrentDayOfTheWeek				INT = 0,
 			@CourseStartTime					TIME,
-			@CourseEndTime						TIME
+			@CourseEndTime						TIME,
+			@CurrentPeriod						INT
 	--==================================================
 	DECLARE @StudentMovements TABLE (
 		StudentDocumentNumber		INT,
@@ -217,7 +224,7 @@ BEGIN
 				[CareerName],
 				[CourseName],
 				[EnrollmentStatus]
-		FROM	[Integration].GetEnrollmentStudents(@CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement);
+		FROM	[Integration].GetEnrollmentStudents(@CurrentPeriod, @CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement);
 		
 		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement
 	END
@@ -444,7 +451,8 @@ BEGIN
 			@CurrentDayOfTheWeek				INT = 0,
 			@CourseId							INT = 0,
 			@CourseStartTime					TIME,
-			@CourseEndTime						TIME
+			@CourseEndTime						TIME,
+			@CurrentPeriod						INT;
 	--==================================================
 	DECLARE @CourseAttendance					INT
 	--==================================================
@@ -461,6 +469,11 @@ BEGIN
 		EnrollmentStatus			NVARCHAR(MAX));
 	--==================================================
 	
+	SELECT @CurrentPeriod = Period
+	FROM	Integration.GetCurrentAcademicPeriod()
+
+	--==================================================
+
 	SELECT  TOP 1 @CourseStartTime		= [CCT].[StartTime]
 				, @CourseEndTime		= [CCT].[EndTime]
 				, @CourseId				= [CCT].[CourseId] 
@@ -474,16 +487,9 @@ BEGIN
 									FROM	[Integration].[GetCourseWithTotalStudentsById](@CourseId) )
 
 	--==================================================
-	
-	SELECT  TOP 1 @CourseStartTime		= [CCT].[StartTime]
-				, @CourseEndTime		= [CCT].[EndTime]
-				, @CourseId				= [CCT].[CourseId] 
-	FROM	 [Integration].GetCurrentCoursesByTeacherDocumentNumber( @TeacherDocumentNumber ) [CCT]
-
-	--==================================================
 	--Get the movements of the current day
 	DECLARE MovementsCursor CURSOR FOR
-		SELECT * FROM [Attendance].GetTodayMovements()
+		SELECT DocumentNumber FROM [Attendance].GetTodayMovements()
 	
 	OPEN MovementsCursor;
 	
@@ -492,7 +498,8 @@ BEGIN
 
 	WHILE @@FETCH_STATUS = 0  
 	BEGIN
-		
+		PRINT CONCAT('Document number:' , @CurrentDocumentNumberOfTheMovement)
+
 		INSERT INTO @CourseMovements (
 			StudentDocumentNumber, 
 			StudentCode, 
@@ -514,7 +521,12 @@ BEGIN
 				[CareerName],
 				[CourseName],
 				[EnrollmentStatus]
-		FROM	[Integration].GetEnrollmentStudents(@CourseId, @CourseStartTime, @CourseEndTime, @CurrentDocumentNumberOfTheMovement);
+		FROM	[Integration].GetEnrollmentStudents(
+			@CurrentPeriod,
+			@CourseId,
+			@CourseStartTime,
+			@CourseEndTime,
+			@CurrentDocumentNumberOfTheMovement);
 		
 		FETCH NEXT FROM MovementsCursor INTO @CurrentDocumentNumberOfTheMovement
 	END
@@ -526,7 +538,9 @@ BEGIN
 
 	SELECT @TotalMovements = COUNT(1) FROM @CourseMovements;
 
-	IF( @TotalMovements > 1 )
+	PRINT CONCAT('Total movements: ', @TotalMovements)
+
+	IF( @TotalMovements > 0 )
 	BEGIN
 		SELECT	@CourseId			AS CourseId
 				, [CourseName]

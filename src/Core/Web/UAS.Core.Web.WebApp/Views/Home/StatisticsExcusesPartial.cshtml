@@ -44,9 +44,12 @@
                                     Estado excusas
                                 </h3>
                                 <br />
-                                <small>Actualmente se encuentran en estado: <span class="label label-warning text-uppercase">@majorExcuseStatus.Description</span> más del : <strong>@GetPercentageWithFormat(majorExcuseStatus.Percentage)</strong> de las excusas registradas equivalentes a: <strong>@majorExcuseStatus.Total</strong> durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
-                                <br />
-                                <br />
+                                @if (currentAcademicPeriod != null)
+                                {
+                                    <small>Actualmente se encuentran en estado: <span class="label label-warning text-uppercase">@majorExcuseStatus.Description</span> más del : <strong>@GetPercentageWithFormat(majorExcuseStatus.Percentage)</strong> de las excusas registradas equivalentes a: <strong>@majorExcuseStatus.Total</strong> durante el periodo: <strong>@currentAcademicPeriod.StartDateMonthName.ToUpper() - @currentAcademicPeriod.EndDateMonthName.ToUpper() del @currentAcademicPeriod.Period</strong></small>
+                                    <br />
+                                    <br />
+                                }
                             </div>
                             <div>
                                 <center>
@@ -94,22 +97,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                            @if (topExcuseClassifications != null)
-                            {
-                                var counter = 1;
-                                foreach (var statisticExcuseClassification in topExcuseClassifications)
-                                {
-                                    <tr>
-                                        <td>@counter</td>
-                                        <td>@statisticExcuseClassification.Description</td>
-                                        <td><span class="pie">@GetPiePercentage(statisticExcuseClassification.Total, topExcuseClassifications)</span></td>
-                                        <td>@GetPercentageWithFormat(statisticExcuseClassification.Percentage)</td>
-                                        <td>@statisticExcuseClassification.Total</td>
+                                    @if (topExcuseClassifications != null)
+                                    {
+                                        var counter = 1;
+                                        foreach (var statisticExcuseClassification in topExcuseClassifications)
+                                        {
+                                            <tr>
+                                                <td>@counter</td>
+                                                <td>@statisticExcuseClassification.Description</td>
+                                                <td><span class="pie">@GetPiePercentage(statisticExcuseClassification.Total, topExcuseClassifications)</span></td>
+                                                <td>@GetPercentageWithFormat(statisticExcuseClassification.Percentage)</td>
+                                                <td>@statisticExcuseClassification.Total</td>
 
-                                    </tr>
-                                    counter++;
-                                }
-                            }
+                                            </tr>
+                                            counter++;
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
